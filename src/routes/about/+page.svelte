@@ -1,5 +1,7 @@
 <script lang="ts">
-  import ComingSoon from '$lib/ComingSoon.svelte';
+  import About from '$lib/pages/about/About.svelte';
+
+  let { data } = $props();
 </script>
 
-<ComingSoon title="About" blurb="How Crucible works, and how to run it yourself." />
+<About view={data.about} />
