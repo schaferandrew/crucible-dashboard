@@ -45,3 +45,7 @@ Thumbs.db
 
 # CI checkouts (crucible, site bundle)
 .ci/
+
+# Screenshot harness output (npm run shots); never committed
+docs/rewrite/shots/
+.cache/

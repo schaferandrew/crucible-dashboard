@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "data": "node scripts/link-data.mjs",
+    "data:gen": "bash scripts/gen-data.sh",
     "size": "node scripts/check-size.mjs",
     "shots": "node scripts/shots.mjs"
   },
