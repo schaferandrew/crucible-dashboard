@@ -1,4 +1,44 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# SvelteKit / Vite build output
 .svelte-kit/
 build/
+.output/
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Generated site data (built in CI by `crucible site-data`; never committed)
+static/data/
+
+# Tests
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Python (crucible tooling, scripts)
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editors
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
