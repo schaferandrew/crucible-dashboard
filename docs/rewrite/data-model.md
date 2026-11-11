@@ -173,6 +173,12 @@ Because the site no longer reads bundle records directly (it reads layer-2 outpu
   set against it: unknown uuid → add; same uuid and hash → no-op; same uuid, different hash → reject. Re-running
   publish is always safe. The manifest and rules are Phase 2 work.
 
+- **One sanctioned exception to immutability: privacy redaction.** `publish --from-bundle` blanks IP-like host
+  values (33 format-3 runs carry DHCP names like `ip-…` in `hardware.label` / `provenance.machine_label`) as it copies
+  them into `bundle/`. Every other byte is unchanged. The record gets `provenance.redacted: {fields, at, reason,
+  original_content_hash}` and a new content hash, and the manifest marks the run as redacted. Machine credit
+  (Duskfall, Ironwood) comes from `endpoint.device`, which isn't touched. Maintainer decision, 2026-11-11.
+
 *Alternative considered:* rewrite all 2,053 records to format 4 through publish with `migrated_from` provenance.
 Rejected: it doubles the archive's churn and breaks immutability for no consumer benefit.
 
