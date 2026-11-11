@@ -72,6 +72,39 @@ Today `buildConfigs` groups runs by 7 fields and then **fuzzy-merges** groups wi
   `golden-numbers.json` before anything ships; if it is large we add explicit registry entries rather than
   bring back inference.
 
+### 1.2 One data context for every page
+
+Today each page, and each block within the model page, has its own selection logic. The variant picker, the
+deployments table, the variants table and the A/B block each resolve "what's selected" with different fallbacks
+(MODEL-PAGE-03, PICK-02, DEP-01, VAR-01). The rewrite has one pattern everywhere:
+
+```ts
+type DataContext = {
+  suite: SuiteId;
+  section: SectionId | 'combined';          // default 'combined' wherever it exists (B-18)
+  filters: Partial<Record<Dim, Set<string>>>; // Dim = model | maker | quant | format | packager | reasoning
+                                              //       | harness | where | hw | provider | deployment
+  focus?: SetupId;                          // the one setup a detail block is about, if the reader picked one
+  provisional: boolean; exclude: Set<TierId>;
+};
+scope(index, ctx) -> { setups, cells, rows }  // pure, in src/lib/core
+```
+
+- **One URL codec** reads and writes `DataContext` for every route (same param names on every page).
+- **Pages are a context with some dimensions pinned.** The leaderboard is the context with nothing pinned. A model
+  page is the same context with `model` pinned, a task page pins `task`, and compare pins a set of setups. They use the
+  same filter chips, the same `scope()` and the same counting.
+- **On the model page, variant and deployment are ordinary filters.** Picking a quant, reasoning level, harness or
+  deployment sets a filter, as it does on the leaderboard. Every block (tiles, by-area bars, deployments table,
+  variants table, tasks, other runs) is derived from the same `scope()`, so they can't disagree. Clicking a row
+  in the deployments or variants table sets that filter, and clicking it again clears it. Rows outside the current
+  filters stay visible but dimmed, with a count of what is hidden.
+- **The unfiltered model page is the whole model** (drill-down philosophy): headline tiles for its best setup, every
+  variant and every deployment listed. Narrowing only happens when the reader asks.
+- **A/B** is a derived block. Given the scope, it pairs setups that differ in exactly one dimension on the same
+  recorded deployment, with the same rule as today.
+- Stores hold only the `DataContext` and UI chrome state (open groups, compare ticks). Everything else is derived.
+
 ---
 
 ## 2. Corrections, done cleanly
@@ -235,6 +268,8 @@ Everything not listed here keeps parity with the checklist.
 | B-15 | **Bars** chart keeps plotting Overall (code behaviour); AGENTS doc is corrected instead. Name truncation fixed at the coded 29+"…". | OQ-03, OQ-05 |
 | B-16 | Dead paths not ported: `V.provisionalScore` cell note, task page `renderStub` button, compare duplicate notes. | OQ-07, OQ-11, OQ-12 |
 | B-17 | Model page section `mode` goes into the URL. | OQ-13 |
+| B-18 | **Combined is the default section** on the leaderboard (no `mode` param → Combined), on model and maker pages, and in compare when the setups span sections. It falls back to the first section only when a suite has fewer than two sections or the entity ran in only one. | MAIN-URL-02/03, MODEL-PUB-02, MODEL-PAGE-03 |
+| B-19 | **Model page selection rebuilt on the shared `DataContext` (§1.2).** Variant picker, deployments table and variants table become filters over one scope. Gone: the "closest variant" jump with dashed chips (PICK-02) and the per-block fallbacks. Instead, values that would leave nothing in scope are disabled with a count of 0, and the selection only changes when the reader changes it. The URL uses filter params instead of `variant=`/`deployment=` (legacy params translated). | MODEL-URL-01/04, MODEL-PAGE-03, MODEL-PICK-01/02, MODEL-DEP-01, MODEL-VAR-01 |
 
 Kept as is, deliberately: todo has no Combined and no filters (OQ-08); scatter y-axis scales differ by page (OQ-16);
 narrow-card tooltip differences (OQ-18) get parity, not redesign; status records stay unversioned-checked like today but
@@ -262,3 +297,4 @@ are validated at publish (OQ-02).
 3. **Approve format 4 without rewriting old records** (§3).
 4. **Approve moving the bundle** into `crucible-dashboard/bundle/` (and `crucible publish --to` pointing there).
 5. Anything in §6 you want kept at strict parity instead.
+6. **Approve the shared `DataContext` (§1.2)** and the model-page rebuild on it (B-19), plus Combined as the default (B-18).
