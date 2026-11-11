@@ -40,6 +40,11 @@ export function fmtDate(v: string | null | undefined): string {
   return v ? String(v).slice(0, 10) : NONE;
 }
 
+/** `YYYY-MM-DD HH:MM UTC` from an ISO timestamp (read as UTC, B-12). */
+export function fmtDateTime(v: string | null | undefined): string {
+  return v ? String(v).slice(0, 16).replace('T', ' ') + ' UTC' : NONE;
+}
+
 export function fmtRepeat(a: { n: number; min: number; max: number } | null | undefined): string {
   if (!a) return NONE;
   if (a.n === 1) return '1 run';

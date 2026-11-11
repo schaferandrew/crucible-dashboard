@@ -13,7 +13,8 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "data": "node scripts/link-data.mjs",
-    "size": "node scripts/check-size.mjs"
+    "size": "node scripts/check-size.mjs",
+    "shots": "node scripts/shots.mjs"
   },
   "engines": {
     "node": ">=20"
@@ -27,6 +28,7 @@
     "eslint": "^10.14.0",
     "eslint-plugin-svelte": "^3.24.1",
     "globals": "^17.14.0",
+    "playwright": "^1.65.0",
     "prettier": "^3.9.10",
     "prettier-plugin-svelte": "^4.1.1",
     "svelte": "^5.57.3",

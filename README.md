@@ -80,3 +80,20 @@ are allowed only through a rule in `tests/allowlist.ts` that says why; `WRITE_GO
 read access to the Crucible and site repos (a `CRUCIBLE_READ_TOKEN` secret while those are private).
 
 Work happens on branches, with one PR per phase.
+
+## Run pages and the SPA fallback
+
+`/run/<uuid>/` is **not prerendered** (B-21). There are thousands of runs and each is one small JSON file, so
+prerendering them all would add thousands of near-identical HTML files to every deploy for no reader benefit.
+Instead `adapter-static` is configured with `fallback: '404.html'`: GitHub Pages serves `404.html` for any path it
+doesn't have, and SvelteKit's client router then renders the run route from the URL, so
+`https://<host>/crucible-dashboard/run/<uuid>/` works as a deep link.
+
+Trade-offs: the first response for a run link has HTTP status 404 (the page still renders; browsers and people don't
+care, crawlers would, and every page is `noindex` anyway); the run page needs JavaScript and shows nothing before it
+runs; a real typo in any URL gets the same shell and then the in-app "Page not found". Everything else is prerendered
+as before.
+
+## Screenshots
+
+`npm run shots -- --page <name> --new <path> --live <url> --port <dev-port>` (see docs/rewrite/phase-4-guide.md).

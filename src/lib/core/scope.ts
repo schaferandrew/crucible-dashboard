@@ -69,7 +69,7 @@ export interface ScopeOptions {
 }
 
 /** The setups of a view that appear in at least one of its candidates. */
-function setupsInView(view: View): Set<string> {
+export function setupsInView(view: View): Set<string> {
   const ids = new Set<string>();
   for (const c of view.candidates()) for (const m of c.members) if (m) ids.add(m.id);
   return ids;
@@ -133,6 +133,8 @@ export interface Facet {
   distinct: number;
   /** Values that leave at least one row, in display order (by label, `unrecorded` last). */
   options: FacetOption[];
+  /** Every value of the section, in the same order, including those that would leave no row (`rows: 0`): the panel disables these (B-19). */
+  all: FacetOption[];
 }
 
 export function facetLabel(index: SuiteIndex, dim: Dim, value: string, sample?: Setup): string {
@@ -185,7 +187,7 @@ export function facet(index: SuiteIndex, ctx: DataContext, dim: Dim, opts: Scope
       if (!samples.has(v)) samples.set(v, s);
     }
   }
-  const options: FacetOption[] = [];
+  const all: FacetOption[] = [];
   for (const v of distinct) {
     const rows = buildRows(
       index,
@@ -194,9 +196,9 @@ export function facet(index: SuiteIndex, ctx: DataContext, dim: Dim, opts: Scope
       exclude,
     );
     const n = visibleRows(rows, !!opts.showInProgress).length;
-    if (n) options.push({ value: v, label: facetLabel(index, dim, v, samples.get(v)), rows: n });
+    all.push({ value: v, label: facetLabel(index, dim, v, samples.get(v)), rows: n });
   }
-  options.sort(
+  all.sort(
     (a, b) =>
       Number(a.value === UNRECORDED) - Number(b.value === UNRECORDED) ||
       (a.label.toLowerCase() < b.label.toLowerCase()
@@ -205,7 +207,7 @@ export function facet(index: SuiteIndex, ctx: DataContext, dim: Dim, opts: Scope
           ? 1
           : 0),
   );
-  return { dim, distinct: distinct.size, options };
+  return { dim, distinct: distinct.size, options: all.filter((o) => o.rows > 0), all };
 }
 
 /**

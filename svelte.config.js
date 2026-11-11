@@ -11,7 +11,8 @@ const config = {
     adapter: adapter({
       pages: 'build',
       assets: 'build',
-      fallback: undefined,
+      // Unknown paths (the run pages, `/run/<uuid>/`) are served by this SPA shell: GitHub Pages returns 404.html for them
+      fallback: '404.html',
       precompress: false,
       strict: true,
     }),

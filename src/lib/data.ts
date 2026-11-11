@@ -4,7 +4,8 @@
 
 import { base } from '$app/paths';
 import { normalizeIndex, normalizeMeta } from '$lib/core/normalize';
-import type { CellRuns, Meta, RunSuiteEntry, SuiteId, SuiteIndex } from '$lib/core/types';
+import { buildRunLinkIndex, type RunLinkIndex } from '$lib/core/runlink';
+import type { CellRuns, Meta, RunId, RunSuiteEntry, SuiteId, SuiteIndex } from '$lib/core/types';
 
 type Fetch = typeof fetch;
 
@@ -23,12 +24,20 @@ export async function loadMeta(fetchFn: Fetch): Promise<Meta> {
 }
 
 const indexes = new Map<string, Promise<SuiteIndex>>();
+const loadedIndexes = new Map<string, SuiteIndex>();
+
+/** A suite's index if some page already loaded it (free), else null. For pages that only want nicer labels. */
+export function cachedIndex(suite: SuiteId | string): SuiteIndex | null {
+  return loadedIndexes.get(suite) ?? null;
+}
 
 /** A suite's index.json, once per page load. */
 export function loadIndex(fetchFn: Fetch, suite: SuiteId | string): Promise<SuiteIndex> {
   let p = indexes.get(suite);
   if (!p) {
-    p = readJson(`${suite}/index.json`, fetchFn).then(normalizeIndex);
+    p = readJson(`${suite}/index.json`, fetchFn)
+      .then(normalizeIndex)
+      .then((idx) => (loadedIndexes.set(suite, idx), idx));
     p.catch(() => indexes.delete(suite));
     indexes.set(suite, p);
   }
@@ -57,4 +66,33 @@ export function loadRun(
   uuid: string,
 ): Promise<{ run_uuid: string; suites?: Record<string, RunSuiteEntry> } & Record<string, unknown>> {
   return once(`runs/${uuid}.json`, fetchFn);
+}
+
+/** A run's model output (`outputs/<uuid>.txt`), fetched only when the reader opens the disclosure (RUNDETAIL-10). */
+export async function loadOutput(fetchFn: Fetch, ref: string): Promise<string> {
+  const res = await fetchFn(`${base}/data/${ref.replace(/^\/+/, '')}`);
+  if (!res.ok) throw new Error(`${ref}: ${res.status} ${res.statusText}`);
+  return res.text();
+}
+
+const runLinkIndexes = new Map<string, Promise<RunLinkIndex>>();
+
+/**
+ * The run a matrix cell opens (B-21): the scored run of `setup` x `task` in `suite`, from the lazily fetched
+ * `cell-runs.json`, or null when that cell has no run. The first call per suite fetches the file (about 90 KB
+ * gzip-able JSON, not part of the first load); later calls are a Map lookup. Link with `runHref(uuid)`.
+ */
+export async function runLinkFor(
+  fetchFn: Fetch,
+  suite: SuiteId | string,
+  setup: string,
+  task: string,
+): Promise<RunId | null> {
+  let p = runLinkIndexes.get(suite);
+  if (!p) {
+    p = loadCellRuns(fetchFn, suite).then(buildRunLinkIndex);
+    p.catch(() => runLinkIndexes.delete(suite));
+    runLinkIndexes.set(suite, p);
+  }
+  return (await p).get(setup, task);
 }
