@@ -155,9 +155,9 @@ Because the site no longer reads bundle records directly (it reads layer-2 outpu
 | `model.publisher` → `model.packager` (namespace the weights were downloaded from; may equal the maker) | J-06: "publisher" meant three things |
 | `model.maker` top-level, `model.id` = canonical model ID when the registry knows it, `model.raw_base` = what the runtime called it | J-03/J-05: fix at record time |
 | `model.format` always set for local runs, with `format_source: runtime|filename|unknown` | J-07 |
-| `serving_host` (machine that served the weights) and `harness_host` (machine that ran the harness), replacing `endpoint.device` / `hardware.label` / `provenance.machine_label` | J-14 |
+| detected `hardware {key, chip, memory_gb, accelerators}` of the serving machine plus `served_remotely`, replacing `endpoint.device` / `hardware.label` / `provenance.machine_label`; no host names are published (B-20) | J-14, open submissions |
 | drop `variant_key`, `display`, `run_path`, `endpoint.app`, `hardware.offload`, `origin.base_repo`, `provenance.submitter/verification`; `local` must never be published (publish rejects it) | J-12, inventory §5 |
-| `hardware` reduced to `{key}`; the rest lives in `machines.yaml` | J-12 |
+
 
 - Catalog revision 3: carries all display text currently in `_data/crucible_fallbacks.yml` (area blurbs/examples,
   tier detail, scoring-method labels including `judge`). Scoring fields of a past suite stay frozen; display
@@ -276,6 +276,7 @@ Everything not listed here keeps parity with the checklist.
 | B-17 | Model page section `mode` goes into the URL. | OQ-13 |
 | B-18 | **Combined is the default section** on the leaderboard (no `mode` param → Combined), on model and maker pages, and in compare when the setups span sections. It falls back to the first section only when a suite has fewer than two sections or the entity ran in only one. | MAIN-URL-02/03, MODEL-PUB-02, MODEL-PAGE-03 |
 | B-19 | **Model page selection rebuilt on the shared `DataContext` (§1.2).** Variant picker, deployments table and variants table become filters over one scope. Gone: the "closest variant" jump with dashed chips (PICK-02) and the per-block fallbacks. Instead, values that would leave nothing in scope are disabled with a count of 0, and the selection only changes when the reader changes it. The URL uses filter params instead of `variant=`/`deployment=` (legacy params translated). | MODEL-URL-01/04, MODEL-PAGE-03, MODEL-PICK-01/02, MODEL-DEP-01, MODEL-VAR-01 |
+| B-20 | **Hardware class is the only public machine identity.** A local deployment is `local~<chip-memory key>`, labelled like "Apple M5 Pro · 48 GB". Machine and host names (Duskfall, `an IP-style host`) never reach site data. The "Machine" dimension and the device names in deployment labels go away. Format-4 records carry detected `hardware {key, chip, memory_gb, accelerators}` and `served_remotely`, with no host names. `registry/machines.yaml` is only a private aid that fills hardware keys on old runs. Hardware is a filter: a leaderboard row shows the model's best setup on any hardware. | DIMENSIONS (machine), deployment labels, MODEL-DEP-01 |
 
 Kept as is, deliberately: todo has no Combined and no filters (OQ-08); scatter y-axis scales differ by page (OQ-16);
 narrow-card tooltip differences (OQ-18) get parity, not redesign; status records stay unversioned-checked like today but
