@@ -8,7 +8,7 @@ import { defaultContext, type DataContext, type Dim } from '../src/lib/core/cont
 import { facet, scope } from '../src/lib/core/scope';
 import { OVERALL, isRanked, sortRows, type Row } from '../src/lib/core/scoring';
 import { COMBINED, asSectionId, asSuiteId, asTierId, type SuiteIndex } from '../src/lib/core/types';
-import { B03_MODELS, ECLIPSE_COST_MODELS } from './allowlist';
+import { ALIAS_CASE_MODELS, B03_MODELS, ECLIPSE_COST_MODELS } from './allowlist';
 
 export const ROOT = resolve(import.meta.dirname, '..');
 export const DATA_DIR = resolve(ROOT, 'static/data');
@@ -73,7 +73,8 @@ export function ctxFor(
 
 const modelOf = (row: string) => row.replace(/#.*$/, '').toLowerCase();
 /** Rows whose numbers or membership legitimately moved (B-03 splits, Eclipse hardware filled in). */
-export const isAffected = (row: string) => modelOf(row) in B03_MODELS || modelOf(row) in ECLIPSE_COST_MODELS;
+export const isAffected = (row: string) =>
+  modelOf(row) in B03_MODELS || modelOf(row) in ECLIPSE_COST_MODELS || modelOf(row) in ALIAS_CASE_MODELS;
 
 interface Brief {
   score: number | null;
@@ -120,16 +121,6 @@ export function compareRows(
     const check = (field: string, gv: unknown, av: unknown, note?: Record<string, unknown>) => {
       if (!same(gv, av)) push(g.rowKey, field, gv, av, note);
     };
-    const approxNote = (field: 'time' | 'tps' | 'cost', gv: unknown) => {
-      const vals = r.memberStats
-        .map((s) => (field === 'tps' ? s.tps.median : s[field]))
-        .filter((v): v is number => typeof v === 'number');
-      const lo = Math.min(...vals),
-        hi = Math.max(...vals);
-      const withinBounds = typeof gv === 'number' && vals.length > 0 && gv >= lo - 1e-9 && gv <= hi + 1e-9;
-      return { approx: r.approx, withinBounds };
-    };
-
     const gi = goldenIndex.get(g.rowKey.toLowerCase())!;
     const ai = actualIndex.get(r.rowKey.toLowerCase())!;
     const expectedRank =
@@ -169,9 +160,9 @@ export function compareRows(
       check('provisionalRan.done', g.provisionalRan.done, r.provisionalRan?.done);
       check('provisionalRan.total', g.provisionalRan.total, r.provisionalRan?.total);
     }
-    check('time', g.time, r.time, approxNote('time', g.time));
-    check('tps', g.tps, r.tps, approxNote('tps', g.tps));
-    check('cost', g.cost, r.cost, approxNote('cost', g.cost));
+    check('time', g.time, r.time);
+    check('tps', g.tps, r.tps);
+    check('cost', g.cost, r.cost);
   }
   for (const r of actual)
     if (!used.has(r.rowKey.toLowerCase()))
@@ -246,8 +237,6 @@ export function runScenarios(): ScenarioRun[] {
         if (sc.sortOrders) {
           for (const [key, so] of Object.entries<Json>(sc.sortOrders)) {
             if (so.error) continue;
-            const approxCol = mode === 'combined' && (key === 'time' || key === 'tps' || key === 'cost');
-            if (approxCol) continue;
             const gOrder: string[] = so.rowKeys
               .map((k: string) => k.toLowerCase())
               .filter((k: string) => !isAffected(k));

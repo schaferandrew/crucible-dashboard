@@ -277,6 +277,61 @@ export interface SetupStatsCells {
 
 export type SetupStats = SetupStatsSubsets | SetupStatsCells;
 
+/** One pairing of setups for the Combined view, made by site-data (members index `cell_setups`). */
+export interface CombinedEntity {
+  members: number[];
+  model: ModelId;
+  maker: MakerId;
+  packager: string | null;
+  format: string | null;
+  quant: string | null;
+  reasoning: string;
+  where: string;
+  hw: string | null;
+  provider: string | null;
+  harness: string[];
+  runs: number;
+}
+
+export interface Combined {
+  entities: CombinedEntity[];
+  /** Pooled stats of each entity's members; `by_entity` is parallel to `entities`. */
+  stats:
+    | { format: 'subsets'; tiers: TierId[]; keys: string[]; by_entity: { stats: Stats[]; index: number[] }[] }
+    | {
+        format: 'cells';
+        tiers: TierId[];
+        by_entity: Record<string, { counted?: RunTriple[]; provisional?: RunTriple[] }>[];
+      };
+}
+
+/** `<suite>/cell-runs.json`: the scored run of each cell, fetched lazily. */
+export interface CellRuns {
+  suite: SuiteId;
+  setups: SetupId[];
+  tasks: TaskId[];
+  runs: [number, number, RunId][];
+}
+
+export interface Sibling {
+  run_uuid: RunId;
+  started_at: string | null;
+  state: string;
+  score: number | null;
+  outcome: string | null;
+}
+
+/** The part of `runs/<uuid>.json` a cell link needs: where the run sits in each suite. */
+export interface RunSuiteEntry {
+  state: string;
+  setup?: SetupId;
+  task: TaskId | null;
+  score: number | null;
+  score_ref?: { rubric_version: number; method: string } | null;
+  siblings?: Sibling[];
+  scored_run?: RunId | null;
+}
+
 export interface SuiteIndex {
   suite: SuiteId;
   counts: Counts;
@@ -289,7 +344,11 @@ export interface SuiteIndex {
     deployments: Record<string, Deployment>;
     setups: Record<string, Setup>;
   };
+  /** Decoded from the contract's cells table. */
   cells: Cell[];
+  /** The contract's `cells.setups` (what `combined` members index). */
+  cell_setups: SetupId[];
+  combined: Combined;
   setup_stats: SetupStats;
   other: Record<string, Record<string, number>>;
 }

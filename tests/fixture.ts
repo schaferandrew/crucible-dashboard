@@ -57,6 +57,30 @@ export function syntheticIndex() {
     { id: 'p1', mode: 'chat', area: 'x', category: 'k', tier: 'temper', status: 'provisional', weight: null },
   ];
   const cell = (s: string, t: string, mean: number) => ({ setup: s, task: t, runs: 1, counted: block(mean) });
+  const list: { setup: string; task: string; runs: number; counted?: Block; provisional?: Block }[] = [
+    cell('s-chat', 'c1', 10),
+    cell('s-chat', 'c2', 8),
+    { setup: 's-chat', task: 'p1', runs: 1, provisional: block(6) },
+    cell('s-pi', 'a1', 9),
+    cell('s-pi', 'a2', 7),
+    cell('s-other', 'a1', 4),
+  ];
+  const setupIds = ['s-chat', 's-pi', 's-other'];
+  const taskIds = tasks.map((t) => t.id);
+  const f = (b: Block | undefined) =>
+    b ? [b.n, b.n_scored, b.mean, b.min, b.max, b.n_finished, b.mean_finished, b.timeouts, b.errors] : 0;
+  const table = {
+    setups: setupIds,
+    tasks: taskIds,
+    fields: ['n', 'n_scored', 'mean', 'min', 'max', 'n_finished', 'mean_finished', 'timeouts', 'errors'],
+    rows: list.map((c) => [
+      setupIds.indexOf(c.setup),
+      taskIds.indexOf(c.task),
+      c.runs,
+      f(c.counted),
+      f(c.provisional),
+    ]),
+  };
   const raw = {
     suite: 's',
     catalog: {
@@ -86,14 +110,30 @@ export function syntheticIndex() {
         ].map((s) => [s.id, s]),
       ),
     },
-    cells: [
-      cell('s-chat', 'c1', 10),
-      cell('s-chat', 'c2', 8),
-      { setup: 's-chat', task: 'p1', runs: 1, provisional: block(6) },
-      cell('s-pi', 'a1', 9),
-      cell('s-pi', 'a2', 7),
-      cell('s-other', 'a1', 4),
-    ],
+    cells: table,
+    combined: {
+      entities: [
+        {
+          members: [0, 1],
+          model: 'm/a',
+          maker: 'm',
+          reasoning: 'default',
+          where: 'cloud',
+          harness: ['direct', 'pi'],
+          runs: 5,
+        },
+        {
+          members: [2],
+          model: 'm/a',
+          maker: 'm',
+          reasoning: 'high',
+          where: 'cloud',
+          harness: ['pi'],
+          runs: 1,
+        },
+      ],
+      stats: { format: 'subsets', tiers: ['spark', 'temper'], keys: [], by_entity: [] },
+    },
     setup_stats: { format: 'subsets', tiers: ['spark', 'temper'], keys: [], by_setup: {} },
     other: {},
   };

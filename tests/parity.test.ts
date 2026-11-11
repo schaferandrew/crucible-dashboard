@@ -10,7 +10,7 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { B03_MODELS, ECLIPSE_COST_MODELS, RULES, classify, type Rule } from './allowlist';
-import { ROOT, haveData, runScenarios, type Diff, type ScenarioRun } from './golden';
+import { ROOT, haveData, loadIndex, runScenarios, type Diff, type ScenarioRun } from './golden';
 
 if (!haveData()) {
   throw new Error(
@@ -39,6 +39,24 @@ describe('golden parity', () => {
       ).toEqual([]);
     });
   }
+
+  it('the B-03 cause is real: those models have setups with unrecorded fields, or registry-level grouping', () => {
+    const idx = loadIndex('v4');
+    for (const model of Object.keys(B03_MODELS)) {
+      const setups = Object.values(idx.entities.setups).filter((s) => s.model === model);
+      expect(setups.length).toBeGreaterThan(1);
+      if (model !== 'openai/gpt-oss-20b') expect(setups.some((s) => s.unrecorded.length > 0)).toBe(true);
+    }
+  });
+
+  it('Combined time, tok/s and cost match golden exactly except for the B-03 rows', () => {
+    const bad = runs
+      .filter((r) => r.mode === 'combined')
+      .flatMap((r) => r.diffs)
+      .filter((d) => ['time', 'tps', 'cost'].includes(d.field))
+      .filter((d) => classify(d)?.id !== 'B-03' && classify(d)?.id !== 'eclipse-cost');
+    expect(bad).toEqual([]);
+  });
 
   it('covers the whole golden leaderboard', () => {
     expect(runs.length).toBe(84);
@@ -81,7 +99,7 @@ export function goldenDiffMarkdown(): string {
   out.push(
     `The test reproduces ${runs.length} leaderboard scenarios of \`golden-numbers.json\` (suites v4 and v3, sections chat, agentic and Combined, provisional off and on, each tier left out in turn, in-progress rows hidden and shown) plus sort orders, single-filter boards (harness, where, hw, reasoning) and facet counts. That is ${compared} golden rows; ${compared - rowsWithDiff.size - rowsRankOnly.size} match on every compared field, ${rowsRankOnly.size} differ only in rank (shifted by the rows above them) and ${rowsWithDiff.size} carry another allowed difference. Rows are matched by model and reasoning level, ignoring case.`,
     '',
-    'Not compared, because the value grammar changed rather than the numbers: filters on `format`, `quant` and `packager` (the page guessed `splash`, `mlx-4bit` and publisher spellings; the registry now records `mlx`, `4bit`, the packager). Time, tok/s and cost are compared on non-excluded scenarios only, because the old page ignored the tier toggles for them.',
+    'Not compared, because the value grammar changed rather than the numbers: filters on `format`, `quant` and `packager` (the page guessed `splash`, `mlx-4bit` and publisher spellings; the registry now records `mlx`, `4bit`, the packager). Time, tok/s and cost are compared on non-excluded scenarios only, because the old page ignored the tier toggles for them. Combined time, tok/s and cost are the exact pooled values from site-data and match golden everywhere the setups correspond; the only differences are the four B-03 rows (`openai/gpt-oss-20b#low`, `qwen/qwen3.5-9b#default`, `qwen/qwen3.6-35b-a3b#on`, `qwen/qwen3.8-27b#xhigh`), whose runs the registry groups differently.',
     '',
   );
   out.push(

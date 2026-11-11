@@ -50,6 +50,8 @@ export interface Candidate {
   model: string;
   reasoning: string;
   rowKey: string;
+  /** Index into `index.combined.entities` (Combined candidates only). */
+  entity?: number;
 }
 
 /** Everything the leaderboard shows for one candidate. */
@@ -72,13 +74,6 @@ export interface RowStats {
   cost: number | null;
   /** Provisional tasks run / folded in (provisional preview only). */
   provisionalRan: { done: number; total: number } | null;
-  /**
-   * True when time, tok/s or cost pool two setups' runs (Combined) and were estimated from each setup's
-   * median, because the site data has no per-run values to pool. See the Phase 3 report.
-   */
-  approx: boolean;
-  /** The per-setup statistics behind time, tok/s and cost (one per present member; empty when none). */
-  memberStats: Stats[];
 }
 
 /** A leaderboard row: one model at one reasoning level, shown by its best candidate. */
@@ -497,8 +492,6 @@ function buildSection(index: SuiteIndex, modeId: string, provisional: boolean): 
         tpsRuns: pooled?.tps.n ?? 0,
         cost: pooled?.cost ?? null,
         provisionalRan: sc.provisionalRan,
-        approx: false,
-        memberStats: pooled ? [pooled] : [],
       };
       statsCache.set(ck, out);
       return out;
@@ -532,26 +525,54 @@ export function lookupStats(
 ): Stats | null {
   const ss = index.setup_stats;
   if (!ss) return null;
+  return statsFrom(
+    index,
+    ss,
+    ss.format === 'subsets' ? ss.by_setup?.[setup] : ss.by_setup?.[setup],
+    tiers,
+    provisional,
+  );
+}
+
+/** The same for a Combined entity: stats pooled over the runs of all its members (exact, from site-data). */
+export function lookupCombinedStats(
+  index: SuiteIndex,
+  entity: number,
+  tiers: readonly TierId[],
+  provisional: boolean,
+): Stats | null {
+  const ss = index.combined?.stats;
+  if (!ss) return null;
+  return statsFrom(index, ss, ss.by_entity?.[entity], tiers, provisional);
+}
+
+function statsFrom(
+  index: SuiteIndex,
+  ss: { format: string; tiers: TierId[]; keys?: string[] },
+  entry: unknown,
+  tiers: readonly TierId[],
+  provisional: boolean,
+): Stats | null {
+  if (!entry) return null;
   if (ss.format === 'subsets') {
-    const entry = ss.by_setup?.[setup];
-    if (!entry) return null;
+    const e = entry as { stats: Stats[]; index: number[] };
+    const keys = ss.keys ?? [];
     const wanted = new Set(tiers);
     const ids = ss.tiers.filter((t) => wanted.has(t));
     const suffix = provisional ? ':p1' : ':p0';
-    const k = ids.join('+') + suffix;
-    let pos = ss.keys.indexOf(k);
-    if (pos < 0) pos = ss.keys.findIndex((x) => x.endsWith(suffix)); // largest subset
+    let pos = keys.indexOf(ids.join('+') + suffix);
+    if (pos < 0) pos = keys.findIndex((x) => x.endsWith(suffix)); // largest subset
     if (pos < 0) return null;
-    const at = entry.index[pos];
-    return at !== undefined && at >= 0 ? (entry.stats[at] ?? null) : null;
+    const at = e.index[pos];
+    return at !== undefined && at >= 0 ? (e.stats[at] ?? null) : null;
   }
   if (ss.format === 'cells') {
-    const entry = ss.by_setup?.[setup];
-    if (!entry) return null;
     const info = cacheOf(index).info;
     const wanted = new Set(tiers);
     const triples: RunTriple[] = [];
-    for (const [task, runs] of Object.entries(entry)) {
+    for (const [task, runs] of Object.entries(
+      entry as Record<string, { counted?: RunTriple[]; provisional?: RunTriple[] }>,
+    )) {
       const t = info.taskById.get(task as TaskId);
       if (!t || !t.tier || !wanted.has(t.tier)) continue;
       triples.push(...(runs.counted ?? []));
@@ -592,50 +613,40 @@ function buildCombined(index: SuiteIndex, provisional: boolean): View {
     }
   const partsWith = (tier: string) => parts.filter((p) => p.tasks.some((x) => x.tier === tier));
 
-  // Setups that agree on everything but the harness share a pair key: the same weights (model, packager,
-  // format, quant), reasoning level and deployment (where, provider or hardware).
-  const pairKey = (s: Setup) => [s.artifact, s.reasoning, s.deployment].join('\u0000');
-
-  /** Every combination of one item (or none, null) per section. */
-  function combos<T>(perPart: T[][]): (T | null)[][] {
-    let out: (T | null)[][] = [[]];
-    for (const list of perPart) {
-      const next: (T | null)[][] = [];
-      for (const c of out) for (const x of list.length ? list : [null]) next.push([...c, x]);
-      out = next;
-    }
-    return out;
-  }
-
+  // The pairing is done once, in site-data (`index.combined`); here members are only placed in their section.
   let cands: Candidate[] | null = null;
   function candidates(): Candidate[] {
     if (cands) return cands;
-    const byKey = new Map<string, { part: number; setup: Setup }[]>();
+    const partOf = new Map<string, number>();
     parts.forEach((p, i) => {
-      for (const c of p.candidates()) {
-        const k = pairKey(c.first);
-        let g = byKey.get(k);
-        if (!g) byKey.set(k, (g = []));
-        // Several setups of one section can share a key only through different harnesses (agentic's
-        // opencode and pi): each is its own pairing
-        g.push({ part: i, setup: c.first });
-      }
+      for (const c of p.candidates()) if (!partOf.has(c.first.id)) partOf.set(c.first.id, i);
     });
     const out: Candidate[] = [];
-    for (const g of byKey.values()) {
-      const perPart = parts.map((_, i) => g.filter((x) => x.part === i).map((x) => x.setup));
-      for (const members of combos(perPart)) {
-        const first = members.find((m): m is Setup => !!m)!;
-        out.push({
-          id: 'combined:' + members.map((m) => (m ? m.id : '-')).join(','),
-          members,
-          first,
-          model: first.model,
-          reasoning: first.reasoning,
-          rowKey: rowKeyOf(first),
-        });
+    (index.combined?.entities ?? []).forEach((e, entity) => {
+      const members: (Setup | null)[] = parts.map(() => null);
+      const ids: string[] = [];
+      for (const m of e.members) {
+        const id = index.cell_setups[m];
+        const setup = id ? index.entities.setups[id] : undefined;
+        const at = id ? partOf.get(id) : undefined;
+        if (!setup || at === undefined) continue;
+        const slot = members[at] ? members.findIndex((x) => !x) : at;
+        if (slot < 0) continue;
+        members[slot] = setup;
+        ids.push(setup.id);
       }
-    }
+      const first = members.find((m): m is Setup => !!m);
+      if (!first) return;
+      out.push({
+        id: [...ids].sort().join('+'),
+        members,
+        first,
+        model: first.model,
+        reasoning: first.reasoning,
+        rowKey: rowKeyOf(first),
+        entity,
+      });
+    });
     return (cands = out);
   }
 
@@ -742,25 +753,16 @@ function buildCombined(index: SuiteIndex, provisional: boolean): View {
         if (prog.total && !meets(prog.share, info.inProgressBelow)) behind = true;
       });
 
-      // Time, speed and cost pool the runs of every member. The site data has medians per setup, so a
-      // two-setup row is estimated from them (weighted by run count) and flagged `approx`.
-      const included = aggTiers(exclude).map((t) => t.id);
-      const pooled = c.members.flatMap((m) => {
-        const st = m ? lookupStats(index, m.id, included, provisional) : null;
-        return st ? [st] : [];
-      });
-      const approx = pooled.length > 1;
-      const wavg = (f: (s: Stats) => number | null, w: (s: Stats) => number): number | null => {
-        let num = 0,
-          den = 0;
-        for (const s of pooled) {
-          const v = f(s);
-          if (v === null) continue;
-          num += v * w(s);
-          den += w(s);
-        }
-        return den ? num / den : null;
-      };
+      // Time, speed and cost are pooled over every member's runs, exactly, by site-data.
+      const pooled =
+        c.entity === undefined
+          ? null
+          : lookupCombinedStats(
+              index,
+              c.entity,
+              aggTiers(exclude).map((t) => t.id),
+              provisional,
+            );
       const out: RowStats = {
         candidate: c,
         setup: c.first,
@@ -772,22 +774,11 @@ function buildCombined(index: SuiteIndex, provisional: boolean): View {
         progress: { done, total, share: total ? done / total : 0 },
         inProgress: behind,
         runs,
-        time: wavg(
-          (s) => s.time,
-          (s) => s.runs,
-        ),
-        tps: wavg(
-          (s) => s.tps.median,
-          (s) => s.tps.n,
-        ),
-        tpsRuns: pooled.reduce((n, s) => n + s.tps.n, 0),
-        cost: wavg(
-          (s) => s.cost,
-          (s) => s.runs,
-        ),
+        time: pooled?.time ?? null,
+        tps: pooled?.tps.median ?? null,
+        tpsRuns: pooled?.tps.n ?? 0,
+        cost: pooled?.cost ?? null,
         provisionalRan: provisional ? { done: provDone, total: provTotal } : null,
-        approx,
-        memberStats: pooled,
       };
       statsCache.set(ck, out);
       return out;

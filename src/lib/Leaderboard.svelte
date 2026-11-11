@@ -24,8 +24,6 @@
       return 'Estimated electricity per counted run (time x the hardware’s power x price per kWh). Not the hardware’s cost.';
     return 'Average API cost per counted run';
   }
-
-  const approxTitle = 'Estimated: this row pools two setups’ runs and the data has one median per setup';
 </script>
 
 {#snippet sortHead(key: string, label: string, title?: string)}
@@ -139,15 +137,9 @@
                 >
               {/if}
             </td>
-            <td class="num" title={row.approx ? approxTitle : undefined}
-              >{row.approx ? '~' : ''}{fmtSeconds(row.time)}</td
-            >
-            <td class="num" title={row.approx ? approxTitle : tpsTitle({ n: row.tpsRuns })}
-              >{row.approx && row.tps !== null ? '~' : ''}{fmtTps(row.tps, true)}</td
-            >
-            <td class="num" title={row.approx ? approxTitle : costTitle(row)}
-              >{row.approx && row.cost !== null ? '~' : ''}{fmtCost(row.cost, row.local)}</td
-            >
+            <td class="num">{fmtSeconds(row.time)}</td>
+            <td class="num" title={tpsTitle({ n: row.tpsRuns })}>{fmtTps(row.tps, true)}</td>
+            <td class="num" title={costTitle(row)}>{fmtCost(row.cost, row.local)}</td>
           </tr>
         {/each}
       </tbody>

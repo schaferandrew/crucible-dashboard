@@ -34,6 +34,48 @@ export function normalizeMeta(raw: unknown): Meta {
   };
 }
 
+const BLOCK_FIELDS = [
+  'n',
+  'n_scored',
+  'mean',
+  'min',
+  'max',
+  'n_finished',
+  'mean_finished',
+  'timeouts',
+  'errors',
+];
+
+function block(fields: string[], b: unknown): Rec | undefined {
+  if (!Array.isArray(b)) return undefined;
+  return Object.fromEntries(fields.map((f, i) => [f, b[i] ?? null]));
+}
+
+/** Cells arrive as a table {setups, tasks, fields, rows}; a plain array of cell objects (older format) is accepted too. */
+export function decodeCells(raw: unknown): Rec[] {
+  if (Array.isArray(raw))
+    return raw.map(rec).filter((c) => typeof c.setup === 'string' && typeof c.task === 'string');
+  const t = rec(raw);
+  const setups = arr(t.setups);
+  const tasks = arr(t.tasks);
+  const fields = arr(t.fields).filter((f): f is string => typeof f === 'string');
+  const names = fields.length ? fields : BLOCK_FIELDS;
+  const out: Rec[] = [];
+  for (const row of arr(t.rows)) {
+    if (!Array.isArray(row)) continue;
+    const setup = setups[row[0] as number];
+    const task = tasks[row[1] as number];
+    if (typeof setup !== 'string' || typeof task !== 'string') continue;
+    const cell: Rec = { setup, task, runs: num(row[2], 0) };
+    const counted = block(names, row[3]);
+    const provisional = block(names, row[4]);
+    if (counted) cell.counted = counted;
+    if (provisional) cell.provisional = provisional;
+    out.push(cell);
+  }
+  return out;
+}
+
 /** Fill in what a missing or malformed file lacks. Unknown extra fields pass through untouched. */
 export function normalizeIndex(raw: unknown): SuiteIndex {
   const r = rec(raw);
@@ -149,9 +191,21 @@ export function normalizeIndex(raw: unknown): SuiteIndex {
     };
   }
 
-  const cells = arr(r.cells)
-    .map(rec)
-    .filter((c) => typeof c.setup === 'string' && typeof c.task === 'string');
+  const cells = decodeCells(r.cells);
+  const comb = rec(r.combined);
+  const cstats = rec(comb.stats);
+  const setupIds = Array.isArray(rec(r.cells).setups) ? (rec(r.cells).setups as string[]) : [];
+  const combinedOut = {
+    entities: arr(comb.entities)
+      .map(rec)
+      .map((e) => ({
+        ...e,
+        members: arr(e.members).filter((i): i is number => typeof i === 'number' && !!setupIds[i]),
+        harness: arr(e.harness),
+      }))
+      .filter((e) => e.members.length),
+    stats: cstats.format ? cstats : { format: 'subsets', tiers: [], keys: [], by_entity: [] },
+  };
 
   return {
     suite: str(r.suite, str(suite.id)),
@@ -166,6 +220,8 @@ export function normalizeIndex(raw: unknown): SuiteIndex {
       setups,
     },
     cells,
+    cell_setups: setupIds,
+    combined: combinedOut,
     setup_stats: stats.format ? stats : { format: 'subsets', tiers: [], keys: [], by_setup: {} },
     other: rec(r.other),
   } as unknown as SuiteIndex;

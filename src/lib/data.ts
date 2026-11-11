@@ -4,7 +4,7 @@
 
 import { base } from '$app/paths';
 import { normalizeIndex, normalizeMeta } from '$lib/core/normalize';
-import type { Meta, SuiteId, SuiteIndex } from '$lib/core/types';
+import type { CellRuns, Meta, RunSuiteEntry, SuiteId, SuiteIndex } from '$lib/core/types';
 
 type Fetch = typeof fetch;
 
@@ -33,4 +33,28 @@ export function loadIndex(fetchFn: Fetch, suite: SuiteId | string): Promise<Suit
     indexes.set(suite, p);
   }
   return p;
+}
+
+const lazy = new Map<string, Promise<unknown>>();
+function once<T>(path: string, fetchFn: Fetch): Promise<T> {
+  let p = lazy.get(path);
+  if (!p) {
+    p = readJson(path, fetchFn);
+    p.catch(() => lazy.delete(path));
+    lazy.set(path, p);
+  }
+  return p as Promise<T>;
+}
+
+/** The scored run of every cell of a suite. Not needed for the first view; loaded when a cell is opened. */
+export function loadCellRuns(fetchFn: Fetch, suite: SuiteId | string): Promise<CellRuns> {
+  return once<CellRuns>(`${suite}/cell-runs.json`, fetchFn);
+}
+
+/** One run's detail file (siblings and scored run per suite included). */
+export function loadRun(
+  fetchFn: Fetch,
+  uuid: string,
+): Promise<{ run_uuid: string; suites?: Record<string, RunSuiteEntry> } & Record<string, unknown>> {
+  return once(`runs/${uuid}.json`, fetchFn);
 }

@@ -6,28 +6,26 @@ import type { Diff } from './golden';
 
 /** Models whose legacy setups changed identity (B-03: no fuzzy merge). Source: phase 2b report, "B-03" table. */
 export const B03_MODELS: Record<string, string> = {
-  'google/gemma-4-26b-a4b-qat':
-    'direct and pi on Whitehall: packager and resolved reasoning level were not recorded on 31+20 runs, so the page merged them into the better-recorded group; they are now two setups (r-default and r-on).',
-  'google/gemma-4-e4b':
-    'direct and pi on Ironwood (mlx 4bit): 21+23 runs recorded no packager or resolved level and used to merge with the recorded ones; now r-default and r-on setups.',
   'openai/gpt-oss-20b':
-    'direct and pi on Whitehall (mxfp4): packager, format and resolved level missing on some runs (three setups); and the registry level `low` joins what the page kept apart as requested default and requested low.',
-  'ornith-ai/ornith-1.5-9b':
-    'q6_k direct split by resolved level (r-on vs r-default); one q4_k_m run recorded no weights (packager, format, quant) and is its own `unrecorded` setup. Also the row key is lowercased by the registry alias (was Ornith-1.5-9B).',
-  'ornith-ai/ornith-1.5-35b-a3b':
-    'one q4_k_s run recorded no weights and is its own `unrecorded` setup. Also the row key is lowercased by the registry alias (was Ornith-1.5-35B-A3B).',
-  'qwen/qwen3.5-35b-a3b': 'one q6_k run recorded no weights and is its own `unrecorded` setup.',
-  'qwen/qwen3.6-35b-a3b':
-    'one q4_k_m pi run recorded no weights (and no level) and is its own `unrecorded` setup.',
-  'qwen/qwen3.8-27b': 'one mlx 4bit pi run recorded no weights and is its own `unrecorded` setup.',
+    'the registry groups runs by resolved reasoning level (r-low, r-high); the page kept requested `default` and requested `low` apart and merged runs missing a resolved level. Row `openai/gpt-oss-20b#low` differs.',
   'qwen/qwen3.5-9b':
-    'four q4_k_m runs have no hardware key and no host that resolves, so they sit on `local~unrecorded` instead of being absorbed.',
+    'q4_k_m runs record no packager, and four have no hardware key and no host that resolves, so they are `unrecorded` setups (packager, hw) instead of being absorbed into a better-recorded group. Row `qwen/qwen3.5-9b#default` differs.',
+  'qwen/qwen3.6-35b-a3b':
+    'one pi run (and eleven opencode runs) recorded no weights (packager, format, quant) and are their own `unrecorded` setups. Row `qwen/qwen3.6-35b-a3b#on` differs.',
+  'qwen/qwen3.8-27b':
+    'runs on the m5/m1 pi setups recorded no weights and are their own `unrecorded` setups. Row `qwen/qwen3.8-27b#xhigh` differs.',
 };
 
 /** Local setups served by Eclipse recorded no hardware key, so the page showed no cost; the registry fills it in. */
 export const ECLIPSE_COST_MODELS: Record<string, string> = {
   'essentialai/rnj-1': 'q4_k_m served by Eclipse',
   'liquid/lfm2-24b-a2b': 'mlx 6bit direct and pi served by Eclipse',
+};
+
+/** Models whose row label changed case (registry lowercase), which moves ties that the page broke by label. */
+export const ALIAS_CASE_MODELS: Record<string, string> = {
+  'ornith-ai/ornith-1.5-9b': 'was Ornith-1.5-9B',
+  'ornith-ai/ornith-1.5-35b-a3b': 'was Ornith-1.5-35B-A3B',
 };
 
 export interface Rule {
@@ -43,16 +41,6 @@ const num = (v: unknown): v is number => typeof v === 'number';
 
 export const RULES: Rule[] = [
   {
-    id: 'combined-pooled',
-    title: 'Combined time, tok/s and cost pooled from two setups',
-    reason:
-      "The page's Combined row takes one median over the runs of both paired setups. site-data gives a median per setup, which cannot be pooled exactly, so the core estimates it from the two setups' values (weighted by run count) and flags the row `approx`. The estimate lies between the two setups' own values, and so does the golden number; the test checks that. Exact pooling needs per-run values in the site data (see the Phase 3 report).",
-    match: (d) =>
-      (d.field === 'time' || d.field === 'tps' || d.field === 'cost') &&
-      !!(d.note as { approx?: boolean } | undefined)?.approx &&
-      !!(d.note as { withinBounds?: boolean } | undefined)?.withinBounds,
-  },
-  {
     id: 'B-03',
     title: 'Setups that no longer merge (B-03)',
     reason:
@@ -64,10 +52,11 @@ export const RULES: Rule[] = [
     id: 'B-03-rank',
     title: 'Rank shifted by B-03 rows (B-07 numbering)',
     reason:
-      'A row of an affected model moved, so the rows below it shifted. For an unaffected row the new rank is checked exactly: golden rank + (affected ranked rows above it now) - (affected ranked rows above it then). For an affected row the rank follows its changed score.',
+      'A row of an affected model moved (or, for the lowercased Ornith ids, sorts differently where scores tie, because the page broke ties by the case of the label), so the rows below it shifted. For an unaffected row the new rank is checked exactly: golden rank + (affected ranked rows above it now) - (affected ranked rows above it then). For an affected row the rank follows its changed score.',
     match: (d) => {
       if (d.field !== 'rank') return false;
-      if (isB03(d.row) || modelOf(d.row) in ECLIPSE_COST_MODELS) return true;
+      if (isB03(d.row) || modelOf(d.row) in ECLIPSE_COST_MODELS || modelOf(d.row) in ALIAS_CASE_MODELS)
+        return true;
       const exp = (d.note as { expectedRank?: number } | undefined)?.expectedRank;
       return num(exp) && exp === d.actual;
     },
