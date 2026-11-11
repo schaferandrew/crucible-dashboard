@@ -10,7 +10,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Generated site data (built in CI by `crucible site-data`; never committed)
-static/data/
+static/data
 
 # Tests
 coverage/
