@@ -83,8 +83,12 @@ export function normalizeIndex(raw: unknown): SuiteIndex {
         areas: arr(m.areas).filter((a): a is string => typeof a === 'string'),
         harnesses: arr(m.harnesses).filter((a): a is string => typeof a === 'string'),
       })),
-    areas: arr(cat.areas).map(rec).filter((a) => typeof a.id === 'string'),
-    categories: arr(cat.categories).map(rec).filter((c) => typeof c.id === 'string'),
+    areas: arr(cat.areas)
+      .map(rec)
+      .filter((a) => typeof a.id === 'string'),
+    categories: arr(cat.categories)
+      .map(rec)
+      .filter((c) => typeof c.id === 'string'),
     tiers: arr(cat.tiers)
       .map(rec)
       .filter((t) => typeof t.id === 'string')
@@ -100,10 +104,21 @@ export function normalizeIndex(raw: unknown): SuiteIndex {
     harnesses: arr(cat.harnesses)
       .map(rec)
       .filter((h) => typeof h.id === 'string')
-      .map((h) => ({ ...h, label: str(h.label, str(h.id)), modes: arr(h.modes).filter((a): a is string => typeof a === 'string') })),
-    scoring_policy: { ...policy, coverage_min: num(policy.coverage_min, 0.75), in_progress_below: num(policy.in_progress_below, 0.75) },
+      .map((h) => ({
+        ...h,
+        label: str(h.label, str(h.id)),
+        modes: arr(h.modes).filter((a): a is string => typeof a === 'string'),
+      })),
+    scoring_policy: {
+      ...policy,
+      coverage_min: num(policy.coverage_min, 0.75),
+      in_progress_below: num(policy.in_progress_below, 0.75),
+    },
     scoring_methods: rec(cat.scoring_methods),
-    labels: { overall: str(labels.overall, 'Overall'), combined: { label: str(combined.label, 'Combined'), blurb: str(combined.blurb) } },
+    labels: {
+      overall: str(labels.overall, 'Overall'),
+      combined: { label: str(combined.label, 'Combined'), blurb: str(combined.blurb) },
+    },
     tasks,
   };
 
@@ -121,7 +136,15 @@ export function normalizeIndex(raw: unknown): SuiteIndex {
       where: str(s.where, 'unrecorded'),
       maker: str(s.maker, 'unknown'),
       modes: arr(s.modes),
-      labels: { model: s.model, maker: str(s.maker), packager: null, hw: null, machines: [], provider: null, ...rec(s.labels) },
+      labels: {
+        model: s.model,
+        maker: str(s.maker),
+        packager: null,
+        hw: null,
+        machines: [],
+        provider: null,
+        ...rec(s.labels),
+      },
       unrecorded: arr(s.unrecorded),
     };
   }

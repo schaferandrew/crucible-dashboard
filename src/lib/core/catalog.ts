@@ -11,7 +11,6 @@ import type {
   Gate,
   ModeId,
   TaskId,
-  TierId,
 } from './types';
 import { COMBINED, asModeId, asTierId } from './types';
 

@@ -1,0 +1,102 @@
+/* Plain, tidy base styles. Colours are CSS variables with a dark-mode override; Phase 4 does the real design. */
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf8;
+  --surface: #ffffff;
+  --fg: #231f2b;
+  --muted: #6b6578;
+  --border: #e3dfe9;
+  --border-strong: #c9c3d3;
+  --accent: #1856a3;
+  --accent-soft: #eaf2fb;
+  --local: #2a78d6;
+  --cloud: #eb6834;
+  --good: #1f7a3d;
+  --bad: #b3261e;
+  --warn: #8a5a00;
+  --warn-soft: #fff4d6;
+  --bar: #e8e4ee;
+  --radius: 8px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16141b;
+    --surface: #1e1b25;
+    --fg: #ece9f2;
+    --muted: #a39cb3;
+    --border: #322e3d;
+    --border-strong: #4a4458;
+    --accent: #6aa5f0;
+    --accent-soft: #1d2a3d;
+    --local: #5aa2f2;
+    --cloud: #f08a5d;
+    --good: #5fd08a;
+    --bad: #ff8a80;
+    --warn: #f1c45e;
+    --warn-soft: #3a2f12;
+    --bar: #322e3d;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.5 var(--font);
+}
+
+a {
+  color: var(--accent);
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+button,
+select,
+summary {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.muted {
+  color: var(--muted);
+}

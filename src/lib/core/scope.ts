@@ -160,6 +160,12 @@ export function facetLabel(index: SuiteIndex, dim: Dim, value: string, sample?: 
   }
 }
 
+/** The display text of one filter value (for chips), found from any setup that has it. */
+export function facetValueLabel(index: SuiteIndex, dim: Dim, value: string): string {
+  const sample = allSetups(index).find((s) => facetValue(s, dim) === value);
+  return facetLabel(index, dim, value, sample);
+}
+
 /**
  * The options of one filter dimension, drill-down style: the values left by every *other* filter, each with
  * the number of rows picking it alone would leave. An option appears only if choosing it leaves at least one

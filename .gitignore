@@ -42,3 +42,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 *.swp
+
+# CI checkouts (crucible, site bundle)
+.ci/

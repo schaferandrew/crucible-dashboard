@@ -5,3 +5,4 @@ static/data/
 package-lock.json
 docs/
 .claude/
+.ci/

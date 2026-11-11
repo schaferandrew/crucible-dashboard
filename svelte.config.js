@@ -8,7 +8,13 @@ const base = '/crucible-dashboard';
 const config = {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: adapter({ pages: 'build', assets: 'build', fallback: undefined, precompress: false, strict: true }),
+    adapter: adapter({
+      pages: 'build',
+      assets: 'build',
+      fallback: undefined,
+      precompress: false,
+      strict: true,
+    }),
     paths: { base, relative: false },
     prerender: { handleHttpError: 'fail', handleMissingId: 'fail' },
   },
