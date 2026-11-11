@@ -11,3 +11,9 @@ The page also lazily fetches `/crucible-data/<output_ref>` (run outputs) when a 
 Total fixtures 12 MB (< 25 MB), so no .gitignore entry was added.
 `verification.json` holds the Playwright spot-check results and the live-vs-local-repo drift check; `fixtures.meta.json` the fetch time.
 Regenerate numbers: `node ../scripts/golden.mjs` (uses schaferandrew.github.io assets/js/crucible-core.js).
+
+## Redaction (2026-11-11)
+
+`data.json` had two IP-style DHCP host names in `hardware.label` and `provenance.machine_label` (33 runs).
+They were replaced with `redacted-host-a` and `redacted-host-b`, so the sha256 above no longer matches the
+file. No score, count or label used by `golden-numbers.json` depends on these fields.

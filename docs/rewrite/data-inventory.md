@@ -131,7 +131,7 @@ Harness x v4 catalog mode: chat/direct 1283, agentic/pi 644, agentic/opencode 10
 | `hardware.cpu` | 95.7% | `Apple M5 Pro` 632, `Apple M1 Pro` 474, `AMD Ryzen 7 7700` 373 |
 | `hardware.system_memory_gb` | 95.7% | 32.0 (847), 48.0 (632) |
 | `hardware.accelerators` | non-empty 373 (the RTX box) | `[{name, memory_gb, count}]` |
-| `hardware.label` | 99.7% (1542) | `Duskfall` 563, `Ironwood` 474, `Whitehall` 373, `Eclipse` 63, `Mac-168` 40, `redacted-host-a` 18, `redacted-host-b` 11 (the last three are raw DHCP host names) |
+| `hardware.label` | 99.7% (1542) | `Duskfall` 563, `Ironwood` 474, `Whitehall` 373, `Eclipse` 63, `Mac-168` 40, two IP-style DHCP host names 18 and 11 (redacted; the last three are raw DHCP host names) |
 | `hardware.offload` | 0% (always null) | |
 
 Key, cpu, class, memory and accelerators form three tuples, one per key. Only `hardware.key` (and `label` as a device fallback) is read.
@@ -169,7 +169,7 @@ Key, cpu, class, memory and accelerators form three tuples, one per key. Only `h
 | `crucible_commit` | 81.6% | 22 | never read |
 | `crucible_dirty` | 81.6% | false 1608, true 68 | never read |
 | `machine_id` | 97.7% (2005) | 4 | never read |
-| `machine_label` | 97.7% | `Ironwood` 1594, `Duskfall` 275, `Mac-168` 103, `redacted-host-x` 33 | never read |
+| `machine_label` | 97.7% | `Ironwood` 1594, `Duskfall` 275, `Mac-168` 103, IP-style DHCP host names (redacted) 33 | never read |
 | `source` | 100% | `crucible-run` 1676, `crucible-migrate` 377 | never read |
 | `content_hash` | 99.1% (2034); null on the 19 oldest | one per record | P; never read by the page (checked by `publish --check`) |
 | `submitter`, `verification` | 0% (always null) | | reserved |
