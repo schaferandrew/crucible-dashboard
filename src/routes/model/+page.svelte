@@ -1,5 +1,7 @@
 <script lang="ts">
-  import ComingSoon from '$lib/ComingSoon.svelte';
+  import ModelIndex from '$lib/pages/model/ModelIndex.svelte';
+
+  let { data } = $props();
 </script>
 
-<ComingSoon title="Models" blurb="One model: its setups, deployments and runs." />
+<ModelIndex {data} />
