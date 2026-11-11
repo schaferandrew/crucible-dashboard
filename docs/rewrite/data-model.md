@@ -167,6 +167,12 @@ Because the site no longer reads bundle records directly (it reads layer-2 outpu
   content hash; no record changes). The 19 legacy runs with a leaked `local` key and null hash are copied as-is
   and flagged by `--check` (they're already published; we don't edit them, `site-data` ignores `local`).
 
+- **The dashboard repo's `bundle/` is the source of truth** for every published result (the maintainer's
+  runs and, later, community submissions; issue #3). Local run folders are staging. `crucible publish` writes a
+  generated `bundle/manifest.json` (`run_uuid → content_hash, submitter, path`) and applies one idempotent rule
+  set against it: unknown uuid → add; same uuid and hash → no-op; same uuid, different hash → reject. Re-running
+  publish is always safe. The manifest and rules are Phase 2 work.
+
 *Alternative considered:* rewrite all 2,053 records to format 4 through publish with `migrated_from` provenance.
 Rejected: it doubles the archive's churn and breaks immutability for no consumer benefit.
 
