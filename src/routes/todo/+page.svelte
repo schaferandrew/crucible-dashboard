@@ -8,7 +8,7 @@
   import type { SuiteId } from '$lib/core/types';
   import { modelHref, suiteParam, taskHref } from '$lib/paths';
   import { setupLabel } from '$lib/labels';
-  import TierCell from '$lib/TierCell.svelte';
+  import TierCell from '$lib/ui/TierCell.svelte';
   import { buildTodo, sectionTasks } from '$lib/pages/todo/build';
   import ModelRef from '$lib/pages/todo/ModelRef.svelte';
   import {

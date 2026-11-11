@@ -11,7 +11,7 @@
   import ModelRef from './ModelRef.svelte';
   import { emptyText } from './phrases';
   import type { Picks } from './picks.svelte';
-  import TierCell from './TierCell.svelte';
+  import TierCell from '$lib/ui/TierCell.svelte';
 
   let {
     index,

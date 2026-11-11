@@ -49,7 +49,7 @@ Node 20 or newer (CI uses 22), SvelteKit 2, Svelte 5 (runes), TypeScript strict,
 
 ```bash
 npm install
-npm run data      # make static/data available (see below)
+npm run data:gen  # generate static/data from GitHub (needs git + uv; see below)
 npm run dev       # http://localhost:5173/crucible-dashboard/
 npm run check     # svelte-check (types)
 npm run lint      # prettier --check and eslint
@@ -58,14 +58,12 @@ npm run build     # prerendered static site in build/
 npm run size      # size budget on the build: index.json <= 100 KB, first-load JS+CSS <= 150 KB (gzip)
 ```
 
-**Data.** `static/data/` is generated, never committed. For local work `npm run data` symlinks it to the folder
-named by `$CRUCIBLE_SITE_DATA` (any `crucible site-data` output), and, if that is unset, to the maintainer's
-scratch build at `/private/tmp/claude-501/.../scratchpad/site-data` (a dev convenience that only exists on that
-machine). To generate your own, from a Crucible checkout:
-`crucible site-data --bundle <bundle> --outputs <outputs> --out static/data` (format:
-`docs/site-data-format.md` in Crucible). In CI the same command runs from `.github/actions/site-data`, using the
-Crucible ref in `.crucible-version` and, until the bundle moves into this repo, the bundle in
-`schaferandrew.github.io`.
+**Data.** `static/data/` is generated, never committed. `npm run data:gen` works on any machine, cloud
+sessions included: it shallow-clones Crucible at the ref in `.crucible-version` and the published bundle
+(`schaferandrew.github.io`) into `.cache/`, runs `crucible site-data` into `.cache/site-data`, and links
+`static/data` to it. Rerun it to refresh. If you already have a `crucible site-data` output folder, point at it
+instead: `CRUCIBLE_SITE_DATA=<folder> npm run data`. CI runs the same command from `.github/actions/site-data`.
+The contract is `docs/site-data-format.md` in Crucible.
 
 **URLs.** Everything is served under `/crucible-dashboard/`, in dev too. View state is query parameters with
 today's names: `?mode=chat&suite=v3&exclude=forge&harness=pi&where=local&hw=m5-pro-48gb&quant=q4_k_m&provisional=1`.

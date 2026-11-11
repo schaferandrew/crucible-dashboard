@@ -15,7 +15,7 @@
   import PageHeader from '$lib/ui/PageHeader.svelte';
   import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
   import type { Column } from '$lib/ui/table';
-  import TierCell from '$lib/TierCell.svelte';
+  import TierCell from '$lib/ui/TierCell.svelte';
   import { MAX_COMPARE_VARIANTS } from './constants';
   import { modelsHref, modelHref, suiteParam } from './links';
   import MakerChart from './MakerChart.svelte';

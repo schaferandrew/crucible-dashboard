@@ -10,7 +10,7 @@
   import Empty from '$lib/ui/Empty.svelte';
   import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
   import type { Column } from '$lib/ui/table';
-  import TierCell from '$lib/TierCell.svelte';
+  import TierCell from '$lib/ui/TierCell.svelte';
   import { DIM_NAMES, type VariantRow, type VariantTable } from './shape';
 
   let {
