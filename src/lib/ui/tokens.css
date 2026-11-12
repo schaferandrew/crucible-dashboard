@@ -1,0 +1,152 @@
+/*
+ * Design tokens: the one place colour, space, type and radius are defined. Modelled on the live Crucible
+ * pages (white page, #262626 text, #e3e3e8 hairlines, a grey segmented-control tray, 11px pills, a blue
+ * heat ramp, blue local / orange cloud). Components use these variables and nothing else.
+ *
+ * Contrast: every text/background pair listed in tokens.test.ts is checked against WCAG AA (4.5:1) for
+ * both themes. `--local` and `--cloud` are fills; text on those hues uses `--local-ink` / `--cloud-ink`.
+ */
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces and text */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f7f7f7;
+  --tray: #f1f1f3;
+  --fg: #262626;
+  --muted: #545454;
+  --faint: #6b6b76; /* placeholders, disabled text: still >= 4.5:1 on --bg */
+  --border: #e3e3e8;
+  --border-strong: #c4c4cc;
+
+  /* Accents */
+  --accent: #1856a3;
+  --accent-soft: #eaf2fb;
+  --accent-fill: #3083dc;
+  --on-accent: #ffffff;
+
+  /* Local / cloud identity (FMT-10) */
+  --local: #2a78d6;
+  --local-ink: #1a5aa8;
+  --local-tint: #e8f0fb;
+  --cloud: #eb6834;
+  --cloud-ink: #a4421b;
+  --cloud-tint: #fff3ea;
+
+  /* Status */
+  --good: #1f7a3d;
+  --good-soft: #e6f4ea;
+  --bad: #b3261e;
+  --bad-soft: #fdecea;
+  --warn: #7a4d12;
+  --warn-soft: #fdf6ec;
+  --bar: #e8e4ee;
+
+  /* Heat ramp (FMT-09): score 0 -> --heat-lo, score 10 -> --heat-hi. The text colour of a heat cell is
+     picked per cell from --heat-ink-dark / --heat-ink-light by contrast (ui/heat.ts), so it is always AA. */
+  --heat-lo: #eaf2fb;
+  --heat-hi: #1856a3;
+  --heat-ink-dark: #000000;
+  --heat-ink-light: #ffffff;
+
+  /* Series colours for charts and compare (FMT-10) */
+  --series-1: #1856a3;
+  --series-2: #eb6834;
+  --series-3: #2f8a4a;
+  --series-4: #8a4fbf;
+
+  /* Focus */
+  --focus: #1856a3;
+
+  /* Space (4px grid; 16px is the live site's --gap) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* Type */
+  --font: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --text-xs: 0.6875rem; /* 11px: pills, group labels */
+  --text-sm: 0.875rem; /* 14px: tables, controls, the live site's textSmall */
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.9rem;
+  --leading: 1.5;
+  --leading-tight: 1.25;
+
+  /* Shape */
+  --radius-sm: 3px;
+  --radius: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+  --shadow: 0 6px 18px rgb(0 0 0 / 0.15);
+
+  /* Motion */
+  --speed: 150ms;
+
+  /* Layout */
+  --wrap: 1200px;
+  --gutter: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16141b;
+    --surface: #1e1b25;
+    --surface-2: #231f2b;
+    --tray: #2a2633;
+    --fg: #ece9f2;
+    --muted: #b0aac0;
+    --faint: #9c96ad;
+    --border: #322e3d;
+    --border-strong: #4a4458;
+
+    --accent: #7db2f5;
+    --accent-soft: #1d2a3d;
+    --accent-fill: #5aa2f2;
+    --on-accent: #0d1b2e;
+
+    --local: #5aa2f2;
+    --local-ink: #8fc0fa;
+    --local-tint: #1d2a3d;
+    --cloud: #f08a5d;
+    --cloud-ink: #f5a784;
+    --cloud-tint: #3a2418;
+
+    --good: #6fd696;
+    --good-soft: #14301f;
+    --bad: #ff9a92;
+    --bad-soft: #3a1a18;
+    --warn: #f1c45e;
+    --warn-soft: #3a2f12;
+    --bar: #322e3d;
+
+    --series-1: #7db2f5;
+    --series-2: #f08a5d;
+    --series-3: #6fd696;
+    --series-4: #c49bf0;
+
+    --focus: #9cc7fb;
+    --shadow: 0 6px 18px rgb(0 0 0 / 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --speed: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

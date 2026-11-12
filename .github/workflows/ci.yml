@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # The parity tests and the build both need real data.
+      - name: Generate site data
+        uses: ./.github/actions/site-data
+        with:
+          token: ${{ secrets.CRUCIBLE_READ_TOKEN || github.token }}
+
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - run: npm run size
