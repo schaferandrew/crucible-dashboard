@@ -3,7 +3,8 @@
 // the setup to full coverage would take. Nothing here knows a task, section, tier or threshold by name.
 
 import { fmtSeconds, NONE } from '$lib/core/format';
-import type { Cell } from '$lib/core/types';
+import { cellsOf, lookupStats } from '$lib/core/scoring';
+import type { Cell, SetupId, SuiteIndex, TierId } from '$lib/core/types';
 
 export const SORT_KEYS = ['easiest', 'fewest', 'time', 'score', 'model'] as const;
 export type SortKey = (typeof SORT_KEYS)[number];
@@ -36,15 +37,35 @@ export interface TaskTimes {
 
 /**
  * Typical times from the catalog's `typical_time` (the median elapsed_s of the task's finished counted runs in
- * the suite; null when it has none). The catalog carries no per-setup times, so every setup runs at the typical
- * pace.
+ * the suite; null when it has none). A setup's pace is its median task time (`setup_stats`, every tier,
+ * counted runs) over the median typical time of the tasks it has scored: a ratio of medians, from index.json
+ * alone, standing in for the old per-run median of ratios. 1 when either side is missing.
  */
-export function catalogTimes(tasks: readonly { id: string; typical_time?: number | null }[]): TaskTimes {
+export function catalogTimes(
+  tasks: readonly { id: string; typical_time?: number | null }[],
+  index?: SuiteIndex,
+): TaskTimes {
   const typical = new Map<string, number>();
   for (const t of tasks)
     if (typeof t.typical_time === 'number' && Number.isFinite(t.typical_time) && t.typical_time > 0)
       typical.set(t.id, t.typical_time);
-  return { typical: (task) => typical.get(task) ?? null, pace: () => 1 };
+  const tiers = index ? [...new Set(index.catalog.tasks.map((t) => t.tier).filter(Boolean))] : [];
+  return {
+    typical: (task) => typical.get(task) ?? null,
+    pace(setup, ids) {
+      if (!index) return 1;
+      const own = lookupStats(index, setup as SetupId, tiers as TierId[], false)?.time;
+      if (typeof own !== 'number' || !(own > 0)) return 1;
+      const cells = cellsOf(index, setup);
+      const ref = median(
+        ids
+          .filter((id) => n0(cells.get(id)?.counted?.n_scored) > 0)
+          .map((id) => typical.get(id))
+          .filter((v): v is number => v !== undefined),
+      );
+      return ref && ref > 0 ? own / ref : 1;
+    },
+  };
 }
 
 export const NO_TIMES: TaskTimes = { typical: () => null, pace: () => 1 };

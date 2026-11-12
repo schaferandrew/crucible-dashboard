@@ -47,8 +47,8 @@
   const suiteQ = $derived(suiteParam(st.suite, data.meta.current_suite));
   const info = $derived(st.index.catalog);
 
-  // Estimates come from the catalog's per-task typical times: nothing else to fetch
-  const times = $derived(catalogTimes(st.index.catalog.tasks));
+  // Estimates come from the catalog's per-task typical times and setup_stats: nothing else to fetch
+  const times = $derived(catalogTimes(st.index.catalog.tasks, st.index));
   const built = $derived(section ? buildTodo(st.index, section.id, st.all, times) : null);
   const sorted = $derived(built ? sortEntries(built.entries, st.sort) : []);
   const pick = $derived(built ? recommend(built.entries) : null);
@@ -131,7 +131,8 @@
           {/if}
           <p class="foot muted">
             Easiest means fewest tasks to run, each task this setup already timed out or errored on counting
-            extra, then the least estimated time: each task's median finished time across setups.
+            extra, then the least estimated time: each task's median finished time across setups, scaled by
+            this setup's own pace.
           </p>
         </div>
       {/if}

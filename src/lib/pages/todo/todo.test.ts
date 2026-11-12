@@ -59,6 +59,26 @@ describe('times (TODO-DATA-04)', () => {
     for (const t of ['t2', 't3', 't4', 'nope']) expect(times.typical(t)).toBeNull();
     expect(times.pace('a', ['t1'])).toBe(1);
   });
+
+  it("a setup's pace is its median time over the typical time of the tasks it scored", () => {
+    const idx = syntheticIndex();
+    const setup = idx.cells.find((c) => c.counted && c.counted.n_scored > 0)!.setup;
+    const scored = idx.cells
+      .filter((c) => c.setup === setup && (c.counted?.n_scored ?? 0) > 0)
+      .map((c) => c.task);
+    idx.setup_stats = {
+      format: 'subsets',
+      tiers: ['spark', 'temper'],
+      keys: ['spark+temper:p0'],
+      by_setup: { [setup]: { index: [0], stats: [{ time: 30, runs: 2, cost: null, tps: null }] } },
+    } as never;
+    const times = catalogTimes(
+      scored.map((id) => ({ id, typical_time: 10 })),
+      idx,
+    );
+    expect(times.pace(setup, scored)).toBe(3);
+    expect(times.pace('no-such-setup', scored)).toBe(1);
+  });
 });
 
 describe('computeLeft (TODO-DATA-02..05)', () => {

@@ -174,6 +174,10 @@
     {sc}
     unit="setups"
     pinned={['task']}
+    hideSections
+    hideProvisional
+    hideTiers
+    hideEmptyFilters
     unknownSuite={cs.unknownSuite}
     label="Task controls"
   />

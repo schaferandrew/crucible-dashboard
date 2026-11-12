@@ -230,8 +230,7 @@ export function methodLabel(catalog: SuiteIndex['catalog'], method: string | nul
 }
 
 export function scoredBy(catalog: SuiteIndex['catalog'], t: CatalogTask): string {
-  // `summary` passes through the index normalizer untouched, but is not in the core type
-  const summary = (t as { summary?: unknown }).summary;
+  const summary = t.summary;
   const first = typeof summary === 'string' ? (summary.split('\n')[0] ?? '').trim() : '';
   if (first) return first;
   const sc = t.scoring ?? {};
