@@ -89,6 +89,10 @@ export interface SlimRun {
   elapsed: number | null;
   cost: number | null;
   startedAt: string | null;
+  /** Output tokens (task files only), null when not recorded. */
+  tokensOut: number | null;
+  /** The chosen score's groups as pass shares, null when the score has none. */
+  groups: CheckGroup[] | null;
 }
 
 export interface TaskFile {
@@ -100,6 +104,21 @@ export interface TaskFile {
 /** Provisional means any status but active or retired (TASK-CTRL-02). */
 export const isProvisional = (status: string | null | undefined) =>
   status !== 'active' && status !== 'retired';
+
+/** `[[group id, passed, total], ...]` to pass shares; null when absent. Groups with no total are left out. */
+function parseGroups(raw: unknown): CheckGroup[] | null {
+  if (!Array.isArray(raw)) return null;
+  const out: CheckGroup[] = [];
+  for (const g of raw) {
+    if (!Array.isArray(g)) continue;
+    const key = str(g[0]);
+    const passed = num(g[1]);
+    const total = num(g[2]);
+    if (key && passed !== null && total !== null && total > 0)
+      out.push({ key, value: Math.max(0, Math.min(1, passed / total)) });
+  }
+  return out;
+}
 
 export function parseTaskFile(raw: unknown, fallbackSuite = ''): TaskFile | null {
   const r = rec(raw);
@@ -148,6 +167,8 @@ export function parseTaskFile(raw: unknown, fallbackSuite = ''): TaskFile | null
       elapsed: num(o.elapsed_s),
       cost: num(o.cost),
       startedAt: str(o.started_at),
+      tokensOut: num(o.tokens_out),
+      groups: parseGroups(o.groups),
     });
   }
   return { suite: str(r.suite) ?? fallbackSuite, task, runs };
@@ -185,7 +206,7 @@ export interface IndexItem {
   name: string;
   tierLabel: string;
   provisional: boolean;
-  /** "Scored by hidden tests, 43 tests" from the catalog (the one-line summary is not in index.json). */
+  /** The first line of the catalog `summary`, else "Scored by hidden tests, 43 tests". */
   scoredBy: string;
 }
 
@@ -209,6 +230,10 @@ export function methodLabel(catalog: SuiteIndex['catalog'], method: string | nul
 }
 
 export function scoredBy(catalog: SuiteIndex['catalog'], t: CatalogTask): string {
+  // `summary` passes through the index normalizer untouched, but is not in the core type
+  const summary = (t as { summary?: unknown }).summary;
+  const first = typeof summary === 'string' ? (summary.split('\n')[0] ?? '').trim() : '';
+  if (first) return first;
   const sc = t.scoring ?? {};
   const total =
     typeof sc.total === 'number' ? `, ${sc.total.toLocaleString('en')} ${sc.unit || 'points'}` : '';
@@ -447,7 +472,7 @@ export function isLongPrompt(text: string): boolean {
   return text.split('\n').length > 12 || text.length > 1100;
 }
 
-// ---- Per-check results (from the run files) ------------------------------------------------------------
+// ---- Per-check results (from the task file's runs) ------------------------------------------------------------
 
 export interface CheckGroup {
   key: string;
@@ -460,43 +485,12 @@ export interface RunDetail {
   tokensOut: number | null;
 }
 
-/** The checks of one run file, grouped. Tolerant: nothing found is an empty list. */
-export function parseRunDetail(raw: unknown, suite: string): RunDetail {
-  const r = rec(raw);
-  const scores = arr(r.scores).map(rec);
-  const ref = rec(rec(rec(r.suites)[suite]).score_ref);
-  const chosen =
-    scores.find(
-      (s) =>
-        ref.rubric_version !== undefined &&
-        s.rubric_version === ref.rubric_version &&
-        s.method === ref.method,
-    ) ??
-    scores[0] ??
-    {};
-  const out: CheckGroup[] = [];
-  for (const g of arr(chosen.groups).map(rec)) {
-    const key = str(g.id) ?? str(g.label);
-    const total = num(g.total);
-    const passed = num(g.passed);
-    if (key && total && total > 0 && passed !== null)
-      out.push({ key, value: Math.max(0, Math.min(1, passed / total)) });
-  }
-  if (!out.length) {
-    const acc = new Map<string, number[]>();
-    for (const it of arr(chosen.items).map(rec)) {
-      const key = str(it.group) ?? str(it.label) ?? str(it.id);
-      if (!key) continue;
-      const share = num(it.share) ?? (it.passed === true ? 1 : it.passed === false ? 0 : null);
-      if (share === null) continue;
-      const l = acc.get(key);
-      if (l) l.push(share);
-      else acc.set(key, [share]);
-    }
-    for (const [key, v] of acc) out.push({ key, value: mean(v) ?? 0 });
-  }
-  const metrics = rec(rec(r.summary).metrics);
-  return { groups: out, tokensOut: num(metrics.tokens_out) };
+/** Each entry's newest-run results, from the task file's own runs (no run files are fetched). */
+export function detailsOf(entries: readonly Entry[]): Map<string, RunDetail> {
+  const m = new Map<string, RunDetail>();
+  for (const e of entries)
+    m.set(e.latest.uuid, { groups: e.latest.groups ?? [], tokensOut: e.latest.tokensOut });
+  return m;
 }
 
 export interface CheckStat {

@@ -47,14 +47,12 @@
     file,
     built,
     details,
-    detailState,
     suiteQ,
   }: {
     index: SuiteIndex;
     file: TaskFile;
     built: Built;
     details: ReadonlyMap<string, RunDetail>;
-    detailState: 'idle' | 'loading' | 'ready' | 'error';
     suiteQ: string | undefined;
   } = $props();
 
@@ -265,17 +263,12 @@
   <section>
     <h2>Which checks trip models up</h2>
     <ErrorBoundary what="the checks">
-      {#if detailState === 'error' && !stats.length}
-        <p class="muted">Couldn’t load the per-check results.</p>
-      {:else if !stats.length && detailState !== 'ready'}
-        <p class="muted">Loading per-check results…</p>
-      {:else if !stats.length}
+      {#if !stats.length}
         <p class="muted">No per-check results were published for these runs.</p>
       {:else}
         <p class="muted">
           Share of the {plural(Math.max(...stats.map((s) => s.n)), 'setup')}’ newest counted runs that passed
           each check, hardest first. A part-credit check counts the share it earned.
-          {#if detailState === 'loading'}Loading more…{/if}
         </p>
         <ul class="bars">
           {#each stats as s (s.key)}
@@ -309,8 +302,7 @@
         ? 'Every setup'
         : `Each model's best setup (the one the leaderboard ranks it by, on its ${index.catalog.labels.overall} score)`},
       ranked by score on this task, then time. Check squares are from the setup's newest counted run. Select a
-      score to open that run.{#if detailState === 'loading'}
-        Loading checks…{/if}
+      score to open that run.
     </p>
     <ErrorBoundary what="the performers">
       <ResponsiveTable
@@ -392,12 +384,8 @@
         {#if effort.skipped}
           {plural(effort.skipped, 'setup')} left off ({measure === 'cost'
             ? 'local hardware with no power figure, or no cost recorded'
-            : measure === 'tokens' && detailState !== 'ready'
-              ? 'token counts are still loading or not recorded'
-              : 'not recorded'}).
+            : 'not recorded'}).
         {/if}
-      {:else if measure === 'tokens' && detailState !== 'ready'}
-        Token counts come from each setup's newest run and are loading.
       {:else}
         Nothing to plot: none of these setups recorded this measure.
       {/if}

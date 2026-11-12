@@ -65,7 +65,6 @@
     if (solo && untrack(() => cs.ctx.section) !== solo) cs.ctx = { ...cs.ctx, section: solo as never };
   }
 
-  let mounted = $state(false);
   async function settle() {
     let next = translateModelParams(cs.index, modelId, cs.ctx, location.search);
     const solo = soloSection(cs.index);
@@ -76,7 +75,6 @@
   onMount(async () => {
     await cs.init();
     await settle();
-    mounted = true;
   });
   afterNavigate(({ type }) => {
     if (type !== 'enter') void cs.syncFromUrl().then(settle);
@@ -270,9 +268,8 @@
           <ul class="dnf">
             {#each dnf as d (d.run.run_uuid)}
               <li>
-                {#if d.task}<a href={mounted ? taskHref(d.task.id, sq) : undefined}
-                    >{d.task.name ?? d.task.id}</a
-                  >{:else}{d.run.task}{/if}:
+                {#if d.task}<a href={taskHref(d.task.id, sq)}>{d.task.name ?? d.task.id}</a>{:else}{d.run
+                    .task}{/if}:
                 {d.run.outcome === 'timed_out' ? 'timed out' : 'errored'} after {secs(d.run.elapsed_s)} on {d.deployment};
                 the leaderboard scores it {fmtScore(d.run.score)}.
                 {#if !d.recorded}<span class="tag warn">not recorded</span>{/if}
@@ -317,7 +314,6 @@
             deploymentLabel={bestDeployment}
             runs={byCell}
             suiteParam={sq}
-            linksReady={mounted}
           />
         </ErrorBoundary>
       </section>
@@ -332,7 +328,7 @@
       </p>
       <ErrorBoundary what="the tasks">
         {#if !ready}<Loading label="Loading the runs…" />{/if}
-        <TasksBlock {groups} local={best.local} suiteParam={sq} linksReady={mounted && ready} />
+        <TasksBlock {groups} local={best.local} suiteParam={sq} />
       </ErrorBoundary>
     </section>
   </div>

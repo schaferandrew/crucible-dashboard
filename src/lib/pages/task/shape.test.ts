@@ -13,7 +13,6 @@ import {
   logDomain,
   logTicks,
   notCounted,
-  parseRunDetail,
   parseTaskFile,
   placeLabels,
   resolveTask,
@@ -36,6 +35,8 @@ const run = (uuid: string, setup: string, score: number | null, extra: Partial<S
   elapsed: 10,
   cost: 0.1,
   startedAt: '2026-01-01T00:00:00Z',
+  tokensOut: null,
+  groups: null,
   ...extra,
 });
 
@@ -192,31 +193,23 @@ describe('checks', () => {
     expect(square(0.6)).toMatchObject({ kind: 'partial', text: 'partly passed (60%)' });
     expect(square(undefined).kind).toBe('none');
   });
-  it('reads a run file by groups, falling back to items', () => {
-    const g = parseRunDetail(
-      {
-        scores: [{ groups: [{ id: 'A', passed: 3, total: 4 }], items: [] }],
-        summary: { metrics: { tokens_out: 321 } },
-      },
-      'v4',
-    );
-    expect(g.groups).toEqual([{ key: 'A', value: 0.75 }]);
-    expect(g.tokensOut).toBe(321);
-    const i = parseRunDetail(
-      {
-        scores: [
-          {
-            items: [
-              { group: 'X', share: 1 },
-              { group: 'X', passed: false },
-            ],
-          },
-        ],
-      },
-      'v4',
-    );
-    expect(i.groups).toEqual([{ key: 'X', value: 0.5 }]);
-    expect(parseRunDetail(null, 'v4')).toEqual({ groups: [], tokensOut: null });
+  it('reads groups and tokens from the task file runs', () => {
+    const f = parseTaskFile({
+      task: { id: 't' },
+      runs: [
+        {
+          run_uuid: 'a',
+          groups: [
+            ['A', 3, 4],
+            ['Empty', 0, 0],
+          ],
+          tokens_out: 321,
+        },
+        { run_uuid: 'b', groups: null },
+      ],
+    });
+    expect(f?.runs[0]).toMatchObject({ groups: [{ key: 'A', value: 0.75 }], tokensOut: 321 });
+    expect(f?.runs[1]).toMatchObject({ groups: null, tokensOut: null });
   });
 });
 

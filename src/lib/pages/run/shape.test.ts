@@ -7,6 +7,13 @@ const local = {
   cost: 0.001,
   outcome: 'finished',
   output: 'outputs/x.txt',
+  labels: {
+    hw: 'Apple M5 Pro, 48 GB',
+    model: 'Nemo',
+    maker: 'NVIDIA',
+    packager: 'nvidia',
+    machines: ['Duskfall'],
+  },
   resolution: {
     model: 'nvidia/nemo',
     maker: 'nvidia',
@@ -112,7 +119,8 @@ describe('run page data shaping (B-21, spec 5.2)', () => {
   it('setup facts: format source, hardware class with machine credit, model link', () => {
     const s = Object.fromEntries(v.setup.map((f) => [f.label, f.value]));
     expect(s.Format).toBe('gguf (read from the quant)');
-    expect(s['Hardware class']).toBe('m5-pro-48gb (Duskfall)');
+    expect(s['Hardware class']).toBe('Apple M5 Pro, 48 GB (Duskfall)');
+    expect(s.Maker).toBe('NVIDIA');
     expect(s.Harness).toBe('pi 1.4.0');
     expect(v.setup.find((f) => f.label === 'Model')!.to).toEqual({ kind: 'model', id: 'nvidia/nemo' });
     expect(v.notes).toHaveLength(1);

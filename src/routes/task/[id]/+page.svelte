@@ -1,15 +1,16 @@
 <script lang="ts">
   // /task/<id>: one task (spec 8). A page is a DataContext with the task fixed: the panel's counts and the
-  // entries come from `scope()` over the setups that ran it. The task file is fetched on demand; per-check
-  // results come from the run files after the first paint.
+  // entries come from `scope()` over the setups that ran it. The page needs index.json and the task file only
+  // (per-check results and tokens are in the task file's runs).
   import { afterNavigate } from '$app/navigation';
   import { onMount, untrack } from 'svelte';
   import { DIMS, type DataContext } from '$lib/core/context';
   import { scope } from '$lib/core/scope';
   import { link } from '$lib/paths';
-  import { findElsewhere, loadRunDetails, loadTaskFile } from '$lib/pages/task/load';
+  import { findElsewhere, loadTaskFile } from '$lib/pages/task/load';
   import {
     buildEntries,
+    detailsOf,
     indexForTask,
     isProvisional,
     resolveTask,
@@ -124,31 +125,8 @@
     void cs.update({ ...next, section: cs.ctx.section });
   }
 
-  // ---- Per-check results, after first paint
-  let details = $state.raw(new Map<string, RunDetail>());
-  let detailState = $state<'idle' | 'loading' | 'ready' | 'error'>('idle');
-  $effect(() => {
-    const uuids = (built?.entries ?? []).map((e) => e.latest.uuid);
-    const s = suite as string;
-    const todo = uuids.filter((u) => !untrack(() => details).has(u));
-    if (!todo.length) {
-      detailState = uuids.length ? 'ready' : 'idle';
-      return;
-    }
-    let live = true;
-    let failed = 0;
-    detailState = 'loading';
-    void loadRunDetails(fetch, todo, s, (u, d) => {
-      if (!live) return;
-      if (d) details = new Map(details).set(u, d);
-      else failed += 1;
-    }).then(() => {
-      if (live) detailState = failed && !details.size ? 'error' : 'ready';
-    });
-    return () => {
-      live = false;
-    };
-  });
+  // Per-check results and tokens are in the task file's runs
+  const details = $derived(built ? detailsOf(built.entries) : new Map<string, RunDetail>());
 
   const name = $derived(full?.name ?? (catalogTask ? taskName(catalogTask) : null));
   const like = $derived(catalogTask ? [] : similarTasks(cs.index.catalog, data.id, cs.ctx.provisional));
@@ -207,7 +185,7 @@
       </ErrorBoundary>
     {:else if file && built}
       <ErrorBoundary what="this task">
-        <TaskDetail index={cs.index} {file} {built} {details} {detailState} {suiteQ} />
+        <TaskDetail index={cs.index} {file} {built} {details} {suiteQ} />
       </ErrorBoundary>
     {:else}
       <Loading />

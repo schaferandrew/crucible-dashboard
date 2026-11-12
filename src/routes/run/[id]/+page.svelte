@@ -1,6 +1,7 @@
 <script lang="ts">
   // /run/<uuid>: one run, its own shareable page (B-21, spec 5.2). The data is one small file, loaded by the
-  // route; labels come from the suite index only if another page already loaded it.
+  // route; the run's own `labels` give model, maker, hardware and machine credit; only the task name and method labels
+  // use a suite index that another page already loaded.
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { cachedIndex } from '$lib/data';

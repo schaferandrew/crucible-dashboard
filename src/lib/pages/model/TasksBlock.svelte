@@ -9,12 +9,8 @@
   import type { Column } from '$lib/ui/table';
   import type { AreaGroup, AreaGroupTask } from './shape';
 
-  let {
-    groups,
-    local,
-    suiteParam,
-    linksReady,
-  }: { groups: readonly AreaGroup[]; local: boolean; suiteParam?: string; linksReady: boolean } = $props();
+  let { groups, local, suiteParam }: { groups: readonly AreaGroup[]; local: boolean; suiteParam?: string } =
+    $props();
 
   const KEY = 'crucible-model-areas';
   function readOpen(): Set<string> {
@@ -79,8 +75,7 @@
         >
           {#snippet cell(t: AreaGroupTask, col: Column<AreaGroupTask>)}
             {#if col.id === 'task'}
-              <a href={linksReady ? taskHref(t.task.id, suiteParam) : undefined}>{t.task.name ?? t.task.id}</a
-              >
+              <a href={taskHref(t.task.id, suiteParam)}>{t.task.name ?? t.task.id}</a>
               <span class="tag">{t.tierLabel}</span>
             {:else if !t.cell}
               {#if col.id === 'score'}<span class="muted">not run</span>{:else}—{/if}
@@ -88,7 +83,7 @@
               {@const th = heat(t.mean)}
               {#if t.mean === null}
                 <span class="muted">{t.provisional ? 'provisional' : 'doesn’t count'}</span>
-              {:else if linksReady && t.run}
+              {:else if t.run}
                 <a
                   class="score"
                   href={runHref(t.run, suiteParam)}

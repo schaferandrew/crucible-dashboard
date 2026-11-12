@@ -60,6 +60,11 @@ export function loadCellRuns(fetchFn: Fetch, suite: SuiteId | string): Promise<C
   return once<CellRuns>(`${suite}/cell-runs.json`, fetchFn);
 }
 
+/** `<suite>/tasks/<task>.json` (raw), once per page load. `task` is a catalog id, never an alias. */
+export function loadTask(fetchFn: Fetch, suite: SuiteId | string, task: string): Promise<unknown> {
+  return once(`${suite}/tasks/${encodeURIComponent(task)}.json`, fetchFn);
+}
+
 /** One run's detail file (siblings and scored run per suite included). */
 export function loadRun(
   fetchFn: Fetch,

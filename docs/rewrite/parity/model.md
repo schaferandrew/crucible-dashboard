@@ -40,4 +40,4 @@ Status: done | changed (B-xx) | dropped.
 | MODEL-COMB-01 | done | Combined from site-data entities; areas prefixed with section; no A/B or compare ticks. |
 | MODEL-RESP-01 | done | Tables are cards below 640 px. |
 
-Note: task links appear after hydration, because the prerender crawl fails on a task route that does not exist in this branch; remove the `linksReady` gates once the task page is merged.
+Note: task links render immediately (task pages exist, so the prerender crawl finds them); there are no `linksReady` gates.

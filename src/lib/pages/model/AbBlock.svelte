@@ -26,7 +26,6 @@
     deploymentLabel,
     runs,
     suiteParam,
-    linksReady = false,
   }: {
     index: SuiteIndex;
     sc: Scope;
@@ -35,7 +34,6 @@
     runs: RunsByCell | null;
     suiteParam?: string;
     /** Task links appear once the page is interactive (the prerendered copy has none). */
-    linksReady?: boolean;
   } = $props();
 
   const cands = $derived(abCandidates(index, sc.view, base, sc.setups));
@@ -98,10 +96,8 @@
   <ul class="db" aria-label="Score per shared task">
     {#each result.pairs as p (p.task.id)}
       <li class:skip={!p.counted}>
-        <a
-          class="name"
-          href={linksReady ? taskHref(p.task.id, suiteParam) : undefined}
-          title={p.task.name ?? p.task.id}>{p.task.name ?? p.task.id}</a
+        <a class="name" href={taskHref(p.task.id, suiteParam)} title={p.task.name ?? p.task.id}
+          >{p.task.name ?? p.task.id}</a
         >
         {#if !p.counted}
           <span class="skiptext">not scored here: a side didn’t finish</span>
@@ -163,8 +159,7 @@
     <ul class="dnf">
       {#each result.notFinished as n (n.side + n.task.id)}
         <li>
-          <a href={linksReady ? taskHref(n.task.id, suiteParam) : undefined}>{n.task.name ?? n.task.id}</a>: {n.side ===
-          'a'
+          <a href={taskHref(n.task.id, suiteParam)}>{n.task.name ?? n.task.id}</a>: {n.side === 'a'
             ? aText
             : bText} didn’t finish {n.k} of {n.n} run{n.n === 1 ? '' : 's'}{#if n.run}
             ({outcomeText(n.run.outcome)} after {secs(n.run.elapsed_s)}){/if}.

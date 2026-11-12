@@ -1,9 +1,9 @@
 // Shaping one run's detail file (`runs/<uuid>.json`) into what the run page shows (spec 5.2, B-21). Pure and
 // tolerant: a missing or oddly typed field becomes an absent line, never an exception.
 //
-// The run file carries ids, not labels. Labels (maker name, "Apple M5 Pro, 48 GB", task name, scoring method)
-// come from the suite's index when some earlier page already loaded it (`labels`), and otherwise are made
-// readable from the ids, so a deep link needs only the one small run file.
+// The run file carries its own display `labels` (model, maker, packager, hardware, machine credit), so a deep
+// link needs only the one small run file. The task name and scoring-method labels are not in it: they come from
+// the suite's index when some earlier page already loaded it, and otherwise are made readable from the ids.
 
 import { fmtCost, fmtDateTime, fmtInt, fmtScore, fmtSeconds, fmtTps, NONE } from '$lib/core/format';
 
@@ -13,11 +13,14 @@ const arr = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
 const str = (v: unknown): string | null => (typeof v === 'string' && v !== '' ? v : null);
 const num = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
 
-/** Display text the page can look up from an already-loaded index. All optional. */
+/** Display text: the run file's `labels` plus, optionally, task and method names from a loaded index. */
 export interface RunLabels {
   model?: string;
   maker?: string;
+  packager?: string;
   hardware?: string;
+  /** Machine credit labels (display only). */
+  machines?: string[];
   task?: string;
   /** scoring method id -> label */
   methods?: Record<string, string>;
@@ -231,12 +234,28 @@ function hardwareText(hw: Rec, key: string | null, labelOverride?: string): stri
   return acc.length ? acc.join(' + ') : key;
 }
 
+/** The `labels` block of a run file (`{hw, model, maker, packager, machines}`), tolerant. */
+export function runFileLabels(raw: unknown): RunLabels {
+  const l = rec(rec(raw).labels);
+  return {
+    model: str(l.model) ?? undefined,
+    maker: str(l.maker) ?? undefined,
+    packager: str(l.packager) ?? undefined,
+    hardware: str(l.hw) ?? undefined,
+    machines: arr(l.machines).filter((m): m is string => typeof m === 'string' && m !== ''),
+  };
+}
+
 export function shapeRun(
   raw: unknown,
   opts: { suite?: string | null; currentSuite?: string | null; labels?: RunLabels } = {},
 ): RunView {
   const run = rec(raw);
-  const labels = opts.labels ?? {};
+  const own = runFileLabels(run);
+  const labels: RunLabels = {
+    ...opts.labels,
+    ...Object.fromEntries(Object.entries(own).filter(([, v]) => v !== undefined)),
+  };
   const uuid = str(run.run_uuid) ?? '';
   const summary = rec(run.summary);
   const resolution = rec(run.resolution);
@@ -340,7 +359,7 @@ export function shapeRun(
   const formatFrom = str(rec(resolution.sources).format_from);
   const hardwareKey = str(resolution.hardware_key);
   const hwText = where === 'local' ? hardwareText(hw, hardwareKey, labels.hardware) : null;
-  const machine = str(resolution.machine);
+  const machine = labels.machines?.length ? labels.machines.join(', ') : str(resolution.machine);
   const setup: Fact[] = [];
   if (modelId)
     setup.push({
@@ -350,7 +369,7 @@ export function shapeRun(
       tag: where ?? undefined,
     });
   setup.push({ label: 'Maker', value: labels.maker ?? str(resolution.maker) ?? 'unknown' });
-  setup.push({ label: 'Packager', value: str(resolution.packager) ?? 'not recorded' });
+  setup.push({ label: 'Packager', value: labels.packager ?? str(resolution.packager) ?? 'not recorded' });
   if (where === 'local') {
     setup.push({ label: 'Quant', value: quant ?? 'not recorded' });
     setup.push({
