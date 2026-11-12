@@ -1,6 +1,7 @@
 // Shaping for the Runs page (B-05): slim runs from `recent/<month>.json` -> rows for one suite, with the
 // filters and sorts the page offers. Pure; the page only draws.
 
+import { outcomeClass, type OutcomeClass } from '$lib/core/outcome';
 import { facetValue } from '$lib/core/scope';
 import { DIMS, type DataContext } from '$lib/core/context';
 import type { Setup, SuiteIndex } from '$lib/core/types';
@@ -57,23 +58,6 @@ export function normalizeShard(raw: unknown): SlimRun[] {
     });
   }
   return out;
-}
-
-// ---- Outcome classes (B-06): one definition ----
-
-export type OutcomeClass = 'finished' | 'timeout' | 'error';
-export const OUTCOME_LABEL: Record<OutcomeClass, string> = {
-  finished: 'Finished',
-  timeout: 'Timed out',
-  error: 'Error',
-};
-
-/** `timed_out` (or a timeout status) is a timeout, `finished` (or completed) finished, anything else is an error. */
-export function outcomeClass(outcome: string | null | undefined): OutcomeClass {
-  const o = (outcome ?? '').toLowerCase();
-  if (o === 'finished' || o === 'completed' || o === 'ok') return 'finished';
-  if (o === 'timed_out' || o === 'timeout') return 'timeout';
-  return 'error';
 }
 
 // ---- States ----
@@ -187,6 +171,10 @@ export function rowMatches(row: RunRow, ctx: DataContext, f: RunFilters): boolea
   for (const dim of DIMS) {
     const set = ctx.filters[dim];
     if (!set || !set.size) continue;
+    if (dim === 'task') {
+      if (!row.taskId || !set.has(row.taskId)) return false;
+      continue;
+    }
     const v = row.setup ? facetValue(row.setup, dim) : null;
     if (v === null || !set.has(v)) return false;
   }
@@ -266,6 +254,13 @@ export function monthLabel(month: string): string {
 export function orderMonths(names: readonly string[]): string[] {
   const dated = names.filter((n) => /^\d{4}-\d{2}$/.test(n)).sort((a, b) => cmp(b, a));
   return names.includes('unknown') ? [...dated, 'unknown'] : dated;
+}
+
+/** The months of `recent/index.json` (`{months: [{id, runs}]}`), newest first, `unknown` last. Tolerant. */
+export function monthsOfIndex(raw: unknown): string[] {
+  const months = rec(raw).months;
+  if (!Array.isArray(months)) return [];
+  return orderMonths(months.map((m) => str(rec(m).id)).filter((id): id is string => id !== null));
 }
 
 /** Counts of states among rows, for the state select. */

@@ -3,7 +3,7 @@ import { syntheticIndex } from '../../../../tests/fixture';
 import type { Cell } from '$lib/core/types';
 import { buildTodo, pickSection, sectionChoices } from './build';
 import {
-  buildTimes,
+  catalogTimes,
   computeLeft,
   countsLine,
   estimateText,
@@ -48,19 +48,16 @@ describe('url codec (TODO-URL-01..04)', () => {
 });
 
 describe('times (TODO-DATA-04)', () => {
-  const runs = (setup: string, ...e: number[]) =>
-    e.map((elapsed_s) => ({ setup, state: 'counted', outcome: 'finished', elapsed_s }));
-  it('typical = median finished time; pace = median ratio; 1 when none', () => {
-    const times = buildTimes(
-      new Map([
-        ['t1', [...runs('a', 10), ...runs('b', 30), { setup: 'c', outcome: 'timed_out', elapsed_s: 999 }]],
-        ['t2', runs('a', 100)],
-      ]),
-    );
+  it('typical comes from the catalog; untimed tasks are null; pace is 1', () => {
+    const times = catalogTimes([
+      { id: 't1', typical_time: 20 },
+      { id: 't2', typical_time: null },
+      { id: 't3' },
+      { id: 't4', typical_time: 0 },
+    ]);
     expect(times.typical('t1')).toBe(20);
-    expect(times.typical('t3')).toBeNull();
-    expect(times.pace('a', ['t1', 't2'])).toBeCloseTo(0.75);
-    expect(times.pace('nobody', ['t1'])).toBe(1);
+    for (const t of ['t2', 't3', 't4', 'nope']) expect(times.typical(t)).toBeNull();
+    expect(times.pace('a', ['t1'])).toBe(1);
   });
 });
 

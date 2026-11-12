@@ -134,6 +134,8 @@ export interface CatalogTask {
   rubric_version?: number | null;
   weight: number | null;
   added_in?: string | null;
+  /** Median elapsed seconds of the task's finished counted runs in the suite; null when it has none. */
+  typical_time?: number | null;
   scoring: { method?: string; unit?: string; total?: number; scale?: number } & Record<string, unknown>;
 }
 

@@ -22,7 +22,9 @@ export type Dim =
   | 'where'
   | 'hw'
   | 'provider'
-  | 'deployment';
+  | 'deployment'
+  /** A cell-level dimension (a task page pins it); it never narrows setups, see `passes`. */
+  | 'task';
 
 /** The order filters are written to the URL in (the first group is today's order). */
 export const DIMS: readonly Dim[] = [
@@ -37,6 +39,7 @@ export const DIMS: readonly Dim[] = [
   'maker',
   'provider',
   'deployment',
+  'task',
 ];
 
 export type Filters = Partial<Record<Dim, ReadonlySet<string>>>;
@@ -190,6 +193,31 @@ export function contextToSearch(ctx: DataContext, env: ContextEnv, catalog?: Cat
   if (ctx.focus) add('setup', [ctx.focus]);
   if (ctx.provisional) parts.push('provisional=1');
   return parts.join('&');
+}
+
+/** Every query parameter the context codec owns. Any other parameter belongs to the page (sort, outcome...). */
+export const CONTEXT_PARAMS: ReadonlySet<string> = new Set([
+  'mode',
+  'suite',
+  'exclude',
+  'setup',
+  'provisional',
+  ...DIMS,
+]);
+
+/**
+ * The query string (no leading `?`) to write for `contextSearch` (from `contextToSearch`) when the URL is
+ * currently `currentSearch`: the context's parameters, then every parameter of the current URL that is not a
+ * context parameter, untouched and in order, so page-local parameters round-trip.
+ */
+export function mergeSearch(contextSearch: string, currentSearch: string): string {
+  const s = currentSearch.startsWith('?') ? currentSearch.slice(1) : currentSearch;
+  const foreign = s.split('&').filter((part) => {
+    if (!part) return false;
+    const eq = part.indexOf('=');
+    return !CONTEXT_PARAMS.has(safeDecode(eq < 0 ? part : part.slice(0, eq)));
+  });
+  return [contextSearch, ...foreign].filter(Boolean).join('&');
 }
 
 function tiersOfSection(info: ReturnType<typeof suiteInfo>, section: string): string[] {

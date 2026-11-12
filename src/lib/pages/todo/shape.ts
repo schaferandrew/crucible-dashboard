@@ -27,54 +27,24 @@ export function median(values: readonly number[]): number | null {
 
 // ---- Times ----
 
-/** The part of a slim run (`<suite>/tasks/<task>.json`) the estimates need. Every field may be missing. */
-export interface TimeRun {
-  setup?: unknown;
-  state?: unknown;
-  outcome?: unknown;
-  elapsed_s?: unknown;
-}
-
-/** Runs that sit in a cell: the states the cells table covers. Withdrawn, retired and unknown-task runs don't. */
-const NOT_IN_CELLS = new Set(['withdrawn', 'retired', 'unknown_task']);
-
 export interface TaskTimes {
-  /** A task's typical time: the median finished time over every setup of the suite (TODO-DATA-04). */
+  /** A task's typical time: the median finished counted time over every setup of the suite (TODO-DATA-04). */
   typical(task: string): number | null;
-  /** This setup's own pace: the median of (its finished time / the task's typical time); 1 when none. */
+  /** A setup's own pace relative to the typical times (1 = typical). */
   pace(setup: string, tasks: readonly string[]): number;
 }
 
-export function buildTimes(runsByTask: ReadonlyMap<string, readonly TimeRun[]>): TaskTimes {
-  const typical = new Map<string, number | null>();
-  const own = new Map<string, Map<string, number[]>>();
-  for (const [task, runs] of runsByTask) {
-    const all: number[] = [];
-    for (const r of runs) {
-      if (!r || r.outcome !== 'finished' || NOT_IN_CELLS.has(String(r.state))) continue;
-      const v = r.elapsed_s;
-      if (typeof v !== 'number' || !Number.isFinite(v) || typeof r.setup !== 'string') continue;
-      all.push(v);
-      let byTask = own.get(r.setup);
-      if (!byTask) own.set(r.setup, (byTask = new Map()));
-      const list = byTask.get(task);
-      if (list) list.push(v);
-      else byTask.set(task, [v]);
-    }
-    typical.set(task, median(all));
-  }
-  return {
-    typical: (task) => typical.get(task) ?? null,
-    pace(setup, tasks) {
-      const ratios: number[] = [];
-      for (const t of tasks) {
-        const ty = typical.get(t);
-        if (!ty) continue;
-        for (const v of own.get(setup)?.get(t) ?? []) ratios.push(v / ty);
-      }
-      return median(ratios) ?? 1;
-    },
-  };
+/**
+ * Typical times from the catalog's `typical_time` (the median elapsed_s of the task's finished counted runs in
+ * the suite; null when it has none). The catalog carries no per-setup times, so every setup runs at the typical
+ * pace.
+ */
+export function catalogTimes(tasks: readonly { id: string; typical_time?: number | null }[]): TaskTimes {
+  const typical = new Map<string, number>();
+  for (const t of tasks)
+    if (typeof t.typical_time === 'number' && Number.isFinite(t.typical_time) && t.typical_time > 0)
+      typical.set(t.id, t.typical_time);
+  return { typical: (task) => typical.get(task) ?? null, pace: () => 1 };
 }
 
 export const NO_TIMES: TaskTimes = { typical: () => null, pace: () => 1 };

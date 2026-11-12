@@ -4,14 +4,15 @@
   // (OQ-08, deliberately kept): the state is suite, section, sort and "every setup" (TodoState).
   import { afterNavigate } from '$app/navigation';
   import { onMount, untrack } from 'svelte';
-  import { sectionView, type RowStats } from '$lib/core/scoring';
+  import type { RowStats } from '$lib/core/scoring';
   import type { SuiteId } from '$lib/core/types';
   import { modelHref, suiteParam, taskHref } from '$lib/paths';
   import { setupLabel } from '$lib/labels';
   import TierCell from '$lib/ui/TierCell.svelte';
-  import { buildTodo, sectionTasks } from '$lib/pages/todo/build';
+  import { buildTodo } from '$lib/pages/todo/build';
   import ModelRef from '$lib/pages/todo/ModelRef.svelte';
   import {
+    catalogTimes,
     countsLine,
     estimateText,
     plural,
@@ -21,16 +22,16 @@
     sortEntries,
     type Entry,
     type SortKey,
-    type TaskTimes,
   } from '$lib/pages/todo/shape';
   import { TodoState } from '$lib/pages/todo/state.svelte';
   import TaskList from '$lib/pages/todo/TaskList.svelte';
-  import { loadTimes } from '$lib/pages/todo/times';
+  import CoverageBar from '$lib/ui/CoverageBar.svelte';
   import Empty from '$lib/ui/Empty.svelte';
   import ErrorBoundary from '$lib/ui/ErrorBoundary.svelte';
   import Loading from '$lib/ui/Loading.svelte';
   import PageHeader from '$lib/ui/PageHeader.svelte';
   import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
+  import SectionRadiogroup from '$lib/ui/SectionRadiogroup.svelte';
   import SuiteBar from '$lib/ui/SuiteBar.svelte';
   import type { Column } from '$lib/ui/table';
 
@@ -46,26 +47,9 @@
   const suiteQ = $derived(suiteParam(st.suite, data.meta.current_suite));
   const info = $derived(st.index.catalog);
 
-  // The run times behind the estimates are fetched after the first render, for the section's scored tasks
-  let times = $state.raw<TaskTimes | null>(null);
-  let missing = $state(0);
-  let timesFor = '';
-  const taskIds = $derived(section ? sectionTasks(sectionView(st.index, section.id)).map((t) => t.id) : []);
-  $effect(() => {
-    const key = st.suite + '|' + section?.id;
-    const ids = taskIds;
-    const suite = st.suite;
-    if (key === timesFor) return;
-    timesFor = key;
-    times = null;
-    void loadTimes(fetch, suite, ids).then((r) => {
-      if (timesFor !== key) return;
-      times = r.times;
-      missing = r.missing;
-    });
-  });
-
-  const built = $derived(section && times ? buildTodo(st.index, section.id, st.all, times) : null);
+  // Estimates come from the catalog's per-task typical times: nothing else to fetch
+  const times = $derived(catalogTimes(st.index.catalog.tasks));
+  const built = $derived(section ? buildTodo(st.index, section.id, st.all, times) : null);
   const sorted = $derived(built ? sortEntries(built.entries, st.sort) : []);
   const pick = $derived(built ? recommend(built.entries) : null);
   const view = $derived(built?.view ?? null);
@@ -104,19 +88,12 @@
 
 <section aria-label="Remaining tasks" class:loading={st.loading} aria-busy={st.loading}>
   {#if st.choices.length > 1}
-    <div class="field">
-      <span class="lbl" id="todo-mode-lbl">Section</span>
-      <div class="seg" role="radiogroup" aria-labelledby="todo-mode-lbl">
-        {#each st.choices as c (c.id)}
-          <button
-            type="button"
-            role="radio"
-            aria-checked={section?.id === c.id}
-            onclick={() => section?.id !== c.id && st.setMode(c.id)}>{c.label}</button
-          >
-        {/each}
-      </div>
-    </div>
+    <SectionRadiogroup
+      id="todo-mode"
+      choices={st.choices}
+      value={section?.id}
+      onselect={(id) => st.setMode(id)}
+    />
   {/if}
 
   {#if !section}
@@ -124,12 +101,6 @@
   {:else if !built}
     <Loading label="Working out what's left…" />
   {:else}
-    {#if missing}
-      <p class="banner" role="status">
-        Run times for {plural(missing, 'task')} couldn't be loaded, so their estimates are left out.
-      </p>
-    {/if}
-
     <h2>Recommended next</h2>
     <ErrorBoundary what="the recommendation">
       {#if !pick}
@@ -160,8 +131,7 @@
           {/if}
           <p class="foot muted">
             Easiest means fewest tasks to run, each task this setup already timed out or errored on counting
-            extra, then the least estimated time: each task's median finished time across setups, scaled by
-            this setup's own pace.
+            extra, then the least estimated time: each task's median finished time across setups.
           </p>
         </div>
       {/if}
@@ -195,11 +165,12 @@
             <ModelRef stat={e.stat} label={e.label} suite={suiteQ} />
             <div class="setup muted">{setupLabel(e.stat)}</div>
           {:else if col.id === 'done'}
-            <span class="progress">{e.stat.progress.done}/{e.stat.progress.total}</span>
-            <span class="bar" aria-hidden="true"
-              ><span class="fill" class:local={e.stat.local} style:width="{e.stat.progress.share * 100}%"
-              ></span></span
-            >
+            <CoverageBar
+              done={e.stat.progress.done}
+              total={e.stat.progress.total}
+              share={e.stat.progress.share}
+              local={e.stat.local}
+            />
             {#if e.stat.inProgress}<span class="tag warn">in progress</span>{/if}
           {:else if col.id === 'left'}
             {e.left.tasks.length}{e.left.failed ? ` (${e.left.failed} failed)` : ''}
@@ -251,27 +222,6 @@
     letter-spacing: 0.04em;
     color: var(--muted);
   }
-  .seg {
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-self: start;
-    padding: 3px;
-    background: var(--tray);
-    border-radius: var(--radius);
-  }
-  .seg button {
-    background: none;
-    border: 0;
-    border-radius: var(--radius-sm);
-    padding: 0.3rem 0.8rem;
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--fg);
-  }
-  .seg button[aria-checked='true'] {
-    background: var(--surface);
-    box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
-  }
   select {
     justify-self: start;
     border: 1px solid var(--border-strong);
@@ -316,26 +266,6 @@
   }
   .foot {
     font-size: var(--text-sm);
-  }
-  .progress {
-    font-variant-numeric: tabular-nums;
-  }
-  .bar {
-    display: block;
-    width: 5rem;
-    height: 6px;
-    margin: 3px 0;
-    border-radius: 3px;
-    background: var(--bar);
-    overflow: hidden;
-  }
-  .fill {
-    display: block;
-    height: 100%;
-    background: var(--cloud);
-  }
-  .fill.local {
-    background: var(--local);
   }
   .names {
     overflow-wrap: anywhere;

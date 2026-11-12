@@ -183,6 +183,7 @@ export function translateLegacyUrl(
       const exclude = list(raw.get('exclude'));
       if (exclude.length) params.exclude = exclude;
       for (const dim of DIMS) {
+        if (dim === 'task') continue;
         const values = list(raw.get(dim));
         // old single-select defaults: harness `best`, where `all`
         const kept = dim === 'harness' ? values.filter((v) => v !== 'best') : values;
