@@ -27,14 +27,14 @@ import { COMBINED } from './types';
 
 /** A setup's value on a filter dimension: a string, `unrecorded`, or null when not applicable. */
 export function facetValue(s: Setup, dim: Dim): string | null {
-  const v = s[dim];
+  const v = (s as unknown as Record<string, unknown>)[dim]; // `task` is not a setup field: null
   return v === undefined || v === null ? null : String(v);
 }
 
 /** Does a setup pass every filter (except `skip`)? In Combined the harness filter does not apply (B-08). */
 export function passes(s: Setup, ctx: DataContext, view: View, skip?: Dim): boolean {
   for (const dim of DIMS) {
-    if (dim === skip) continue;
+    if (dim === skip || dim === 'task') continue; // a task filter is about cells, not setups
     if (dim === 'harness' && view.kind === 'combined') continue;
     const set = ctx.filters[dim];
     if (!set || !set.size) continue;
@@ -157,6 +157,8 @@ export function facetLabel(index: SuiteIndex, dim: Dim, value: string, sample?: 
       return index.catalog.harnesses.find((h) => h.id === value)?.label ?? value;
     case 'deployment':
       return index.entities.deployments[value]?.label ?? value;
+    case 'task':
+      return index.catalog.tasks.find((t) => t.id === value)?.name ?? value;
     default:
       return value;
   }
@@ -223,6 +225,10 @@ export function changeSection(index: SuiteIndex, ctx: DataContext, section: stri
     const set = ctx.filters[dim];
     if (!set || !set.size) continue;
     if (dim === 'harness' && view.kind === 'combined') continue;
+    if (dim === 'task') {
+      filters[dim] = set;
+      continue;
+    }
     const have = new Set(setups.map((s) => facetValue(s, dim)));
     const kept = [...set].filter((v) => have.has(v));
     if (kept.length) filters[dim] = new Set(kept);

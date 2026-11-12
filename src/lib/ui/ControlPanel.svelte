@@ -60,6 +60,13 @@
     sc: scProp,
     unknownSuite = null,
     label = 'Controls',
+    noun,
+    count,
+    hideProvisional = false,
+    hideSections = false,
+    hideTiers = false,
+    hideEmptyFilters = false,
+    pinnedCounts = false,
   }: {
     index: SuiteIndex;
     meta: Meta;
@@ -80,6 +87,20 @@
     unknownSuite?: string | null;
     /** Accessible name of the panel region. */
     label?: string;
+    /** What the count line calls what it counts (`models` by default, `setups` for unit `setups`; or `runs`...). */
+    noun?: string;
+    /** The page's own "shown of total", when the panel's scope isn't what the page lists (a runs page counts runs). */
+    count?: { shown: number; total: number };
+    /** Leave out the "Include n provisional tasks" switch. */
+    hideProvisional?: boolean;
+    /** Leave out the section chips. */
+    hideSections?: boolean;
+    /** Leave out the tier include/exclude toggles. */
+    hideTiers?: boolean;
+    /** Leave out the Filters button (and the filter row) when it would hold no control. */
+    hideEmptyFilters?: boolean;
+    /** Show each pinned dimension as a fixed chip with the count it leaves. */
+    pinnedCounts?: boolean;
   } = $props();
 
   const sc = $derived(scProp ?? scope(index, ctx, { showInProgress }));
@@ -118,6 +139,31 @@
   const whereSet = $derived(ctx.filters.where);
   const counts = $derived(panelCounts(index, sc, unit));
   const inProgressCount = $derived(sc.rows.filter((r) => r.ran && r.inProgress).length);
+  const showTiers = $derived(!hideTiers && sc.view.showAgg && sc.view.tiers.length > 1);
+  const showWhere = $derived(!!whereFacet && whereFacet.distinct >= 2);
+  const hasFilterRow = $derived(showTiers || showWhere || menus.length > 0 || !!onprogress);
+  const showFilters = $derived(!hideEmptyFilters || hasFilterRow);
+  const countLine = $derived({
+    shown: count?.shown ?? counts.shown,
+    total: count?.total ?? counts.total,
+    noun: noun ?? counts.noun,
+  });
+  // A pinned dimension is the page's, so it is a fixed chip: its value and what it leaves in scope
+  const pinnedChips = $derived(
+    pinnedCounts
+      ? pinned
+          .filter((d): d is Dim => (DIMS as readonly string[]).includes(d) && !!ctx.filters[d as Dim]?.size)
+          .flatMap((dim) => {
+            const f = panelFacet(index, ctx, dim, { unit, showInProgress });
+            return f.options
+              .filter((o) => o.selected)
+              .map((o) => ({
+                text: `${NAMES[dim]?.name ?? cap(dim)} ${o.label}`,
+                n: f.distinct > 0 ? o.count : null,
+              }));
+          })
+      : [],
+  );
   const provisionalTasks = $derived(
     info.tasks.filter((t) => t.status === 'provisional' && (combined || t.mode === ctx.section)),
   );
@@ -186,124 +232,124 @@
 
 <section class="panel" aria-label={label} bind:this={root}>
   <div class="row primary">
-    <div class="field">
-      <span class="lbl" id="section-lbl">Section</span>
-      <div class="seg" role="radiogroup" aria-labelledby="section-lbl">
-        {#each sections as s (s.id)}
-          <button
-            type="button"
-            role="radio"
-            aria-checked={ctx.section === s.id}
-            title="{s.n} scored tasks"
-            onclick={() => ctx.section !== s.id && onctx(changeSection(index, ctx, s.id))}
-          >
-            {s.label} <span class="count">{s.n}</span>
-          </button>
-        {/each}
-      </div>
-    </div>
+    {#if !hideSections}<div class="field">
+        <span class="lbl" id="section-lbl">Section</span>
+        <div class="seg" role="radiogroup" aria-labelledby="section-lbl">
+          {#each sections as s (s.id)}
+            <button
+              type="button"
+              role="radio"
+              aria-checked={ctx.section === s.id}
+              title="{s.n} scored tasks"
+              onclick={() => ctx.section !== s.id && onctx(changeSection(index, ctx, s.id))}
+            >
+              {s.label} <span class="count">{s.n}</span>
+            </button>
+          {/each}
+        </div>
+      </div>{/if}
     <SuiteSelect {meta} value={ctx.suite} onchange={(suite: SuiteId) => onctx({ ...ctx, suite })} />
-    <button
-      type="button"
-      class="toggle-filters"
-      aria-expanded={open}
-      aria-controls="panel-filters"
-      onclick={() => (open = !open)}
-    >
-      Filters ({nOn} on) <span aria-hidden="true">{open ? '▴' : '▾'}</span>
-    </button>
+    {#if showFilters}<button
+        type="button"
+        class="toggle-filters"
+        aria-expanded={open}
+        aria-controls="panel-filters"
+        onclick={() => (open = !open)}
+      >
+        Filters ({nOn} on) <span aria-hidden="true">{open ? '▴' : '▾'}</span>
+      </button>{/if}
   </div>
   {#if hint}<p class="hint muted">{hint}</p>{/if}
 
-  <div class="row filters" id="panel-filters" class:open>
-    {#if sc.view.showAgg && sc.view.tiers.length > 1}
-      <div class="field">
-        <span class="lbl" id="tiers-lbl">{info.overallLabel} score counts</span>
-        <div class="seg" role="group" aria-labelledby="tiers-lbl">
-          {#each sc.view.tiers as t (t.id)}
-            {@const on = sc.view.aggTiers(ctx.exclude).some((x) => x.id === t.id)}
-            {@const last = on && sc.view.aggTiers(ctx.exclude).length === 1}
+  {#if showFilters}<div class="row filters" id="panel-filters" class:open>
+      {#if showTiers}
+        <div class="field">
+          <span class="lbl" id="tiers-lbl">{info.overallLabel} score counts</span>
+          <div class="seg" role="group" aria-labelledby="tiers-lbl">
+            {#each sc.view.tiers as t (t.id)}
+              {@const on = sc.view.aggTiers(ctx.exclude).some((x) => x.id === t.id)}
+              {@const last = on && sc.view.aggTiers(ctx.exclude).length === 1}
+              <button
+                type="button"
+                aria-pressed={on}
+                aria-disabled={last}
+                title={last
+                  ? `The ${info.overallLabel} score needs at least one tier`
+                  : on
+                    ? `Leave ${t.label} out of the ${info.overallLabel} score`
+                    : `Add ${t.label} to the ${info.overallLabel} score`}
+                onclick={() => toggleTier(t.id)}
+              >
+                {on ? '✓ ' : ''}{t.label}
+              </button>
+            {/each}
+          </div>
+        </div>
+      {/if}
+
+      {#if whereFacet && showWhere}
+        <div class="field">
+          <span class="lbl" id="where-lbl">Models</span>
+          <div class="seg" role="group" aria-labelledby="where-lbl">
+            <button type="button" aria-pressed={!whereSet?.size} onclick={() => setFilter('where', [])}
+              >All</button
+            >
+            {#each whereFacet.options as o (o.value)}
+              <button
+                type="button"
+                aria-pressed={o.selected}
+                aria-disabled={o.disabled}
+                title={o.disabled ? `No ${o.label.toLowerCase()} models for these filters` : undefined}
+                onclick={() =>
+                  !o.disabled && setFilter('where', o.selected && whereSet?.size === 1 ? [] : [o.value])}
+              >
+                {o.label} ({o.count})
+              </button>
+            {/each}
+          </div>
+        </div>
+      {/if}
+
+      {#each menus as f (f.dim)}
+        <div class="field">
+          <span class="lbl" aria-hidden="true">{NAMES[f.dim]?.name ?? cap(f.dim)}</span>
+          <FacetMenu
+            id="facet-{f.dim}"
+            label={NAMES[f.dim]?.name ?? cap(f.dim)}
+            summary={summary(f.dim)}
+            active={!!ctx.filters[f.dim]?.size}
+            options={f.options}
+            open={openId === `facet-${f.dim}`}
+            onopen={() => (openId = `facet-${f.dim}`)}
+            onclose={() => (openId = null)}
+            ontoggle={(v) => toggleValue(f.dim, v)}
+            onclear={() => setFilter(f.dim, [])}
+          />
+        </div>
+      {/each}
+
+      {#if onprogress}
+        <div class="field">
+          <span class="lbl" id="show-lbl">Show</span>
+          <div class="seg" role="group" aria-labelledby="show-lbl">
+            <button type="button" aria-pressed={!showInProgress} onclick={() => onprogress(false)}>
+              Finished
+            </button>
             <button
               type="button"
-              aria-pressed={on}
-              aria-disabled={last}
-              title={last
-                ? `The ${info.overallLabel} score needs at least one tier`
-                : on
-                  ? `Leave ${t.label} out of the ${info.overallLabel} score`
-                  : `Add ${t.label} to the ${info.overallLabel} score`}
-              onclick={() => toggleTier(t.id)}
+              aria-pressed={showInProgress}
+              class:faint={inProgressCount === 0}
+              title={inProgressCount === 0
+                ? 'Every model has finished ' + (combined ? 'every section' : 'this section')
+                : undefined}
+              onclick={() => onprogress(true)}
             >
-              {on ? '✓ ' : ''}{t.label}
+              + In progress ({inProgressCount})
             </button>
-          {/each}
+          </div>
         </div>
-      </div>
-    {/if}
-
-    {#if whereFacet && whereFacet.distinct >= 2}
-      <div class="field">
-        <span class="lbl" id="where-lbl">Models</span>
-        <div class="seg" role="group" aria-labelledby="where-lbl">
-          <button type="button" aria-pressed={!whereSet?.size} onclick={() => setFilter('where', [])}
-            >All</button
-          >
-          {#each whereFacet.options as o (o.value)}
-            <button
-              type="button"
-              aria-pressed={o.selected}
-              aria-disabled={o.disabled}
-              title={o.disabled ? `No ${o.label.toLowerCase()} models for these filters` : undefined}
-              onclick={() =>
-                !o.disabled && setFilter('where', o.selected && whereSet?.size === 1 ? [] : [o.value])}
-            >
-              {o.label} ({o.count})
-            </button>
-          {/each}
-        </div>
-      </div>
-    {/if}
-
-    {#each menus as f (f.dim)}
-      <div class="field">
-        <span class="lbl" aria-hidden="true">{NAMES[f.dim]?.name ?? cap(f.dim)}</span>
-        <FacetMenu
-          id="facet-{f.dim}"
-          label={NAMES[f.dim]?.name ?? cap(f.dim)}
-          summary={summary(f.dim)}
-          active={!!ctx.filters[f.dim]?.size}
-          options={f.options}
-          open={openId === `facet-${f.dim}`}
-          onopen={() => (openId = `facet-${f.dim}`)}
-          onclose={() => (openId = null)}
-          ontoggle={(v) => toggleValue(f.dim, v)}
-          onclear={() => setFilter(f.dim, [])}
-        />
-      </div>
-    {/each}
-
-    {#if onprogress}
-      <div class="field">
-        <span class="lbl" id="show-lbl">Show</span>
-        <div class="seg" role="group" aria-labelledby="show-lbl">
-          <button type="button" aria-pressed={!showInProgress} onclick={() => onprogress(false)}>
-            Finished
-          </button>
-          <button
-            type="button"
-            aria-pressed={showInProgress}
-            class:faint={inProgressCount === 0}
-            title={inProgressCount === 0
-              ? 'Every model has finished ' + (combined ? 'every section' : 'this section')
-              : undefined}
-            onclick={() => onprogress(true)}
-          >
-            + In progress ({inProgressCount})
-          </button>
-        </div>
-      </div>
-    {/if}
-  </div>
+      {/if}
+    </div>{/if}
 
   {#if combined}
     <p class="note muted">Each row pairs one setup per section that differs only in harness.</p>
@@ -311,7 +357,7 @@
     <p class="note muted">Every {sc.view.label} run uses the {sc.view.harnesses[0]} harness.</p>
   {/if}
 
-  {#if provisionalTasks.length}
+  {#if !hideProvisional && provisionalTasks.length}
     <div class="prov">
       <label>
         <input
@@ -332,7 +378,15 @@
   {/if}
 
   <div class="foot">
-    <span class="count-line" aria-live="polite">Showing {counts.shown} of {counts.total} {counts.noun}</span>
+    <span class="count-line" aria-live="polite"
+      >Showing {countLine.shown} of {countLine.total} {countLine.noun}</span
+    >
+    {#each pinnedChips as c (c.text)}
+      <span class="pinned"
+        >{c.text}{#if c.n !== null}
+          <span class="count">({c.n})</span>{/if}</span
+      >
+    {/each}
     <span class="chips">
       {#each chips as c (c.dim + c.value)}
         <button
@@ -452,6 +506,12 @@
   .chip {
     background: var(--accent-soft);
     border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.6rem;
+    font-size: var(--text-sm);
+  }
+  .pinned {
+    border: 1px solid var(--border);
     border-radius: var(--radius-pill);
     padding: 0.1rem 0.6rem;
     font-size: var(--text-sm);

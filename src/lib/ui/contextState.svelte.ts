@@ -11,6 +11,7 @@
 import { replaceState } from '$app/navigation';
 import {
   contextToSearch,
+  mergeSearch,
   defaultContext,
   parseContext,
   resolveContext,
@@ -72,7 +73,8 @@ export class ContextState {
 
   #write(ctx: DataContext, idx: SuiteIndex) {
     if (!this.#mounted) return;
-    const search = this.search(ctx, idx);
+    // Page-local parameters of the current URL (sort, outcome, state...) are kept as they are
+    const search = mergeSearch(this.search(ctx, idx), location.search);
     replaceState(`${location.pathname}${search ? '?' + search : ''}`, {});
   }
 

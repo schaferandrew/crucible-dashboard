@@ -3,9 +3,9 @@
   import { onMount, untrack } from 'svelte';
   import { cap, fmtCost, fmtDate, fmtScore, fmtSeconds } from '$lib/core/format';
   import { loadMonth } from '$lib/pages/runs/data';
+  import { OUTCOME_CLASSES, OUTCOME_LABEL, type OutcomeClass } from '$lib/core/outcome';
   import {
     NO_FILTERS,
-    OUTCOME_LABEL,
     SORTS,
     isSortKey,
     monthLabel,
@@ -15,7 +15,6 @@
     stateLabel,
     taskTable,
     toRow,
-    type OutcomeClass,
     type RunFilters,
     type RunRow,
     type SlimRun,
@@ -153,6 +152,11 @@
   ctx={cs.ctx}
   {onctx}
   unit="setups"
+  noun="runs"
+  count={{ shown: inScope.length, total: all.length }}
+  hideProvisional
+  hideEmptyFilters
+  pinnedCounts
   unknownSuite={cs.unknownSuite}
   label="Run filters"
 />
@@ -168,7 +172,7 @@
       }}
     >
       <option value="all">All outcomes</option>
-      {#each ['finished', 'timeout', 'error'] as const as o (o)}
+      {#each OUTCOME_CLASSES as o (o)}
         <option value={o} disabled={outcomeN(o) === 0 && filters.outcome !== o}
           >{OUTCOME_LABEL[o]} ({outcomeN(o).toLocaleString('en')})</option
         >

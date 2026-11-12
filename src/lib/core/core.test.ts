@@ -4,6 +4,7 @@ import {
   activeFilterCount,
   contextToSearch,
   defaultContext,
+  mergeSearch,
   parseContext,
   resolveContext,
   sameContext,
@@ -54,6 +55,34 @@ describe('context codec', () => {
   it('honours the remembered provisional choice only when the URL is silent', () => {
     expect(parseContext('', env, true).ctx.provisional).toBe(true);
     expect(parseContext('provisional=0', env, true).ctx.provisional).toBe(false);
+  });
+});
+
+describe('context codec: page-local params and the task dimension', () => {
+  it('mergeSearch keeps parameters the codec does not own, in order', () => {
+    const ctxSearch = contextToSearch(
+      { ...defaultContext(env), filters: { quant: new Set(['q4_k_m']) } },
+      env,
+    );
+    expect(mergeSearch(ctxSearch, '?sort=oldest&quant=old&outcome=error&state=counted')).toBe(
+      'quant=q4_k_m&sort=oldest&outcome=error&state=counted',
+    );
+    expect(mergeSearch('', '?sort=oldest&mode=chat&suite=old&provisional=1&exclude=x')).toBe('sort=oldest');
+    expect(mergeSearch('', '')).toBe('');
+    // A value with encoded characters is passed through untouched
+    expect(mergeSearch('', 'q=a%26b%2Cc')).toBe('q=a%26b%2Cc');
+  });
+  it('task is a dimension: round-trips and never narrows setups', () => {
+    const ctx = { ...defaultContext(env), filters: { task: new Set(['t1', 't2']) } };
+    const search = contextToSearch(ctx, env);
+    expect(search).toBe('task=t1,t2');
+    expect([...parseContext(search, env).ctx.filters.task!].sort()).toEqual(['t1', 't2']);
+    expect(activeFilterCount(ctx)).toBe(1);
+    const index = normalizeIndex(syntheticIndex());
+    const section = defaultContext(env).section;
+    expect(scope(index, { ...ctx, section }).setups.length).toBe(
+      scope(index, { ...defaultContext(env), section }).setups.length,
+    );
   });
 });
 

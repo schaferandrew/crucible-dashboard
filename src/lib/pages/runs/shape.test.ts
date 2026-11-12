@@ -6,8 +6,8 @@ import {
   isFlagged,
   monthLabel,
   normalizeShard,
+  monthsOfIndex,
   orderMonths,
-  outcomeClass,
   rowMatches,
   sortRuns,
   type RunRow,
@@ -36,14 +36,6 @@ const row = (o: Partial<RunRow>): RunRow => ({
 const ctx = defaultContext({ currentSuite: 'v4' as SuiteId, suites: ['v4' as SuiteId] });
 
 describe('runs shaping (B-05, B-06)', () => {
-  it('outcome classes: timeouts, errors, anything unknown is an error', () => {
-    expect(outcomeClass('finished')).toBe('finished');
-    expect(outcomeClass('timed_out')).toBe('timeout');
-    expect(outcomeClass('error')).toBe('error');
-    expect(outcomeClass('harness_error')).toBe('error');
-    expect(outcomeClass(null)).toBe('error');
-  });
-
   it('flags invalid and withdrawn, withdrawn first', () => {
     expect(isFlagged('counted', 'valid')).toBeNull();
     expect(isFlagged('invalid', 'invalid')).toBe('invalid');
@@ -106,6 +98,12 @@ describe('runs shaping (B-05, B-06)', () => {
       '2026-09',
       'unknown',
     ]);
+    expect(
+      monthsOfIndex({
+        months: [{ id: '2026-10', runs: 2 }, { id: 'unknown', runs: 1 }, { id: '2026-11' }, 7],
+      }),
+    ).toEqual(['2026-11', '2026-10', 'unknown']);
+    expect(monthsOfIndex(null)).toEqual([]);
     expect(monthLabel('2026-10')).toBe('October 2026');
     expect(monthLabel('unknown')).toBe('runs with no start time');
   });
