@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { syntheticIndex } from '../../../../tests/fixture';
 import { defaultContext } from '$lib/core/context';
 import { scope } from '$lib/core/scope';
-import { asSuiteId } from '$lib/core/types';
+import { asSuiteId, asTaskId } from '$lib/core/types';
 import { barName, barRows, layoutBars, shortName } from './bars';
-import { areaResult, cellView, heatAreas, tierGroups } from './matrix';
+import { areaResult, cellView, heatAreas, partSetup, setupFor, tierGroups } from './matrix';
 import { caveat, emptyText, filterPhrase, leaderboardNote, orList } from './phrases';
 import { parsePicks, togglePick } from './picks.svelte';
 import { frontier, layoutScatter, logDomain, logTicks, scatterPoints } from './scatter';
@@ -133,7 +133,26 @@ describe('matrix', () => {
     expect(r.total).toBe(2);
     expect(r.score).toBe(9);
     expect(tierGroups(sc.view).map((g) => g.id)).toEqual(['spark', 'temper']);
-    expect(heatAreas(idx, scope(idx, defaultContext(env)).view)).toEqual([]);
+  });
+
+  it('Combined reads each section from its own setup (B-23)', () => {
+    const all = scope(idx, defaultContext(env), { showInProgress: true });
+    expect(all.view.kind).toBe('combined');
+    const groups = tierGroups(all.view);
+    expect(groups.map((g) => g.id)).toEqual(['chat:spark', 'chat:temper', 'agentic:spark', 'agentic:temper']);
+    expect(groups.map((g) => g.sectionStart)).toEqual([true, false, true, false]);
+    const areas = heatAreas(idx, all.view);
+    expect(areas.map((a) => [a.id, a.part])).toEqual([
+      ['chat:x', 0],
+      ['agentic:y', 1],
+    ]);
+    const paired = all.visible.find((r) => r.candidate.members.every(Boolean));
+    expect(paired).toBeDefined();
+    const [chatSetup, agentSetup] = paired!.candidate.members;
+    expect(setupFor(all.view, paired!, asTaskId('c1'))?.id).toBe(chatSetup!.id);
+    expect(setupFor(all.view, paired!, asTaskId('a1'))?.id).toBe(agentSetup!.id);
+    expect(partSetup(all.view, paired!, 1)?.id).toBe(agentSetup!.id);
+    expect(areaResult(idx, all.view, null, areas[1]!)).toEqual({ score: null, n: 0, total: 2 });
   });
 });
 

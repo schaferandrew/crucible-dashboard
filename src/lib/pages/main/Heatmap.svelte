@@ -6,7 +6,7 @@
   import type { SuiteIndex } from '$lib/core/types';
   import { heatStyle } from '$lib/ui/heat';
   import Empty from '$lib/ui/Empty.svelte';
-  import { areaResult, heatAreas, type AreaResult } from './matrix';
+  import { areaResult, heatAreas, partSetup, type AreaResult } from './matrix';
   import ModelRef from './ModelRef.svelte';
   import { emptyText } from './phrases';
   import { Wide } from './wide.svelte';
@@ -50,7 +50,11 @@
             <tr>
               <th scope="row" class="who"><ModelRef {row} {suite} tag /></th>
               {#each areas as a (a.id)}
-                <td>{@render result(areaResult(index, sc.view, row.setup.id, a))}</td>
+                <td
+                  >{@render result(
+                    areaResult(index, sc.view, partSetup(sc.view, row, a.part)?.id ?? null, a),
+                  )}</td
+                >
               {/each}
             </tr>
           {/each}
@@ -66,7 +70,11 @@
           {#each areas as a (a.id)}
             <div class="kv">
               <span class="k">{a.label}</span>
-              <span class="v">{@render result(areaResult(index, sc.view, row.setup.id, a))}</span>
+              <span class="v"
+                >{@render result(
+                  areaResult(index, sc.view, partSetup(sc.view, row, a.part)?.id ?? null, a),
+                )}</span
+              >
             </div>
           {/each}
         </li>

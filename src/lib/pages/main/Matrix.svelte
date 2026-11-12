@@ -13,7 +13,7 @@
   import { setupLabel } from '$lib/labels';
   import { runHref, taskHref } from '$lib/paths';
   import { heatStyle } from '$lib/ui/heat';
-  import { cellView, tierGroups, type CellView } from './matrix';
+  import { cellView, setupFor, tierGroups, type CellView } from './matrix';
   import ModelRef from './ModelRef.svelte';
   import { emptyText } from './phrases';
   import { Wide } from './wide.svelte';
@@ -62,18 +62,27 @@
 
   const linkIndex = $derived(links && loadedFor === index.suite ? links : null);
 
+  // In Combined a row pairs one setup per section: each task reads its own section's setup (B-23)
+  function setupOf(row: Row, task: CatalogTask): string | null {
+    return setupFor(view, row, task.id)?.id ?? null;
+  }
+
   function runOf(row: Row, task: CatalogTask): string | null {
-    const cell = cellsOf(index, row.setup.id).get(task.id);
-    return cell?.scored_run ?? linkIndex?.get(row.setup.id, task.id) ?? null;
+    const setup = setupOf(row, task);
+    if (!setup) return null;
+    return cellsOf(index, setup).get(task.id)?.scored_run ?? linkIndex?.get(setup, task.id) ?? null;
   }
 
   function cv(row: Row, t: CatalogTask): CellView {
-    return cellView(cellsOf(index, row.setup.id).get(t.id), provIds.has(t.id), row.label, t.name || t.id);
+    const setup = setupOf(row, t);
+    const cell = setup ? cellsOf(index, setup).get(t.id) : undefined;
+    return cellView(cell, provIds.has(t.id), row.label, t.name || t.id);
   }
 
   async function open(row: Row, t: CatalogTask) {
     const idx = await ensureLinks();
-    const run = runOf(row, t) ?? idx?.get(row.setup.id, t.id);
+    const setup = setupOf(row, t);
+    const run = runOf(row, t) ?? (setup ? idx?.get(setup, t.id) : null);
     if (run) await goto(runHref(run, suite));
   }
 </script>
@@ -126,14 +135,22 @@
             <tr>
               <th scope="col"></th>
               {#each groups as g (g.id)}
-                <th scope="colgroup" colspan={g.tasks.length} class="tier">{g.label}</th>
+                <th scope="colgroup" colspan={g.tasks.length} class="tier" class:section={g.sectionStart}
+                  >{g.label}</th
+                >
               {/each}
             </tr>
             <tr>
               <th scope="col">Model</th>
               {#each groups as g (g.id)}
                 {#each g.tasks as t, i (t.id)}
-                  <th scope="col" class="task" class:start={i === 0} title={t.name || t.id}>
+                  <th
+                    scope="col"
+                    class="task"
+                    class:start={i === 0}
+                    class:section={i === 0 && g.sectionStart}
+                    title={t.name || t.id}
+                  >
                     <a href={taskHref(t.id, suite)}>{t.name || t.id}</a>
                   </th>
                 {/each}
@@ -152,6 +169,7 @@
                     {@const c = cv(row, t)}
                     <td
                       class:start={i === 0}
+                      class:section={i === 0 && g.sectionStart}
                       class:prov={provIds.has(t.id)}
                       class:isempty={c.state === 'empty'}
                     >
@@ -235,6 +253,9 @@
   }
   .start {
     border-left: 1px solid var(--border-strong);
+  }
+  .section {
+    border-left: 2px solid var(--text);
   }
   th.who {
     text-align: left;

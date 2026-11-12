@@ -2,8 +2,8 @@
 // A cell is "empty" (no runs in this suite), "uncounted" (runs, but none count) or "scored".
 
 import { fmtRepeat, fmtScore, NONE } from '$lib/core/format';
-import { cellsOf, type View } from '$lib/core/scoring';
-import type { Block, Cell, CatalogTask, SuiteIndex } from '$lib/core/types';
+import { cellsOf, type Row, type View } from '$lib/core/scoring';
+import type { Block, Cell, CatalogTask, Setup, SuiteIndex, TaskId } from '$lib/core/types';
 
 export interface CellView {
   state: 'empty' | 'uncounted' | 'scored';
@@ -67,21 +67,48 @@ export interface Area {
   id: string;
   label: string;
   tasks: CatalogTask[];
+  /** The view part (section) the area belongs to: always 0 in a section view. */
+  part: number;
 }
 
-/** The section's areas (catalog order) that have at least one shown task. */
-export function heatAreas(index: SuiteIndex, view: View): Area[] {
-  const part = view.parts[0];
-  if (!part || view.kind !== 'section') return [];
-  const order = part.mode.areas.length
-    ? part.mode.areas
-    : index.catalog.areas.filter((a) => a.mode === part.mode.id).map((a) => a.id);
-  const out: Area[] = [];
-  for (const id of order) {
-    const tasks = view.tasks.filter((t) => t.area === id);
-    if (!tasks.length) continue;
-    out.push({ id, label: index.catalog.areas.find((a) => a.id === id)?.label || id, tasks });
+/**
+ * The setup a row shows for a task. A section row has one setup; a Combined row pairs one setup per section
+ * (B-23), so a chat task reads the row's chat setup and an agentic task its agentic setup. Null when the row
+ * has no setup in that task's section.
+ */
+export function setupFor(view: View, row: Row, task: TaskId): Setup | null {
+  if (view.kind !== 'combined') return row.setup;
+  for (let i = 0; i < view.parts.length; i++) {
+    if (view.parts[i]!.taskIds.has(task) && row.candidate.members[i]) return row.candidate.members[i]!;
   }
+  return null;
+}
+
+/** The setup a row shows for one part (section) of the view. */
+export function partSetup(view: View, row: Row, part: number): Setup | null {
+  return view.kind === 'combined' ? (row.candidate.members[part] ?? null) : row.setup;
+}
+
+/** The areas (catalog order) that have at least one shown task: one section's, or every section's in Combined. */
+export function heatAreas(index: SuiteIndex, view: View): Area[] {
+  const out: Area[] = [];
+  const combined = view.kind === 'combined';
+  view.parts.forEach((part, p) => {
+    const order = part.mode.areas.length
+      ? part.mode.areas
+      : index.catalog.areas.filter((a) => a.mode === part.mode.id).map((a) => a.id);
+    for (const id of order) {
+      const tasks = part.tasks.filter((t) => t.area === id);
+      if (!tasks.length) continue;
+      const label = index.catalog.areas.find((a) => a.id === id)?.label || id;
+      out.push({
+        id: combined ? `${part.id}:${id}` : id,
+        label: combined ? `${part.label} · ${label}` : label,
+        tasks,
+        part: p,
+      });
+    }
+  });
   return out;
 }
 
@@ -93,7 +120,8 @@ export interface AreaResult {
   total: number;
 }
 
-export function areaResult(index: SuiteIndex, view: View, setup: string, area: Area): AreaResult {
+export function areaResult(index: SuiteIndex, view: View, setup: string | null, area: Area): AreaResult {
+  if (!setup) return { score: null, n: 0, total: area.tasks.length };
   const cells = cellsOf(index, setup);
   const prov = new Set<string>(view.provisionalTasks.map((t) => t.id));
   const means: number[] = [];
@@ -108,17 +136,36 @@ export function areaResult(index: SuiteIndex, view: View, setup: string, area: A
   };
 }
 
-/** Task columns grouped by tier, in the view's order. */
-export function tierGroups(view: View): { id: string; label: string; tasks: CatalogTask[] }[] {
-  const out: { id: string; label: string; tasks: CatalogTask[] }[] = [];
-  for (const t of view.tasks) {
-    const id = String(t.tier ?? '');
-    let g = out[out.length - 1];
-    if (!g || g.id !== id) {
-      g = { id, label: view.info.tier(id).label, tasks: [] };
-      out.push(g);
+export interface TierGroup {
+  id: string;
+  label: string;
+  tasks: CatalogTask[];
+  /** The first group of a section (Combined only), drawn with a stronger edge. */
+  sectionStart: boolean;
+}
+
+/** Task columns grouped by tier, in the view's order; in Combined, section by section, then tier by tier. */
+export function tierGroups(view: View): TierGroup[] {
+  const out: TierGroup[] = [];
+  const combined = view.kind === 'combined';
+  for (const part of combined ? view.parts : [view]) {
+    let first = true;
+    for (const t of part.tasks) {
+      const tier = String(t.tier ?? '');
+      let g = out[out.length - 1];
+      if (!g || g.id !== (combined ? `${part.id}:${tier}` : tier) || first) {
+        const tl = view.info.tier(tier).label;
+        g = {
+          id: combined ? `${part.id}:${tier}` : tier,
+          label: combined ? `${part.label} · ${tl}` : tl,
+          tasks: [],
+          sectionStart: combined && first,
+        };
+        out.push(g);
+        first = false;
+      }
+      g.tasks.push(t);
     }
-    g.tasks.push(t);
   }
   return out;
 }

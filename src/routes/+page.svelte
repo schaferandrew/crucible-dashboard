@@ -147,26 +147,34 @@
     <Scatter {sc} suite={suiteQ} />
   </ErrorBoundary>
 
-  {#if !combined}
-    <h2>Every model on every task</h2>
-    <p class="note muted">
+  <h2>Every model on every task</h2>
+  <p class="note muted">
+    {#if combined}
+      Score per task, grouped by section and then tier. As in the leaderboard, each row pairs a model's
+      setups: a section's tasks show the model's setup for that section. Rows keep the leaderboard's order. A
+      score
+    {:else}
       Score per task, grouped by tier, for each model's best setup; rows keep the leaderboard's order. A score
-      is the mean of that setup's runs (&times;n marks repeats). Select any cell for its runs, checks and
-      output. An empty outlined cell has runs that don't count in this suite (an older task version, or a run
-      marked invalid).
-    </p>
-    <ErrorBoundary what="the matrix">
-      <Matrix index={cs.index} {sc} suite={suiteQ} />
-    </ErrorBoundary>
+    {/if}
+    is the mean of that setup's runs (&times;n marks repeats). Select any cell for its runs, checks and output.
+    An empty outlined cell has runs that don't count in this suite (an older task version, or a run marked invalid).
+  </p>
+  <ErrorBoundary what="the matrix">
+    <Matrix index={cs.index} {sc} suite={suiteQ} />
+  </ErrorBoundary>
 
-    <h2>Model &times; area</h2>
-    <p class="note muted">
+  <h2>Model &times; area</h2>
+  <p class="note muted">
+    {#if combined}
+      Mean score (0&ndash;10) for each area of every section, across all tiers; each section's areas use the
+      model's setup for that section.
+    {:else}
       Mean score (0&ndash;10) for each area in this section, across all tiers, for each model's best setup.
-    </p>
-    <ErrorBoundary what="the heatmap">
-      <Heatmap index={cs.index} {sc} suite={suiteQ} />
-    </ErrorBoundary>
-  {/if}
+    {/if}
+  </p>
+  <ErrorBoundary what="the heatmap">
+    <Heatmap index={cs.index} {sc} suite={suiteQ} />
+  </ErrorBoundary>
 
   <p class="foot note muted">{footnote(cs.index, data.meta.crucible_version)}</p>
 </div>
