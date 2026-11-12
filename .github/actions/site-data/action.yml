@@ -1,0 +1,52 @@
+name: Generate site data
+description: >
+  Installs `crucible site-data` at the ref pinned in .crucible-version and writes static/data
+  from the published bundle. Shared by deploy.yml and ci.yml. Run actions/checkout first.
+
+inputs:
+  token:
+    description: Token that can read schaferandrew/crucible and schaferandrew/schaferandrew.github.io.
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Read the pinned Crucible ref
+      id: version
+      shell: bash
+      run: |
+        ref="$(grep -v '^[[:space:]]*#' .crucible-version | grep -v '^[[:space:]]*$' | head -n 1 | tr -d '[:space:]')"
+        test -n "$ref" || { echo "::error::.crucible-version has no ref"; exit 1; }
+        echo "ref=$ref" >> "$GITHUB_OUTPUT"
+
+    - name: Check out Crucible
+      uses: actions/checkout@v4
+      with:
+        repository: schaferandrew/crucible
+        ref: ${{ steps.version.outputs.ref }}
+        path: .ci/crucible
+        token: ${{ inputs.token }}
+
+    # Until the bundle moves into this repo (bundle/), it is published in the site repo.
+    - name: Check out the bundle (site repo)
+      uses: actions/checkout@v4
+      with:
+        repository: schaferandrew/schaferandrew.github.io
+        path: .ci/site
+        token: ${{ inputs.token }}
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
+
+    - name: Run crucible site-data
+      shell: bash
+      run: |
+        rm -rf static/data
+        uv run --project .ci/crucible crucible site-data \
+          --bundle .ci/site/_data/crucible \
+          --outputs .ci/site/crucible-data/outputs \
+          --display .ci/site/_data/crucible_display.yml \
+          --fallbacks .ci/site/_data/crucible_fallbacks.yml \
+          --out static/data
+        test -f static/data/meta.json
