@@ -255,7 +255,7 @@
     border-left: 1px solid var(--border-strong);
   }
   .section {
-    border-left: 2px solid var(--text);
+    border-left: 2px solid var(--muted);
   }
   th.who {
     text-align: left;
