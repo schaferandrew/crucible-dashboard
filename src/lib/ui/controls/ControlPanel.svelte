@@ -410,6 +410,12 @@
     gap: var(--space-3) var(--space-5);
     align-items: flex-end;
   }
+  .row.primary {
+    align-items: stretch;
+  }
+  .primary .toggle-filters {
+    align-self: flex-end;
+  }
   .row.filters {
     margin-top: var(--space-3);
   }
