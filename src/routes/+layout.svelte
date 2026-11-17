@@ -101,6 +101,11 @@
     text-decoration: none;
     padding: var(--space-2) 0;
   }
+  @media (max-width: 639px) {
+    .brand {
+      display: none;
+    }
+  }
   main {
     padding-top: var(--space-5);
     padding-bottom: var(--space-7);
