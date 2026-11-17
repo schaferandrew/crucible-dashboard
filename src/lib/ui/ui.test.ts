@@ -18,7 +18,7 @@ describe('heat (FMT-09) meets AA', () => {
 
 describe('token contrast (AA)', () => {
   const css = readFileSync(new URL('./tokens.css', import.meta.url), 'utf8');
-  const blocks = css.split('@media (prefers-color-scheme: dark)');
+  const blocks = css.split(":root[data-theme='dark']");
   const read = (src: string) => {
     const m = new Map<string, number[]>();
     for (const [, k, h] of src.matchAll(/--([\w-]+):\s*#([0-9a-f]{6})/gi))

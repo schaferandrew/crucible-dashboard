@@ -88,6 +88,7 @@
     box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
   }
   .count {
+    margin-inline-start: var(--space-1);
     color: var(--muted);
     font-size: 0.85em;
     font-weight: 400;

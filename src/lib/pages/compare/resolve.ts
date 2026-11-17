@@ -10,6 +10,7 @@ import { cap } from '$lib/core/format';
 import { cellsOf, rowLabel, viewFor, type Candidate, type View } from '$lib/core/scoring';
 import type { Setup, SuiteIndex } from '$lib/core/types';
 import { COMBINED } from '$lib/core/types';
+import { coverage, overlap, poolCandidates } from './coverage';
 import { MAX_COMPARE, type Identity } from './pairing';
 
 export interface Resolved {
@@ -46,12 +47,17 @@ export function describe(
 /** Packager, quant, hardware or provider, harness: what tells setups of one model apart. */
 export function setupText(members: readonly (Setup | null)[], first: Setup): string {
   const harness = [...new Set(members.filter((m): m is Setup => !!m).map((m) => m.harness))].join(' + ');
+  const deployments = new Set(members.filter((m) => m !== null).map((m) => m.deployment));
+  if (deployments.size > 1)
+    return [first.format, first.quant, harness, `${deployments.size} deployments pooled`]
+      .filter(Boolean)
+      .join(' · ');
   if (first.where !== 'local')
     return [`via ${first.labels.provider ?? first.provider ?? 'cloud'}`, harness].join(' · ');
   const packager =
     first.labels.packager && first.labels.packager !== 'unrecorded' ? first.labels.packager : '';
   const quant = first.quant && first.quant !== 'unrecorded' ? first.quant : 'quant not recorded';
-  const weights = [packager, quant].join(' ');
+  const weights = [packager, first.format, quant].filter(Boolean).join(' ');
   const machines = first.labels.machines.length ? ` (${first.labels.machines.join(', ')})` : '';
   const hw = first.labels.hw
     ? first.labels.hw + machines
@@ -72,10 +78,7 @@ export function identityOf(c: Candidate): Identity {
     model: c.first.model,
     weights: c.first.where === 'local' ? [f.packager, f.format, f.quant].join('|') : 'api',
     reasoning: c.first.reasoning,
-    harness: c.members
-      .filter((m): m is Setup => !!m)
-      .map((m) => m.harness)
-      .join('+'),
+    harness: [...new Set(c.members.filter((m): m is Setup => !!m).map((m) => m.harness))].join('+'),
   };
 }
 
@@ -83,15 +86,15 @@ export function identityOf(c: Candidate): Identity {
 export function variantText(c: Candidate, withHarness: boolean): string {
   const f = c.first;
   const parts: string[] = [];
-  if (f.where === 'local') parts.push(f.quant && f.quant !== 'unrecorded' ? f.quant : 'quant not recorded');
+  if (f.where === 'local')
+    parts.push(
+      [f.format, f.quant && f.quant !== 'unrecorded' ? f.quant : 'quant not recorded']
+        .filter(Boolean)
+        .join(' '),
+    );
   parts.push(`reasoning ${f.reasoning}`);
   if (withHarness)
-    parts.push(
-      c.members
-        .filter((m): m is Setup => !!m)
-        .map((m) => m.harness)
-        .join(' + '),
-    );
+    parts.push([...new Set(c.members.filter((m): m is Setup => !!m).map((m) => m.harness))].join(' + '));
   return parts.join(' · ');
 }
 
@@ -103,6 +106,9 @@ export function packagedBy(c: Candidate): string | null {
 }
 
 export function deploymentText(index: SuiteIndex, c: Candidate): string {
+  const deployments = [...new Set(c.members.filter((m) => m !== null).map((m) => m.deployment))];
+  if (deployments.length > 1)
+    return 'Pooled: ' + deployments.map((id) => index.entities.deployments[id]?.label ?? id).join('; ');
   const d = index.entities.deployments[c.first.deployment];
   if (d?.label) return d.label;
   const f = c.first;
@@ -143,11 +149,20 @@ export function pickerGroups(
   index: SuiteIndex,
   candidates: readonly Candidate[],
   chosen: readonly Candidate[],
+  tasks: readonly { id: string }[] = index.catalog.tasks.filter((t) => t.status === 'active'),
+  completeOnly = false,
 ): { maker: string; label: string; options: { id: string; text: string }[] }[] {
   const taken = new Set(chosen.map((c) => c.id));
   const groups = new Map<string, { maker: string; label: string; options: { id: string; text: string }[] }>();
-  for (const c of candidates) {
-    if (taken.has(c.id)) continue;
+  const counts = new Map(candidates.map((c) => [c.id, coverage(index, c, tasks)]));
+  const sorted = [...candidates].sort(
+    (a, b) =>
+      counts.get(b.id)!.done - counts.get(a.id)!.done ||
+      fullLabel(index, a).localeCompare(fullLabel(index, b)),
+  );
+  for (const c of sorted) {
+    const n = counts.get(c.id)!;
+    if (taken.has(c.id) || (completeOnly && n.done !== n.total)) continue;
     const maker = c.first.maker && c.first.maker !== 'unknown' ? c.first.maker : '';
     let g = groups.get(maker);
     if (!g) {
@@ -156,7 +171,10 @@ export function pickerGroups(
         (g = { maker, label: maker ? c.first.labels.maker || maker : 'Unknown maker', options: [] }),
       );
     }
-    g.options.push({ id: c.id, text: fullLabel(index, c) });
+    g.options.push({
+      id: c.id,
+      text: `${fullLabel(index, c)} — ${n.done}/${n.total} tasks scored${chosen.length ? ` · ${overlap(index, [...chosen, c], tasks)} in common` : ''}`,
+    });
   }
   return [...groups.values()].sort((a, b) =>
     !a.maker ? 1 : !b.maker ? -1 : a.label.toLowerCase() < b.label.toLowerCase() ? -1 : 1,
@@ -193,9 +211,9 @@ export function assignColors(
 
 /** A recorded cell alone can be older, invalid, provisional, or from the wrong harness.
  * Comparisons require a counted score on an active task in the selected view. */
-export function comparisonCandidates(index: SuiteIndex, view: View): Candidate[] {
+export function comparisonCandidates(index: SuiteIndex, view: View, pool = false): Candidate[] {
   const active = new Set<string>(view.tasks.filter((t) => t.status === 'active').map((t) => t.id));
-  return view
+  const candidates = view
     .candidates()
     .filter((c) =>
       c.members.some(
@@ -206,6 +224,7 @@ export function comparisonCandidates(index: SuiteIndex, view: View): Candidate[]
           ),
       ),
     );
+  return pool ? poolCandidates(candidates) : candidates;
 }
 
 /** The sections a setup has counted scores in (read from the views, not guessed). */
@@ -234,6 +253,7 @@ export function resolveCompare(
   tokens: readonly string[],
   mode: string | null,
   legacy: Readonly<Record<string, string>> = {},
+  pool = false,
 ): Resolved {
   const info = suiteInfo(index.catalog);
   const notes: string[] = [];
@@ -247,11 +267,20 @@ export function resolveCompare(
   }
   const explicitMode = section !== null;
 
-  const combinedCands = info.hasCombined ? viewFor(index, COMBINED).candidates() : [];
+  const exactCombined = info.hasCombined ? viewFor(index, COMBINED).candidates() : [];
+  const combinedCands = info.hasCombined ? comparisonCandidates(index, viewFor(index, COMBINED), pool) : [];
+  const poolCands = pool
+    ? [
+        ...combinedCands,
+        ...info.modes.flatMap((m) => comparisonCandidates(index, viewFor(index, m.id), true)),
+      ]
+    : [];
   const toks: Token[] = [];
   for (const raw of tokens.map((t) => t.trim()).filter(Boolean)) {
     const setup = index.entities.setups[raw] ?? null;
-    const entity = setup ? null : (combinedCands.find((c) => c.id === raw) ?? null);
+    const entity = setup
+      ? null
+      : ([...exactCombined, ...combinedCands, ...poolCands].find((c) => c.id === raw) ?? null);
     if (setup || entity) {
       toks.push({ raw, setup, entity });
       continue;
@@ -265,7 +294,11 @@ export function resolveCompare(
     const modes = new Set<string>();
     let entityTok = false;
     for (const t of toks) {
-      if (t.entity) entityTok = true;
+      if (t.entity && [...exactCombined, ...combinedCands].some((c) => c.id === t.entity!.id))
+        entityTok = true;
+      else if (t.entity)
+        for (const member of t.entity.members)
+          if (member) for (const m of sectionsOf(index, member)) modes.add(m);
       if (t.setup) for (const m of sectionsOf(index, t.setup)) modes.add(m);
     }
     // B-18: Combined when the setups span sections; the section they share otherwise
@@ -279,13 +312,18 @@ export function resolveCompare(
           : defaultSection(info);
   }
   const view = viewFor(index, section);
-  const cands = comparisonCandidates(index, view);
+  const cands = comparisonCandidates(index, view, pool);
   const secName = sectionName(index, section);
 
   const items: Candidate[] = [];
   for (const t of toks) {
     let found: Candidate | undefined;
-    if (t.entity) found = cands.find((c) => c.id === t.entity!.id);
+    if (t.entity)
+      found = cands.find(
+        (c) =>
+          c.id === t.entity!.id ||
+          (pool && t.entity!.members.every((m) => !m || c.members.some((x) => x?.id === m.id))),
+      );
     else if (t.setup) {
       const holding = cands.filter((c) => c.members.some((m) => m && m.id === t.setup!.id));
       found = holding[0];

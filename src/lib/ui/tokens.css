@@ -7,7 +7,7 @@
  * both themes. `--local` and `--cloud` are fills; text on those hues uses `--local-ink` / `--cloud-ink`.
  */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
   /* Surfaces and text */
   --bg: #ffffff;
@@ -95,46 +95,45 @@
   --gutter: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #16141b;
-    --surface: #1e1b25;
-    --surface-2: #231f2b;
-    --tray: #2a2633;
-    --fg: #ece9f2;
-    --muted: #b0aac0;
-    --faint: #9c96ad;
-    --border: #322e3d;
-    --border-strong: #4a4458;
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #16141b;
+  --surface: #1e1b25;
+  --surface-2: #231f2b;
+  --tray: #2a2633;
+  --fg: #ece9f2;
+  --muted: #b0aac0;
+  --faint: #9c96ad;
+  --border: #322e3d;
+  --border-strong: #4a4458;
 
-    --accent: #7db2f5;
-    --accent-soft: #1d2a3d;
-    --accent-fill: #5aa2f2;
-    --on-accent: #0d1b2e;
+  --accent: #7db2f5;
+  --accent-soft: #1d2a3d;
+  --accent-fill: #5aa2f2;
+  --on-accent: #0d1b2e;
 
-    --local: #5aa2f2;
-    --local-ink: #8fc0fa;
-    --local-tint: #1d2a3d;
-    --cloud: #f08a5d;
-    --cloud-ink: #f5a784;
-    --cloud-tint: #3a2418;
+  --local: #5aa2f2;
+  --local-ink: #8fc0fa;
+  --local-tint: #1d2a3d;
+  --cloud: #f08a5d;
+  --cloud-ink: #f5a784;
+  --cloud-tint: #3a2418;
 
-    --good: #6fd696;
-    --good-soft: #14301f;
-    --bad: #ff9a92;
-    --bad-soft: #3a1a18;
-    --warn: #f1c45e;
-    --warn-soft: #3a2f12;
-    --bar: #322e3d;
+  --good: #6fd696;
+  --good-soft: #14301f;
+  --bad: #ff9a92;
+  --bad-soft: #3a1a18;
+  --warn: #f1c45e;
+  --warn-soft: #3a2f12;
+  --bar: #322e3d;
 
-    --series-1: #7db2f5;
-    --series-2: #f08a5d;
-    --series-3: #6fd696;
-    --series-4: #c49bf0;
+  --series-1: #7db2f5;
+  --series-2: #f08a5d;
+  --series-3: #6fd696;
+  --series-4: #c49bf0;
 
-    --focus: #9cc7fb;
-    --shadow: 0 6px 18px rgb(0 0 0 / 0.5);
-  }
+  --focus: #9cc7fb;
+  --shadow: 0 6px 18px rgb(0 0 0 / 0.5);
 }
 
 @media (prefers-reduced-motion: reduce) {
