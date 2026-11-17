@@ -3,6 +3,7 @@
 // Set PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH to use an existing system Chromium.
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { checkCompare } from './check-compare.mjs';
 
 const origin = process.argv[2] ?? 'http://localhost:5173';
 const base = `${origin.replace(/\/$/, '')}/crucible-dashboard`;
@@ -247,3 +248,5 @@ try {
 } finally {
   await browser.close();
 }
+
+await checkCompare(origin);
