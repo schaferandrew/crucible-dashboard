@@ -46,7 +46,7 @@
   @media (max-width: 1100px) {
     .tabs {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: flex-end;
       gap: var(--space-1);
     }
   }

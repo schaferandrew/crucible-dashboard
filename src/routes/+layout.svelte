@@ -158,6 +158,7 @@
       display: flex;
       flex: 0 0 100%;
       flex-direction: column;
+      align-items: flex-end;
       padding-bottom: var(--space-4);
       gap: var(--space-4);
     }
