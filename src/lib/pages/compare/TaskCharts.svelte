@@ -111,7 +111,9 @@
   {#if !nums.timesLoaded}
     <p class="muted" role="status">Loading run times…</p>
   {:else if !tAxis}
-    <p class="sub">No run times were recorded for these tasks.</p>
+    <p class="sub">
+      Time comparisons are unavailable for pooled deployments or when timings were not recorded.
+    </p>
   {:else}
     <p class="sub">
       Seconds per task (median of finished runs) on a log scale: equal distances are equal ratios, not equal

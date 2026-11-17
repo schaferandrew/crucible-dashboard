@@ -1,7 +1,8 @@
 // Gathering what the numbers need for each chosen side, and the page's URL codec. Pure except `loadTaskRuns`.
 
+import { countedBlocks, mixedDeployments } from './coverage';
 import { loadTask } from '$lib/data';
-import { cellsOf, type Candidate, type View } from '$lib/core/scoring';
+import { type Candidate, type View } from '$lib/core/scoring';
 import type { CatalogTask, Setup, SuiteIndex } from '$lib/core/types';
 import type { CountedBlock, NumSide, NumTask, RunInfo } from './numbers';
 import { runOutcome, type PairRun, type PairSide } from './pairing';
@@ -15,6 +16,8 @@ export interface CompareQuery {
   s: string[];
   mode: string | null;
   suite: string | null;
+  pool: boolean;
+  complete: boolean;
 }
 
 /** `?s=a,b&mode=chat&suite=v3`. Values are URI-encoded, comma-joined. Never throws. */
@@ -40,6 +43,8 @@ export function parseCompareQuery(search: string): CompareQuery {
     s: sRaw ? sRaw.split(',').map(dec).filter(Boolean) : [],
     mode: q.get('mode') || null,
     suite: q.get('suite') || null,
+    pool: q.get('pool') === '1',
+    complete: q.get('complete') === '1',
   };
 }
 
@@ -60,15 +65,7 @@ function members(c: Candidate): Setup[] {
 
 /** A side's counted blocks by task. A Combined side's members cover different sections, so tasks don't overlap. */
 export function countedOf(index: SuiteIndex, c: Candidate): Map<string, CountedBlock> {
-  const out = new Map<string, CountedBlock>();
-  for (const m of members(c)) {
-    for (const [task, cell] of cellsOf(index, m.id)) {
-      const b = cell.counted;
-      if (!b || !(b.n > 0)) continue;
-      if (!out.has(task)) out.set(task, b);
-    }
-  }
-  return out;
+  return countedBlocks(index, c);
 }
 
 interface SlimRun {
@@ -106,9 +103,9 @@ export function runsBySide(
           startedAt: r.started_at ?? null,
           outcome: runOutcome({ outcome: r.outcome }),
           score: num(r.score),
-          elapsed: num(r.elapsed_s),
-          tps: num(r.tps),
-          cost: num(r.cost),
+          elapsed: mixedDeployments(c) ? null : num(r.elapsed_s),
+          tps: mixedDeployments(c) ? null : num(r.tps),
+          cost: mixedDeployments(c) ? null : num(r.cost),
         });
       }
       if (list.length) out.set(task, list);
@@ -158,7 +155,7 @@ export function pairSide(
   return {
     identity: identityOf(c),
     deployment: first.deployment || null,
-    recorded: !unrecordedDeployment(first),
+    recorded: !mixedDeployments(c) && !unrecordedDeployment(first),
     costKind: first.where === 'local' ? 'electricity' : first.where === 'cloud' ? 'billed' : null,
     runs: mapped,
   };

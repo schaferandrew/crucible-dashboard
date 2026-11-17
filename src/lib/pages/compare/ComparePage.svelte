@@ -41,6 +41,7 @@
     sectionName,
     shortLabels,
   } from '$lib/pages/compare/resolve';
+  import { coverage, mixedDeployments } from './coverage';
   import Reliability from './Reliability.svelte';
   import Summary from './Summary.svelte';
   import TaskCharts from './TaskCharts.svelte';
@@ -98,7 +99,7 @@
   });
 
   const info = $derived(suiteInfo(index.catalog));
-  const res = $derived(resolveCompare(index, q.s, q.mode, legacy));
+  const res = $derived(resolveCompare(index, q.s, q.mode, legacy, q.pool));
   const items = $derived(res.items);
   const hasMany = $derived(items.length >= 2);
   const withHarness = $derived(harnessCount(index, res.view) > 1);
@@ -184,13 +185,15 @@
   const anyLocal = $derived(items.some((c) => c.first.where === 'local'));
   const places = $derived([...new Set(depLabels)]);
   const timeCaveat = $derived(
-    deploymentsDiffer
-      ? `${
-          mixedWhere
-            ? 'These times come from local machines and a cloud provider'
-            : `These times come from different ${anyLocal ? 'machines' : 'providers'}`
-        } (${places.join('; ')}), so a gap in time or decode speed may be the hardware, not the model.`
-      : '',
+    items.some(mixedDeployments)
+      ? 'Pooled scores span deployments; timing, speed and cost are omitted for pooled sides.'
+      : deploymentsDiffer
+        ? `${
+            mixedWhere
+              ? 'These times come from local machines and a cloud provider'
+              : `These times come from different ${anyLocal ? 'machines' : 'providers'}`
+          } (${places.join('; ')}), so a gap in time or decode speed may be the hardware, not the model.`
+        : '',
   );
 
   const settingNotes = $derived.by(() => {
@@ -204,7 +207,7 @@
       });
       const note = differenceNote(diffs, true);
       if (note) out.push(note);
-      if (deploymentsDiffer)
+      if (deploymentsDiffer && !items.some(mixedDeployments))
         out.push(
           `They also run on different ${mixedWhere ? 'machines and providers (local and cloud)' : anyLocal ? 'machines' : 'providers'}, so times and decode speeds are labelled by deployment (a gap in either may be the hardware, not the model) and local electricity is never set against cloud billing.`,
         );
@@ -228,11 +231,19 @@
 
   // ---- URL building ----
 
-  function hrefFor(ids: string[], mode?: string | null, s: string | undefined = suiteQ) {
+  function hrefFor(
+    ids: string[],
+    mode?: string | null,
+    s: string | undefined = suiteQ,
+    pool = q.pool,
+    complete = q.complete,
+  ) {
     return link('/compare/', {
       s: ids,
       mode: mode ?? (res.explicitMode ? res.section : undefined),
       suite: s,
+      pool: pool ? '1' : undefined,
+      complete: complete ? '1' : undefined,
     });
   }
   const ids = $derived(items.map((c) => c.id));
@@ -246,7 +257,20 @@
       keepFocus: true,
     });
 
-  const groups = $derived(pickerGroups(index, comparisonCandidates(index, res.view), items));
+  function onPool(enabled: boolean) {
+    const exact = comparisonCandidates(index, res.view);
+    const next = enabled
+      ? ids
+      : items
+          .map(
+            (c) => exact.find((e) => e.members.every((m) => !m || c.members.some((x) => x?.id === m.id)))?.id,
+          )
+          .filter((id): id is string => !!id);
+    void goto(hrefFor(next, res.section, suiteQ, enabled), { noScroll: true, keepFocus: true });
+  }
+  const groups = $derived(
+    pickerGroups(index, comparisonCandidates(index, res.view, q.pool), items, tasks, q.complete),
+  );
   const candidateCount = $derived(groups.reduce((n, g) => n + g.options.length, 0));
   const full = $derived(items.length >= MAX_COMPARE);
 
@@ -303,8 +327,15 @@
   {#if items.length}
     <ul class="chips" aria-label="Chosen setups">
       {#each items as c, k (c.id)}
+        {@const progress = coverage(index, c, tasks)}
         <li class="chip" style:border-left-color={colors[k]}>
-          <Identity {index} item={c} color={colors[k]} {withHarness} {suiteQ} />
+          <div class="chosen-info">
+            <Identity {index} item={c} color={colors[k]} {withHarness} {suiteQ} />
+            <span class="coverage"
+              >{progress.done}/{progress.total} tasks scored · {progress.attempted} attempted · {progress.runs}
+              runs</span
+            >
+          </div>
           <button
             type="button"
             class="x"
@@ -316,6 +347,33 @@
     </ul>
   {/if}
 
+  <div class="options">
+    <label
+      ><input type="checkbox" checked={q.pool} onchange={(e) => onPool(e.currentTarget.checked)} /> Pool matching
+      setups across deployments</label
+    >
+    <label
+      ><input
+        type="checkbox"
+        checked={q.complete}
+        onchange={(e) =>
+          goto(hrefFor(ids, undefined, suiteQ, q.pool, e.currentTarget.checked), {
+            noScroll: true,
+            keepFocus: true,
+          })}
+      /> Complete setups only</label
+    >
+  </div>
+  <p class="help muted">
+    Repeated runs of the same setup are always combined. Task counts are unique tasks with a finished score,
+    not the number of runs.
+    {#if q.pool}Pooling keeps model, weights, format, quant, reasoning and section/harness combination the
+      same. Scores average eligible repeats. Different formats stay separate.{/if}
+  </p>
+  {#if items.some(mixedDeployments)}<p class="help muted">
+      Pooled scores include several deployments. Time, speed and cost are not combined across machines or
+      providers.
+    </p>{/if}
   <div class="pickrow">
     <div class="field">
       <label class="lbl" for="cmp-pick">Add a setup</label>
@@ -334,7 +392,9 @@
             ? `Up to ${MAX_COMPARE} setups`
             : candidateCount
               ? 'Pick a setup…'
-              : 'No other setups ran here'}</option
+              : q.complete
+                ? 'No other complete setups in this section'
+                : 'No other setups ran here'}</option
         >
         {#each groups as g (g.maker)}
           <optgroup label={g.label}>
@@ -369,16 +429,17 @@
 
 {#if !hasMany}
   <p class="sub">
-    Pick two to four setups to see them side by side. A setup is one model at one reasoning level, quant,
-    machine or provider and harness, local or cloud. They are scored only on the tasks all of them have
-    counted runs of, so nobody gains from a task another skipped. Setups from different sections can't be
-    compared{res.view.kind === 'section' ? `, so the picker lists only ${secName} setups.` : '.'}{items.length
-      ? ' Add one more to start.'
-      : ''}
+    Pick two to four setups to see them side by side. An exact setup is one model at one reasoning level,
+    format, quant, machine or provider and harness, local or cloud. They are scored only on the tasks all of
+    them have counted runs of, so nobody gains from a task another skipped. Setups from different sections
+    can't be compared{res.view.kind === 'section'
+      ? `, so the picker lists only ${secName} setups.`
+      : '.'}{items.length ? ' Add one more to start.' : ''}
   </p>
 {:else}
   <p class="sub">
     {#if nShared}
+      Comparing {nPaired} shared finished tasks out of {tasks.length} in {secName} of {suiteName}.
       {nShared} task{nShared === 1 ? '' : 's'}
       {items.length === 2 ? 'both setups' : `all ${items.length} setups`} ran in {secName} of {suiteName}.
       Scores count the {nPaired} of them every setup finished ({nShared - nPaired} left out); a task that timed
@@ -434,6 +495,30 @@
 {/if}
 
 <style>
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .options label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .help {
+    margin: 0;
+    font-size: var(--text-sm);
+    max-width: 65rem;
+  }
+  .chosen-info {
+    display: grid;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+  .coverage {
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
   .notes {
     margin: var(--space-3) 0;
     padding: var(--space-2) var(--space-3) var(--space-2) var(--space-5);
