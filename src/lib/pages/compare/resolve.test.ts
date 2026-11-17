@@ -17,10 +17,10 @@ const idx = syntheticIndex();
 describe('compare URL (B-01)', () => {
   it('reads s, mode and suite; ids keep `+`, `@`, `/` and `~`', () => {
     const q = parseCompareQuery('?s=a%2Fb~c%40d,e+f&mode=chat&suite=v3');
-    expect(q).toEqual({ s: ['a/b~c@d', 'e+f'], mode: 'chat', suite: 'v3' });
+    expect(q).toEqual({ s: ['a/b~c@d', 'e+f'], mode: 'chat', suite: 'v3', pool: false, complete: false });
   });
   it('tolerates nothing, garbage and bad escapes', () => {
-    expect(parseCompareQuery('')).toEqual({ s: [], mode: null, suite: null });
+    expect(parseCompareQuery('')).toEqual({ s: [], mode: null, suite: null, pool: false, complete: false });
     expect(parseCompareQuery('?s=%E0%A4%A,,&x')).toMatchObject({ s: ['%E0%A4%A'] });
   });
 });
