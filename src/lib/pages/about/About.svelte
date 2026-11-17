@@ -2,7 +2,7 @@
   // The About page. The authored prose is static (HC-16); every section label, area, tier, rule and the
   // Overall/Combined names come from the current suite's catalog through `view`.
   import { link } from '$lib/paths';
-  import PageHeader from '$lib/ui/PageHeader.svelte';
+  import PageHeader from '$lib/ui/layout/PageHeader.svelte';
   import { INSTALL_SNIPPET, REPO_NAME, REPO_URL, VERSIONING_URL } from './config';
   import type { AboutView } from './shape';
 

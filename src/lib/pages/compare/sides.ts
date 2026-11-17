@@ -1,6 +1,6 @@
 // Gathering what the numbers need for each chosen side, and the page's URL codec. Pure except `loadTaskRuns`.
 
-import { base } from '$app/paths';
+import { loadTask } from '$lib/data';
 import { cellsOf, type Candidate, type View } from '$lib/core/scoring';
 import type { CatalogTask, Setup, SuiteIndex } from '$lib/core/types';
 import type { CountedBlock, NumSide, NumTask, RunInfo } from './numbers';
@@ -83,13 +83,9 @@ interface SlimRun {
   started_at?: string | null;
 }
 
-/** `<suite>/tasks/<task>.json`'s slim runs, or [] on any failure (the page then just lacks time and cost). */
+/** Shared task loader; failures reach the page's retry boundary. */
 export async function loadTaskRuns(fetchFn: typeof fetch, suite: string, task: string): Promise<SlimRun[]> {
-  const res = await fetchFn(
-    `${base}/data/${encodeURIComponent(suite)}/tasks/${encodeURIComponent(task)}.json`,
-  );
-  if (!res.ok) throw new Error(`${task}: ${res.status} ${res.statusText}`);
-  const j = (await res.json()) as { runs?: SlimRun[] };
+  const j = (await loadTask(fetchFn, suite, task)) as { runs?: SlimRun[] };
   return Array.isArray(j?.runs) ? j.runs : [];
 }
 
@@ -168,15 +164,5 @@ export function pairSide(
   };
 }
 
-const taskRunCache = new Map<string, Promise<SlimRun[]>>();
-/** `loadTaskRuns` once per suite and task; a failure is not cached, so Try again refetches. */
-export function taskRuns(fetchFn: typeof fetch, suite: string, task: string): Promise<SlimRun[]> {
-  const key = `${suite}/${task}`;
-  let p = taskRunCache.get(key);
-  if (!p) {
-    p = loadTaskRuns(fetchFn, suite, task);
-    p.catch(() => taskRunCache.delete(key));
-    taskRunCache.set(key, p);
-  }
-  return p;
-}
+/** The shared loader caches successful reads and evicts failures for Try again. */
+export const taskRuns = loadTaskRuns;

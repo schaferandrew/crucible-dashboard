@@ -1,13 +1,13 @@
 # crucible-dashboard
 
 The results dashboard for [Crucible](https://github.com/schaferandrew/crucible), a harness that runs local and
-cloud LLMs on real-world tasks. It is a static SvelteKit app served at
-[schaferandrew.com/crucible-dashboard/](https://www.schaferandrew.com/crucible-dashboard/), and it replaces the
+cloud LLMs on real-world tasks. It is a static SvelteKit app intended for
+[schaferandrew.com/crucible-dashboard/](https://www.schaferandrew.com/crucible-dashboard/), to replace the
 Jekyll dashboard at [/crucible/](https://www.schaferandrew.com/crucible/).
 
-> **Status:** rewrite in progress. Phase 3 is the SvelteKit skeleton, the typed scoring core and a first
-> leaderboard page; the other routes are "coming soon" placeholders. Design and pages follow in Phase 4. See
-> [docs/rewrite/](docs/rewrite/).
+> **Status:** the SvelteKit MVP implements every dashboard page in [PR #6](https://github.com/schaferandrew/crucible-dashboard/pull/6).
+> Cleanup and validation precede the portfolio dashboard cutover. Start with [docs/rewrite/](docs/rewrite/README.md)
+> and the [MVP handoff](docs/rewrite/mvp-handoff.md).
 
 ## How it fits together
 
@@ -23,6 +23,8 @@ crucible run  ──►  crucible publish  ──►  bundle/          immutable
                                      GitHub Pages  /crucible-dashboard/
 ```
 
+The bundle currently lives in the portfolio repository, under `_data/crucible/`; moving it to this repo's `bundle/` is a cutover step.
+
 - **Records are never hand-edited.** Fixes go into Crucible's registry and are applied by `crucible site-data`,
   or a run is republished.
 - **Data-driven.** Tasks, areas, sections, tiers, labels and thresholds come from the suite catalogs. Unknown
@@ -35,8 +37,10 @@ crucible run  ──►  crucible publish  ──►  bundle/          immutable
 | Path                | What                                                                                                   |
 | ------------------- | ------------------------------------------------------------------------------------------------------ |
 | `src/lib/core/`     | typed, pure scoring (no DOM, no Svelte): types, context + URL codec, scope, scoring, format, normalize |
-| `src/lib/`          | UI pieces (filter bar, leaderboard, tier cell) and the data loader                                     |
-| `src/routes/`       | pages: leaderboard (`/`) and placeholders for task, model, compare, runs, todo, about                  |
+| `src/lib/pages/`    | page views, components, shaping helpers and adjacent tests, grouped by page                            |
+| `src/lib/ui/`       | shared controls, layout, feedback and tables in named subfolders; visual tokens and heat colours       |
+| `src/lib/`          | data access, links, navigation and shared labels                                                       |
+| `src/routes/`       | route loaders, prerender entries and small wrappers for the implemented page views                     |
 | `tests/`            | golden parity tests and their allowlist (`allowlist.ts`)                                               |
 | `scripts/`          | `link-data.mjs` (dev data link), `check-size.mjs` (size budget)                                        |
 | `static/data/`      | generated site data (gitignored)                                                                       |
@@ -55,6 +59,7 @@ npm run check     # svelte-check (types)
 npm run lint      # prettier --check and eslint
 npm test          # unit tests plus parity with docs/rewrite/golden-numbers.json (needs static/data)
 npm run build     # prerendered static site in build/
+npm run test:ui   # browser smoke checks against a running dev server (Playwright Chromium required)
 npm run size      # size budget on the build: index.json <= 100 KB, first-load JS+CSS <= 150 KB (gzip)
 ```
 
@@ -74,10 +79,10 @@ are allowed only through a rule in `tests/allowlist.ts` that says why; `WRITE_GO
 `docs/rewrite/golden-diff.md`.
 
 **CI.** `.github/workflows/ci.yml` (pull requests) lints, type-checks, tests, builds and checks the size budget.
-`deploy.yml` does the same on `main` and publishes to GitHub Pages. Both generate the data first, and both need
-read access to the Crucible and site repos (a `CRUCIBLE_READ_TOKEN` secret while those are private).
+The browser smoke suite also runs against the built site in CI. `deploy.yml` runs the build checks on `main`
+and publishes to GitHub Pages. Both generate the data first, and both need read access to the Crucible and site repos (a `CRUCIBLE_READ_TOKEN` secret while those are private).
 
-Work happens on branches, with one PR per phase.
+Work happens on branches. Keep the portfolio cutover separate from cleanup and UI fixes.
 
 ## Run pages and the SPA fallback
 

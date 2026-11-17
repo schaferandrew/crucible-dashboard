@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { syntheticIndex } from '../../../../tests/fixture';
-import { COMBINED } from '$lib/core/types';
+import { asSetupId, COMBINED } from '$lib/core/types';
+import { viewFor } from '$lib/core/scoring';
 import { parseCompareQuery } from './sides';
-import { pickerGroups, resolveCompare, shortLabels, variantText } from './resolve';
+import {
+  comparisonCandidates,
+  pickerGroups,
+  resolveCompare,
+  sectionsOf,
+  shortLabels,
+  variantText,
+} from './resolve';
 
 const idx = syntheticIndex();
 
@@ -65,6 +73,23 @@ describe('resolving setups (CMP-RESOLVE-01/02, B-18)', () => {
   });
   it('never throws on an empty suite', () => {
     expect(() => resolveCompare(idx, ['', ' ', 'zzz'], 'chat')).not.toThrow();
+  });
+  it('does not offer other-section runs or provisional-only and unscored setups', () => {
+    const index = syntheticIndex();
+    const scored = index.cells[0]!;
+    const preview = asSetupId('preview-only');
+    index.entities.setups[preview] = { ...index.entities.setups['s-chat']!, id: preview };
+    index.cells.push(
+      { ...scored, setup: asSetupId('s-pi'), counted: undefined },
+      { ...scored, setup: asSetupId('s-other'), counted: { ...scored.counted!, n_scored: 0, mean: null } },
+      { ...scored, setup: preview, counted: undefined, provisional: scored.counted },
+    );
+    const candidates = comparisonCandidates(index, viewFor(index, 'chat'));
+    expect(candidates.map((c) => c.id)).toEqual(['s-chat']);
+    expect(sectionsOf(index, index.entities.setups['s-pi']!)).toEqual(['agentic']);
+    const result = resolveCompare(index, [preview], 'chat');
+    expect(result.items).toEqual([]);
+    expect(result.notes[0]).toContain('has no scored task in Chat');
   });
 });
 

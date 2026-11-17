@@ -1,6 +1,6 @@
 # Compare page parity (behaviour-spec 9 and 2.4)
 
-Code: `src/routes/compare/+page.svelte`, `src/lib/pages/compare/` (pure rules and tests: `pairing.ts`, `numbers.ts`,
+Code: `src/lib/pages/compare/ComparePage.svelte`, `src/lib/pages/compare/` (pure rules and tests: `pairing.ts`, `numbers.ts`,
 `resolve.ts`, `scales.ts`, `checks.ts`, `sides.ts`). Status: done / changed (deliberate, with reason) / dropped.
 
 A compare _side_ is a leaderboard candidate of the chosen section: one setup, or in Combined a pairing of one setup per
@@ -57,4 +57,4 @@ fetched after the first paint (shown as "…" / "Loading run times…").
 
 - `legacy-slugs.json` (B-04) is not generated yet; the page reads `<data>/legacy-slugs.json` (`{setups: {slug: id}}` or a flat map) when present.
 - Slim runs in `tasks/<task>.json` could carry the raw outcome status so reliability lists can say "context limit" again.
-- A `loadTask` loader in `$lib/data` would replace the page-local `taskRuns` in `sides.ts`.
+- Shared `loadTask` now lives in `$lib/data`; `taskRuns` in `sides.ts` uses it.

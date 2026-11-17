@@ -9,7 +9,7 @@
   //  - Cell content: columns give plain `value()` text; for anything richer pass a `cell` snippet and switch on
   //    `col.id`. The snippet's third argument says which layout it is drawing.
   import { onMount, type Snippet } from 'svelte';
-  import Empty from './Empty.svelte';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
   import { CARD_QUERY, type Column, type SortState } from './table';
 
   let {

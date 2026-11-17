@@ -7,7 +7,7 @@
 
 import { defaultSection, suiteInfo } from '$lib/core/catalog';
 import { cap } from '$lib/core/format';
-import { rowLabel, viewFor, type Candidate, type View } from '$lib/core/scoring';
+import { cellsOf, rowLabel, viewFor, type Candidate, type View } from '$lib/core/scoring';
 import type { Setup, SuiteIndex } from '$lib/core/types';
 import { COMBINED } from '$lib/core/types';
 import { MAX_COMPARE, type Identity } from './pairing';
@@ -191,13 +191,30 @@ export function assignColors(
 
 // ---- Resolution ----
 
-/** The sections a setup can be compared in: those where it is a candidate (read from the views, not guessed). */
+/** A recorded cell alone can be older, invalid, provisional, or from the wrong harness.
+ * Comparisons require a counted score on an active task in the selected view. */
+export function comparisonCandidates(index: SuiteIndex, view: View): Candidate[] {
+  const active = new Set<string>(view.tasks.filter((t) => t.status === 'active').map((t) => t.id));
+  return view
+    .candidates()
+    .filter((c) =>
+      c.members.some(
+        (m) =>
+          m &&
+          [...cellsOf(index, m.id)].some(
+            ([task, cell]) => active.has(task) && (cell.counted?.n_scored ?? 0) > 0,
+          ),
+      ),
+    );
+}
+
+/** The sections a setup has counted scores in (read from the views, not guessed). */
 export function sectionsOf(index: SuiteIndex, setup: Setup): string[] {
   return suiteInfo(index.catalog)
     .modes.filter((m) =>
-      viewFor(index, m.id)
-        .candidates()
-        .some((c) => c.members.some((x) => x?.id === setup.id)),
+      comparisonCandidates(index, viewFor(index, m.id)).some((c) =>
+        c.members.some((x) => x?.id === setup.id),
+      ),
     )
     .map((m) => m.id as string);
 }
@@ -262,7 +279,7 @@ export function resolveCompare(
           : defaultSection(info);
   }
   const view = viewFor(index, section);
-  const cands = view.candidates();
+  const cands = comparisonCandidates(index, view);
   const secName = sectionName(index, section);
 
   const items: Candidate[] = [];

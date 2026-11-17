@@ -8,7 +8,7 @@ import type { Meta, SuiteId, SuiteIndex } from '$lib/core/types';
 import { asSuiteId } from '$lib/core/types';
 import { loadIndex } from '$lib/data';
 import { suiteParam } from '$lib/paths';
-import { chrome } from '$lib/ui/chrome.svelte';
+import { chrome } from '$lib/ui/layout/chrome.svelte';
 import { pickSection, sectionChoices } from './build';
 import type { SortKey } from './shape';
 import { parseTodoUrl, todoSearch } from './url';

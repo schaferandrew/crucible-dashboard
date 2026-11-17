@@ -25,18 +25,21 @@
   } = $props();
 
   type State = { status: 'loading' } | { status: 'error' } | { status: 'ok'; checks: RunChecks };
-  const states = $state<Record<number, State>>({});
+  const states = $state<Record<string, State>>({});
 
   const picks = $derived(runs.map((r) => newestFinished(r)));
 
   $effect(() => {
-    picks.forEach((p, k) => {
+    const wantedSuite = suite;
+    picks.forEach((p) => {
       const uuid = p.newest?.uuid;
-      if (!uuid || states[k]) return;
-      states[k] = { status: 'loading' };
+      if (!uuid) return;
+      const key = `${wantedSuite}|${uuid}`;
+      if (states[key]) return;
+      states[key] = { status: 'loading' };
       loadRun(fetch, uuid).then(
-        (run) => (states[k] = { status: 'ok', checks: checksFromRun(run, suite) }),
-        () => (states[k] = { status: 'error' }),
+        (run) => (states[key] = { status: 'ok', checks: checksFromRun(run, wantedSuite) }),
+        () => (states[key] = { status: 'error' }),
       );
     });
   });
@@ -45,7 +48,7 @@
 <div class="grid">
   {#each labels as label, k (k)}
     {@const pick = picks[k]}
-    {@const st = states[k]}
+    {@const st = pick?.newest ? states[`${suite}|${pick.newest.uuid}`] : undefined}
     <div class="col" style:border-top-color={colors[k]}>
       <p class="head">
         <strong>{label}</strong>{#if pick?.newest}&nbsp;{fmtScore(pick.newest.score)}{/if}

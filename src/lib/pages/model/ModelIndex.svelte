@@ -4,10 +4,10 @@
   import { afterNavigate } from '$app/navigation';
   import { onMount, untrack } from 'svelte';
   import type { Meta, SuiteIndex } from '$lib/core/types';
-  import { ContextState } from '$lib/ui/contextState.svelte';
-  import Empty from '$lib/ui/Empty.svelte';
-  import PageHeader from '$lib/ui/PageHeader.svelte';
-  import SuiteBar from '$lib/ui/SuiteBar.svelte';
+  import { ContextState } from '$lib/ui/controls/contextState.svelte';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
+  import PageHeader from '$lib/ui/layout/PageHeader.svelte';
+  import SuiteBar from '$lib/ui/controls/SuiteBar.svelte';
   import { makerHref, modelHref, suiteParam } from './links';
   import { makerGroups } from './shape';
 

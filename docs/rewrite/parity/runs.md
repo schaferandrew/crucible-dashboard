@@ -2,7 +2,7 @@
 
 | ID | status | note |
 | --- | --- | --- |
-| RUN-PAGE-01 | changed: B-05 | Title "Runs", breadcrumb "Crucible > Runs". Only the shared panel's choices are in the URL (suite, section, facets); outcome, state, sort, page size and loaded months are restored on Back through the page snapshot. |
+| RUN-PAGE-01 | changed: B-05 | Title "Runs", breadcrumb "Crucible > Runs". The shared panel choices plus outcome, state and sort are shareable query parameters. Page size and loaded months are restored on Back through the route snapshot. |
 | RUN-PAGE-02 | changed: B-05 | Suite select comes from the shared panel ("(current)" mark kept). Sort select: newest, oldest, model, score high/low. The old "Filter" select is split into Outcome (finished / timed out / error) and State (every state present, with counts). |
 | RUN-PAGE-03 | changed: B-05 | The list is filtered by the chosen suite's state of each run. Invalid/withdrawn runs are kept, with a badge. The task-version check is the suite's "older" state; every state is filterable. |
 | RUN-PAGE-04 | changed: B-05 | Outcome uses one core class: timed_out is timeout, finished is finished, anything else (including harness_error) is error. |

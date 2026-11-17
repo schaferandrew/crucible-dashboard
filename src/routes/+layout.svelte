@@ -7,8 +7,8 @@
   import { fmtDate } from '$lib/core/format';
   import { navFor } from '$lib/nav';
   import { link } from '$lib/paths';
-  import { chrome } from '$lib/ui/chrome.svelte';
-  import TabStrip from '$lib/ui/TabStrip.svelte';
+  import { chrome } from '$lib/ui/layout/chrome.svelte';
+  import TabStrip from '$lib/ui/layout/TabStrip.svelte';
 
   let { data, children } = $props();
 

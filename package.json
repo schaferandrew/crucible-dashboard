@@ -15,7 +15,8 @@
     "data": "node scripts/link-data.mjs",
     "data:gen": "bash scripts/gen-data.sh",
     "size": "node scripts/check-size.mjs",
-    "shots": "node scripts/shots.mjs"
+    "shots": "node scripts/shots.mjs",
+    "test:ui": "node scripts/check-ui.mjs"
   },
   "engines": {
     "node": ">=20"

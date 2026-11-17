@@ -2,8 +2,8 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { buildRunLinkIndex } from '../core/runlink';
 import { contrast, heat, heatRgb } from './heat';
-import { describeNotShown, notShownLine } from './notShown';
-import { documentTitle } from './title';
+import { describeNotShown, notShownLine } from '$lib/ui/feedback/notShown';
+import { documentTitle } from '$lib/ui/layout/title';
 
 describe('heat (FMT-09) meets AA', () => {
   it('every score 0..10 has >= 4.5:1 text', () => {

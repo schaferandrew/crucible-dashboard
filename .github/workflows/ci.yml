@@ -35,3 +35,14 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm run size
+
+      - name: Install browser for UI checks
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser smoke checks
+        run: |
+          npm run preview -- --host 0.0.0.0 --port 4173 > /tmp/crucible-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid"' EXIT
+          curl --fail --silent --retry 15 --retry-connrefused --retry-delay 1 http://localhost:4173/crucible-dashboard/ > /dev/null
+          npm run test:ui -- http://localhost:4173

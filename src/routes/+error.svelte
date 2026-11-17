@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { link } from '$lib/paths';
-  import PageHeader from '$lib/ui/PageHeader.svelte';
+  import PageHeader from '$lib/ui/layout/PageHeader.svelte';
 </script>
 
 <PageHeader

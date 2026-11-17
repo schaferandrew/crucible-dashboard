@@ -1,7 +1,7 @@
 // Is the viewport at least 640 px wide? null until mounted (prerender and first paint draw both layouts and
 // CSS shows the right one, as ResponsiveTable does). Only one layout is in the DOM once mounted (MAIN-RESP-01).
 
-import { CARD_QUERY } from '$lib/ui/table';
+import { CARD_QUERY } from '$lib/ui/tables/table';
 
 export class Wide {
   value = $state<boolean | null>(null);

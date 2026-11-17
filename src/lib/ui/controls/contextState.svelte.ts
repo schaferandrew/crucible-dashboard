@@ -24,7 +24,7 @@ import type { Meta, SuiteIndex } from '$lib/core/types';
 import { loadIndex } from '$lib/data';
 import { link, suiteParam } from '$lib/paths';
 import type { Params } from '$lib/core/urls';
-import { chrome } from './chrome.svelte';
+import { chrome } from '$lib/ui/layout/chrome.svelte';
 import { readProvisional } from './prefs';
 
 export interface ContextStateOptions {
@@ -48,6 +48,7 @@ export class ContextState {
   failure = $state<string | null>(null);
   loading = $state(false);
   #mounted = false;
+  #request = 0;
 
   constructor(opts: ContextStateOptions) {
     this.meta = opts.meta;
@@ -97,6 +98,7 @@ export class ContextState {
 
   /** Apply a new context: loads the suite's index if it changed, resolves the section, updates the URL. */
   update = async (next: DataContext, opts: { write?: boolean } = {}): Promise<void> => {
+    const request = ++this.#request;
     let idx = this.index;
     if (next.suite !== idx.suite) {
       this.loading = true;
@@ -104,12 +106,16 @@ export class ContextState {
       try {
         idx = await loadIndex(fetch, next.suite);
       } catch (e) {
-        this.failure = `Couldn't load ${next.suite}: ${e instanceof Error ? e.message : String(e)}`;
+        if (request === this.#request)
+          this.failure = `Couldn't load ${next.suite}: ${e instanceof Error ? e.message : String(e)}`;
         return;
       } finally {
-        this.loading = false;
+        if (request === this.#request) this.loading = false;
       }
     }
+    if (request !== this.#request) return;
+    this.loading = false;
+    this.failure = null;
     const resolved = this.#pinned(resolveContext(next, idx.catalog));
     this.index = idx;
     this.ctx = resolved;
