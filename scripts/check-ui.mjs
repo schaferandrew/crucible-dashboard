@@ -10,9 +10,15 @@ const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
 });
 const errors = [];
+const externalRequests = new Set();
 const page = await browser.newPage({ reducedMotion: 'reduce' });
 page.setDefaultTimeout(15000);
 page.on('pageerror', (error) => errors.push(error.message));
+page.on('request', (request) => {
+  const url = new URL(request.url());
+  if (/^https?:$/.test(url.protocol) && url.origin !== new URL(origin).origin)
+    externalRequests.add(url.origin);
+});
 const outcome = () => page.getByRole('combobox', { name: /^Outcome/ });
 const state = () => page.getByRole('combobox', { name: /^State in/ });
 const sort = () => page.getByRole('combobox', { name: /^Sort by/ });
@@ -56,37 +62,46 @@ async function activeTabVisible() {
 }
 
 async function themeControls(width) {
+  await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto(base + '/');
+  await page.evaluate(() => localStorage.removeItem('crucible-theme'));
+  await page.reload();
   await settled();
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
   const mobile = width < 1101;
   const open = () => page.getByRole('button', { name: 'Open menu', exact: true });
-  const theme = () => page.getByRole('combobox', { name: 'Theme', exact: true });
+  const toggle = () => page.getByRole('button', { name: /^Switch to (light|dark) mode$/ });
   if (mobile) {
-    assert.equal(await theme().isVisible(), false);
+    assert.equal(await toggle().isVisible(), false);
     await open().click();
     assert.equal(
       await page.getByRole('button', { name: 'Close menu' }).getAttribute('aria-expanded'),
       'true',
     );
   }
-  await theme().selectOption('dark');
+  assert.equal(await toggle().getAttribute('title'), 'Switch to dark mode');
+  await toggle().click();
+  assert.equal(await toggle().getAttribute('aria-label'), 'Switch to light mode');
   assert.equal(
     await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()),
     '#16141b',
   );
-  await page.emulateMedia({ colorScheme: 'light' });
-  assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
   await page.reload();
   await settled();
   if (mobile) await open().click();
-  assert.equal(await theme().inputValue(), 'dark');
-  await theme().selectOption('light');
+  assert.equal(await toggle().getAttribute('aria-label'), 'Switch to light mode');
+  // Keyboard activation has the same single-click behavior.
+  await toggle().focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await toggle().getAttribute('aria-label'), 'Switch to dark mode');
   await page.emulateMedia({ colorScheme: 'dark' });
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
-  await theme().selectOption('auto');
-  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
-  await page.emulateMedia({ colorScheme: 'light' });
-  await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+  await page.reload();
+  await settled();
+  if (mobile) await open().click();
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
   if (mobile) {
     await page.keyboard.press('Escape');
     assert.equal(await open().getAttribute('aria-expanded'), 'false');
@@ -309,6 +324,7 @@ try {
     assert.equal(await suite().inputValue(), currentSuite);
     assert.equal(new URL(page.url()).searchParams.has('suite'), false);
   }
+  assert.deepEqual([...externalRequests], [], 'Dashboard flows must not request third-party resources');
   assert.deepEqual(errors, [], 'No browser runtime errors');
   console.log('Passed suite race check; no browser runtime errors');
 } finally {

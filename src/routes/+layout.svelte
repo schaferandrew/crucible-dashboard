@@ -4,7 +4,7 @@
   import { base } from '$app/paths';
   import { page } from '$app/state';
   import { tick } from 'svelte';
-  import ThemeSelect from '$lib/ui/layout/ThemeSelect.svelte';
+  import ThemeToggle from '$lib/ui/layout/ThemeToggle.svelte';
   import { fmtDate } from '$lib/core/format';
   import { navFor } from '$lib/nav';
   import { link } from '$lib/paths';
@@ -84,7 +84,7 @@
     </button>
     <div id="header-menu" class="header-menu" class:open={menuOpen}>
       <TabStrip {current} suite={chrome.suite} />
-      <ThemeSelect />
+      <ThemeToggle />
     </div>
   </div>
 </header>
