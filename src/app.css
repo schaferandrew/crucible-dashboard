@@ -1,0 +1,136 @@
+/* Base styles on top of the tokens (src/lib/ui/tokens.css). Component styles live in the components. */
+@import './lib/ui/tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: var(--text-md) / var(--leading) var(--font);
+}
+
+a {
+  color: var(--accent);
+}
+
+h1,
+h2,
+h3 {
+  line-height: var(--leading-tight);
+  margin: 0 0 var(--space-2);
+}
+
+h1 {
+  font-size: var(--text-2xl);
+}
+h2 {
+  font-size: var(--text-lg);
+}
+h3 {
+  font-size: var(--text-md);
+}
+
+button,
+select,
+input,
+summary {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* A heading focused by a route change is a target, not a control: no ring around it */
+h1[tabindex='-1']:focus {
+  outline: none;
+}
+
+table {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* `hidden` always wins over layout rules (A11Y-05) */
+[hidden] {
+  display: none !important;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Shared small pieces */
+.tag {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--tray);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.tag.local {
+  background: var(--local-tint);
+  color: var(--local-ink);
+}
+.tag.cloud {
+  background: var(--cloud-tint);
+  color: var(--cloud-ink);
+}
+.tag.warn {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.tag.bad {
+  background: var(--bad-soft);
+  color: var(--bad);
+}
+.tag.good {
+  background: var(--good-soft);
+  color: var(--good);
+}
+
+.banner {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius);
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.banner.bad {
+  background: var(--bad-soft);
+  color: var(--bad);
+}

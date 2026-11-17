@@ -1,0 +1,9 @@
+.svelte-kit/
+build/
+node_modules/
+static/data/
+package-lock.json
+docs/
+.claude/
+.ci/
+.cache/

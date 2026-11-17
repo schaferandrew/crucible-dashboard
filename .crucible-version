@@ -1,0 +1,4 @@
+# The schaferandrew/crucible ref CI installs `crucible site-data` from (first non-comment line).
+# For now this is the branch carrying the registry and site-data work; it becomes a release tag
+# (for example v3.11.0) as soon as Crucible publishes one, so builds are reproducible.
+phase-2

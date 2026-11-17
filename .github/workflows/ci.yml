@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # The parity tests and the build both need real data.
+      - name: Generate site data
+        uses: ./.github/actions/site-data
+        with:
+          token: ${{ secrets.CRUCIBLE_READ_TOKEN || github.token }}
+
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - run: npm run size
+
+      - name: Install browser for UI checks
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser smoke checks
+        run: |
+          npm run preview -- --host 0.0.0.0 --port 4173 > /tmp/crucible-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid"' EXIT
+          curl --fail --silent --retry 15 --retry-connrefused --retry-delay 1 http://localhost:4173/crucible-dashboard/ > /dev/null
+          npm run test:ui -- http://localhost:4173
