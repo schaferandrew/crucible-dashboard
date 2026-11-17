@@ -126,7 +126,8 @@ async function themeControls(width) {
     assert.ok(Math.max(...targets.map((t) => t.right)) - Math.min(...targets.map((t) => t.right)) < 1);
     await toggle().focus();
     await page.keyboard.press('Tab');
-    assert.equal(await page.locator('header .brand').evaluate((e) => e === document.activeElement), true);
+    const close = page.getByRole('button', { name: 'Close menu', exact: true });
+    assert.equal(await close.evaluate((e) => e === document.activeElement), true);
     await page.keyboard.press('Escape');
     assert.equal(await open().getAttribute('aria-expanded'), 'false');
     assert.equal(await open().evaluate((e) => e === document.activeElement), true);

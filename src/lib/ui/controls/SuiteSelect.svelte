@@ -25,6 +25,7 @@
 <style>
   .field {
     display: grid;
+    grid-template-rows: max-content 1fr;
     gap: 0.2rem;
   }
   label {
