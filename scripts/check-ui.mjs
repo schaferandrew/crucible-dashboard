@@ -23,6 +23,11 @@ async function settled() {
   await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'));
 }
 async function followLink(link) {
+  if (
+    !(await link.isVisible()) &&
+    (await page.getByRole('button', { name: 'Open menu', exact: true }).isVisible())
+  )
+    await page.getByRole('button', { name: 'Open menu', exact: true }).click();
   const href = await link.getAttribute('href');
   assert.ok(href, 'Navigation needs a link destination');
   const destination = new URL(href, page.url());
@@ -35,6 +40,9 @@ async function noOverflow() {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
 async function activeTabVisible() {
+  const menu = page.getByRole('button', { name: 'Open menu', exact: true });
+  const mobile = await menu.isVisible();
+  if (mobile) await menu.click();
   assert.equal(
     await page.locator('nav.tabs [aria-current="page"]').evaluate((tab) => {
       const a = tab.getBoundingClientRect();
@@ -44,6 +52,64 @@ async function activeTabVisible() {
     true,
     'The active nav tab must be visible',
   );
+  if (mobile) await page.getByRole('button', { name: 'Close menu', exact: true }).click();
+}
+
+async function themeControls(width) {
+  await page.goto(base + '/');
+  await settled();
+  const mobile = width < 1101;
+  const open = () => page.getByRole('button', { name: 'Open menu', exact: true });
+  const theme = () => page.getByRole('combobox', { name: 'Theme', exact: true });
+  if (mobile) {
+    assert.equal(await theme().isVisible(), false);
+    await open().click();
+    assert.equal(
+      await page.getByRole('button', { name: 'Close menu' }).getAttribute('aria-expanded'),
+      'true',
+    );
+  }
+  await theme().selectOption('dark');
+  assert.equal(
+    await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()),
+    '#16141b',
+  );
+  await page.emulateMedia({ colorScheme: 'light' });
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'dark');
+  await page.reload();
+  await settled();
+  if (mobile) await open().click();
+  assert.equal(await theme().inputValue(), 'dark');
+  await theme().selectOption('light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+  await theme().selectOption('auto');
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+  if (mobile) {
+    await page.keyboard.press('Escape');
+    assert.equal(await open().getAttribute('aria-expanded'), 'false');
+    assert.equal(await open().evaluate((e) => e === document.activeElement), true);
+    await open().click();
+    await followLink(page.getByRole('link', { name: 'Tasks', exact: true }));
+    assert.equal(await open().getAttribute('aria-expanded'), 'false');
+  } else {
+    const centers = await page.locator('header .brand, header nav a').evaluateAll((es) =>
+      es.map((e) => {
+        const range = document.createRange();
+        range.selectNodeContents(e);
+        const box = range.getBoundingClientRect();
+        return box.y + box.height / 2;
+      }),
+    );
+    assert.ok(Math.max(...centers) - Math.min(...centers) < 3, 'Header text is vertically centered');
+    const underline = await page
+      .locator('nav [aria-current="page"]')
+      .evaluate((e) => getComputedStyle(e, '::after').height);
+    assert.equal(underline, '2px');
+  }
+  await noOverflow();
 }
 
 async function json(path) {
@@ -72,6 +138,7 @@ assert.ok(repeat, 'The smoke data needs a repeated run with model outputs');
 try {
   for (const width of [1400, 375]) {
     await page.setViewportSize({ width, height: 900 });
+    await themeControls(width);
     for (const route of ['/', '/task/', '/model/', '/compare/', '/todo/', '/runs/', '/about/']) {
       await page.goto(base + route);
       await settled();
