@@ -11,9 +11,15 @@ const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
 });
 const errors = [];
+const externalRequests = new Set();
 const page = await browser.newPage({ reducedMotion: 'reduce' });
 page.setDefaultTimeout(15000);
 page.on('pageerror', (error) => errors.push(error.message));
+page.on('request', (request) => {
+  const url = new URL(request.url());
+  if (/^https?:$/.test(url.protocol) && url.origin !== new URL(origin).origin)
+    externalRequests.add(url.origin);
+});
 const outcome = () => page.getByRole('combobox', { name: /^Outcome/ });
 const state = () => page.getByRole('combobox', { name: /^State in/ });
 const sort = () => page.getByRole('combobox', { name: /^Sort by/ });
@@ -24,6 +30,11 @@ async function settled() {
   await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'));
 }
 async function followLink(link) {
+  if (
+    !(await link.isVisible()) &&
+    (await page.getByRole('button', { name: 'Open menu', exact: true }).isVisible())
+  )
+    await page.getByRole('button', { name: 'Open menu', exact: true }).click();
   const href = await link.getAttribute('href');
   assert.ok(href, 'Navigation needs a link destination');
   const destination = new URL(href, page.url());
@@ -36,6 +47,9 @@ async function noOverflow() {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
 async function activeTabVisible() {
+  const menu = page.getByRole('button', { name: 'Open menu', exact: true });
+  const mobile = await menu.isVisible();
+  if (mobile) await menu.click();
   assert.equal(
     await page.locator('nav.tabs [aria-current="page"]').evaluate((tab) => {
       const a = tab.getBoundingClientRect();
@@ -45,6 +59,106 @@ async function activeTabVisible() {
     true,
     'The active nav tab must be visible',
   );
+  if (mobile) await page.getByRole('button', { name: 'Close menu', exact: true }).click();
+}
+
+async function themeControls(width) {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto(base + '/');
+  await page.evaluate(() => localStorage.removeItem('crucible-theme'));
+  await page.reload();
+  await settled();
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
+  const mobile = width < 1101;
+  const open = () => page.getByRole('button', { name: 'Open menu', exact: true });
+  const toggle = () => page.getByRole('button', { name: /^Switch to (light|dark) mode$/ });
+  const assertPinned = async () => {
+    const viewport = page.viewportSize();
+    const { x, y, width, height } = await toggle().boundingBox();
+    assert.equal(viewport.height - y - height, 16);
+    const menu = await page.getByRole('button', { name: /^(Open|Close) menu$/ }).boundingBox();
+    assert.equal(menu.y + menu.height, y + height);
+    assert.equal(viewport.width - menu.x - menu.width, 16);
+    assert.equal(menu.x - x - width, 8);
+  };
+  if (mobile) {
+    assert.equal(await toggle().isVisible(), true);
+    assert.equal(await page.locator('#header-menu button').count(), 0);
+    await assertPinned();
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    assert.ok(await page.evaluate(() => window.scrollY > 0));
+    await assertPinned();
+  }
+  assert.equal(await toggle().getAttribute('title'), 'Switch to dark mode');
+  await toggle().click();
+  assert.equal(await toggle().getAttribute('aria-label'), 'Switch to light mode');
+  assert.equal(
+    await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()),
+    '#16141b',
+  );
+  await page.reload();
+  await settled();
+  assert.equal(await toggle().getAttribute('aria-label'), 'Switch to light mode');
+  // Keyboard activation has the same single-click behavior.
+  await toggle().focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await toggle().getAttribute('aria-label'), 'Switch to dark mode');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+  await page.reload();
+  await settled();
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
+  if (mobile) {
+    await open().click();
+    await assertPinned();
+    const overlay = await page.locator('header').boundingBox();
+    assert.equal(overlay.y, 0);
+    assert.equal(overlay.height, 900);
+    assert.equal(await page.locator('main').getAttribute('inert'), '');
+    const targets = await page
+      .locator('header nav a')
+      .evaluateAll((es) =>
+        es.map((e) => ({ height: e.getBoundingClientRect().height, right: e.getBoundingClientRect().right })),
+      );
+    assert.ok(targets.every((t) => t.height >= 56));
+    assert.ok(Math.max(...targets.map((t) => t.right)) - Math.min(...targets.map((t) => t.right)) < 1);
+    await toggle().focus();
+    await page.keyboard.press('Tab');
+    assert.equal(await page.locator('header .brand').evaluate((e) => e === document.activeElement), true);
+    await page.keyboard.press('Escape');
+    assert.equal(await open().getAttribute('aria-expanded'), 'false');
+    assert.equal(await open().evaluate((e) => e === document.activeElement), true);
+    await open().click();
+    await followLink(page.getByRole('link', { name: 'Tasks', exact: true }));
+    assert.equal(await open().getAttribute('aria-expanded'), 'false');
+  } else {
+    const centers = await page.locator('header .brand, header nav a').evaluateAll((es) =>
+      es.map((e) => {
+        const range = document.createRange();
+        range.selectNodeContents(e);
+        const box = range.getBoundingClientRect();
+        return box.y + box.height / 2;
+      }),
+    );
+    assert.ok(Math.max(...centers) - Math.min(...centers) < 3, 'Header text is vertically centered');
+    const underline = await page
+      .locator('nav [aria-current="page"]')
+      .evaluate((e) => getComputedStyle(e, '::after').height);
+    assert.equal(underline, '2px');
+  }
+  await noOverflow();
+  if (mobile) {
+    await page.setViewportSize({ width, height: 400 });
+    await open().click();
+    await page.getByRole('link', { name: 'About', exact: true }).scrollIntoViewIfNeeded();
+    assert.ok(await page.locator('header').evaluate((e) => e.scrollTop > 0));
+    await assertPinned();
+    await page.keyboard.press('Escape');
+    assert.notEqual(await page.evaluate(() => document.body.style.overflow), 'hidden');
+    await page.setViewportSize({ width, height: 900 });
+  }
 }
 
 async function json(path) {
@@ -73,6 +187,7 @@ assert.ok(repeat, 'The smoke data needs a repeated run with model outputs');
 try {
   for (const width of [1400, 375]) {
     await page.setViewportSize({ width, height: 900 });
+    await themeControls(width);
     for (const route of ['/', '/task/', '/model/', '/compare/', '/todo/', '/runs/', '/about/']) {
       await page.goto(base + route);
       await settled();
@@ -243,6 +358,7 @@ try {
     assert.equal(await suite().inputValue(), currentSuite);
     assert.equal(new URL(page.url()).searchParams.has('suite'), false);
   }
+  assert.deepEqual([...externalRequests], [], 'Dashboard flows must not request third-party resources');
   assert.deepEqual(errors, [], 'No browser runtime errors');
   console.log('Passed suite race check; no browser runtime errors');
 } finally {

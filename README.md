@@ -51,6 +51,10 @@ The bundle currently lives in the portfolio repository, under `_data/crucible/`;
 
 Node 20 or newer (CI uses 22), SvelteKit 2, Svelte 5 (runes), TypeScript strict, Vitest.
 
+Keep UI assets local: use inline SVG icons and system or self-hosted fonts. Do not add Google font/icon
+packages, remotely hosted fonts or icons, or third-party tracking scripts. Browser smoke checks assert
+that dashboard flows make no third-party resource requests.
+
 ```bash
 npm install
 npm run data:gen  # generate static/data from GitHub (needs git + uv; see below)
