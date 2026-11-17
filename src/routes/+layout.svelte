@@ -21,10 +21,32 @@
   let announcement = $state('');
   let menuOpen = $state(false);
   let menuButton: HTMLButtonElement;
+  $effect(() => {
+    if (!menuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  });
   function closeOnEscape(event: KeyboardEvent) {
     if (event.key === 'Escape' && menuOpen) {
       menuOpen = false;
+      event.preventDefault();
       menuButton?.focus();
+    } else if (event.key === 'Tab' && menuOpen) {
+      const controls = [...document.querySelectorAll<HTMLElement>('header a, header button')].filter(
+        (el) => el.getClientRects().length > 0,
+      );
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     }
   }
   afterNavigate(async ({ from, to, type }) => {
@@ -51,7 +73,12 @@
   });
 </script>
 
-<svelte:window onkeydown={closeOnEscape} />
+<svelte:window
+  onkeydown={closeOnEscape}
+  onresize={() => {
+    if (innerWidth > 1100) menuOpen = false;
+  }}
+/>
 
 <svelte:head>
   <meta name="robots" content="noindex" />
@@ -59,7 +86,7 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
-<header class="top">
+<header class="top" class:menu-open={menuOpen}>
   <div class="wrap bar">
     <a class="brand" href={link('/', { suite: chrome.suite })}>Crucible</a>
     <button
@@ -89,11 +116,11 @@
   </div>
 </header>
 
-<main id="main" class="wrap" tabindex="-1">
+<main id="main" class="wrap" tabindex="-1" inert={menuOpen}>
   {@render children()}
 </main>
 
-<footer class="wrap foot muted">
+<footer class="wrap foot muted" inert={menuOpen}>
   Data built {fmtDate(data.meta.built_at)} (UTC) with Crucible {data.meta.crucible_version}.
 </footer>
 
@@ -142,6 +169,19 @@
     background: var(--surface);
   }
   @media (max-width: 1100px) {
+    .top.menu-open {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    .menu-open .bar {
+      min-height: 100dvh;
+      align-content: start;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
     .bar {
       flex-wrap: wrap;
       align-items: center;
@@ -159,8 +199,9 @@
       flex: 0 0 100%;
       flex-direction: column;
       align-items: flex-end;
+      gap: var(--space-5);
+      padding-top: var(--space-4);
       padding-bottom: var(--space-4);
-      gap: var(--space-4);
     }
   }
   .brand {

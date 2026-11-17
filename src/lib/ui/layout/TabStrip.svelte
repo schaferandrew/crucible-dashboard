@@ -49,5 +49,10 @@
       align-items: flex-end;
       gap: var(--space-1);
     }
+    a {
+      min-height: 56px;
+      font-size: var(--text-xl);
+      padding: var(--space-3) 0;
+    }
   }
 </style>

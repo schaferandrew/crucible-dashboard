@@ -103,6 +103,20 @@ async function themeControls(width) {
   if (mobile) await open().click();
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
   if (mobile) {
+    const overlay = await page.locator('header').boundingBox();
+    assert.equal(overlay.y, 0);
+    assert.equal(overlay.height, 900);
+    assert.equal(await page.locator('main').getAttribute('inert'), '');
+    const targets = await page
+      .locator('header nav a')
+      .evaluateAll((es) =>
+        es.map((e) => ({ height: e.getBoundingClientRect().height, right: e.getBoundingClientRect().right })),
+      );
+    assert.ok(targets.every((t) => t.height >= 56));
+    assert.ok(Math.max(...targets.map((t) => t.right)) - Math.min(...targets.map((t) => t.right)) < 1);
+    await toggle().focus();
+    await page.keyboard.press('Tab');
+    assert.equal(await page.locator('header .brand').evaluate((e) => e === document.activeElement), true);
     await page.keyboard.press('Escape');
     assert.equal(await open().getAttribute('aria-expanded'), 'false');
     assert.equal(await open().evaluate((e) => e === document.activeElement), true);
@@ -125,6 +139,18 @@ async function themeControls(width) {
     assert.equal(underline, '2px');
   }
   await noOverflow();
+  if (mobile) {
+    await page.setViewportSize({ width, height: 400 });
+    await open().click();
+    await toggle().scrollIntoViewIfNeeded();
+    assert.ok(
+      await page.locator('header').evaluate((e) => e.scrollTop > 0),
+      'Short screens can scroll to the theme button',
+    );
+    await page.keyboard.press('Escape');
+    assert.notEqual(await page.evaluate(() => document.body.style.overflow), 'hidden');
+    await page.setViewportSize({ width, height: 900 });
+  }
 }
 
 async function json(path) {
