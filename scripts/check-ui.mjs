@@ -22,6 +22,15 @@ async function settled() {
   await page.waitForLoadState('networkidle');
   await page.waitForFunction(() => !document.querySelector('[aria-busy="true"]'));
 }
+async function followLink(link) {
+  const href = await link.getAttribute('href');
+  assert.ok(href, 'Navigation needs a link destination');
+  const destination = new URL(href, page.url());
+  // A cached page can still be idle before SvelteKit starts client navigation.
+  // Wait for the destination first, then inspect its UI.
+  await Promise.all([page.waitForURL((url) => url.pathname === destination.pathname), link.click()]);
+  await settled();
+}
 async function noOverflow() {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 }
@@ -83,8 +92,7 @@ try {
       await page.getByRole('radio', { checked: true }).evaluate((e) => e === document.activeElement),
       true,
     );
-    await page.locator('main a[href*="/task/"]').first().click();
-    await settled();
+    await followLink(page.locator('main a[href*="/task/"]').first());
     assert.equal(await page.getByRole('heading', { name: 'Task not found', exact: true }).count(), 0);
     await noOverflow();
 
@@ -110,13 +118,9 @@ try {
       assert.equal(new URL(page.url()).searchParams.get('sort'), 'oldest');
     }
     const run = page.locator('main a[href*="/run/"]').first();
-    await run.click();
-    await page.waitForURL((url) => url.pathname.includes('/run/'));
-    await settled();
+    await followLink(run);
     await noOverflow();
-    await page.getByRole('link', { name: '← Back', exact: true }).click();
-    await page.waitForURL((url) => url.pathname.endsWith('/runs/'));
-    await settled();
+    await followLink(page.getByRole('link', { name: '← Back', exact: true }));
     assert.equal(await outcome().inputValue(), 'timeout');
     assert.equal(await sort().inputValue(), 'oldest');
 
@@ -128,9 +132,9 @@ try {
     await output().locator('pre').waitFor();
     const firstOutput = await page.request.get(`${base}/data/${repeat.run.output}`).then((r) => r.text());
     assert.equal(await output().locator('pre').textContent(), firstOutput || '(empty)');
-    await page.getByRole('link', { name: `Run ${repeat.other.run_uuid.slice(0, 8)}`, exact: true }).click();
-    await page.waitForURL((url) => url.pathname.endsWith(`/run/${repeat.other.run_uuid}/`));
-    await settled();
+    await followLink(
+      page.getByRole('link', { name: `Run ${repeat.other.run_uuid.slice(0, 8)}`, exact: true }),
+    );
     assert.equal(await output().getAttribute('open'), null);
     await output().locator('summary').click();
     await output().locator('pre').waitFor();
@@ -199,11 +203,9 @@ try {
     }
     await page.unroute('**/data/runs/*.json');
     await noOverflow();
-    await page.getByRole('link', { name: 'Models', exact: true }).click();
-    await settled();
+    await followLink(page.getByRole('link', { name: 'Models', exact: true }));
     await activeTabVisible();
-    await page.locator('main a[href*="/model/"]').first().click();
-    await settled();
+    await followLink(page.locator('main a[href*="/model/"]').first());
     // Maker -> model detail.
     const model = page.locator('main a[href*="/model/"]').filter({ hasText: /./ });
     const detail = await model.evaluateAll((links) =>
