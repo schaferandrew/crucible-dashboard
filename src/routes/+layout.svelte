@@ -184,7 +184,7 @@
       z-index: 11;
     }
     .theme-control {
-      right: var(--controls-right);
+      right: calc(var(--controls-right) + 44px + var(--space-2));
       background: var(--surface);
       box-shadow: 0 0 0 1px var(--border);
       border-radius: var(--radius-pill);
@@ -210,7 +210,7 @@
     }
     .menu-toggle {
       display: flex;
-      right: calc(var(--controls-right) + 44px + var(--space-2));
+      right: var(--controls-right);
     }
     .header-menu {
       display: none;

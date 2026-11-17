@@ -77,10 +77,10 @@ async function themeControls(width) {
     const viewport = page.viewportSize();
     const { x, y, width, height } = await toggle().boundingBox();
     assert.equal(viewport.height - y - height, 16);
-    assert.equal(viewport.width - x - width, 16);
     const menu = await page.getByRole('button', { name: /^(Open|Close) menu$/ }).boundingBox();
     assert.equal(menu.y + menu.height, y + height);
-    assert.equal(x - menu.x - menu.width, 8);
+    assert.equal(viewport.width - menu.x - menu.width, 16);
+    assert.equal(menu.x - x - width, 8);
   };
   if (mobile) {
     assert.equal(await toggle().isVisible(), true);
