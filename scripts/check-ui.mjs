@@ -73,13 +73,19 @@ async function themeControls(width) {
   const mobile = width < 1101;
   const open = () => page.getByRole('button', { name: 'Open menu', exact: true });
   const toggle = () => page.getByRole('button', { name: /^Switch to (light|dark) mode$/ });
+  const assertPinned = async () => {
+    const viewport = page.viewportSize();
+    const { x, y, width, height } = await toggle().boundingBox();
+    assert.equal(viewport.height - y - height, 16);
+    assert.equal(viewport.width - x - width, 16);
+  };
   if (mobile) {
-    assert.equal(await toggle().isVisible(), false);
-    await open().click();
-    assert.equal(
-      await page.getByRole('button', { name: 'Close menu' }).getAttribute('aria-expanded'),
-      'true',
-    );
+    assert.equal(await toggle().isVisible(), true);
+    assert.equal(await page.locator('#header-menu button').count(), 0);
+    await assertPinned();
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    assert.ok(await page.evaluate(() => window.scrollY > 0));
+    await assertPinned();
   }
   assert.equal(await toggle().getAttribute('title'), 'Switch to dark mode');
   await toggle().click();
@@ -90,7 +96,6 @@ async function themeControls(width) {
   );
   await page.reload();
   await settled();
-  if (mobile) await open().click();
   assert.equal(await toggle().getAttribute('aria-label'), 'Switch to light mode');
   // Keyboard activation has the same single-click behavior.
   await toggle().focus();
@@ -100,9 +105,10 @@ async function themeControls(width) {
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
   await page.reload();
   await settled();
-  if (mobile) await open().click();
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'light');
   if (mobile) {
+    await open().click();
+    await assertPinned();
     const overlay = await page.locator('header').boundingBox();
     assert.equal(overlay.y, 0);
     assert.equal(overlay.height, 900);
@@ -142,11 +148,9 @@ async function themeControls(width) {
   if (mobile) {
     await page.setViewportSize({ width, height: 400 });
     await open().click();
-    await toggle().scrollIntoViewIfNeeded();
-    assert.ok(
-      await page.locator('header').evaluate((e) => e.scrollTop > 0),
-      'Short screens can scroll to the theme button',
-    );
+    await page.getByRole('link', { name: 'About', exact: true }).scrollIntoViewIfNeeded();
+    assert.ok(await page.locator('header').evaluate((e) => e.scrollTop > 0));
+    await assertPinned();
     await page.keyboard.press('Escape');
     assert.notEqual(await page.evaluate(() => document.body.style.overflow), 'hidden');
     await page.setViewportSize({ width, height: 900 });

@@ -21,6 +21,7 @@
   let announcement = $state('');
   let menuOpen = $state(false);
   let menuButton: HTMLButtonElement;
+  let headerBar: HTMLDivElement;
   $effect(() => {
     if (!menuOpen) return;
     const previous = document.body.style.overflow;
@@ -35,7 +36,7 @@
       event.preventDefault();
       menuButton?.focus();
     } else if (event.key === 'Tab' && menuOpen) {
-      const controls = [...document.querySelectorAll<HTMLElement>('header a, header button')].filter(
+      const controls = [...headerBar.querySelectorAll<HTMLElement>('a, button')].filter(
         (el) => el.getClientRects().length > 0,
       );
       const first = controls[0];
@@ -87,7 +88,7 @@
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="top" class:menu-open={menuOpen}>
-  <div class="wrap bar">
+  <div class="wrap bar" bind:this={headerBar}>
     <a class="brand" href={link('/', { suite: chrome.suite })}>Crucible</a>
     <button
       class="menu-toggle"
@@ -111,6 +112,8 @@
     </button>
     <div id="header-menu" class="header-menu" class:open={menuOpen}>
       <TabStrip {current} suite={chrome.suite} />
+    </div>
+    <div class="theme-control">
       <ThemeToggle />
     </div>
   </div>
@@ -153,9 +156,10 @@
   .header-menu {
     display: flex;
     flex: 1;
-    justify-content: space-between;
-    gap: var(--space-5);
     min-width: 0;
+  }
+  .theme-control {
+    display: flex;
   }
   .menu-toggle {
     display: none;
@@ -169,6 +173,18 @@
     background: var(--surface);
   }
   @media (max-width: 1100px) {
+    .top {
+      --theme-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+    }
+    .theme-control {
+      position: fixed;
+      right: calc(var(--space-4) + env(safe-area-inset-right, 0px));
+      bottom: var(--theme-bottom);
+      z-index: 11;
+      background: var(--surface);
+      box-shadow: 0 0 0 1px var(--border);
+      border-radius: var(--radius-pill);
+    }
     .top.menu-open {
       position: fixed;
       inset: 0;
@@ -180,7 +196,7 @@
       min-height: 100dvh;
       align-content: start;
       padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-bottom: calc(44px + var(--theme-bottom));
     }
     .bar {
       flex-wrap: wrap;
@@ -224,5 +240,10 @@
   .foot {
     padding-bottom: var(--space-5);
     font-size: var(--text-sm);
+  }
+  @media (max-width: 1100px) {
+    .foot {
+      padding-bottom: calc(44px + 2 * var(--space-4) + env(safe-area-inset-bottom, 0px));
+    }
   }
 </style>
