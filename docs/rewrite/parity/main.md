@@ -4,7 +4,7 @@ ID | status | note
 
 Status: done = implemented as specified; changed = implemented, behaviour deliberately different (cite the B-item or reason); shared = lives in shared code (control panel / ContextState / core), not this phase; n/a = dropped.
 
-Code: `src/routes/+page.svelte`, `src/lib/pages/main/*` (tests in `main.test.ts`).
+Code: `src/lib/pages/main/MainPage.svelte`, `src/lib/pages/main/*` (tests in `main.test.ts`).
 
 | ID | status | note |
 |---|---|---|
@@ -42,7 +42,7 @@ Code: `src/routes/+page.svelte`, `src/lib/pages/main/*` (tests in `main.test.ts`
 | MAIN-BARS-08 | changed | Redraws reactively (container width binding and window width), no debounce needed. |
 | MAIN-SCAT-01..12 | done | `scatter.ts` + `Scatter.svelte`. Dots are also keyboard-focusable; visually hidden data table added. |
 | MAIN-MATRIX-01 | done | Heading and sub-text. |
-| MAIN-MATRIX-02 | done | Matrix and heatmap are not rendered in Combined. |
+| MAIN-MATRIX-02 | changed B-23 | Matrix and heatmap render in Combined; each section reads its paired setup. |
 | MAIN-MATRIX-03..05 | done | Tier-grouped task columns, task links, row header with setup line. Task link `title` is the task name only (the catalog has no summary). |
 | MAIN-MATRIX-06 | changed | B-21: a scored cell is a link to `/run/<uuid>/` (the leaderboard-scored run). Integer text, heat colour, x n, timeout ring, empty "·", "—" outlined for uncounted. |
 | MAIN-MATRIX-07, 08 | changed | B-21: no run panel; the run page lists siblings. |
@@ -51,7 +51,7 @@ Code: `src/routes/+page.svelte`, `src/lib/pages/main/*` (tests in `main.test.ts`
 | MAIN-MATRIX-11 | done | The wide table scrolls in its own box; verified no page overflow at 375 px. |
 | MAIN-HEAT-01..05 | done | `Heatmap.svelte`; provisional tasks fold into area means when the preview is on. |
 | MAIN-COMB-01..07, 09, 10 | shared | Pairing, sums, verdicts, progress, availability in `core/scoring.ts`. |
-| MAIN-COMB-08 | done | Combined shows takeaways, leaderboard, bars, scatter only; harness filter ignored; "of N" numbers. |
+| MAIN-COMB-08 | changed B-23 | Combined also shows the matrix and heatmap; harness filter ignored; "of N" numbers. |
 | MAIN-FOOT-01 | changed | Method counts come from the catalog's active tasks, counting only methods that have at least one scored cell in the index (the index does not list "published score records"). |
 | MAIN-FOOT-02 | done | Footnote with suite, cut date and Crucible version from meta. |
 | MAIN-TRAY-01 | done | `CompareTray`: fixed bottom-right, full width below 640 px; link to `/compare/?s=<setups>`. |

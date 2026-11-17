@@ -7,10 +7,10 @@
   import { compareHref } from '$lib/paths';
   import type { View } from '$lib/core/scoring';
   import type { TierId } from '$lib/core/types';
-  import Empty from '$lib/ui/Empty.svelte';
-  import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
-  import type { Column } from '$lib/ui/table';
-  import TierCell from '$lib/ui/TierCell.svelte';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
+  import ResponsiveTable from '$lib/ui/tables/ResponsiveTable.svelte';
+  import type { Column } from '$lib/ui/tables/table';
+  import TierCell from '$lib/ui/tables/TierCell.svelte';
   import { DIM_NAMES, type VariantRow, type VariantTable } from './shape';
 
   let {

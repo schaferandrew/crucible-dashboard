@@ -16,6 +16,7 @@
   import { viewFor } from '$lib/core/scoring';
   import { COMBINED, type Meta, type SuiteId, type SuiteIndex, type TierId } from '$lib/core/types';
   import FacetMenu from './FacetMenu.svelte';
+  import SectionRadiogroup from './SectionRadiogroup.svelte';
   import { writeProvisional } from './prefs';
   import SuiteNotes from './SuiteNotes.svelte';
   import SuiteSelect from './SuiteSelect.svelte';
@@ -232,22 +233,11 @@
 
 <section class="panel" aria-label={label} bind:this={root}>
   <div class="row primary">
-    {#if !hideSections}<div class="field">
-        <span class="lbl" id="section-lbl">Section</span>
-        <div class="seg" role="radiogroup" aria-labelledby="section-lbl">
-          {#each sections as s (s.id)}
-            <button
-              type="button"
-              role="radio"
-              aria-checked={ctx.section === s.id}
-              title="{s.n} scored tasks"
-              onclick={() => ctx.section !== s.id && onctx(changeSection(index, ctx, s.id))}
-            >
-              {s.label} <span class="count">{s.n}</span>
-            </button>
-          {/each}
-        </div>
-      </div>{/if}
+    {#if !hideSections}<SectionRadiogroup
+        choices={sections}
+        value={ctx.section}
+        onselect={(section) => onctx(changeSection(index, ctx, section))}
+      />{/if}
     <SuiteSelect {meta} value={ctx.suite} onchange={(suite: SuiteId) => onctx({ ...ctx, suite })} />
     {#if showFilters}<button
         type="button"
@@ -450,7 +440,6 @@
     font-weight: 600;
     color: var(--fg);
   }
-  .seg button[aria-checked='true'],
   .seg button[aria-pressed='true'] {
     background: var(--surface);
     box-shadow: 0 1px 3px rgb(0 0 0 / 0.18);
@@ -461,11 +450,6 @@
   .seg button[aria-disabled='true'] {
     color: var(--faint);
     cursor: not-allowed;
-  }
-  .count {
-    color: var(--muted);
-    font-size: 0.85em;
-    font-weight: 400;
   }
   .hint,
   .note {

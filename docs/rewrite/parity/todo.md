@@ -14,7 +14,7 @@
 | TODO-DATA-01 | pass | `all`: setups with counted runs; else each row's best setup, no filters. |
 | TODO-DATA-02 | pass | Entry only if a scored task has no counted mean; complete ones are counted in the line. |
 | TODO-DATA-03 | changed: B-06 | Derived from the cell block (no raw statuses). A single failure reads "timed out" or "harness error"; other raw statuses (e.g. context limit) are no longer named. Legacy took the text from an arbitrary counted run, which could say "finished". |
-| TODO-DATA-04 | pass | Typical time and pace from `tasks/<task>.json` (fetched after first render). Finished runs in cell states only. |
+| TODO-DATA-04 | pass | Typical task times and setup pace come from `index.json`; no per-task timing fetches. Finished runs only. |
 | TODO-DATA-05 | pass | Effort = tasks to run plus min(fails, 3) each. |
 | TODO-DATA-06 | pass | Five comparators as specified. |
 | TODO-DATA-07 | pass | "scoring only", "—", "≈ time + n untimed task(s)". |
@@ -30,4 +30,4 @@
 | TODO-TABLE-03 | pass | `ResponsiveTable` cards below 640 px; tasks limited to 4 with "...and n more". Card also shows the overall score. |
 | TODO-TABLE-04 | pass | `is-<slug>` class per task item. |
 
-Added behaviour: if a task file fails to load, that task is untimed and a notice says so; while times load the blocks show `Loading`.
+Missing task times produce untimed estimates. The page uses the suite index rather than loading task files for estimates.

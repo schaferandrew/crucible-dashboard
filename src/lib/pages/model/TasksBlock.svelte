@@ -5,8 +5,8 @@
   import { fmtCost, fmtRepeat, fmtScore, fmtSeconds } from '$lib/core/format';
   import { runHref, taskHref } from '$lib/paths';
   import { heat } from '$lib/ui/heat';
-  import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
-  import type { Column } from '$lib/ui/table';
+  import ResponsiveTable from '$lib/ui/tables/ResponsiveTable.svelte';
+  import type { Column } from '$lib/ui/tables/table';
   import type { AreaGroup, AreaGroupTask } from './shape';
 
   let { groups, local, suiteParam }: { groups: readonly AreaGroup[]; local: boolean; suiteParam?: string } =

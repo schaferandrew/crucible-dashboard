@@ -5,7 +5,7 @@
   import { fmtScore } from '$lib/core/format';
   import { taskHref } from '$lib/paths';
   import { heatStyle } from '$lib/ui/heat';
-  import { CARD_QUERY } from '$lib/ui/table';
+  import { CARD_QUERY } from '$lib/ui/tables/table';
   import Checks from './Checks.svelte';
   import { TIE } from './pairing';
   import { foldsTies, type RunInfo, type SpreadRow } from './numbers';

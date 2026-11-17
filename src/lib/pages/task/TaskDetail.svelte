@@ -7,10 +7,10 @@
   import { fmtCost, fmtInt, fmtScore, fmtSeconds, fmtUsd, NONE } from '$lib/core/format';
   import { compareHref, modelHref, runHref } from '$lib/paths';
   import type { SuiteIndex } from '$lib/core/types';
-  import Empty from '$lib/ui/Empty.svelte';
-  import ErrorBoundary from '$lib/ui/ErrorBoundary.svelte';
-  import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
-  import type { Column } from '$lib/ui/table';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
+  import ErrorBoundary from '$lib/ui/feedback/ErrorBoundary.svelte';
+  import ResponsiveTable from '$lib/ui/tables/ResponsiveTable.svelte';
+  import type { Column } from '$lib/ui/tables/table';
   import Dumbbells from './Dumbbells.svelte';
   import EffortChart from './EffortChart.svelte';
   import SpreadChart from './SpreadChart.svelte';

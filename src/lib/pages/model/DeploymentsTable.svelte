@@ -3,10 +3,10 @@
   // filter: picking it sets `deployment`, picking it again clears it. Rows outside the current filters are
   // dimmed, a row that would leave nothing is disabled.
   import { fmtCost, fmtSeconds, fmtTps, tpsTitle } from '$lib/core/format';
-  import Empty from '$lib/ui/Empty.svelte';
-  import Loading from '$lib/ui/Loading.svelte';
-  import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
-  import type { Column } from '$lib/ui/table';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
+  import Loading from '$lib/ui/feedback/Loading.svelte';
+  import ResponsiveTable from '$lib/ui/tables/ResponsiveTable.svelte';
+  import type { Column } from '$lib/ui/tables/table';
   import type { DeploymentRow, DeploymentTable } from './shape';
 
   let {

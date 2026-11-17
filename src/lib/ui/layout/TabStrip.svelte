@@ -1,6 +1,5 @@
 <script lang="ts">
   // The Crucible tab strip (NAV-01..06). One <nav>, never wraps: it scrolls sideways when it doesn't fit.
-  import { onMount } from 'svelte';
   import { link } from '$lib/paths';
   import { NAV, type NavId } from '$lib/nav';
 
@@ -8,10 +7,15 @@
 
   let strip: HTMLElement | undefined = $state();
 
-  // NAV-06: if the strip overflows, bring the current tab into view once, on load
-  onMount(() => {
+  // offsetLeft is relative to an offset parent, which can be outside the scrolling nav.
+  // Measure within the strip so the selected tab stays visible on mobile and client navigation.
+  $effect(() => {
+    void current;
     const el = strip?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (strip && el && strip.scrollWidth > strip.clientWidth) strip.scrollLeft = el.offsetLeft - 16;
+    if (!strip || !el) return;
+    const box = strip.getBoundingClientRect();
+    const tab = el.getBoundingClientRect();
+    if (tab.left < box.left || tab.right > box.right) strip.scrollLeft += tab.left - box.left - 16;
   });
 </script>
 

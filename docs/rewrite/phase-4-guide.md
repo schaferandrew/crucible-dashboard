@@ -1,11 +1,12 @@
 # Phase 4 guide for page porters
 
-Everything shared lives in `src/lib/ui/`, `src/lib/core/` and `src/lib/paths.ts`. **Never edit shared files**:
-if you need a change there, describe it in your report and carry on with a local workaround.
+Historical guide for the parallel Phase 4 port. For ongoing maintenance, start with [the MVP handoff](mvp-handoff.md).
+Shared UI now lives in `src/lib/ui/{controls,layout,feedback,tables}/`; core rules and links are in `src/lib/core/`
+and `src/lib/paths.ts`. Shared fixes are normal maintenance: update consumers and run the relevant checks.
 
 ## Conventions
 
-- One route folder per page (`src/routes/<page>/`). Page-only components, shaping code and tests go in
+- Route loaders and small wrappers live in `src/routes/<page>/`. Page views, components, shaping code and tests go in
   `src/lib/pages/<page>/`.
 - Pages are a `DataContext` with some dimensions pinned (data-model §1.2). Don't write your own filter logic.
 - Every internal link comes from `$lib/paths` (`link`, `taskHref`, `modelHref`, `runHref`, `compareHref`); ids
@@ -41,9 +42,9 @@ matrix cell opens, from the lazily fetched `cell-runs.json`; link with `runHref`
   import { afterNavigate } from '$app/navigation';
   import { onMount, untrack } from 'svelte';
   import { scope } from '$lib/core/scope';
-  import { ContextState } from '$lib/ui/contextState.svelte';
-  import ControlPanel from '$lib/ui/ControlPanel.svelte';
-  import PageHeader from '$lib/ui/PageHeader.svelte';
+  import { ContextState } from '$lib/ui/controls/contextState.svelte';
+  import ControlPanel from '$lib/ui/controls/ControlPanel.svelte';
+  import PageHeader from '$lib/ui/layout/PageHeader.svelte';
   let { data } = $props();
   const cs = untrack(() => new ContextState({ meta: data.meta, index: data.index }));
   const sc = $derived(scope(cs.index, cs.ctx));
@@ -54,7 +55,7 @@ matrix cell opens, from the lazily fetched `cell-runs.json`; link with `runHref`
 <ControlPanel index={cs.index} meta={data.meta} ctx={cs.ctx} onctx={cs.update} {sc} unknownSuite={cs.unknownSuite} />
 ```
 
-See `src/routes/+page.svelte` (leaderboard) and `src/routes/run/[id]/+page.svelte` for working examples.
+See `src/lib/pages/main/MainPage.svelte` and `src/lib/pages/run/RunPage.svelte` for working examples.
 
 ## Screenshots
 

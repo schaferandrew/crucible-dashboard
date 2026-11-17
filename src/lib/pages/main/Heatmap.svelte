@@ -5,7 +5,7 @@
   import type { Scope } from '$lib/core/scope';
   import type { SuiteIndex } from '$lib/core/types';
   import { heatStyle } from '$lib/ui/heat';
-  import Empty from '$lib/ui/Empty.svelte';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
   import { areaResult, heatAreas, partSetup, type AreaResult } from './matrix';
   import ModelRef from './ModelRef.svelte';
   import { emptyText } from './phrases';

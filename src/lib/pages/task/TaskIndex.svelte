@@ -1,6 +1,6 @@
 <script lang="ts">
   // The task index (TASK-INDEX-01..03): one heading per section with shown tasks, one list per area.
-  import Empty from '$lib/ui/Empty.svelte';
+  import Empty from '$lib/ui/feedback/Empty.svelte';
   import { plural, type IndexSection } from './shape';
 
   let {

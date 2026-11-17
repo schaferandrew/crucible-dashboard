@@ -6,12 +6,12 @@
   import type { Scope } from '$lib/core/scope';
   import type { SuiteIndex } from '$lib/core/types';
   import { setupLabel } from '$lib/labels';
-  import ResponsiveTable from '$lib/ui/ResponsiveTable.svelte';
-  import type { Column, SortState } from '$lib/ui/table';
+  import ResponsiveTable from '$lib/ui/tables/ResponsiveTable.svelte';
+  import type { Column, SortState } from '$lib/ui/tables/table';
   import ModelRef from './ModelRef.svelte';
   import { emptyText } from './phrases';
   import type { Picks } from './picks.svelte';
-  import TierCell from '$lib/ui/TierCell.svelte';
+  import TierCell from '$lib/ui/tables/TierCell.svelte';
 
   let {
     index,
