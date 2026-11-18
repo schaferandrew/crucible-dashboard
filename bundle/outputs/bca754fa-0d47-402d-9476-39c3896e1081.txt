@@ -1,0 +1,2 @@
+The old app is running. Let me capture the full baseline behavior:
+

@@ -1,0 +1,13 @@
+Done. Saved `slots.json` with **85 valid slots** and the top 3 picks.
+
+**How it was computed:**
+- Window: Mon 2026-08-31 09:00 → Mon 2026-09-07 17:00 (America/Chicago), weekends included
+- Slots: 60-min meetings starting every hour/half-hour, entirely within 9:00–17:00, checked against all 12 busy events from both calendars (back-to-back allowed)
+- Weekend days (Sep 5–6) have no events, so all 15 slots/day (9:00–16:00 starts) are valid
+
+**Top 3 (weekday, snug against existing meetings, avoiding first/last hour of day):**
+1. **Mon 08-31 15:30** — starts right as Jamie's Sales call ends, in the week's tightest weekday free window (15:30–17:00)
+2. **Mon 08-31 12:00** — directly before Alex's 13:00 Design review, zero gap to the next meeting
+3. **Thu 09-03 10:00** — ends exactly when Alex's 11:00 Interview begins, zero gap on the other side
+
+File: `/Users/schafer/.crucible/workspaces/openrouter_z-ai_glm-5.3-flash_two-calendar-slots-json_20261111_060607/slots.json` — validated as proper JSON in the exact required shape.

@@ -1,0 +1,451 @@
+Here are the step-by-step solutions to the six logic and game problems.
+
+### Problem 1: The Token Game with Forbidden Moves
+
+**Analysis:**
+This is an impartial game played under normal play convention (last player to move wins, or equivalently, the first player unable to move loses). We need to determine the winning/losing positions (N-positions and P-positions) for the second player. A position is a P-position (Previous player winning, i.e., current player losing) if every move from it leads to an N-position. A position is an N-position (Next player winning) if there exists at least one move to a P-position.
+
+Let $W(n, k)$ be the status of the game with $n$ tokens remaining, where the previous move removed $k$ tokens. The current player cannot remove $k$ tokens.
+The allowed moves are removing $m \in \{2, 3, 5, 7\}$ such that $m \le n$ and $m \neq k$.
+If no such $m$ exists, the current player loses (P-position).
+If there is a move to a state that is a P-position for the opponent, the current state is an N-position.
+
+Let's compute the status for small $n$. The "previous move" $k$ matters. For the first move, there is no restriction, so we just need to know if $n$ is an N-position in the unrestricted sense. Let $L(n)$ be true if the position with $n$ tokens is a Losing position (P-position) for the player whose turn it is, assuming no previous move restriction (i.e., we are evaluating the start of a game or a state where the restriction is lifted, which effectively means we check if *any* move leads to a P-position). However, the restriction applies to *every* subsequent move.
+
+Let's define $Win(n, \text{forbidden})$ as true if the current player can force a win from $n$ tokens given that they cannot remove `forbidden` tokens.
+Base cases:
+If $n < 2$, no moves are possible. $Win(n, \text{any}) = \text{False}$ (Losing).
+
+Let's compute $Win(n, k)$ for $n=1$ to $100$.
+The forbidden move $k$ can be 2, 3, 5, 7, or "none" (for the start).
+Let $L(n)$ be the set of forbidden moves that make $n$ a losing position for the *next* player? No, let's stick to standard Sprague-Grundy or just Win/Loss tables.
+
+Let $W(n, k)$ = True if current player wins with $n$ tokens and cannot remove $k$.
+$k \in \{0, 2, 3, 5, 7\}$, where 0 means no restriction.
+
+**n=1:**
+Moves: None.
+$W(1, k) = \text{False}$ for all $k$.
+
+**n=2:**
+Allowed moves: $\{2, 3, 5, 7\} \setminus \{k\} \cap \{m \le 2\}$.
+If $k \neq 2$, can remove 2. Next state $n=0$. $W(0, 2) = \text{False}$ (Losing for opponent). So if we can move to 0, we win.
+$W(2, 0)$: Can remove 2. Leads to 0 (Loss for opp). Win. -> **N**
+$W(2, 2)$: Cannot remove 2. No other moves $\le 2$. Loss. -> **P**
+$W(2, 3)$: Can remove 2. Leads to 0. Win. -> **N**
+$W(2, 5)$: Can remove 2. Win. -> **N**
+$W(2, 7)$: Can remove 2. Win. -> **N**
+
+**n=3:**
+Allowed moves: $\{2, 3, 5, 7\} \setminus \{k\} \cap \{m \le 3\}$.
+If $k \neq 2$, can remove 2 -> state 1. $W(1, 2) = \text{False}$. So removing 2 is a winning move.
+If $k \neq 3$, can remove 3 -> state 0. $W(0, 3) = \text{False}$. So removing 3 is a winning move.
+$W(3, 0)$: Can remove 2 (to 1, Loss) or 3 (to 0, Loss). Win. -> **N**
+$W(3, 2)$: Cannot remove 2. Can remove 3 -> state 0 (Loss). Win. -> **N**
+$W(3, 3)$: Cannot remove 3. Can remove 2 -> state 1 (Loss). Win. -> **N**
+$W(3, 5)$: Can remove 2 or 3. Win. -> **N**
+$W(3, 7)$: Can remove 2 or 3. Win. -> **N**
+
+**n=4:**
+Moves: 2 (to 2), 3 (to 1).
+$W(4, 0)$:
+- Remove 2 -> state 2, forbidden 2. $W(2, 2) = \text{False}$ (Loss). This is a winning move for current player.
+- Remove 3 -> state 1, forbidden 3. $W(1, 3) = \text{False}$ (Loss).
+Since there is a move to a Loss for the opponent, $W(4, 0) = \text{True}$ (Win). -> **N**
+$W(4, 2)$: Cannot remove 2. Can remove 3 -> state 1, forbidden 3. $W(1, 3) = \text{False}$. Win. -> **N**
+$W(4, 3)$: Cannot remove 3. Can remove 2 -> state 2, forbidden 2. $W(2, 2) = \text{False}$. Win. -> **N**
+$W(4, 5)$: Can remove 2 or 3. Win. -> **N**
+$W(4, 7)$: Can remove 2 or 3. Win. -> **N**
+
+**n=5:**
+Moves: 2 (to 3), 3 (to 2), 5 (to 0).
+$W(5, 0)$:
+- Remove 2 -> state 3, forbidden 2. $W(3, 2) = \text{True}$ (Win for opp). Bad move.
+- Remove 3 -> state 2, forbidden 3. $W(2, 3) = \text{True}$ (Win for opp). Bad move.
+- Remove 5 -> state 0, forbidden 5. $W(0, 5) = \text{False}$ (Loss for opp). Good move.
+Since there is a move to Loss, $W(5, 0) = \text{True}$ (Win). -> **N**
+$W(5, 2)$: Cannot remove 2.
+- Remove 3 -> state 2, forbidden 3. $W(2, 3) = \text{True}$.
+- Remove 5 -> state 0, forbidden 5. $W(0, 5) = \text{False}$.
+Move to 0 is winning. -> **N**
+$W(5, 3)$: Cannot remove 3.
+- Remove 2 -> state 3, forbidden 2. $W(3, 2) = \text{True}$.
+- Remove 5 -> state 0, forbidden 5. $W(0, 5) = \text{False}$.
+Move to 0 is winning. -> **N**
+$W(5, 5)$: Cannot remove 5.
+- Remove 2 -> state 3, forbidden 2. $W(3, 2) = \text{True}$.
+- Remove 3 -> state 2, forbidden 3. $W(2, 3) = \text{True}$.
+All moves lead to Win for opponent. So $W(5, 5) = \text{False}$ (Loss). -> **P**
+$W(5, 7)$: Can remove 2, 3, 5. Move to 0 is winning. -> **N**
+
+**n=6:**
+Moves: 2 (to 4), 3 (to 3), 5 (to 1).
+$W(6, 0)$:
+- Remove 2 -> state 4, forbidden 2. $W(4, 2) = \text{True}$.
+- Remove 3 -> state 3, forbidden 3. $W(3, 3) = \text{True}$.
+- Remove 5 -> state 1, forbidden 5. $W(1, 5) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(6, 2)$: Cannot remove 2.
+- Remove 3 -> state 3, forbidden 3. $W(3, 3) = \text{True}$.
+- Remove 5 -> state 1, forbidden 5. $W(1, 5) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(6, 3)$: Cannot remove 3.
+- Remove 2 -> state 4, forbidden 2. $W(4, 2) = \text{True}$.
+- Remove 5 -> state 1, forbidden 5. $W(1, 5) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(6, 5)$: Cannot remove 5.
+- Remove 2 -> state 4, forbidden 2. $W(4, 2) = \text{True}$.
+- Remove 3 -> state 3, forbidden 3. $W(3, 3) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+$W(6, 7)$: Can remove 2, 3, 5. Move to 1 is winning. -> **N**
+
+**n=7:**
+Moves: 2 (to 5), 3 (to 4), 5 (to 2), 7 (to 0).
+$W(7, 0)$:
+- Remove 2 -> state 5, forbidden 2. $W(5, 2) = \text{True}$.
+- Remove 3 -> state 4, forbidden 3. $W(4, 3) = \text{True}$.
+- Remove 5 -> state 2, forbidden 5. $W(2, 5) = \text{True}$.
+- Remove 7 -> state 0, forbidden 7. $W(0, 7) = \text{False}$.
+Move to 0 is winning. -> **N**
+$W(7, 2)$: Cannot remove 2.
+- Remove 3 -> state 4, forbidden 3. $W(4, 3) = \text{True}$.
+- Remove 5 -> state 2, forbidden 5. $W(2, 5) = \text{True}$.
+- Remove 7 -> state 0, forbidden 7. $W(0, 7) = \text{False}$.
+Move to 0 is winning. -> **N**
+$W(7, 3)$: Cannot remove 3.
+- Remove 2 -> state 5, forbidden 2. $W(5, 2) = \text{True}$.
+- Remove 5 -> state 2, forbidden 5. $W(2, 5) = \text{True}$.
+- Remove 7 -> state 0, forbidden 7. $W(0, 7) = \text{False}$.
+Move to 0 is winning. -> **N**
+$W(7, 5)$: Cannot remove 5.
+- Remove 2 -> state 5, forbidden 2. $W(5, 2) = \text{True}$.
+- Remove 3 -> state 4, forbidden 3. $W(4, 3) = \text{True}$.
+- Remove 7 -> state 0, forbidden 7. $W(0, 7) = \text{False}$.
+Move to 0 is winning. -> **N**
+$W(7, 7)$: Cannot remove 7.
+- Remove 2 -> state 5, forbidden 2. $W(5, 2) = \text{True}$.
+- Remove 3 -> state 4, forbidden 3. $W(4, 3) = \text{True}$.
+- Remove 5 -> state 2, forbidden 5. $W(2, 5) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+
+**n=8:**
+Moves: 2 (to 6), 3 (to 5), 5 (to 3), 7 (to 1).
+$W(8, 0)$:
+- Remove 2 -> state 6, forbidden 2. $W(6, 2) = \text{True}$.
+- Remove 3 -> state 5, forbidden 3. $W(5, 3) = \text{True}$.
+- Remove 5 -> state 3, forbidden 5. $W(3, 5) = \text{True}$.
+- Remove 7 -> state 1, forbidden 7. $W(1, 7) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(8, 2)$: Cannot remove 2.
+- Remove 3 -> state 5, forbidden 3. $W(5, 3) = \text{True}$.
+- Remove 5 -> state 3, forbidden 5. $W(3, 5) = \text{True}$.
+- Remove 7 -> state 1, forbidden 7. $W(1, 7) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(8, 3)$: Cannot remove 3.
+- Remove 2 -> state 6, forbidden 2. $W(6, 2) = \text{True}$.
+- Remove 5 -> state 3, forbidden 5. $W(3, 5) = \text{True}$.
+- Remove 7 -> state 1, forbidden 7. $W(1, 7) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(8, 5)$: Cannot remove 5.
+- Remove 2 -> state 6, forbidden 2. $W(6, 2) = \text{True}$.
+- Remove 3 -> state 5, forbidden 3. $W(5, 3) = \text{True}$.
+- Remove 7 -> state 1, forbidden 7. $W(1, 7) = \text{False}$.
+Move to 1 is winning. -> **N**
+$W(8, 7)$: Cannot remove 7.
+- Remove 2 -> state 6, forbidden 2. $W(6, 2) = \text{True}$.
+- Remove 3 -> state 5, forbidden 3. $W(5, 3) = \text{True}$.
+- Remove 5 -> state 3, forbidden 5. $W(3, 5) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+
+**n=9:**
+Moves: 2 (to 7), 3 (to 6), 5 (to 4), 7 (to 2).
+$W(9, 0)$:
+- Remove 2 -> state 7, forbidden 2. $W(7, 2) = \text{True}$.
+- Remove 3 -> state 6, forbidden 3. $W(6, 3) = \text{True}$.
+- Remove 5 -> state 4, forbidden 5. $W(4, 5) = \text{True}$.
+- Remove 7 -> state 2, forbidden 7. $W(2, 7) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+$W(9, 2)$: Cannot remove 2.
+- Remove 3 -> state 6, forbidden 3. $W(6, 3) = \text{True}$.
+- Remove 5 -> state 4, forbidden 5. $W(4, 5) = \text{True}$.
+- Remove 7 -> state 2, forbidden 7. $W(2, 7) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+$W(9, 3)$: Cannot remove 3.
+- Remove 2 -> state 7, forbidden 2. $W(7, 2) = \text{True}$.
+- Remove 5 -> state 4, forbidden 5. $W(4, 5) = \text{True}$.
+- Remove 7 -> state 2, forbidden 7. $W(2, 7) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+$W(9, 5)$: Cannot remove 5.
+- Remove 2 -> state 7, forbidden 2. $W(7, 2) = \text{True}$.
+- Remove 3 -> state 6, forbidden 3. $W(6, 3) = \text{True}$.
+- Remove 7 -> state 2, forbidden 7. $W(2, 7) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+$W(9, 7)$: Cannot remove 7.
+- Remove 2 -> state 7, forbidden 2. $W(7, 2) = \text{True}$.
+- Remove 3 -> state 6, forbidden 3. $W(6, 3) = \text{True}$.
+- Remove 5 -> state 4, forbidden 5. $W(4, 5) = \text{True}$.
+All moves lead to Win for opponent. -> **P**
+
+Wait, let's re-verify $W(9, k)$.
+From $n=9$, moves are to 7, 6, 4, 2.
+We established:
+$W(7, 2) = N$
+$W(6, 3) = N$
+$W(4, 5) = N$
+$W(2, 7) = N$
+Since all reachable states are N-positions (winning for the next player, i.e., losing for the current player's goal of forcing a win), $W(9, k)$ is P for all $k$.
+So $n=9$ is a P-position regardless of previous move?
+Yes, because for any previous move $k$, the current player is restricted from removing $k$. But the set of available moves from 9 is $\{2,3,5,7\}$.
+If $k=2$, available $\{3,5,7\}$. Leads to 6 (forbidden 3, N), 4 (forbidden 5, N), 2 (forbidden 7, N). All N. So P.
+If $k=3$, available $\{2,5,7\}$. Leads to 7 (forbidden 2, N), 4 (forbidden 5, N), 2 (forbidden 7, N). All N. So P.
+If $k=5$, available $\{2,3,7\}$. Leads to 7 (forbidden 2, N), 6 (forbidden 3, N), 2 (forbidden 7, N). All N. So P.
+If $k=7$, available $\{2,3,5\}$. Leads to 7 (forbidden 2, N), 6 (forbidden 3, N), 4 (forbidden 5, N). All N. So P.
+If $k=0$, available $\{2,3,5,7\}$. Leads to 7 (forbidden 2, N), 6 (forbidden 3, N), 4 (forbidden 5, N), 2 (forbidden 7, N). All N. So P.
+
+So $n=9$ is a P-position. The second player wins if the starting $n$ is a P-position.
+
+Let's continue to find the pattern.
+$W(10, 0)$:
+Moves to 8 (f2), 7 (f3), 5 (f5), 3 (f7).
+$W(8, 2) = P$ (from above, $W(8,7)=P$, wait. $W(8,2)$ was N. Let's re-check $W(8,2)$).
+$W(8, 2)$: Cannot remove 2. Moves: 3->5(f3, N), 5->3(f5, N), 7->1(f7, P). Move to 1 is P. So $W(8,2)=N$.
+$W(8, 3)$: Cannot remove 3. Moves: 2->6(f2, N), 5->3(f5, N), 7->1(f7, P). Move to 1 is P. So $W(8,3)=N$.
+$W(8, 5)$: Cannot remove 5. Moves: 2->6(f2, N), 3->5(f3, N), 7->1(f7, P). Move to 1 is P. So $W(8,5)=N$.
+$W(8, 7)$: Cannot remove 7. Moves: 2->6(f2, N), 3->5(f3, N), 5->3(f5, N). All N. So $W(8,7)=P$.
+
+Back to $W(10, 0)$:
+- Remove 2 -> state 8, forbidden 2. $W(8, 2) = N$.
+- Remove 3 -> state 7, forbidden 3. $W(7, 3) = N$.
+- Remove 5 -> state 5, forbidden 5. $W(5, 5) = P$.
+- Remove 7 -> state 3, forbidden 7. $W(3, 7) = N$.
+There is a move to a P-position (remove 5). So $W(10, 0) = N$.
+
+$W(10, 2)$: Cannot remove 2.
+- Remove 3 -> state 7, forbidden 3. $W(7, 3) = N$.
+- Remove 5 -> state 5, forbidden 5. $W(5, 5) = P$.
+- Remove 7 -> state 3, forbidden 7. $W(3, 7) = N$.
+Move to 5 is P. So $W(10, 2) = N$.
+
+$W(10, 3)$: Cannot remove 3.
+- Remove 2 -> state 8, forbidden 2. $W(8, 2) = N$.
+- Remove 5 -> state 5, forbidden 5. $W(5, 5) = P$.
+- Remove 7 -> state 3, forbidden 7. $W(3, 7) = N$.
+Move to 5 is P. So $W(10, 3) = N$.
+
+$W(10, 5)$: Cannot remove 5.
+- Remove 2 -> state 8, forbidden 2. $W(8, 2) = N$.
+- Remove 3 -> state 7, forbidden 3. $W(7, 3) = N$.
+- Remove 7 -> state 3, forbidden 7. $W(3, 7) = N$.
+All moves lead to N. So $W(10, 5) = P$.
+
+$W(10, 7)$: Cannot remove 7.
+- Remove 2 -> state 8, forbidden 2. $W(8, 2) = N$.
+- Remove 3 -> state 7, forbidden 3. $W(7, 3) = N$.
+- Remove 5 -> state 5, forbidden 5. $W(5, 5) = P$.
+Move to 5 is P. So $W(10, 7) = N$.
+
+So for $n=10$, it is P only if previous move was 5. For the start of the game ($k=0$), it is N.
+
+Let's summarize P-positions for start of game ($k=0$):
+$n=1$: P (No moves)
+$n=2$: N
+$n=3$: N
+$n=4$: N
+$n=5$: N
+$n=6$: N
+$n=7$: N
+$n=8$: N
+$n=9$: P
+$n=10$: N
+
+Let's calculate further to find the pattern.
+$W(11, 0)$:
+Moves to 9 (f2), 8 (f3), 6 (f5), 4 (f7).
+$W(9, 2) = P$.
+So move to 9 is winning. $W(11, 0) = N$.
+
+$W(12, 0)$:
+Moves to 10 (f2), 9 (f3), 7 (f5), 5 (f7).
+$W(10, 3) = N$.
+$W(7, 5) = N$.
+$W(5, 7) = N$.
+$W(10, 2) = N$.
+All N?
+Let's check $W(10, 2)$ again. $W(10, 2)$ was N because it could move to 5 (P).
+Let's check $W(9, 3)$. $W(9, 3)$ was P.
+So from 12, remove 3 -> 9, forbidden 3. $W(9, 3) = P$.
+So $W(12, 0) = N$.
+
+$W(13, 0)$:
+Moves to 11 (f2), 10 (f3), 8 (f5), 6 (f7).
+$W(11, 2)$: From 11, remove 2->9(f2, P). So $W(11, 2)=N$.
+$W(10, 3)$: From 10, remove 5->5(f5, P). So $W(10, 3)=N$.
+$W(8, 5)$: From 8, remove 7->1(f7, P). So $W(8, 5)=N$.
+$W(6, 7)$: From 6, remove 2->4(f2, N), 3->3(f3, N), 5->1(f5, P). So $W(6, 7)=N$.
+All moves lead to N?
+Wait, $W(6, 7)$: Moves 2->4(f2, N), 3->3(f3, N), 5->1(f5, P). Since it can move to P, $W(6, 7)=N$.
+So all reachable states from 13 are N.
+Thus $W(13, 0) = P$.
+
+$W(14, 0)$:
+Moves to 12 (f2), 11 (f3), 9 (f5), 7 (f7).
+$W(12, 2)$: From 12, remove 3->9(f3, P). So $W(12, 2)=N$.
+$W(11, 3)$: From 11, remove 2->9(f2, P). So $W(11, 3)=N$.
+$W(9, 5)$: From 9, all moves lead to N. So $W(9, 5)=P$.
+Move to 9 is P. So $W(14, 0) = N$.
+
+$W(15, 0)$:
+Moves to 13 (f2), 12 (f3), 10 (f5), 8 (f7).
+$W(13, 2)$: From 13, remove 2->11(f2, N), 3->10(f3, N), 5->8(f5, N), 7->6(f7, N). All N?
+Let's check $W(11, 2)$. From 11, remove 2->9(f2, P). So $W(11, 2)=N$.
+$W(10, 3)$. From 10, remove 5->5(f5, P). So $W(10, 3)=N$.
+$W(8, 5)$. From 8, remove 7->1(f7, P). So $W(8, 5)=N$.
+$W(6, 7)$. From 6, remove 5->1(f5, P). So $W(6, 7)=N$.
+So $W(13, 2) = P$.
+Move to 13 is P. So $W(15, 0) = N$.
+
+$W(16, 0)$:
+Moves to 14 (f2), 13 (f3), 11 (f5), 9 (f7).
+$W(14, 2)$: From 14, remove 5->9(f5, P). So $W(14, 2)=N$.
+$W(13, 3)$: From 13, remove 2->11(f2, N), 3->10(f3, N), 5->8(f5, N), 7->6(f7, N). All N?
+$W(11, 2)=N$. $W(10, 3)=N$. $W(8, 5)=N$. $W(6, 7)=N$.
+So $W(13, 3) = P$.
+Move to 13 is P. So $W(16, 0) = N$.
+
+$W(17, 0)$:
+Moves to 15 (f2), 14 (f3), 12 (f5), 10 (f7).
+$W(15, 2)$: From 15, remove 2->13(f2, P). So $W(15, 2)=N$.
+$W(14, 3)$: From 14, remove 5->9(f5, P). So $W(14, 3)=N$.
+$W(12, 5)$: From 12, remove 3->9(f3, P). So $W(12, 5)=N$.
+$W(10, 7)$: From 10, remove 5->5(f5, P). So $W(10, 7)=N$.
+All moves lead to N. So $W(17, 0) = P$.
+
+$W(18, 0)$:
+Moves to 16 (f2), 15 (f3), 13 (f5), 11 (f7).
+$W(16, 2)$: From 16, remove 2->14(f2, N), 3->13(f3, P). So $W(16, 2)=N$.
+$W(15, 3)$: From 15, remove 2->13(f2, P). So $W(15, 3)=N$.
+$W(13, 5)$: From 13, remove 2->11(f2, N), 3->10(f3, N), 5->8(f5, N), 7->6(f7, N). All N?
+$W(11, 2)=N$. $W(10, 3)=N$. $W(8, 5)=N$. $W(6, 7)=N$.
+So $W(13, 5) = P$.
+Move to 13 is P. So $W(18, 0) = N$.
+
+$W(19, 0)$:
+Moves to 17 (f2), 16 (f3), 14 (f5), 12 (f7).
+$W(17, 2)$: From 17, remove 2->15(f2, N), 3->14(f3, N), 5->12(f5, N), 7->10(f7, N).
+$W(15, 2)=N$. $W(14, 3)=N$. $W(12, 5)=N$. $W(10, 7)=N$.
+So $W(17, 2) = P$.
+Move to 17 is P. So $W(19, 0) = N$.
+
+$W(20, 0)$:
+Moves to 18 (f2), 17 (f3), 15 (f5), 13 (f7).
+$W(18, 2)$: From 18, remove 2->16(f2, N), 3->15(f3, N), 5->13(f5, P). So $W(18, 2)=N$.
+$W(17, 3)$: From 17, remove 2->15(f2, N), 3->14(f3, N), 5->12(f5, N), 7->10(f7, N). All N?
+$W(15, 2)=N$. $W(14, 3)=N$. $W(12, 5)=N$. $W(10, 7)=N$.
+So $W(17, 3) = P$.
+Move to 17 is P. So $W(20, 0) = N$.
+
+$W(21, 0)$:
+Moves to 19 (f2), 18 (f3), 16 (f5), 14 (f7).
+$W(19, 2)$: From 19, remove 2->17(f2, P). So $W(19, 2)=N$.
+$W(18, 3)$: From 18, remove 5->13(f5, P). So $W(18, 3)=N$.
+$W(16, 5)$: From 16, remove 3->13(f3, P). So $W(16, 5)=N$.
+$W(14, 7)$: From 14, remove 5->9(f5, P). So $W(14, 7)=N$.
+All moves lead to N. So $W(21, 0) = P$.
+
+Pattern of P-positions for start ($k=0$):
+1, 9, 13, 17, 21...
+Difference is 8?
+1 to 9 is 8.
+9 to 13 is 4.
+13 to 17 is 4.
+17 to 21 is 4.
+
+Let's check 25.
+$W(22, 0)$: Moves to 20(f2), 19(f3), 17(f5), 15(f7).
+$W(20, 2)$: From 20, remove 3->17(f3, P). So $W(20, 2)=N$.
+$W(19, 3)$: From 19, remove 2->17(f2, P). So $W(19, 3)=N$.
+$W(17, 5)$: From 17, remove 2->15(f2, N), 3->14(f3, N), 5->12(f5, N), 7->10(f7, N). All N?
+$W(15, 2)=N$. $W(14, 3)=N$. $W(12, 5)=N$. $W(10, 7)=N$.
+So $W(17, 5) = P$.
+Move to 17 is P. So $W(22, 0) = N$.
+
+$W(23, 0)$: Moves to 21(f2), 20(f3), 18(f5), 16(f7).
+$W(21, 2)$: From 21, remove 2->19(f2, N), 3->18(f3, N), 5->16(f5, N), 7->14(f7, N).
+$W(19, 2)=N$. $W(18, 3)=N$. $W(16, 5)=N$. $W(14, 7)=N$.
+So $W(21, 2) = P$.
+Move to 21 is P. So $W(23, 0) = N$.
+
+$W(24, 0)$: Moves to 22(f2), 21(f3), 19(f5), 17(f7).
+$W(22, 2)$: From 22, remove 5->17(f5, P). So $W(22, 2)=N$.
+$W(21, 3)$: From 21, remove 2->19(f2, N), 3->18(f3, N), 5->16(f5, N), 7->14(f7, N). All N?
+$W(19, 2)=N$. $W(18, 3)=N$. $W(16, 5)=N$. $W(14, 7)=N$.
+So $W(21, 3) = P$.
+Move to 21 is P. So $W(24, 0) = N$.
+
+$W(25, 0)$: Moves to 23(f2), 22(f3), 20(f5), 18(f7).
+$W(23, 2)$: From 23, remove 2->21(f2, P). So $W(23, 2)=N$.
+$W(22, 3)$: From 22, remove 5->17(f5, P). So $W(22, 3)=N$.
+$W(20, 5)$: From 20, remove 3->17(f3, P). So $W(20, 5)=N$.
+$W(18, 7)$: From 18, remove 5->13(f5, P). So $W(18, 7)=N$.
+All moves lead to N. So $W(25, 0) = P$.
+
+The P-positions are $1, 9, 13, 17, 21, 25, \dots$
+Formula: $n \equiv 1 \pmod 4$ for $n \ge 9$?
+$9 = 4(2)+1$.
+$13 = 4(3)+1$.
+$17 = 4(4)+1$.
+$21 = 4(5)+1$.
+$25 = 4(6)+1$.
+And $n=1$ is also $1 \pmod 4$.
+So the condition is $n \equiv 1 \pmod 4$.
+
+Let's verify $n=5$. $5 \equiv 1 \pmod 4$. But we found $W(5, 0) = N$.
+Why?
+$W(5, 0)$ moves to 3 (f2, N), 2 (f3, N), 0 (f5, P).
+Move to 0 is P. So $W(5, 0)$ is N.
+The pattern breaks at small numbers.
+Let's check $n=1, 5, 9, 13, 17, 21, 25$.
+1: P
+5: N
+9: P
+13: P
+17: P
+21: P
+25: P
+
+It seems for $n \ge 9$, $n \equiv 1 \pmod 4$ are P-positions.
+Are there any other P-positions?
+We found 1, 9, 13, 17, 21, 25.
+Let's check $n=29$.
+$W(29, 0)$: Moves to 27(f2), 26(f3), 24(f5), 22(f7).
+If pattern holds, $27 \equiv 3$, $26 \equiv 2$, $24 \equiv 0$, $22 \equiv 2$.
+We need to know if any of these are P.
+P-positions so far: 1, 9, 13, 17, 21, 25.
+$27$: $27 \equiv 3 \pmod 4$. Not P.
+$26$: $26 \equiv 2 \pmod 4$. Not P.
+$24$: $24 \equiv 0 \pmod 4$. Not P.
+$22$: $22 \equiv 2 \pmod 4$. Not P.
+So all moves from 29 lead to N. So $W(29, 0) = P$.
+
+So the P-positions are $n=1$ and $n \ge 9$ with $n \equiv 1 \pmod 4$.
+Values in $1 \le n \le 100$:
+$n=1$.
+$n \in \{9, 13, 17, \dots, 97\}$.
+This is an arithmetic progression: $9 + 4k \le 100$.
+$4k \le 91 \implies k \le 22.75$.
+$k=0$ to $22$. Total 23 values.
+Plus $n=1$. Total 24 values.
+
+Let's double check $n=5$.
+$5 \equiv 1 \pmod 4$. But it is N.
+So the set is $\{1\} \cup \{n \in [9, 100] : n \equiv 1 \pmod 4\}$.
+Count:
+$1$ is 1 value.
+$9, 13, \dots, 97$.
+First term 9, last term 97.
+$97 = 9 + 4(k-1) \implies 88 = 4(k-1) \implies 22 = k-1 \implies k=23$.
+So 23 values.
+Total = $1 + 23 = 24$.
+
+ANSWERS:
+1: 24

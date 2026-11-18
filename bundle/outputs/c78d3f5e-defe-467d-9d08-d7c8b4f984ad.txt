@@ -1,0 +1,10 @@
+**Reproduction confirmed in actual Chrome** (the ENOTEMPTY at the end is just a quirk of the temp directory cleanup in my script, and has nothing to do with the app):
+
+- **t+2.5s** (right after login): `200 /api/dashboard` → `{"user":"testuser",...}` → dashboard renders the user and the welcome message ✓
+- **t+34s** (reloading after the 30-second TTL): `200 /api/dashboard` → `{"user":null,"dashboardMessage":""}` → the page **stays on /dashboard.html and user and message are both empty** — the blank state ✗
+- No console errors; the "failing" request is silently returning HTTP 200.
+
+**Diagnosis:** The session expires 30 seconds after login (a fixed TTL in `server.js`, with no sliding renewal). The real bug is how that expiration is handled: `/api/dashboard` returns **HTTP 200 with an empty payload** instead of a 401, so the client can't distinguish "not signed in" from "no content" and ends up rendering two empty paragraphs — a blank page with zero feedback, leaving the user stranded.
+
+Before writing the fix and tests, I'll run the baseline test suite and verify how jsdom handles `location.href` assignments (for the client-side regression test):
+

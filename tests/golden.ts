@@ -1,9 +1,10 @@
-// Shared by the parity tests: loads the real site-data and golden-numbers.json, reproduces the golden
+// Shared by the parity tests: loads a frozen site-data baseline and golden-numbers.json, reproduces the golden
 // leaderboard scenarios with the typed core, and returns every difference found.
 
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { normalizeIndex, normalizeMeta } from '../src/lib/core/normalize';
+import { gunzipSync } from 'node:zlib';
+import { normalizeIndex } from '../src/lib/core/normalize';
 import { defaultContext, type DataContext, type Dim } from '../src/lib/core/context';
 import { facet, scope } from '../src/lib/core/scope';
 import { OVERALL, isRanked, sortRows, type Row } from '../src/lib/core/scoring';
@@ -11,18 +12,11 @@ import { COMBINED, asSectionId, asSuiteId, asTierId, type SuiteIndex } from '../
 import { ALIAS_CASE_MODELS, B03_MODELS, ECLIPSE_COST_MODELS } from './allowlist';
 
 export const ROOT = resolve(import.meta.dirname, '..');
-export const DATA_DIR = resolve(ROOT, 'static/data');
-
-export function haveData(): boolean {
-  return existsSync(resolve(DATA_DIR, 'meta.json'));
-}
-
-export function loadMeta() {
-  return normalizeMeta(JSON.parse(readFileSync(resolve(DATA_DIR, 'meta.json'), 'utf8')));
-}
+const BASELINE_DIR = resolve(import.meta.dirname, 'fixtures/parity');
 
 export function loadIndex(suite: string): SuiteIndex {
-  return normalizeIndex(JSON.parse(readFileSync(resolve(DATA_DIR, suite, 'index.json'), 'utf8')));
+  const index = gunzipSync(readFileSync(resolve(BASELINE_DIR, `${suite}.index.json.gz`)));
+  return normalizeIndex(JSON.parse(index.toString('utf8')));
 }
 
 // The golden file is large and untyped; this is the one place that reads it loosely.

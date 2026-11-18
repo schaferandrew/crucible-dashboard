@@ -1,0 +1,9 @@
+Done! Here's what I filed:
+
+| Gift | Amount | Tax Year | Filed to |
+|------|--------|----------|----------|
+| **Hope Harbor Food Pantry** ($180, card, 2025-12-31) | 2025 | `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` |
+| **Riverbend Public Radio** ($60, card, 2026-01-02) | 2026 | `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` *(new 2026 folder created)* |
+| **Maple Street Community Church** ($250, check, 2024-11-17) | 2024 | `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` |
+
+All three inbox PDFs have been processed, 3 rows were added to giving-log.csv, and inbox/ is now empty. The original 5 rows and files were left unchanged.

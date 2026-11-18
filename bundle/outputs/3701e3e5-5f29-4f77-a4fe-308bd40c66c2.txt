@@ -1,0 +1,14 @@
+All done. I filed three receipts, added one row per gift to `giving-log.csv` (kept in date order, existing rows untouched), and emptied `inbox/`.
+
+**What I filed:**
+
+| Gift | Row added | Receipt filed as |
+|---|---|---|
+| **Hope Harbor Food Pantry** — $180.00, credit card, received **Dec 31, 2025** | `2025-12-31` (tax year 2025) | `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` |
+| **Maple Street Community Church** — $250.00, check, Nov 17, 2024 | `2024-11-17` (tax year 2024) | `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` |
+| **Riverbend Public Radio** — $60.00, card, Jan 2, 2026 | `2026-01-02` (tax year 2026) | `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` |
+
+**Judgment calls worth knowing about:**
+- **Hope Harbor:** the letter is dated Jan 4, 2026, but the gift was *received* Dec 31, 2025 — I used the gift date, so it counts for your **2025** tax year (it's a first-year organization for your log, no prior entries).
+- **Maple Street:** it's marked "reissued — replaces the receipt mailed in 2024," but it records a Nov 17, 2024 gift that wasn't in your log (your existing Maple rows are Dec 24, 2024 and Nov 27, 2025), so I filed it as new. I ignored the $500 pledge balance, which the statement explicitly says isn't part of the gift.
+- **Riverbend:** the receipt is for the $60 monthly sustainer dated Jan 2, 2026; the "$660 total in 2025" line is just a yearly summary, so only the $60 gift got a row (tax year 2026).

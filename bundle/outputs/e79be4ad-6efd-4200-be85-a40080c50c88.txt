@@ -1,0 +1,1 @@
+Baseline: all 26 tests pass. Now I'll write reproduction tests **before** fixing. First, an API-level test reproducing bug B (register with a pending invite) and documenting the accept-invite contract.

@@ -1,0 +1,94 @@
+⏺ bash(command=ls -la; echo "---"; cat calendar-fixture.json 2>/dev/null | )
+  ⎿ total 24
+drwxr-xr-x@  6 schafer  staff   192 Nov 11 07:01 .
+drwxr-xr-x@ 14 schafer  staff   448 Nov 11 07:01 ..
+drwxr-xr-x@ 14 schafer  staff   448 Nov 11 07:01 .git
+-rw-r--r--@  1 schafer  staff    4
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+
+data = json.load(ope)
+  ⎿ num valid: 6
+2026-08-31T11:00:00-05:00
+2026-08-31T11:30:00-05:00
+2026-08-31T12:00:00-05:00
+2026-08-31T15:30:00-05:00
+2026-08-31T16:00:00-05:00
+2026-08-31T16:30:00-05:00
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+
+data = json.load(ope)
+  ⎿ Traceback (most recent call last):
+  File "<stdin>", line 24, in <module>
+TypeError: can't compare offset-naive and offset-aware datetimes
+
+
+Command exited with code 1
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+from datetime import )
+  ⎿ num valid: 92
+2026-08-31T11:00:00-05:00
+2026-08-31T11:30:00-05:00
+2026-08-31T12:00:00-05:00
+2026-08-31T15:30:00-05:00
+2026-08-31T16:00:00-05:00
+2026-08-31T16:30:00-05:00
+2026-09-01T10:00:00-05:00
+2026
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+from datetime import )
+  ⎿ Traceback (most recent call last):
+  File "<stdin>", line 46, in <module>
+  File "<stdin>", line 38, in score
+TypeError: '<=' not supported between instances of 'datetime.datetime' and 'str'
+
+
+Command
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+from datetime import )
+  ⎿ Traceback (most recent call last):
+  File "<stdin>", line 39, in <module>
+  File "<stdin>", line 39, in <genexpr>
+  File "<stdin>", line 35, in score
+TypeError: '<=' not supported between instances of
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+data=json.load(open(")
+  ⎿ (datetime.datetime(2026, 8, 31, 10, 0, tzinfo=datetime.timezone(datetime.timedelta(days=-1, seconds=68400))), datetime.datetime(2026, 8, 31, 11, 0, tzinfo=datetime.timezone(datetime.timedelta(days=-1,
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+from datetime import )
+  ⎿ BAD EVENT: 2026-08-31 10:00:00-05:00 2026-08-31 11:00:00-05:00 <class 'datetime.datetime'> <class 'datetime.datetime'>
+Traceback (most recent call last):
+  File "<stdin>", line 38, in <module>
+  File 
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+from datetime import )
+  ⎿ Traceback (most recent call last):
+  File "<stdin>", line 43, in <module>
+  File "<stdin>", line 43, in <genexpr>
+  File "<stdin>", line 32, in score
+TypeError: '<=' not supported between instances of
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+data=json.load(open(")
+  ⎿ bad count 0
+Traceback (most recent call last):
+  File "<stdin>", line 15, in <module>
+TypeError: fromisoformat: argument must be str
+
+
+Command exited with code 1
+⏺ bash(command=python3 << 'EOF'
+import json, datetime
+from datetime import )
+  ⎿ Traceback (most recent call last):
+  File "<stdin>", line 40, in <module>
+  File "<stdin>", line 40, in <genexpr>
+  File "<stdin>", line 36, in score
+TypeError: '<=' not supported between instances of

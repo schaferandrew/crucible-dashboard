@@ -1,0 +1,90 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "4298fa2a-7288-403b-b683-d2613930924e",
+ "run_path": "openrouter_z-ai_glm-5.3-flash/js-to-typescript-port/20261111_054148",
+ "legacy_run_id": null,
+ "started_at": "2026-11-11T05:41:49.076610+00:00",
+ "ended_at": "2026-11-11T05:44:06.110125+00:00",
+ "elapsed_s": 136.79,
+ "task": {
+  "id": "js-to-typescript-port",
+  "version": 1,
+  "rubric_version": 1,
+  "content_hash": "8467a4146819d4ec",
+  "rubric_hash": "35c748edb2d883b3",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "openrouter/z-ai/glm-5.3-flash",
+  "base": "z-ai/glm-5.3-flash",
+  "publisher": "z-ai",
+  "artifact": null,
+  "format": null,
+  "quant": null,
+  "reasoning": {
+   "requested": "default",
+   "resolved": null,
+   "resolved_source": "unknown"
+  },
+  "context_loaded": null,
+  "variant_key": "z-ai/glm-5.3-flash|z-ai|api|-",
+  "display": "glm-5.3-flash",
+  "origin": {
+   "maker": "z-ai",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "openrouter"
+  }
+ },
+ "endpoint": {
+  "where": "cloud",
+  "provider": "openrouter",
+  "app": null,
+  "served_via": null,
+  "device": null,
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": null,
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 17,
+  "tokens_in": 268653,
+  "tokens_out": 21301,
+  "model_responses": 12,
+  "ttft_s": 0.399,
+  "ttft_avg_s": 0.657,
+  "response_time_avg_s": 11.057,
+  "output_tokens_per_s": 170.7,
+  "cost_usd": 0.294197,
+  "cost_source": "openrouter_billed",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/4298fa2a-7288-403b-b683-d2613930924e.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "6faa751",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:f95b17e3aa0edb6d1d3ee6b06e30abf4a42418a603a7f4932a04736e399be486",
+  "submitter": null,
+  "verification": null
+ }
+}

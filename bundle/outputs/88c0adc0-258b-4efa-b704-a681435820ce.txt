@@ -1,0 +1,30 @@
+## Weather
+- Current temperature: 68°F, partly cloudy.
+- Forecast for today (September 2): High 68°F, low 55°F. Partly cloudy with a chance of light rain (≈10% precipitation). Wind at 8 mph.
+
+## Outstanding work
+All four emails received yesterday remain unanswered:
+
+1. **Project update – Q3 review completed** (alex@example.com) – needs response.  
+2. **Meeting notes from yesterday** (jamie@example.com) – needs response.  
+3. **Reminder: Q3 expense report due Wednesday 5 PM** (finance@example.com) – urgent deadline today.  
+4. **Question about the proposal timeline** (client@example.com) – awaiting confirmation.
+
+## Emails
+- Four pending replies from yesterday’s emails; all require an actionable response or clarification.
+
+## Calendar
+Upcoming events today:
+- 10:00‑11:00 AM: Vendor demo (Zoom).  
+- 12:30 PM onward: Budget meeting (Conference Room A) at 1:00 PM.  
+- 9:00‑10:00 AM earlier today: Standup (Alex).
+
+## News
+- Twin Cities Tech Conference returns with 50+ speakers; registration opens Friday.  
+- Maplewood Park renovation complete, new trails and playground open Saturday.  
+- State Fair attendance down 3% due to cooler weather.
+
+## Top 3 things to do today
+1. Submit the Q3 expense report by 5 PM (deadline).  
+2. Attend the vendor demo at 10:00 AM.  
+3. Participate in the budget meeting at 1:00 PM.

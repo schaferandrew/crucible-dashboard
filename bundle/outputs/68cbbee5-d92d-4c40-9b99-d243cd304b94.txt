@@ -1,0 +1,154 @@
+Here is the step-by-step reasoning for each problem.
+
+### 1. How many integers from 1 to 10,000 inclusive are divisible by 3 or by 7, but not by 21?
+
+Let $S$ be the set of integers $\{1, 2, ..., 10000\}$.
+Let $A$ be the set of integers in $S$ divisible by 3.
+Let $B$ be the set of integers in $S$ divisible by 7.
+We want to find the number of elements in $(A \cup B) \setminus (A \cap B)$.
+Note that $A \cap B$ is the set of integers divisible by $\text{lcm}(3, 7) = 21$.
+The condition "divisible by 3 or by 7, but not by 21" is equivalent to the symmetric difference of $A$ and $B$, denoted as $A \Delta B$.
+The size of this set is $|A| + |B| - 2|A \cap B|$.
+
+First, calculate $|A|$:
+$|A| = \lfloor \frac{10000}{3} \rfloor = 3333$.
+
+Next, calculate $|B|$:
+$|B| = \lfloor \frac{10000}{7} \rfloor = 1428$.
+
+Next, calculate $|A \cap B|$:
+$|A \cap B| = \lfloor \frac{10000}{21} \rfloor = 476$.
+
+Now, compute the result:
+$|A \Delta B| = 3333 + 1428 - 2(476)$
+$|A \Delta B| = 4761 - 952$
+$|A \Delta B| = 3809$.
+
+**Answer:** 3809
+
+### 2. What is the remainder when $7^{2026}$ is divided by 100?
+
+We need to calculate $7^{2026} \pmod{100}$.
+Since $\gcd(7, 100) = 1$, we can use Euler's Totient Theorem.
+$\phi(100) = 100(1 - \frac{1}{2})(1 - \frac{1}{5}) = 100(\frac{1}{2})(\frac{4}{5}) = 40$.
+Thus, $7^{40} \equiv 1 \pmod{100}$.
+
+We reduce the exponent modulo 40:
+$2026 = 40 \times 50 + 26$.
+So, $7^{2026} \equiv 7^{26} \pmod{100}$.
+
+Let's compute powers of 7 modulo 100:
+$7^1 = 7$
+$7^2 = 49$
+$7^3 = 343 \equiv 43 \pmod{100}$
+$7^4 = 7 \times 43 = 301 \equiv 1 \pmod{100}$? No, $301 = 3 \times 100 + 1$, so $7^4 \equiv 1 \pmod{100}$ is **false**. Wait, $7^4 = 2401$. $2401 \equiv 1 \pmod{100}$.
+Let's re-verify:
+$7^2 = 49$.
+$7^4 = 49^2 = 2401 \equiv 1 \pmod{100}$.
+
+Since $7^4 \equiv 1 \pmod{100}$, the order of 7 modulo 100 divides 4.
+We can reduce the exponent 26 modulo 4.
+$26 = 4 \times 6 + 2$.
+So, $7^{26} = (7^4)^6 \cdot 7^2 \equiv 1^6 \cdot 7^2 \equiv 49 \pmod{100}$.
+
+**Answer:** 49
+
+### 3. In how many ways can a 2 x 12 board be tiled with 1 x 2 dominoes (placed either way) and 2 x 2 squares?
+
+Let $a_n$ be the number of ways to tile a $2 \times n$ board.
+Consider the rightmost end of the board (column $n$).
+Case 1: The last piece is a vertical domino ($1 \times 2$ placed vertically). This covers column $n$. The remaining board is $2 \times (n-1)$. There are $a_{n-1}$ ways.
+Case 2: The last pieces are two horizontal dominoes ($1 \times 2$ placed horizontally). This covers columns $n-1$ and $n$. The remaining board is $2 \times (n-2)$. There are $a_{n-2}$ ways.
+Case 3: The last piece is a $2 \times 2$ square. This covers columns $n-1$ and $n$. The remaining board is $2 \times (n-2)$. There are $a_{n-2}$ ways.
+
+So the recurrence relation is:
+$a_n = a_{n-1} + 2a_{n-2}$
+
+Base cases:
+$a_0 = 1$ (empty board)
+$a_1 = 1$ (one vertical domino)
+
+Calculate up to $n=12$:
+$a_2 = a_1 + 2a_0 = 1 + 2(1) = 3$
+$a_3 = a_2 + 2a_1 = 3 + 2(1) = 5$
+$a_4 = a_3 + 2a_2 = 5 + 2(3) = 11$
+$a_5 = a_4 + 2a_3 = 11 + 2(5) = 21$
+$a_6 = a_5 + 2a_4 = 21 + 2(11) = 43$
+$a_7 = a_6 + 2a_5 = 43 + 2(21) = 85$
+$a_8 = a_7 + 2a_6 = 85 + 2(43) = 171$
+$a_9 = a_8 + 2a_7 = 171 + 2(85) = 341$
+$a_{10} = a_9 + 2a_8 = 341 + 2(171) = 683$
+$a_{11} = a_{10} + 2a_9 = 683 + 2(341) = 1365$
+$a_{12} = a_{11} + 2a_{10} = 1365 + 2(683) = 1365 + 1366 = 2731$
+
+**Answer:** 2731
+
+### 4. Three fair six-sided dice are rolled. What is the probability that the largest number shown is exactly 4?
+
+Let $X_1, X_2, X_3$ be the outcomes of the three dice. Total outcomes = $6^3 = 216$.
+Let $M = \max(X_1, X_2, X_3)$. We want $P(M = 4)$.
+$P(M = 4) = P(M \le 4) - P(M \le 3)$.
+
+The event $M \le k$ means all dice show a number less than or equal to $k$.
+The number of outcomes where all dice are $\le k$ is $k^3$.
+
+$P(M \le 4) = \frac{4^3}{6^3} = \frac{64}{216}$.
+$P(M \le 3) = \frac{3^3}{6^3} = \frac{27}{216}$.
+
+$P(M = 4) = \frac{64 - 27}{216} = \frac{37}{216}$.
+
+Check if the fraction is in lowest terms. 37 is a prime number. 216 is not divisible by 37 ($37 \times 6 = 222$). So it is in lowest terms.
+
+**Answer:** 37/216
+
+### 5. A family has two children. You learn that at least one of them is a boy who was born on a Tuesday. Assuming each child is equally likely to be a boy or a girl and to be born on any day of the week, independently, what is the probability that both children are boys?
+
+Let the sample space for a single child be $C = \{ (G, d), (B, d) \mid d \in \{Mon, ..., Sun\} \}$.
+There are $2 \times 7 = 14$ possible states for one child.
+For two children, there are $14 \times 14 = 196$ total equally likely outcomes.
+
+Let $E$ be the event "at least one child is a boy born on a Tuesday".
+Let $F$ be the event "both children are boys".
+We want to find $P(F | E) = \frac{|E \cap F|}{|E|}$.
+
+**Calculate $|E|$:**
+It is easier to count the complement $E^c$ (no child is a boy born on a Tuesday) and subtract from total.
+A child is *not* a boy born on a Tuesday if they are either a girl (7 days) or a boy born on a non-Tuesday day (6 days).
+So there are $7 + 6 = 13$ states for a child that are not "Boy-Tuesday".
+$|E^c| = 13 \times 13 = 169$.
+$|E| = 196 - 169 = 27$.
+
+Alternatively, count $|E|$ directly:
+Case 1: First child is Boy-Tuesday (BT). Second child can be anything (14 options). -> 14 outcomes.
+Case 2: Second child is BT. First child can be anything (14 options). -> 14 outcomes.
+Case 3: Both are BT. This is counted in both Case 1 and Case 2. -> 1 outcome.
+$|E| = 14 + 14 - 1 = 27$.
+
+**Calculate $|E \cap F|$:**
+This is the event "Both children are boys AND at least one is a boy born on a Tuesday".
+Let the children be $C_1, C_2$. Both are boys.
+Possible states for a boy: $B_{Mon}, ..., B_{Sun}$ (7 options).
+Total outcomes where both are boys = $7 \times 7 = 49$.
+Let $G$ be the event "at least one is BT" within the subset of "both are boys".
+Complement within this subset: Neither is BT.
+If a child is a boy but not BT, there are 6 options ($B_{Mon}, ..., B_{Sun} \setminus \{B_{Tue}\}$).
+Number of outcomes where both are boys and neither is BT = $6 \times 6 = 36$.
+So, $|E \cap F| = 49 - 36 = 13$.
+
+Alternatively, count directly:
+Case 1: $C_1$ is BT. $C_2$ is a boy. $C_2$ can be any of the 7 boy-days. -> 7 outcomes.
+Case 2: $C_2$ is BT. $C_1$ is a boy. $C_1$ can be any of the 7 boy-days. -> 7 outcomes.
+Intersection: Both are BT. -> 1 outcome.
+$|E \cap F| = 7 + 7 - 1 = 13$.
+
+**Calculate Probability:**
+$P(F | E) = \frac{13}{27}$.
+
+**Answer:** 13/27
+
+ANSWERS
+1. 3809
+2. 49
+3. 2731
+4. 37/216
+5. 13/27

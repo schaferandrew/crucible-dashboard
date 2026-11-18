@@ -1,0 +1,2 @@
+I'm checking how vitest handles Node's `localStorage` global in the jsdom environment to understand the baseline failure.
+

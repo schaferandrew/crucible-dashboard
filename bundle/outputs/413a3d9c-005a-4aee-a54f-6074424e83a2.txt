@@ -1,0 +1,1 @@
+Now I'll implement. Starting with the shared types — adding `status` and `reviewComment` as always-present fields so every presenter must set them (matching the client contract exactly).

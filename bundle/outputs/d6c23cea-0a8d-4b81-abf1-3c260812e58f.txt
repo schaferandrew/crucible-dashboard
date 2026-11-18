@@ -1,0 +1,25 @@
+That's Next.js auto-updating its own generated file (comment URL only) — not a config change. The migration is complete and verified.
+
+## Summary
+
+**What changed**
+
+- **Deleted `pages/`** entirely (`_app`, `_document`, `404`, `about`, `index`, `search`, `books/[slug]`, `genres/[genre]`, `api/books`).
+- **`app/layout.tsx`** (new root layout) replaces `_app.tsx` + `_document.tsx`: `<html lang="en">`, `Layout` wrapper, `globals.css`, and the shared title template `%s | Lantern Books` (default `Lantern Books`), which reproduces every page's old `<title>` exactly.
+- **`app/page.tsx`** — home; still static (catalogue is read from `data/books.json` at build time, like the old `getStaticProps`), same content.
+- **`app/books/[slug]/page.tsx`** — `export const dynamic = "force-dynamic"` so it's still rendered on every request; `notFound()` for unknown slugs (404); title/description via `generateMetadata`; the view counter is wrapped in React `cache()` so it still increments exactly once per request (verified: successive requests showed 1, 2, 3…).
+- **`app/genres/[genre]/page.tsx`** — `generateStaticParams()` from the three known genres (prerendered, like `fallback: false`); unknown genres 404.
+- **`app/search/page.tsx`** — small server component that only holds the title/description; the UI moved to **`components/Search.tsx`** (client component, `"use client"`), so the page is still prerendered statically with the same initial HTML (empty input, "Loading books..."), and the `?q=` param is read from `window.location` in an effect since App Router has no `router.query`.
+- **`app/not-found.tsx`** — same copy/links; its `metadata` export + root template yield the old `Page not found | Lantern Books` title with a 404 status.
+- **`app/api/books/route.ts`** — route handler: GET returns all books or filters by `?genre=` (400 for unknown/repeated values, using `getAll` to mirror the old query-parsing semantics); all other methods return 405 with `Allow: GET` and `{"error":"Method not allowed"}`.
+- **`components/Layout.tsx`** — now `"use client"` using `usePathname()` from `next/navigation`; same `aria-current` logic, still rendered server-side into the initial HTML.
+- **`components/ShareLink.tsx`** — takes `slug` as a prop (App Router has no `router.query`); output is identical.
+
+**Verified**: `npm test` — 7/7 pass; `npm run build` — succeeds with unchanged render modes (`○ /`, `○ /about`, `○ /search`, `● /genres/*` static; `ƒ /books/[slug]`, `ƒ /api/books` dynamic). Cursored all routes in production: same titles, descriptions, body content, nav active states, status codes (200/404/405/400), and JSON responses.
+
+**Behaves differently (minor)**
+
+1. Raw HTML now contains App Router's RSC flight `<script>` payloads and `<!-- -->` text separators (inherent to the router swap; visible text, links, and structure are identical).
+2. The search page's `?q=` is now synced via a `popstate` listener + `window.location` read rather than `router.query`; behavior is identical for all navigations the site actually supports (there are no in-site links with a `q` param).
+3. In `next dev` only, the view counter relies on `cache()` for per-request dedupe (production, which is what matters, increments exactly once per request, same as `getServerSideProps`).
+4. `next-env.d.ts` — Next.js regenerated it itself (only the docs-comment URL changed); `package.json`, lockfile, and config files are untouched, and no dependencies were added.

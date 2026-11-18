@@ -1,0 +1,12 @@
+We checked Jamie’s free‑busy schedule for this week (August 31 – September 6, 2026) and compared it with our own. Both calendars are in the **America/Chicago** time zone. The only full‑hour windows where neither of us is booked are:
+
+- August 31 at 08:00 AM Chicago time (no events on either calendar).  
+- September 1 at 08:00 AM Chicago time (both calendars idle until the next event starts at 09:30/12:00).  
+- September 3 at 11:00 AM Chicago time (the only gap between our busy blocks).
+
+These are presented as three options, best first.
+
+OPTIONS:
+2026-08-31 08:00 Chicago
+2026-09-01 08:00 Chicago
+2026-09-03 11:00 Chicago

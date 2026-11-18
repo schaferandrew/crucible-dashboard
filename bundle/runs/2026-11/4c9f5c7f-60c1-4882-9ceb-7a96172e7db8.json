@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "4c9f5c7f-60c1-4882-9ceb-7a96172e7db8",
+ "run_path": "lmstudio_qwen3.8-27b-splash/morning-brief-priorities/20261118_202731",
+ "legacy_run_id": null,
+ "started_at": "2026-11-18T20:27:31.518603+00:00",
+ "ended_at": "2026-11-18T20:29:30.382559+00:00",
+ "elapsed_s": 118.19,
+ "task": {
+  "id": "morning-brief-priorities",
+  "version": 3,
+  "rubric_version": 3,
+  "content_hash": "5adc9d482d290291",
+  "rubric_hash": "6ebad5dfa2fc77b6",
+  "alias": null
+ },
+ "harness": {
+  "id": "opencode",
+  "version": "opencode v2.2.5"
+ },
+ "model": {
+  "id": "lmstudio/qwen3.8-27b-splash",
+  "base": "qwen3.8-27b-splash",
+  "publisher": "incoai",
+  "artifact": "incoai/Qwen3.8-27B-Splash",
+  "format": "splash",
+  "quant": "4bit",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 100292,
+  "variant_key": "qwen3.8-27b-splash|incoai|splash|mlx-4bit",
+  "display": "qwen3.8-27b-splash · 4bit",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "none"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 3,
+  "tokens_in": 40461,
+  "tokens_out": 3474,
+  "model_responses": 4,
+  "ttft_s": null,
+  "ttft_avg_s": null,
+  "response_time_avg_s": 29.298,
+  "output_tokens_per_s": null,
+  "cost_usd": 0,
+  "cost_source": "opencode_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/4c9f5c7f-60c1-4882-9ceb-7a96172e7db8.txt",
+ "provenance": {
+  "crucible_version": "3.8.0",
+  "crucible_commit": "6faa751",
+  "crucible_dirty": false,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:a5cdf69e9d6ae8b6b08408c5bd95bc1253a062840c45cf5f5990f397bb6fe504",
+  "submitter": null,
+  "verification": null
+ }
+}

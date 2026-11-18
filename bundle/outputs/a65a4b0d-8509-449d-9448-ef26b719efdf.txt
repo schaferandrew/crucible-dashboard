@@ -1,0 +1,16 @@
+Done. `slots.json` is saved in the working directory with 85 valid slots and a top-3 ranking.
+
+**How the valid slots were computed** (verified with a script against the fixture):
+- 8 days in the window (Mon 2026-08-31 → Mon 2026-09-07), 120 candidate starts on the hour/half-hour (09:00–16:00), all checked to run fully within 9 AM–5 PM local
+- Excluded anything overlapping either person's busy events (touching is allowed)
+- Daily results: Mon 8/31 → 5, Tue 9/1 → 9, Wed 9/2 → 9, Thu 9/3 → 9, Fri 9/4 → 8, Sat 9/5 → 15, Sun 9/6 → 15, Mon 9/7 → 15 = **85 total**
+
+**Top 3** (weekdays only, first/last hours of the day excluded, then smallest gap to existing meetings, ties broken earlier-in-week):
+
+| Rank | Slot | Why |
+|---|---|---|
+| 1 | **Mon 2026-08-31 15:30** | Back-to-back with Jamie's Sales call ending at 15:30 — zero gap |
+| 2 | **Wed 2026-09-02 14:00** | Back-to-back with Jamie's Budget meeting ending at 14:00 — zero gap |
+| 3 | **Thu 2026-09-03 10:00** | Back-to-back with Alex's 11:00 interview — zero gap |
+
+(Each of these is the earliest zero-gap option on its respective day; the next candidate, Fri 9/4 15:00, is equally gap-free but comes later in the week.)

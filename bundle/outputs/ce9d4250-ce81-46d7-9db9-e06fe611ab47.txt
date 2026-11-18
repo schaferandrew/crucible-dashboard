@@ -1,0 +1,2 @@
+Web search is unavailable — no problem. The standard workaround for this known vitest/Node 22 collision is a guarded shim within the test setup, which is self-contained and requires no dependency changes. Let me check the remaining web test files, then get to work on the implementation.
+

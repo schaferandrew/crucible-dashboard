@@ -1,0 +1,1 @@
+Good, all 21 tests pass. Now I have a thorough understanding of the codebase. Let me create the TypeScript files. I'll start with the foundational types and work up.

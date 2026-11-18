@@ -1,0 +1,1 @@
+All tests pass. Now let me verify the production build compiles cleanly (the original type error):

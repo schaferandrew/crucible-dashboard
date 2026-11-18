@@ -1,0 +1,24 @@
+Here's my reasoning:
+
+**1. Flight:** Filtering all 7 flights against the criteria (departs ≥07:00, arrives ≤12:00, ≤1 stop, layover ≥60 min, total cost ≤$300):
+- NW201 fails: departs 06:10 (before 07:00)
+- CJ550 fails: 2 stops (exceeds limit)
+- TA77 fails: layover only 50 min (under 60 min)
+- NW318 fails: arrives 12:30 (after 12:00)
+- PL09 qualifies: departs 07:20, arrives 11:10, 1 stop with 75 min layover, total $287
+- SL114 qualifies: departs 08:15, arrives 10:40, nonstop, total $279 (bag included)
+- SL330 fails: total $349 (over $300)
+
+Cheapest qualifying flight is **SL114 at $279**.
+
+**2. Restaurant:** Only Harbor Grill and Fennel & Fig are both peanut-free AND sesame-free. Walking distance check: Harbor Grill is 1.3 miles (within 1.5), while Fennel & Fig is 1.9 miles (too far). So **Harbor Grill at 1.3 miles**.
+
+**3. Distance/Time:** Larkspur Inn to Larkspur Airport is 14.2 miles by road. A taxi departing at 17:15 takes 41 minutes (peak traffic).
+
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41

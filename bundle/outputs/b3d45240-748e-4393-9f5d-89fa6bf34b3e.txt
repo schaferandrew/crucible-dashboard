@@ -1,0 +1,37 @@
+Everything is complete. Here's a summary:
+
+## Summary of Changes
+
+### What was migrated
+| Pages Router | App Router |
+|---|---|
+| `pages/index.tsx` | `app/page.tsx` |
+| `pages/_app.tsx` + `pages/_document.tsx` | `app/layout.tsx` |
+| `pages/books/[slug].tsx` | `app/books/[slug]/page.tsx` |
+| `pages/genres/[genre].tsx` | `app/genres/[genre]/page.tsx` |
+| `pages/search.tsx` | `app/search/page.tsx` + `app/search/SearchClient.tsx` |
+| `pages/about.tsx` | `app/about/page.tsx` |
+| `pages/404.tsx` | `app/not-found.tsx` |
+| `pages/api/books.ts` | `app/api/books/route.ts` |
+
+### Key changes
+- **Layout**: Added `"use client"` and replaced `useRouter().pathname` with `usePathname()` from `next/navigation`.
+- **ShareLink**: Replaced `useRouter().query.slug` with `usePathname()` — splits the pathname to extract the book slug.
+- **Search page**: Split into a server wrapper (`page.tsx`) and a client component (`SearchClient.tsx`). Replaced `useRouter().query.q` with `useSearchParams().get("q")`.
+- **Book page**: Converted from `getServerSideProps` to an async server component with `generateMetadata` for dynamic metadata.
+- **Genre page**: Converted from `getStaticPaths` + `getStaticProps` to `generateStaticParams` + `generateMetadata`. Unknown genres call `notFound()` to trigger the custom 404.
+- **API route**: Converted from `NextApiRequest/NextApiResponse` to the `GET`/`POST`/etc. route handler pattern using `URL` and `NextResponse`.
+
+### Rendering behavior preserved
+- Home, genres, about: **static** (built at build time)
+- Book pages: **dynamic** (rendered on each request)
+- Search: **static shell** with client-side data fetching
+- API route: **dynamic**
+
+### Status codes preserved
+- Unknown book/genre slugs: **404**
+- Non-GET to `/api/books`: **405**
+- Invalid genre query param: **400**
+
+### No behavioral differences
+All URLs, HTML content, navigation highlighting, titles, descriptions, and status codes remain identical.

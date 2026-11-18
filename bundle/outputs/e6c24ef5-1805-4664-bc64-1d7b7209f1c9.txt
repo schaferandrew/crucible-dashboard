@@ -1,0 +1,16 @@
+Here's my reasoning:
+
+**Today** is Monday, Aug 31, 2026, 8:30 AM CDT — so "this week" runs through Friday, Sep 4. I checked your calendar (Alex Rivera) and Jamie Chen's free/busy. Intersecting your free time with Jamie's free time (excluding the Design sync on Thursday you declined, so that slot is actually free for you):
+
+- **Mon 8/31**: Your free slots (9:30–10:00, 14:00–15:00, 16:30+) all collide with Jamie's busy blocks. No hour works.
+- **Tue 9/1**: Overlap is only 10:30–11:00 (30 min). No full hour.
+- **Wed 9/2**: Jamie is free 15:30–17:00 and you're free after 14:00 → **15:30–17:00 open**.
+- **Thu 9/3**: Jamie free 10:30–12:00 and 16:00–17:00; you're free 11:00–12:00 and 16:00–17:00 → **11:00–12:00** and **16:00–17:00 open**.
+- **Fri 9/4**: Jamie free 10:30–12:00 and 15:00–17:00; you're free 9:30–12:00 and 13:00–17:00 → **10:30–12:00** and **15:00–17:00 open**.
+
+Best first: Thursday 11:00 (clean mid-morning hour), Friday 10:30 (1.5h buffer, fresh morning slot), Wednesday 15:30 (afternoon, earliest day with a full hour).
+
+OPTIONS:
+2026-09-03 11:00 CDT
+2026-09-04 10:30 CDT
+2026-09-02 15:30 CDT

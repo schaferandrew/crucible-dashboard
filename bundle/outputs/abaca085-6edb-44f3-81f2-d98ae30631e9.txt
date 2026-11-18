@@ -1,0 +1,91 @@
+Here are the step-by-step solutions for each question.
+
+### 1. Compound Interest Calculation
+
+**Formula:**
+$$A = P \left(1 + \frac{r}{n}\right)^{nt}$$
+
+Where:
+*   $P = 5000$ (Principal)
+*   $r = 0.04$ (Annual interest rate)
+*   $n = 12$ (Compounded monthly)
+*   $t = 3$ (Years)
+
+**Step 1: Calculate the monthly interest rate.**
+$$\frac{r}{n} = \frac{0.04}{12} = 0.003333...$$
+
+**Step 2: Calculate the total number of compounding periods.**
+$$nt = 12 \times 3 = 36$$
+
+**Step 3: Apply the formula.**
+$$A = 5000 \left(1 + \frac{0.04}{12}\right)^{36}$$
+$$A = 5000 \left(1.003333...\right)^{36}$$
+
+Calculating the power part first:
+$$(1.003333...)^{36} \approx 1.12727193$$
+
+Multiplying by the principal:
+$$A = 5000 \times 1.12727193 \approx 5636.35965$$
+
+**Step 4: Round to the nearest cent.**
+$$5636.35965 \rightarrow \$5,636.36$$
+
+***
+
+### 2. Flooring Calculation
+
+**Step 1: Calculate the total area needed including waste.**
+The base area is 1,850 sq ft. We need 10% extra.
+$$\text{Total Area} = 1850 \times (1 + 0.10)$$
+$$\text{Total Area} = 1850 \times 1.10 = 2035 \text{ sq ft}$$
+
+**Step 2: Determine the number of boxes required.**
+Each box covers 23.5 sq ft.
+$$\text{Boxes needed} = \frac{2035}{23.5}$$
+$$\text{Boxes needed} \approx 86.5957$$
+
+**Step 3: Round up to the nearest whole box.**
+You cannot buy a fraction of a box. Since 86 boxes would only cover $86 \times 23.5 = 2021$ sq ft (which is less than the required 2035 sq ft), you must buy the next whole number.
+$$\text{Boxes to buy} = 87$$
+
+***
+
+### 3. Gas Cost Calculation
+
+**Step 1: Calculate the gallons of gas needed.**
+$$\text{Gallons} = \frac{\text{Total Miles}}{\text{Miles per Gallon}}$$
+$$\text{Gallons} = \frac{412}{34} \approx 12.117647 \text{ gallons}$$
+
+**Step 2: Calculate the total cost.**
+$$\text{Cost} = \text{Gallons} \times \text{Price per Gallon}$$
+$$\text{Cost} = \left(\frac{412}{34}\right) \times 3.89$$
+$$\text{Cost} \approx 12.117647 \times 3.89 \approx 47.137647$$
+
+**Step 3: Round to the nearest cent.**
+$$47.137647 \rightarrow \$47.14$$
+
+***
+
+### 4. Dinner Bill Split
+
+**Step 1: Calculate the tip amount.**
+The tip is 18% of the pre-tax amount ($172.00).
+$$\text{Tip} = 172.00 \times 0.18 = 30.96$$
+
+**Step 2: Calculate the total bill.**
+The total bill consists of the pre-tax amount, the tax, and the tip.
+Note: The problem states the dinner came to $186.40 *including tax*. This means the tax amount is already embedded in that figure.
+$$\text{Total Bill} = \text{Amount including tax} + \text{Tip}$$
+$$\text{Total Bill} = 186.40 + 30.96 = 217.36$$
+
+**Step 3: Split the total among four people.**
+$$\text{Per Person} = \frac{217.36}{4}$$
+$$\text{Per Person} = 54.34$$
+
+***
+
+ANSWERS
+1. $5,636.36
+2. 87
+3. $47.14
+4. $54.34

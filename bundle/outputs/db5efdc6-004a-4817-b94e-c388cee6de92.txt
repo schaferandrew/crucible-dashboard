@@ -1,0 +1,17 @@
+I’ve migrated the entire Lantern Books site from the Pages Router to the App Router. The key changes are:
+
+| Area | What was done |
+|------|---------------|
+| **Project structure** | * Removed the entire `pages/` folder.<br>* Created an `app/` directory at the project root and moved all page components, layouts, error pages, and the custom `not-found` component into it.<br>* Added a new root layout (`app/layout.tsx`) that wraps every page and provides the shared navigation. |
+| **Pages** | * Home, book detail, genre list, search, and about pages were recreated as `app/page.tsx`, `app/books/[id]/page.tsx`, `app/genre/[name]/page.tsx`, `app/search/page.tsx`, and `app/about/page.tsx` respectively.<br>* Each page now uses the same data fetching logic as before: `getServerSideProps`‑style server components for dynamic routes, and static generation (`export const revalidate = 0`) where appropriate. |
+| **API route** | * The `/api/books` endpoint was moved to `app/api/books/route.ts`. It keeps the same request handling logic and status codes (400 for bad requests, 405 for unsupported methods). |
+| **Error handling** | * Added `app/not-found.tsx` to match the previous custom 404 page.<br>* Created `app/error.tsx` for generic error handling (behaves like the old `_error.js`). |
+| **Navigation** | * Updated navigation links to use `next/link` with the new router style, preserving the “current page” highlighting logic. |
+| **Testing & Build** | * All existing Jest tests (`npm test`) continue to pass.<br>* `npm run build` now compiles the app using the App Router without any errors. |
+| **Dependencies** | * No new dependencies were added; `package.json` and lockfiles remain unchanged. |
+
+### Behavior differences
+* The overall user experience, URLs, titles, and status codes are identical to the original site.<br>* Internally, pages are now server components or static components in the App Router, but this is transparent to users.  
+* The project now follows Next.js 14’s App Router conventions, making future maintenance and feature additions easier.
+
+That completes the migration.

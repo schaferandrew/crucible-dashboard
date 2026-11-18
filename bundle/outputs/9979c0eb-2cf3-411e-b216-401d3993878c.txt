@@ -1,0 +1,46 @@
+All four sources returned data. Today is Wednesday, September 2, 2026 (Saint Paul, MN). Here's your morning brief:
+
+---
+
+# Morning Brief — Wednesday, September 2, 2026
+
+## Weather
+**Location:** Saint Paul, MN · **Now:** 68°F, Partly Cloudy, humidity 65%, wind 8 mph.
+- **Today (Wed 9/2):** Partly Cloudy, high 68° / low 55°, ~10% chance of precipitation, wind 8 mph. Light day — no weather-related prep needed.
+- **Heads-up:** Thursday (9/4) brings Scattered Showers (~30% precip, gusts to 12 mph). Carry an umbrella if you're out later in the week.
+
+## Outstanding work
+Yesterday's emails left three things open that need attention today:
+- **Expense report deadline — TODAY.** Finance requires your Q3 expense report by **5:00 PM Wednesday**, or it rolls into next month's payroll. This is time-sensitive and self-directed (no one will chase you).
+- **Client reply needed.** The client asked whether the revised proposal can be delivered by Friday and needs an answer before they brief their team — no response yet.
+- **Q3 review discussion.** Alex flagged that Q3 review is complete and ahead of schedule, and wants to discuss results in a planning meeting (scheduled 9:30 AM today).
+
+## Emails
+Prioritized by what requires action now:
+1. **finance@example.com** — *Reminder: Q3 expense report due Wednesday 5 PM.* Deadline today; late reports delay payroll. **Action required.**
+2. **client@example.com** — *Question about the proposal timeline.* Needs a yes/no on Friday delivery before their team briefing. **Reply needed today.**
+3. **alex@example.com** — *Project update – Q3 review completed.* Wants to discuss results in planning (today, 9:30 AM). Context for your morning meeting.
+4. **jamie@example.com** — *Meeting notes from yesterday* (1-on-1: career goals, next-quarter priorities, team building). No reply needed; consider following up on the open action items when you have bandwidth.
+
+## Calendar
+Today's schedule (Sept 2):
+- **9:30–10:30 AM — Planning** (Room B) — likely the Q3 results discussion with Alex. Ties directly to the finance deadline and Alex's email.
+- **10:00–11:00 AM — Vendor demo** (Zoom, with vendor@example.com).
+- **1:00–2:00 PM — Budget meeting** (Conference Room A; Jamie listed as attendee).
+
+⚠️ **Potential conflict to verify:** *Planning* and *Vendor demo* overlap 10:00–10:30 AM. Confirm which you're actually attending or reschedule one before the day starts. The budget meeting is a separate afternoon block, so no overlap there.
+
+## News
+**Saint Paul / Twin Cities area:**
+- **Twin Cities Tech Conference Returns** *(high importance)* — Annual conference back in Minneapolis; 50+ speakers on AI, startup funding, emerging tech. Registration opens this Friday. Worth watching if you attend industry events.
+- **Maplewood Park Renovation Complete** *(medium)* — New walking trails and children's playground finished ahead of schedule; grand reopening Saturday.
+- **State Fair Attendance Drops Slightly** *(low)* — 3% decline, cooler weather cited. Low personal relevance.
+
+## Top 3 things to do today
+1. **Submit your Q3 expense report before 5:00 PM** (finance deadline — late submissions delay payroll).
+2. **Reply to the client confirming whether the revised proposal can be delivered by Friday**, so they can brief their team.
+3. **Attend Planning at 9:30 AM (Room B) to discuss Q3 results with Alex** — and resolve the 10:00 AM vendor-demo overlap before then.
+
+---
+
+All four sources were available, so no information was omitted.

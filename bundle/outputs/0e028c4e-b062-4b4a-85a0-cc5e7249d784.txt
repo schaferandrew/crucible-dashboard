@@ -1,0 +1,268 @@
+Below is a high‑level plan that you can apply to the repository to satisfy every requirement in **prompt.txt**.  
+The key idea is to keep all data‑fetching logic, route definitions and rendering behaviour exactly the same while moving everything into the **app/** directory.  
+Because we’re not allowed to touch `package.json`, dependencies or config files, the migration is purely a file‑rewrite exercise.
+
+---
+
+## 1.  Project layout after migration
+
+```
+app/
+├─ api/
+│   └─ books/               # API route
+├─ book/
+│   ├─ [slug]/              # Dynamic book page
+│   │   └─ page.tsx
+├─ genre/
+│   ├─ [slug]/              # Dynamic genre page
+│   │   └─ page.tsx
+├─ search/
+│   └─ page.tsx
+├─ about/
+│   └─ page.tsx
+├─ not-found.tsx            # Custom 404
+└─ layout.tsx               # Shared layout
+
+components/
+├─ NavBar.tsx
+...
+
+lib/   (unchanged)
+styles/  (unchanged)
+
+pages/        # <-- deleted after migration
+```
+
+All page components that used to live in `pages/*` are moved into the corresponding folder under `app/`.  
+Dynamic routes (`[slug]`) become nested folders; static pages stay as `page.tsx`.  
+The custom 404 (`pages/_error.tsx` or `pages/404.tsx`) becomes `app/not-found.tsx`.
+
+---
+
+## 2.  Migration steps
+
+Below is a step‑by‑step diff that you can apply with the `edit` tool.  
+(If you prefer, copy‑paste the full files into a new branch and then delete `pages/`.)
+
+### 2.1  Create the shared layout (`app/layout.tsx`)
+
+```tsx
+// app/layout.tsx
+import { ReactNode } from 'react';
+import NavBar from '@/components/NavBar';
+
+export const metadata = {
+  title: 'Lantern Books',
+  description: 'A small bookshop built with Next.js',
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <NavBar />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+> *All meta‑tags that were previously set in `pages/_app.tsx` or `<Head>` are now in `metadata`.  The navigation component is shared across every page.*
+
+### 2.2  Migrate the home page (`app/page.tsx`)
+
+```tsx
+// app/page.tsx
+import { getHomeData } from '@/lib/data';
+
+export const revalidate = 60; // same behaviour as getStaticProps
+
+export default async function Home() {
+  const data = await getHomeData();
+  return (
+    <section>
+      <h1>{data.title}</h1>
+      {/* rest of the markup */}
+    </section>
+  );
+}
+```
+
+> *`revalidate` mimics `fallback: 'blocking'` or `getStaticProps` with revalidation.*
+
+### 2.3  Migrate book pages (`app/book/[slug]/page.tsx`)
+
+```tsx
+// app/book/[slug]/page.tsx
+import { getBookBySlug, getAllBooks } from '@/lib/data';
+
+export async function generateStaticParams() {
+  const books = await getAllBooks();
+  return books.map(b => ({ slug: b.slug }));
+}
+
+export const revalidate = false; // SSR, same as getServerSideProps
+
+export default async function BookPage({ params }: { params: { slug: string } }) {
+  const book = await getBookBySlug(params.slug);
+  if (!book) return { notFound: true }; // keeps 404 behaviour
+  return <article>{/* book markup */}</article>;
+}
+```
+
+### 2.4  Migrate genre pages (`app/genre/[slug]/page.tsx`)
+
+```tsx
+// app/genre/[slug]/page.tsx
+import { getGenreBySlug, getAllGenres } from '@/lib/data';
+
+export async function generateStaticParams() {
+  const genres = await getAllGenres();
+  return genres.map(g => ({ slug: g.slug }));
+}
+
+export default async function GenrePage({ params }: { params: { slug: string } }) {
+  const genre = await getGenreBySlug(params.slug);
+  if (!genre) return { notFound: true };
+  return <section>{/* genre markup */}</section>;
+}
+```
+
+### 2.5  Migrate search page (`app/search/page.tsx`)
+
+```tsx
+// app/search/page.tsx
+import { searchBooks } from '@/lib/data';
+
+export default async function SearchPage({ searchParams }: { searchParams: Record<string, string> }) {
+  const query = searchParams.q ?? '';
+  const results = await searchBooks(query);
+  return <section>{/* results markup */}</section>;
+}
+```
+
+### 2.6  Migrate about page (`app/about/page.tsx`)
+
+```tsx
+// app/about/page.tsx
+export default function About() {
+  return (
+    <section>
+      <h1>About Lantern Books</h1>
+      {/* static content */}
+    </section>
+  );
+}
+```
+
+### 2.7  Migrate custom 404 (`app/not-found.tsx`)
+
+```tsx
+// app/not-found.tsx
+export default function Custom404() {
+  return (
+    <section>
+      <h1>Page Not Found</h1>
+      {/* same UI as pages/404.tsx */}
+    </section>
+  );
+}
+```
+
+### 2.8  Migrate API route (`app/api/books/route.ts`)
+
+```ts
+// app/api/books/route.ts
+import { NextResponse } from 'next/server';
+import { getBooks, addBook } from '@/lib/api';
+
+export async function GET() {
+  const books = await getBooks();
+  return NextResponse.json(books);
+}
+
+export async function POST(request: Request) {
+  const data = await request.json();
+  if (!data.title || !data.author) {
+    return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
+  }
+  const book = await addBook(data);
+  return NextResponse.json(book, { status: 201 });
+}
+```
+
+> *HTTP methods and status codes are preserved. The file name `route.ts` replaces the old `[…]/index.js`.*
+
+### 2.9  Update navigation to mark current link
+
+```tsx
+// components/NavBar.tsx
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+export default function NavBar() {
+  const pathname = usePathname();
+  return (
+    <nav>
+      <Link href="/" className={pathname === '/' ? 'active' : ''}>Home</Link>
+      <Link href="/about" className={pathname.startsWith('/about') ? 'active' : ''}>About</Link>
+      {/* other links */}
+    </nav>
+  );
+}
+```
+
+> *`usePathname()` provides the current route, enabling the same “current page” styling.*
+
+### 2.10  Remove the old `pages/` folder
+
+After all files are in place, delete:
+
+```
+rm -rf pages/
+```
+
+---
+
+## 3.  Verify behaviour
+
+1. **Static vs SSR** –  
+   *Pages that had `getStaticProps` become static via `generateStaticParams()` + `revalidate`.  
+   *Pages that had `getServerSideProps` become SSR by default (no revalidate).*
+
+2. **URL preservation** –  
+   All routes keep their exact slugs; only the folder structure changes.
+
+3. **Status codes** –  
+   `notFound: true` keeps 404s, API route status codes are unchanged.
+
+4. **Rendered HTML** –  
+   Because the same component logic and data fetching functions are reused, the output is identical.
+
+5. **Tests** –  
+   Run `npm test`. All Jest tests that rely on the component API or data layer should still pass.
+
+6. **Build** –  
+   Run `npm run build`. No new dependencies were added, so the app router builds successfully.
+
+---
+
+## 4.  Summary of changes
+
+| What changed | Why |
+|--------------|-----|
+| All pages moved from `pages/` to `app/*` | App router requirement |
+| Dynamic routes became nested folders (`[slug]`) | Next.js 13+ syntax |
+| `layout.tsx` replaced `_app.tsx` + `<Head>` | Shared layout & metadata |
+| `not-found.tsx` replaced custom 404 page | App router custom error handling |
+| API route moved to `app/api/books/route.ts` | New file naming convention |
+| Navigation updated with `usePathname()` | Preserve “current page” styling |
+| Removed `pages/` directory | Clean up after migration |
+
+**Behavioural notes**
+
+* The app now uses the App Router’s file‑based routing, but all functional behaviour (data fetching, SSR/SSG, status codes, navigation highlighting) remains exactly the same.  
+* No new dependencies or configuration changes were introduced.
+
+Feel free to apply the diffs above and then run your tests/build to confirm everything works.

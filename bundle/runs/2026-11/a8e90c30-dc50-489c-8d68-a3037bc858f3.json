@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "a8e90c30-dc50-489c-8d68-a3037bc858f3",
+ "run_path": "lmstudio_nvidia_nemotron-3-nano-4b/calendar-free-at-330/20261111_064214",
+ "legacy_run_id": null,
+ "started_at": "2026-11-11T06:42:14.750148+00:00",
+ "ended_at": "2026-11-11T06:42:26.050394+00:00",
+ "elapsed_s": 10.51,
+ "task": {
+  "id": "calendar-free-at-330",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "6d145f996bd1436b",
+  "rubric_hash": "d2ed1dccfdb0032f",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/nvidia/nemotron-3-nano-4b",
+  "base": "nvidia/nemotron-3-nano-4b",
+  "publisher": "nvidia",
+  "artifact": "nvidia/nemotron-3-nano-4b",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 100352,
+  "variant_key": "nvidia/nemotron-3-nano-4b|nvidia|gguf|q4_k_m",
+  "display": "nemotron-3-nano-4b · Q4_K_M",
+  "origin": {
+   "maker": "nvidia",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": "LM Link",
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 2,
+  "tokens_in": 10550,
+  "tokens_out": 375,
+  "model_responses": 3,
+  "ttft_s": 2.915,
+  "ttft_avg_s": 1.211,
+  "response_time_avg_s": 3.071,
+  "output_tokens_per_s": 67.2,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/a8e90c30-dc50-489c-8d68-a3037bc858f3.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "6faa751",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:e23ddd0857ef84b21ca80c0926055b8fb7533e5abcb20c00e7961e978653ac53",
+  "submitter": null,
+  "verification": null
+ }
+}

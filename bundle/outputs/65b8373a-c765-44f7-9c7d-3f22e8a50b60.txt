@@ -1,0 +1,40 @@
+# Morning Brief — Wednesday, September 2, 2026
+
+## Weather
+Saint Paul, MN — **Partly cloudy, high 68°F / low 55°F**, 10% chance of precipitation, wind ~8 mph. No weather-related concerns for today's plans. (Heads-up: scattered showers forecast Thursday, ~30%.)
+
+## Outstanding work
+From yesterday's emails, these items are still open:
+- **Client proposal answer (client@example.com, sent 4:45 PM)** — the client asked you to confirm whether the revised proposal can be delivered by Friday and explicitly needs an answer before briefing their team. **Unanswered — this is the most urgent open thread.**
+- **Q3 expense report** — finance's reminder confirms it's due **today at 5:00 PM**; missing the cutoff means payment slips to next month's payroll. Not yet confirmed as submitted.
+- **Q3 review results** — Alex noted the Q3 review is complete and ahead of schedule and wants to discuss it; today's 9:30 AM Planning meeting is the natural venue, so prep discussion points.
+- Jamie's 1-on-1 notes (career goals, next-quarter priorities, team building) — no explicit action requested, but next-quarter priorities may feed into today's planning discussion.
+
+## Emails
+Prioritized by what needs action today:
+1. **client@example.com — "Question about the proposal timeline"** — unanswered; client is blocked waiting on your Friday confirmation. Reply early.
+2. **finance@example.com — "Reminder: Q3 expense report due Wednesday 5 PM"** — deadline is **today, 5:00 PM**, with payroll consequences for missing it.
+3. **alex@example.com — "Project update - Q3 review completed"** — FYI plus a request to discuss at the planning meeting; no reply strictly required but prep is needed.
+4. **jamie@example.com — "Meeting notes from yesterday"** — informational; no action requested.
+
+## Calendar
+Today (Wed, Sep 2) — **note the scheduling conflict**:
+- 9:30–10:30 AM — Planning (Room B, with Alex)
+- 10:00–11:00 AM — Vendor demo (Zoom, with vendor@example.com)
+- 1:00–2:00 PM — Budget meeting (Conference Room A, with Jamie)
+
+⚠️ **Conflict:** Planning (9:30–10:30) overlaps the Vendor demo (10:00–11:00) by 30 minutes — you'll need to delegate, shorten one, or resolve before 10:00 AM.
+
+Later this week:
+- Thu: 9:00 AM Standup (Jamie), 11:00 AM Interview (Conference Room B)
+- Fri: 9:00 AM Workshop (Main Hall), 2:00 PM Project review
+
+## News
+- **Twin Cities Tech Conference Returns** (StarTribune, high importance) — 50+ speakers on AI, startup funding, and emerging tech in Minneapolis; **registration opens Friday** — may be worth acting on this week.
+- **Maplewood Park Renovation Complete** (Pioneer Press, medium) — new trails and playground; grand reopening Saturday.
+- **State Fair Attendance Drops Slightly** (StarTribune, low) — 3% decline, cooler weather cited. No action needed.
+
+## Top 3 things to do today
+1. **Reply to the client confirming whether the revised proposal can be delivered by Friday** — they're waiting on your answer before briefing their team.
+2. **Submit the Q3 expense report before the 5:00 PM deadline** to avoid missing this month's payroll.
+3. **Resolve the 9:30–10:30 Planning / 10:00–11:00 Vendor demo overlap**, and use the Planning time to discuss the Q3 review results with Alex as requested.

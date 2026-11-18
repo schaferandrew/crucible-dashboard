@@ -1,0 +1,22 @@
+Done. The Ruby port passes all 8 fixture cases plus 9 extra regression cases (17/17), and `data/`, `tests/fixtures/` and the PHP files are untouched.
+
+## Layout
+
+- **`app.rb`** — entry point: `handle(request)` returns `[status, body]` (like PHP's `handle()`); when run as CLI it prints body + newline and exits 0 (2xx) / 1 (other), 255 on PHP-style fatals.
+- **`lib/phpshim.rb`** — the PHP semantics layer: `empty()`, `(int)` casts, numeric-string comparison (PHP 8 rules), loose `==`, PHP's `round()`, `parse_str`, `json_encode`, `number_format`, `htmlspecialchars`, `array_filter`-key semantics.
+- **`lib/router.rb`**, **`lib/pricing.rb`**, **`lib/dates.rb`**, **`lib/data_store.rb`**, **`lib/views.rb`** — line-for-line ports of `src/*.php`.
+- **`tests/run_tests.rb`** — port of `tests/run_tests.php` (same fixtures; JSON compared as decoded values, HTML as text), plus **`test/run_tests.rb`** wrapper so both spellings work.
+
+## PHP behaviour reproduced deliberately
+
+- **`empty()`**: `'0'` and `''` are empty (so `guests=0` → 1, and room 201's `"0"` cleaning fee is dropped), but `'0.0'` is not — and `guests=0.0` later divides by zero.
+- **Loose `==`**: room/coupon/booking lookups compare numeric strings numerically (`room=1.01e2` matches room `101`; `paid='no'` is truthy, `'0'`/`''` count as unpaid in `/report`).
+- **PHP 8 comparisons**: `'9' > '12'` is numeric; non-numeric `guests=abc` compares as a string and gets "Too many guests"; non-numeric strings in arithmetic are `TypeError` fatals → exit 255.
+- **`round()`**: half away from zero with PHP 8's 15-significant-digit pre-rounding (`0.285 → 0.29`, `round(675, 2)` → float `675.0`); `int/int` division is int only when even.
+- **`array_filter` keeps key gaps**: `/bookings?room=102` returns a JSON **object** `{"1":…,"3":…}` (and `{"0":…,"5":…}`), not an array.
+- **`parse_str`**: `&` splitting, last-duplicate-wins, `+`→space, leading spaces skipped, `.`/space→`_` in names, `[sub]` arrays with unclosed `[` taking the rest as the index.
+- **`strtotime` quirks**: `02/30/2024` and `2024-02-31` roll over (Mar 1 / Mar 2), but ISO day `00` is rejected as invalid; labels use `D j M Y` with un-padded day.
+- **`json_encode`**: `/` and non-ASCII escaped, sequential integer keys → arrays, otherwise objects; integer `discount = 0` stays an int while money values are floats.
+- **`number_format`** thousands grouping (`$1,150.00`) and `(int)` casts of mixed string/int data fields.
+
+One judgement call: since PHP isn't installed here, tie-adjacent rounding follows **PHP 8**'s documented `round()` semantics (the current PHP on any modern machine), verified against the php.net examples (`5.045 → 5.05`, `0.285 → 0.29`).

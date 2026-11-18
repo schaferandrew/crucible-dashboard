@@ -1,0 +1,1 @@
+Now the API route, using `validateAndNormalize` as the authority:

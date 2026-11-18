@@ -1,0 +1,14 @@
+Done. Here's what I filed:
+
+**From inbox/ (all three receipts, inbox now empty):**
+
+| Receipt | Gift | Filed as |
+|---|---|---|
+| `maple-st-statement.pdf` | Maple Street Community Church — $250.00 check, Nov 17 **2024** | `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` |
+| `receipt-scan-20260104.pdf` | Hope Harbor Food Pantry — $180.00 card, Dec 31 **2025** | `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` |
+| `donation.pdf` | Riverbend Public Radio — $60.00 card, Jan 2 **2026** | `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` (new folder) |
+
+**Notes:**
+- Each row was keyed to the *gift date* on the receipt, not the scan/print date — so the Maple Street reissued statement (printed March 2026) went under tax year 2024, and the Hope Harbor thank-you letter (scanned Jan 2026) went under tax year 2025.
+- Added a matching row to `giving-log.csv` for each, in date order with the existing entries; no existing rows or files were touched.
+- 2026 is a new tax-year folder, created for the Riverbend gift.

@@ -1,0 +1,21 @@
+# Morning Brief — Wednesday, September 2, 2026
+
+## Emails
+- **Q3 expense report due today** (finance@example.com): Must be submitted by **5:00 PM today, Wednesday, September 2**. Miss the cutoff and it's paid with next month's payroll — make this your first task.
+- **Alex — Q3 review complete and ahead of schedule** (10:30 AM yesterday): Alex wants to discuss results in the planning meeting — good timing, since you have **Planning at 9:30 AM today** in Room B.
+- **Client — proposal timeline question** (4:45 PM yesterday): They need confirmation on whether the revised proposal can be delivered by **Friday** before they brief their team. Reply as soon as you can today.
+- **Jamie — 1-on-1 notes** (9:00 AM yesterday): Career goals, next-quarter priorities, and team building activities were covered — useful context heading into today's budget meeting with Jamie.
+
+## Calendar
+- **9:30–10:30 AM** — Planning, Room B (with Alex) — discuss the Q3 review results here
+- **10:00–11:00 AM** — Vendor demo, Zoom (with vendor@example.com) — ⚠️ **overlaps with Planning**; you may need to adjust one or delegate
+- **1:00–2:00 PM** — Budget meeting, Conference Room A (with Jamie) — connect to next-quarter priorities from your 1-on-1
+- Looking ahead: interview Thursday 11 AM (Conference Room B), workshop + project review Friday — worth noting if you promise the client the proposal by Friday.
+
+## News
+- **Twin Cities Tech Conference returns** (StarTribune, high importance): Back in Minneapolis with 50+ speakers on AI, startup funding, and emerging tech. **Registration opens this Friday.**
+- **Maplewood Park renovation complete** (Pioneer Press): Finished ahead of schedule with new walking trails and a children's playground. **Grand reopening Saturday.**
+- **State Fair attendance down slightly** (StarTribune): A 3% decline this year, with cooler-than-average weather cited as a factor.
+
+## Spanish practice
+Buenos días. Hoy es un miércoles ocupado: a las nueve y media tengo la reunión de planificación con Alex, donde hablaremos de los resultados de la revisión del tercer trimestre, que terminó antes de lo previsto. A las diez empieza la demostración del proveedor por Zoom, pero se solapa con la planificación, así que tendré que organizar el horario. Por la tarde, a la una, tengo la reunión del presupuesto con Jamie. También tengo pendientes dos cosas urgentes: enviar el informe de gastos antes de las cinco de la tarde y responder al cliente sobre la propuesta antes del viernes. Además, hoy se abre la inscripción para la conferencia de tecnología de Minneapolis, y el sábado hay una reinauguración en el parque Maplewood, que ahora tiene nuevos senderos para caminar.

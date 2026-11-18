@@ -1,0 +1,27 @@
+Your morning brief for **Wednesday, September 2, 2026** is ready (saved to `brief.md`):
+
+## Emails
+- **Alex** — Q3 review complete and ahead of schedule; wants to discuss results in planning (ties to your 9:30 AM Planning meeting today).
+- **Jamie** — Notes from yesterday's 1-on-1: career goals, next-quarter priorities, team building.
+- **Finance** — Q3 expense report due **today by 5:00 PM**; late reports wait for next month's payroll.
+- **Client** — Asks if the revised proposal can ship by Friday; needs an answer before briefing their team.
+
+## Calendar (today)
+- **9:30–10:30 AM** — Planning (Room B)
+- **10:00–11:00 AM** — Vendor demo (Zoom)
+- **1:00–2:00 PM** — Budget meeting (Conference Room A)
+
+*Tomorrow:* Interview 9–10 AM · *Thursday:* Workshop 9–11 AM.
+
+## News (Saint Paul, MN)
+- **Twin Cities Tech Conference Returns** *(high)* — Back in Minneapolis with 50+ speakers on AI, startup funding, emerging tech; registration opens Friday.
+- **Maplewood Park Renovation Complete** *(medium)* — New trails + children's playground; grand reopening Saturday.
+
+## Practica en español
+Hoy tienes una agenda muy completa: una reunión de planificación a las 9:30, una demostración de un proveedor a las 10:00 y una reunión de presupuesto a la una de la tarde. Como el informe de gastos vence hoy antes de las cinco de la tarde, es buena idea organizar tu tiempo con anticipación para no olvidar ninguna tarea importante. Después del trabajo, puedes disfrutar de la reapertura del parque Maplewood este sábado, que tiene nuevos senderos y un área de juegos para niños; si te interesa la tecnología, recuerda que el registro para la conferencia tecnológica de los Gemelos abre este viernes. ¡Que tengas un excelente día productivo y tranquilo!
+
+A few notes on how I built it:
+- **Emails** = the 4 messages received yesterday (Sep 1).
+- **Calendar** = today's events only; flagged that tomorrow's Interview and Thursday's Workshop are coming up.
+- **News** = filtered to high/medium importance, dropping the low-importance State Fair item.
+- The Spanish paragraph weaves together the day's work themes (planning, budget deadline) and the local news (park reopening, tech conference).
