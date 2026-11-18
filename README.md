@@ -71,7 +71,10 @@ npm run size      # size budget on the build: index.json <= 100 KB, first-load J
 sessions included: it shallow-clones Crucible at the ref in `.crucible-version` and the published bundle
 (`schaferandrew.github.io`) into `.cache/`, runs `crucible site-data` into `.cache/site-data`, and links
 `static/data` to it. Rerun it to refresh. If you already have a `crucible site-data` output folder, point at it
-instead: `CRUCIBLE_SITE_DATA=<folder> npm run data`. CI runs the same command from `.github/actions/site-data`.
+instead: `CRUCIBLE_SITE_DATA=<folder> npm run data`. To preview a results PR before merging, run
+`CRUCIBLE_SITE_REPO=/path/to/portfolio-worktree npm run data:gen` using the local portfolio worktree.
+After a results-only merge in the portfolio, run the dashboard’s Deploy workflow on `main` to publish it.
+CI generates data via `.github/actions/site-data`.
 The contract is `docs/site-data-format.md` in Crucible.
 
 **URLs.** Everything is served under `/crucible-dashboard/`, in dev too. View state is query parameters with
