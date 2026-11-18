@@ -1,0 +1,24 @@
+## Reasoning
+
+**Q1 — Flight.** Filtering HBR→LKS on 2026-10-14 by all constraints:
+- NW201: departs 06:10 → fails "≥07:00".
+- CJ550: 2 stops → fails "at most one stop".
+- TA77: layover only 50 min → fails "≥60 min".
+- NW318: arrives 12:30 → fails "by noon".
+- PL09: qualifies, total = $262 + $25 = **$287**.
+- SL114 (direct): departs 08:15, arrives 10:40, no layover needed, total = $279 + $0 = **$279** ✓.
+- SL330: direct but total = $349 → fails "≤$300".
+
+Cheapest qualifying is **SL114 at $279**.
+
+**Q2 — Restaurant.** Both peanut-free *and* sesame-free kitchens: Harbor Grill and Fennel & Fig. Walking distances: Harbor Grill = 1.3 mi (✓ ≤1.5), Fennel & Fig = 1.9 mi (✗). Only **Harbor Grill at 1.3 miles** qualifies.
+
+**Q3 — Distance/taxi.** Inn→Airport by road = **14.2 miles**; taxi departing the airport at 17:15 (peak traffic) = **41 minutes**.
+
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41

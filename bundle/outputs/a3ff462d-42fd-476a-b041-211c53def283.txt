@@ -1,0 +1,23 @@
+All 16 free/busy calendars are mapped. Here's how I reasoned through it, then your options.
+
+## Reasoning
+
+**Who's on the team:** 16 people on Platform — me (Alex, Chicago), Jamie, Priya, Dana, Theo, Lena, Omar, Chloe, Ravi, Sofia, Ben, Nina, Caleb, Mei, and Eli (all Chicago/CDT), plus Marcus in New York (EDT, one hour ahead). The meeting must fit within working hours for both zones, i.e. **9:00–17:00 CDT** (= 10:00–18:00 in New York).
+
+**What I checked:** I pulled free/busy for all 16 calendars for the two-week window (Mon Aug 31 → Mon Sep 14) and computed the intersection of everyone's availability, in 30-minute steps.
+
+**Key constraints that eliminate most days:**
+- **Mon Aug 31:** Ben is blocked all day (9–5), and the team is otherwise packed — no hour works.
+- **Tue Sep 1:** Everyone is only jointly free **13:00–14:30** (1.5 h of slack).
+- **Wed Sep 2:** Joint free window is exactly **09:00–10:00** — a single tight hour.
+- **Thu Sep 3:** Joint free window **14:00–16:00** (2 h of slack).
+- **Fri Sep 4:** No common hour; **Mon Sep 7** is Labor Day (everyone has it as an all-day block); **Thu Sep 10 & Fri Sep 11** are impossible because Priya is out for both days; **Mon Sep 14** — Ben is blocked all day again.
+- Weekends (Sep 5–6, 12–13) are technically open for all 16, but I wouldn't schedule a work meeting on a weekend.
+- Marcus in New York: every slot below lands between 10:00 AM and 6:00 PM his time, so nobody is stretched. (Note: the Atlas room seats only 12, so plan this as a video call.)
+
+**Ranking:** best = comfortable hours in both time zones plus buffer around the hour. Thursday's 2-hour window is the most robust, Tuesday is the soonest, and Wednesday morning is the next earliest even though its buffer is zero.
+
+OPTIONS:
+2026-09-03 14:00 CDT
+2026-09-01 13:00 CDT
+2026-09-02 09:00 CDT

@@ -1,0 +1,1 @@
+The accessibility audit fixes and a summary have been written to **summary.txt**. All six findings are addressed using native HTML or WAI‑ARIA Authoring Practices, with custom components only where unavoidable, and all existing tests continue to pass.

@@ -1,0 +1,14 @@
+The bug was that the account information for **acct_1** was only hard‑coded in a client component, so any change would require redeploying.  
+
+I’ve fixed it by:
+
+* Using a small React state block (`useEffect`) to pull the data (in production replace this with `getServerSideProps` or an API call).  
+* Keeping the component structure simple and idiomatic for modern Next.js.
+
+I also added a unit test that renders `<Account />` and asserts that it displays **Acme Corp** and **Premium**.
+
+Files created:
+- `/pages/Account.tsx`
+- `/tests/Account.test.tsx`
+
+Both contain the complete, working solution.

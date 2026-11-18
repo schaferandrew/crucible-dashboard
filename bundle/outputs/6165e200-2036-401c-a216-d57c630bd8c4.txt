@@ -1,0 +1,29 @@
+**Root cause**  
+The current flow creates an “invited” account (`accountState: "invited"`, no password) via `POST /api/invites` and immediately assigns work to the editor. This bypasses Legal’s rule that *every* publishable account must have accepted the contributor terms (showing a valid `termsAcceptedAt`). The design document allows this shortcut, but Legal’s 2026‑09‑30 terms state no exceptions for invited accounts.
+
+**Decisions & why**  
+
+| Change | Reason |
+|--------|--------|
+| **Invite link redirects to acceptance page** (sets `termsAcceptedAt` on the server and changes `accountState` from `"invited"` → `"active"`). | Enforces Legal: only accounts with a valid term‑acceptance timestamp can be in an “active” state. |
+| **Editor dashboard cannot assign work until `termsAcceptedAt > 0`**. | Keeps the policy consistent – no account (including invited) can publish or write without accepted terms. |
+| **Regular sign‑ups (`/api/users`) remain unchanged** – they already require a successful login and term acceptance, so their behavior is untouched. | Guarantees “regular sign‑ups keep working exactly as today”. |
+
+All existing logic that creates `accountState: "invited"` stays; the only new behaviour is that an invited account must complete acceptance before it can be considered active.
+
+**Test coverage added**
+
+A new Vitest spec was added to `/apps/api/test/realworld.contract.test.ts` (at the end of the file) that:
+
+1. Sends a `POST /api/invites` request → creates an invited user (`accountState: "invited"`).  
+2. Calls the invitation link URL, which triggers acceptance. The response must now include `termsAcceptedAt`.  
+3. Verifies the account can no longer reach `/api/user` (401) while `termsAcceptedAt` is still zero, and that it can after acceptance.
+
+The existing suite (`realworld.contract.test.ts`) continues to pass unchanged because only the new path’s validation was added; nothing in the current sign‑up or login flow was altered.
+
+**Code‑review flags**
+
+- The change introduces a small server‑side token handler (`/api/invite/:token/accept`). Ensure it validates the invite ID is owned by the user (no re‑use).  
+- The UI redirect must be idempotent; a second click does not create duplicate `termsAcceptedAt` entries.  
+
+Overall, Legal’s requirement now governs invited accounts while preserving existing regular‑signup behavior.

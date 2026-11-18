@@ -1,0 +1,19 @@
+I found 7 slots where all 16 Platform team members are free. Here's my reasoning on the ranking:
+
+**Excluded constraints automatically handled:**
+- Mon Sep 7 is Labor Day (entire team busy/out)
+- Priya is out Thu Sep 10 – Fri Sep 11
+- Ben is out all day Mon Aug 31 and Mon Sep 14
+- Marcus (Eastern time) works 9–5 ET = 8–4 CT, so afternoon CT slots still land within his workday
+
+**Ranking of the 7 fully-free hours:**
+1. **Thu Sep 3, 14:00 CDT** — best pick: mid-afternoon, and it's the start of the only 2-hour contiguous free block (14:00–16:00), so there's room to run over.
+2. **Tue Sep 1, 13:00 CDT** — clean midday slot right after lunch, early in the window so the meeting happens soon.
+3. **Wed Sep 2, 09:00 CDT** — early but fully free for everyone (10:00 for Marcus, comfortably in his day).
+
+The remaining slots (Sep 8 11:00/16:00, Sep 9 15:00) work too but sit right before lunch or late in the day.
+
+OPTIONS:
+2026-09-03 14:00 CDT
+2026-09-01 13:00 CDT
+2026-09-02 09:00 CDT

@@ -1,0 +1,130 @@
+**1. Savings account**
+
+\[
+P = \$5\,000,\qquad r_{\text{annual}}=4\% ,\qquad n = 3 \text{ yr}
+\]
+
+Monthly rate  
+\[
+r_{\text{m}}=\frac{0.04}{12}=\frac1{300}=0.00333333\ldots
+\]
+
+Number of compounding periods  
+\[
+N = 3\times12=36
+\]
+
+Future value  
+\[
+FV=P(1+r_{\text{m}})^{N}=5000\left(1+\frac1{300}\right)^{36}
+\]
+
+Compute the factor:
+
+\[
+\ln(1+\tfrac1{300})=0.00332779\ldots
+\]
+\[
+36\,\ln(1+\tfrac1{300})=0.11980044
+\]
+\[
+e^{0.11980044}=1.127271813\ldots
+\]
+
+Thus  
+
+\[
+FV=5000\times1.127271813=5636.359065
+\]
+
+Rounded to the nearest cent: **\$5,636.36**.
+
+---
+
+**2. Flooring boxes**
+
+Area to cover (including waste)  
+
+\[
+A_{\text{req}}=1850\times1.10=2035\ \text{sq ft}
+\]
+
+Area per box  
+
+\[
+A_{\text{box}}=23.5\ \text{sq ft}
+\]
+
+Number of boxes  
+
+\[
+N=\left\lceil\frac{2035}{23.5}\right\rceil
+      =\left\lceil86.5957\ldots\right\rceil=87
+\]
+
+So **87 boxes** are needed.
+
+---
+
+**3. Gas cost**
+
+Distance \(D=412\) mi, fuel economy \(E=34\) mpg, price \(P_g=\$3.89\)/gal.
+
+Gallons needed  
+
+\[
+G=\frac{D}{E}=\frac{412}{34}=12.1176470588\ \text{gal}
+\]
+
+Cost  
+
+\[
+C=G\times P_g
+  =12.1176470588\times3.89
+  =46.68+0.4576470588
+  =47.1376470588
+\]
+
+Rounded to the nearest cent: **\$47.14**.
+
+---
+
+**4. Dinner bill**
+
+Pre‑tax amount \(A= \$172.00\).  
+Total with tax \(T=\$186.40\).
+
+Tax amount  
+
+\[
+\tau = T-A = 14.40
+\]
+
+Tip (18 % of pre‑tax)  
+
+\[
+\text{tip}=0.18\times172=30.96
+\]
+
+Total bill  
+
+\[
+B=A+\tau+\text{tip}=172+14.40+30.96=217.36
+\]
+
+Split among four people  
+
+\[
+\frac{B}{4}=54.34
+\]
+
+Each person pays **\$54.34**.
+
+---
+
+## ANSWERS
+
+1. \$5,636.36  
+2. 87 boxes  
+3. \$47.14  
+4. \$54.34 each

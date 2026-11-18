@@ -1,0 +1,2 @@
+The response accurately reflects all claims from the passage without adding any invented details, satisfying the Accuracy criterion fully (4 points). However, it contains three sentences instead of exactly two, so it fails the Exactly two sentences criterion (0 points). It does capture the required key points—hours extension, funding limit, and resident survey—so it earns full credit for Key points (3 points).  
+GRADE: 7

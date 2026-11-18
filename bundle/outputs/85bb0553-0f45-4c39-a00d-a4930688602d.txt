@@ -1,0 +1,2 @@
+I found that vitest 3.2.7 has the same issue — the jsdom environment doesn't include `localStorage` in its keys, so Node 26's built-in shadows jsdom's. Let me check the existing web test patterns before writing the fix.
+

@@ -1,0 +1,40 @@
+I now have everything I need. Here's my reasoning:
+
+## 1. Flight (HBR → LKS, 2026-10-14)
+
+Seven flights returned. Checking each against all five constraints:
+
+| Flight | Departs ≥07:00 | Arrives ≤12:00 | Stops ≤1 | All layovers ≥60 | Total (fare+bag) ≤$300 |
+|---|---|---|---|---|---|
+| NW201 | ❌ 06:10 | 09:50 | 1 (95m) | ✓ | $234 — **fails on departure time** |
+| CJ550 | 07:05 | 11:50 | ❌ 2 stops | ✓ | $255 — **fails on stops** |
+| TA77 | 08:00 | 11:35 | 1 | ❌ 50 min | $274 — **fails on layover** |
+| NW318 | 07:45 | ❌ 12:30 | 1 | ✓ | $275 — **fails on arrival** |
+| PL09 | 07:20 | 11:10 | 1 | ✓ 75 min | $287 — ✅ qualifies |
+| SL114 | 08:15 | 10:40 | 0 | — | $279 (bag included, $0 fee) — ✅ qualifies |
+| SL330 | 09:30 | 11:55 | 0 | — | $349 — **fails on cost** |
+
+Cheapest qualifying flight: **SL114 at $279** (vs. PL09 at $287).
+
+## 2. Dinner (severe peanut + sesame allergies, ≤1.5 mi walking)
+
+- **Saffron Table** (0.5 mi walk) — ❌ shared peanut-oil fryer + sesame oil across the menu.
+- **Golden Noodle** (1.0 mi walk) — ❌ sesame oil in nearly every dish, shared across stations.
+- **Harbor Grill** (1.3 mi walk) — ✅ kitchen stocks/uses **no peanuts or sesame anywhere**; menu is clean. 1.3 mi ≤ 1.5 mi.
+- **Tidewater Bistro** (1.4 mi walk) — ❌ bakes sesame buns in-house; even dishes with no sesame share prep surfaces/fryers — unacceptable for a severe allergy.
+- **Fennel & Fig** — kitchen is fully peanut- and sesame-free, but **1.9 mi walking** (river crossing detour) > 1.5 mi — ❌ too far.
+- **Maple & Rye** — allergy-safe kitchen, but **2.8 mi walking** — ❌ too far.
+
+Only **Harbor Grill** is safe for both allergens *and* within 1.5 miles on foot.
+
+## 3. Airport → Inn
+
+Road distance: **14.2 miles**. A taxi departing at 17:15 hits peak traffic, taking **41 minutes**.
+
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41

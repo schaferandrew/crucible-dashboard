@@ -1,0 +1,30 @@
+Done — the brief is written to `morning-brief.md` with exactly the four sections in the requested order. Here it is:
+
+## Emails
+
+Important emails received yesterday (Tuesday, Sept 1):
+
+- **Client** (client@example.com, 4:45 PM) — Question about the proposal timeline: asks you to confirm whether the revised proposal can be delivered by Friday. They need your answer before they brief their team, so this one is waiting on you.
+- **Finance** (finance@example.com, 2:15 PM) — Your Q3 expense report is due today, Wednesday, by 5:00 PM. Reports that miss the cutoff are paid with next month's payroll.
+- **Alex** (alex@example.com, 10:30 AM) — The Q3 review is complete and ahead of schedule; he'd like to discuss the results in today's planning meeting.
+- **Jamie** (jamie@example.com, 9:00 AM) — Notes from yesterday's 1-on-1: career goals, next-quarter priorities, and team building activities.
+
+## Calendar
+
+Wednesday, September 2, 2026 (times Central):
+
+- **9:30 – 10:30 AM** — Planning, Room B (Alex). Good slot to cover the completed Q3 review he flagged in his email.
+- **10:00 – 11:00 AM** — Vendor demo, Zoom (Alex, vendor). Heads-up: overlaps the planning meeting from 10:00 to 10:30 — decide which one to leave early.
+- **1:00 – 2:00 PM** — Budget meeting, Conference Room A (Jamie).
+
+## News
+
+Saint Paul / Twin Cities:
+
+- **Twin Cities Tech Conference returns** — the annual conference is back in Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies; registration opens this Friday. (StarTribune)
+- **Maplewood Park renovation complete** — the finished project adds new walking trails and a children's playground; grand reopening is Saturday. (Pioneer Press)
+- **State Fair attendance drops slightly** — a 3% decline this year, with cooler-than-average weather cited as the factor. (StarTribune)
+
+## Spanish practice
+
+Hoy es miércoles y tienes una jornada con tres reuniones: a las 9:30, la reunión de planificación con Alex, donde podrás hablar de los resultados de la revisión del tercer trimestre; a las 10:00, la demostración del proveedor, que se solapa treinta minutos con la planificación; y a la 1:00, la reunión de presupuesto con Jamie. No olvides que el informe de gastos del tercer trimestre vence hoy a las cinco de la tarde, y el cliente espera tu confirmación sobre el plazo de la propuesta revisada. Para la semana, el pronóstico es bueno: hoy estará parcialmente nublado, con una temperatura de 68 grados, y el sábado reabrirá el parque Maplewood con sus nuevos senderos y área de juegos; además, este viernes abre el registro para la conferencia de tecnología de las Twin Cities.

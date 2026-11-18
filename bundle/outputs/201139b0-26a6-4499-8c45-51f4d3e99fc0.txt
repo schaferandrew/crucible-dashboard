@@ -1,0 +1,9 @@
+The primary error in the text is the use of "then" instead of "than" in the phrase "louder then she remembered it." This is a comparative construction, so "than" is the correct conjunction. The rest of the paragraph is grammatically sound. The sentence fragments ("Not waiting for her, exactly." and "And she didn't know whether to laugh, or leave.") are stylistic choices that contribute to the narrative voice and rhythm, so they are preserved. The comma before "or leave" is acceptable in this context to emphasize the hesitation or the two distinct options, though it could be omitted; I have left it to preserve the author's specific pacing.
+
+CORRECTED:
+Mara stepped off the train and into a city that smelled like rain, hot asphalt, and somebody's breakfast. The station was louder than she remembered it, all brakes shrieking and people talking to fast. She could feel the old neighborhood somewhere beyond the buildings, waiting. Not waiting for her, exactly. That would have been too kind. Still—she was back. And she didn't know whether to laugh, or leave.
+
+POSSIBLY INTENTIONAL:
+"to fast": This is a common colloquialism or dialectal variation of "too fast." While standard grammar requires "too," the author may be using "to" to reflect a specific character voice, regional dialect, or informal tone.
+"Still—she was back.": The em dash is used for dramatic pause and emphasis. This is a stylistic choice to control the rhythm of the sentence.
+"And she didn't know whether to laugh, or leave.": The comma before "or" is not strictly necessary in standard grammar but can be used to create a pause that emphasizes the weight of each option. It is preserved to maintain the author's intended rhythm.

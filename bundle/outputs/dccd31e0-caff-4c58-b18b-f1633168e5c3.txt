@@ -1,0 +1,18 @@
+# Evaluation
+
+## Correct complexity (4): states O(log n) — **0 points**
+The agent stated **O(n log n)**, which is completely wrong. Binary search runs in **O(log n)** on an already sorted array. The sorting step is a *separate* operation, not part of binary search itself. This criterion fails entirely.
+
+## Explanation (3): explains that each step halves the remaining search range — **0 points**
+The agent never mentions halving the search range—the core reason for logarithmic complexity. Instead it attributes the cost to sorting ("repeatedly checks the middle element" is mentioned but not tied to any halving argument). The explanation rests on a false premise and does not address why binary search is efficient.
+
+## Precondition (2): states that the input must already be sorted — **0 points**
+The agent explicitly claims the opposite: *"Binary search therefore works on any array, sorted or not."* This directly contradicts the fundamental precondition of binary search—that the input **must** be sorted. A completely incorrect statement here.
+
+## Clarity (1): the answer is clear and well organised — **0.5 points**
+The prose is readable and has a basic structure (statement → reasoning → summary). However, since every substantive claim is wrong and confidently so, awarding full clarity credit would be inappropriate. Partial credit only for surface-level presentation.
+
+## Summary
+Every content criterion fails because the response confuses binary search with sorting, gives the wrong complexity, omits the halving rationale, and explicitly denies the sorted-input precondition. Only the superficial organization earns minimal credit.
+
+GRADE: 0.5

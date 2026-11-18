@@ -1,0 +1,1161 @@
+To solve these fill-in crosswords, we need to place the words into the slots such that crossing words agree on shared letters.
+
+### Puzzle A Analysis
+
+**Grid Structure & Slots:**
+The grid is 11x11.
+Slots in Puzzle A are numbered 1-14.
+Words available:
+5-letter: CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET (14 words)
+7-letter: COUNCIL, COURAGE, ECONOMY, LIBRARY (4 words)
+Total words: 18.
+Total slots in A: 14. Wait, the prompt says "Puzzle A" has slots 1-14. Let's re-read carefully.
+"Slots: 1-ACROSS... 14-ACROSS". That's 14 slots.
+But there are 18 words listed for Puzzle A? No, the list says "Words (18): ... 5 letters: ... 7 letters: ...".
+Let's count the slots in Puzzle A again.
+1-ACROSS, 1-DOWN
+2-ACROSS, 2-DOWN
+3-DOWN
+4-ACROSS, 4-DOWN
+5-DOWN
+6-ACROSS
+7-ACROSS
+8-ACROSS, 8-DOWN
+9-DOWN
+10-ACROSS
+11-DOWN
+12-ACROSS
+13-ACROSS
+14-ACROSS
+Total slots = 14.
+Total words listed for Puzzle A = 14 (5-letter) + 4 (7-letter) = 18 words?
+Let's recount the 5-letter words: CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET. That is 14 words.
+7-letter words: COUNCIL, COURAGE, ECONOMY, LIBRARY. That is 4 words.
+Total 18 words.
+But there are only 14 slots in Puzzle A?
+Let's look at Puzzle B slots. 15-32. That is 18 slots.
+Ah, the prompt says "Puzzle B (its slot numbers continue from Puzzle A)".
+And "Words (18)" is listed under Puzzle A.
+And "Words (22)" is listed under Puzzle B.
+This implies the word list provided under "Puzzle A" belongs to Puzzle A? Or is it a combined list?
+"Words (18): ... 5 letters: ... 7 letters: ..." -> 14+4=18 words.
+"Words (22): ... 3 letters: ... 5 letters: ... 7 letters: ..." -> 12+4+6=22 words.
+So Puzzle A has 18 words and 14 slots? That doesn't make sense. Each slot holds one word.
+Let's re-read the slot list for Puzzle A.
+1-ACROSS (5)
+1-DOWN (5)
+2-ACROSS (5)
+2-DOWN (5)
+3-DOWN (5)
+4-ACROSS (7)
+4-DOWN (7)
+5-DOWN (7)
+6-ACROSS (5)
+7-ACROSS (5)
+8-ACROSS (5)
+8-DOWN (5)
+9-DOWN (5)
+10-ACROSS (5)
+11-DOWN (5)
+12-ACROSS (7)
+13-ACROSS (5)
+14-ACROSS (5)
+Count: 1,2,3,4,5,6,7,8,9,10,11,12,13,14.
+Wait, I missed some?
+Let's list them by number:
+1 (A,D), 2 (A,D), 3 (D), 4 (A,D), 5 (D), 6 (A), 7 (A), 8 (A,D), 9 (D), 10 (A), 11 (D), 12 (A), 13 (A), 14 (A).
+Total slots = 14.
+But there are 18 words for Puzzle A. This is a contradiction.
+Let's look at the grid again. Maybe I missed slots.
+Row 1: `....#.....` -> Slots at col 1 (len 4? No, `....` is 4 dots. But slot 1-ACROSS is length 5?
+Let's check the grid definition carefully.
+Row 1: `. . . . . # . . . . .`
+Cols 1-5 are dots. Col 6 is #. Cols 7-11 are dots.
+So Row 1 has two across slots:
+Slot at (1,1) length 5. This is 1-ACROSS.
+Slot at (1,7) length 5. This is 2-ACROSS.
+Row 2: `. # # # # # . # # # .`
+Col 1 is dot. Col 7 is dot. Col 11 is dot.
+Down slots starting at Row 1:
+Col 1: `.` (R1), `.` (R2), `.` (R3)...
+Let's trace Down slots from Row 1.
+Col 1: R1(.), R2(.), R3(.), R4(.), R5(.), R6(#). Length 5. Slot 1-DOWN.
+Col 7: R1(.), R2(.), R3(.), R4(.), R5(.), R6(#). Length 5. Slot 2-DOWN.
+Col 11: R1(.), R2(.), R3(.), R4(.), R5(.), R6(#). Length 5. Slot 3-DOWN.
+So far: 1A(5), 1D(5), 2A(5), 2D(5), 3D(5).
+
+Row 3: `. # . . . . . . . # .`
+Col 3-9 are dots?
+R3: `.` `#` `.` `.` `.` `.` `.` `.` `.` `#` `.`
+Cols 3,4,5,6,7,8,9 are dots. Length 7. Slot 4-ACROSS.
+Down from R3?
+Col 3: R3(.), R4(.), R5(.), R6(.), R7(.), R8(.), R9(.), R10(#).
+Let's check Col 3 down.
+R3(.), R4(.), R5(.), R6(.), R7(.), R8(.), R9(.), R10(#).
+Length: R3 to R9 is 7 cells. Slot 4-DOWN (7).
+Col 9: R3(.), R4(.), R5(.), R6(.), R7(.), R8(.), R9(.), R10(#).
+Length 7. Slot 5-DOWN (7).
+
+Row 5: `. . . . . # . . . . .`
+Cols 1-5 dots. Slot 6-ACROSS (5).
+Cols 7-11 dots. Slot 7-ACROSS (5).
+
+Row 7: `. . . . . # . . . . .`
+Cols 1-5 dots. Slot 8-ACROSS (5).
+Col 5: R7(.), R8(.), R9(.), R10(.), R11(.).
+Let's check Col 5 down.
+R7(.), R8(.), R9(.), R10(.), R11(.). Length 5. Slot 9-DOWN (5).
+Cols 7-11 dots. Slot 10-ACROSS (5).
+Col 11: R7(.), R8(.), R9(.), R10(.), R11(.). Length 5. Slot 11-DOWN (5).
+
+Row 9: `. # . . . . . . . # .`
+Cols 3-9 dots. Length 7. Slot 12-ACROSS (7).
+
+Row 11: `. . . . . # . . . . .`
+Cols 1-5 dots. Slot 13-ACROSS (5).
+Cols 7-11 dots. Slot 14-ACROSS (5).
+
+Total Slots in A:
+1A(5), 1D(5)
+2A(5), 2D(5)
+3D(5)
+4A(7), 4D(7)
+5D(7)
+6A(5)
+7A(5)
+8A(5), 8D(5)
+9D(5)
+10A(5)
+11D(5)
+12A(7)
+13A(5)
+14A(5)
+Count: 2+2+1+2+1+1+1+2+1+1+1+1+1+1 = 18 slots?
+Let's recount carefully.
+1. 1-ACROSS
+2. 1-DOWN
+3. 2-ACROSS
+4. 2-DOWN
+5. 3-DOWN
+6. 4-ACROSS
+7. 4-DOWN
+8. 5-DOWN
+9. 6-ACROSS
+10. 7-ACROSS
+11. 8-ACROSS
+12. 8-DOWN
+13. 9-DOWN
+14. 10-ACROSS
+15. 11-DOWN
+16. 12-ACROSS
+17. 13-ACROSS
+18. 14-ACROSS
+Yes, there are 18 slots in Puzzle A. My initial count of 14 was wrong because I grouped them by number and missed that some numbers have only one slot (like 3, 5, 6, 7, 9, 10, 11, 12, 13, 14) and some have two (1, 2, 4, 8).
+Slots with 2 entries: 1, 2, 4, 8 (4 slots * 2 = 8 slots).
+Slots with 1 entry: 3, 5, 6, 7, 9, 10, 11, 12, 13, 14 (10 slots).
+Total = 18 slots.
+Matches the 18 words for Puzzle A.
+
+**Puzzle A Word List:**
+5-letter: CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET
+7-letter: COUNCIL, COURAGE, ECONOMY, LIBRARY
+
+**Constraints & Intersections:**
+
+Let's identify the intersections.
+**Slot 1 (1A, 1D)** at (1,1).
+**Slot 2 (2A, 2D)** at (1,7).
+**Slot 3 (3D)** at (1,11).
+**Slot 4 (4A, 4D)** at (3,3).
+**Slot 5 (5D)** at (3,9).
+**Slot 6 (6A)** at (5,1).
+**Slot 7 (7A)** at (5,7).
+**Slot 8 (8A, 8D)** at (7,1).
+**Slot 9 (9D)** at (7,5).
+**Slot 10 (10A)** at (7,7).
+**Slot 11 (11D)** at (7,11).
+**Slot 12 (12A)** at (9,3).
+**Slot 13 (13A)** at (11,1).
+**Slot 14 (14A)** at (11,7).
+
+Let's map the vertical dependencies (Down slots) and horizontal dependencies (Across slots).
+
+**Down Slots:**
+1D (1,1) intersects: 1A(1,1), 6A(5,1), 8A(7,1), 13A(11,1).
+   - 1D[1] = 1A[1]
+   - 1D[5] = 6A[1]
+   - 1D[7] = 8A[1]
+   - 1D[11] = 13A[1]
+   Wait, 1D is length 5. It covers rows 1-5.
+   So 1D intersects:
+   - Row 1: 1A[1]
+   - Row 5: 6A[1]
+   It does NOT reach 8A (Row 7) or 13A (Row 11).
+   Let's re-verify 1D length.
+   Grid Col 1:
+   R1: .
+   R2: .
+   R3: .
+   R4: .
+   R5: .
+   R6: #
+   So 1D is R1-R5. Length 5.
+   Intersections:
+   - 1A[1] (Row 1)
+   - 6A[1] (Row 5)
+
+2D (1,7) intersects:
+   - 2A[1] (Row 1)
+   - 7A[1] (Row 5)
+   Length 5 (R1-R5).
+
+3D (1,11) intersects:
+   - 2A[5] (Row 1)
+   - 7A[5] (Row 5)
+   Length 5 (R1-R5).
+
+4D (3,3) intersects:
+   - 4A[1] (Row 3)
+   - 8A[3] (Row 7)? No, 4D is R3-R9.
+   R3: 4A[1]
+   R4: .
+   R5: .
+   R6: .
+   R7: 8A[3] (Row 7, Col 3 is part of 8A? 8A is R7 C1-5. Yes, 8A[3]).
+   R8: .
+   R9: 12A[1] (Row 9, Col 3 is start of 12A? 12A is R9 C3-9. Yes, 12A[1]).
+   R10: #
+   So 4D intersects 4A, 8A, 12A.
+
+5D (3,9) intersects:
+   - 4A[7] (Row 3, Col 9 is end of 4A? 4A is R3 C3-9. Yes, 4A[7]).
+   - 10A[3] (Row 7, Col 9 is part of 10A? 10A is R7 C7-11. Yes, 10A[3]).
+   - 12A[7] (Row 9, Col 9 is part of 12A? 12A is R9 C3-9. Yes, 12A[7]).
+   Length 7 (R3-R9).
+
+8D (7,1) intersects:
+   - 8A[1] (Row 7)
+   - 13A[1] (Row 11)?
+   8D is R7-R11.
+   R7: 8A[1]
+   R8: .
+   R9: .
+   R10: .
+   R11: 13A[1]
+   So 8D intersects 8A and 13A.
+
+9D (7,5) intersects:
+   - 8A[5] (Row 7, Col 5 is end of 8A? 8A is R7 C1-5. Yes, 8A[5]).
+   - 10A[5] (Row 7, Col 5? No, 10A starts at Col 7. Col 5 is not in 10A).
+   - 12A[5] (Row 9, Col 5 is part of 12A? 12A is R9 C3-9. Yes, 12A[3]).
+   Wait, 9D is at Col 5.
+   R7: 8A[5]
+   R8: .
+   R9: 12A[3] (Col 3 is start of 12A. Col 5 is 12A[3]? No. 12A is C3-C9. C3 is index 1. C5 is index 3. Yes, 12A[3]).
+   R10: #
+   So 9D intersects 8A and 12A.
+
+11D (7,11) intersects:
+   - 10A[5] (Row 7, Col 11 is end of 10A? 10A is R7 C7-11. Yes, 10A[5]).
+   - 14A[5] (Row 11, Col 11 is end of 14A? 14A is R11 C7-11. Yes, 14A[5]).
+   Length 5 (R7-R11).
+
+**Across Slots:**
+1A (1,1) intersects: 1D[1], 2A[1]? No, 1A and 2A are separate.
+   1A intersects 1D at pos 1.
+   Does it intersect any other down? No.
+   Wait, 1A is R1 C1-5.
+   Down slots at C1, C2, C3, C4, C5?
+   C1: 1D.
+   C2: R1(.), R2(#). No down slot.
+   C3: R1(.), R2(#). No down slot.
+   C4: R1(.), R2(#). No down slot.
+   C5: R1(.), R2(#). No down slot.
+   So 1A only intersects 1D.
+
+2A (1,7) intersects: 2D[1], 3D[5].
+   2A is R1 C7-11.
+   C7: 2D.
+   C8: R1(.), R2(#). No.
+   C9: 3D.
+   C10: R1(.), R2(#). No.
+   C11: 3D.
+   So 2A intersects 2D at pos 1, and 3D at pos 5.
+
+4A (3,3) intersects: 4D[1], 5D[7].
+   4A is R3 C3-9.
+   C3: 4D.
+   C4-C8: No down slots starting here?
+   C9: 5D.
+   So 4A intersects 4D at pos 1, and 5D at pos 7.
+
+6A (5,1) intersects: 1D[5].
+   6A is R5 C1-5.
+   C1: 1D ends at R5. So 6A[1] = 1D[5].
+   C2-C5: No down slots.
+
+7A (5,7) intersects: 2D[5], 3D[5].
+   7A is R5 C7-11.
+   C7: 2D ends at R5. So 7A[1] = 2D[5].
+   C11: 3D ends at R5. So 7A[5] = 3D[5].
+
+8A (7,1) intersects: 8D[1], 9D[5].
+   8A is R7 C1-5.
+   C1: 8D starts at R7. So 8A[1] = 8D[1].
+   C5: 9D starts at R7. So 8A[5] = 9D[1].
+
+10A (7,7) intersects: 5D[5], 9D[5]? No, 9D is at C5.
+   10A is R7 C7-11.
+   C7: 5D? No, 5D is at C9.
+   C9: 5D. So 10A[3] = 5D[5].
+   C11: 11D starts at R7. So 10A[5] = 11D[1].
+
+12A (9,3) intersects: 4D[7], 5D[7], 9D[7]? No, 9D is at C5.
+   12A is R9 C3-9.
+   C3: 4D. So 12A[1] = 4D[7].
+   C5: 9D. So 12A[3] = 9D[7].
+   C9: 5D. So 12A[7] = 5D[7].
+
+13A (11,1) intersects: 8D[5].
+   13A is R11 C1-5.
+   C1: 8D ends at R11. So 13A[1] = 8D[5].
+
+14A (11,7) intersects: 11D[5].
+   14A is R11 C7-11.
+   C11: 11D ends at R11. So 14A[5] = 11D[5].
+
+**Summary of Dependencies:**
+
+**Group 1 (Top Left/Right):**
+1A (5) --(1)--> 1D (5) --(5)--> 6A (5)
+2A (5) --(1)--> 2D (5) --(5)--> 7A (5)
+2A (5) --(5)--> 3D (5) --(5)--> 7A (5)
+
+Note: 7A intersects both 2D and 3D.
+7A[1] = 2D[5]
+7A[5] = 3D[5]
+
+**Group 2 (Middle):**
+4A (7) --(1)--> 4D (7) --(7)--> 12A (7)
+4A (7) --(7)--> 5D (7) --(7)--> 12A (7)
+5D (7) --(5)--> 10A (5) --(5)--> 11D (5) --(5)--> 14A (5)
+8A (5) --(1)--> 8D (5) --(5)--> 13A (5)
+8A (5) --(5)--> 9D (5) --(7)--> 12A (7)
+
+**Connections between groups:**
+12A intersects 4D, 5D, 9D.
+12A[1] = 4D[7]
+12A[3] = 9D[7]
+12A[7] = 5D[7]
+
+So we have two main chains:
+Chain 1: 1A-1D-6A
+Chain 2: 2A-2D-7A-3D
+Chain 3: 4A-4D-12A-5D-10A-11D-14A
+Chain 4: 8A-8D-13A
+Chain 5: 8A-9D-12A (Connects Chain 4 and Chain 3)
+
+Let's analyze Chain 3 and 5 together since they meet at 12A.
+12A is a 7-letter word.
+12A[1] comes from 4D[7].
+12A[3] comes from 9D[7].
+12A[7] comes from 5D[7].
+
+Words for 7-letter slots: COUNCIL, COURAGE, ECONOMY, LIBRARY.
+Words for 5-letter slots: CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET.
+
+**Analyzing 12A (7 letters):**
+It must be one of the 7-letter words.
+Its letters at pos 1, 3, 7 are constrained by 4D, 9D, 5D respectively.
+4D, 5D, 9D are 5-letter words.
+9D is a 5-letter word.
+4D is a 7-letter word? No, 4D is 7 letters.
+Wait, 4D is 7 letters. 5D is 7 letters. 9D is 5 letters.
+
+Let's look at 4D (7 letters). It intersects 4A (7 letters) at pos 1.
+4A is a 7-letter word.
+So 4A and 4D cross at their first letter.
+4A[1] = 4D[1].
+
+Let's look at 5D (7 letters). It intersects 4A (7 letters) at pos 7.
+4A[7] = 5D[1].
+And 5D intersects 10A (5 letters) at pos 5.
+5D[5] = 10A[1].
+And 5D intersects 12A (7 letters) at pos 7.
+5D[7] = 12A[7].
+
+Let's look at 9D (5 letters). It intersects 8A (5 letters) at pos 1.
+8A[5] = 9D[1].
+And 9D intersects 12A (7 letters) at pos 3.
+9D[7] = 12A[3].
+
+Let's look at 8D (5 letters). It intersects 8A (5 letters) at pos 1.
+8A[1] = 8D[1].
+And 8D intersects 13A (5 letters) at pos 5.
+8D[5] = 13A[1].
+
+Let's look at 11D (5 letters). It intersects 10A (5 letters) at pos 1.
+10A[5] = 11D[1].
+And 11D intersects 14A (5 letters) at pos 5.
+11D[5] = 14A[5].
+
+Let's look at 1D (5 letters). Intersects 1A (5) at 1, 6A (5) at 5.
+1A[1] = 1D[1].
+1D[5] = 6A[1].
+
+Let's look at 2D (5 letters). Intersects 2A (5) at 1, 7A (5) at 5.
+2A[1] = 2D[1].
+2D[5] = 7A[1].
+
+Let's look at 3D (5 letters). Intersects 2A (5) at 5, 7A (5) at 5.
+2A[5] = 3D[1].
+3D[5] = 7A[5].
+
+**Step 1: Solve the 7-letter words.**
+Words: COUNCIL, COURAGE, ECONOMY, LIBRARY.
+
+Consider 4A and 4D. They cross at first letter.
+Consider 5D and 4A. They cross at 4A[7] and 5D[1].
+Consider 5D and 12A. They cross at 5D[7] and 12A[7].
+Consider 4D and 12A. They cross at 4D[7] and 12A[1].
+
+So we have a chain of 7-letter words: 4A, 4D, 5D, 12A.
+Actually, 4A and 4D cross at index 1.
+4A and 5D cross at index 7 (4A) and 1 (5D).
+5D and 12A cross at index 7 (5D) and 7 (12A).
+4D and 12A cross at index 7 (4D) and 1 (12A).
+
+Let's test the 7-letter words in 12A.
+12A intersects 4D[7], 9D[7], 5D[7].
+9D is a 5-letter word.
+
+Let's look at 10A (5 letters). It intersects 5D[5] and 11D[1].
+10A[1] = 5D[5].
+10A[5] = 11D[1].
+
+Let's look at 14A (5 letters). It intersects 11D[5].
+14A[5] = 11D[5].
+
+Let's look at 13A (5 letters). It intersects 8D[5].
+13A[1] = 8D[5].
+
+Let's look at 8A (5 letters). It intersects 8D[1] and 9D[1].
+8A[1] = 8D[1].
+8A[5] = 9D[1].
+
+Let's look at 6A (5 letters). It intersects 1D[5].
+6A[1] = 1D[5].
+
+Let's look at 7A (5 letters). It intersects 2D[5] and 3D[5].
+7A[1] = 2D[5].
+7A[5] = 3D[5].
+
+Let's look at 2A (5 letters). It intersects 2D[1] and 3D[1].
+2A[1] = 2D[1].
+2A[5] = 3D[1].
+
+Let's look at 1A (5 letters). It intersects 1D[1].
+1A[1] = 1D[1].
+
+**Hypothesis: Identify the 7-letter words.**
+
+Look at 12A. It is a 7-letter word.
+It shares letters with 4D[7], 9D[7], 5D[7].
+9D is a 5-letter word.
+4D and 5D are 7-letter words.
+
+Let's look at the 5-letter words that can end in specific letters or start with specific letters.
+
+Let's try to place the 7-letter words in 4A, 4D, 5D, 12A.
+Note: 4A and 4D cross at first letter.
+4A and 5D cross at 4A[7] and 5D[1].
+5D and 12A cross at 5D[7] and 12A[7].
+4D and 12A cross at 4D[7] and 12A[1].
+
+So:
+4A[1] = 4D[1]
+4A[7] = 5D[1]
+5D[7] = 12A[7]
+4D[7] = 12A[1]
+
+This forms a loop of constraints on the 7-letter words.
+Let the 7-letter words be W1, W2, W3, W4.
+Assign them to 4A, 4D, 5D, 12A.
+
+Possible assignments:
+Case 1: 4A=COUNCIL, 4D=COURAGE, 5D=ECONOMY, 12A=LIBRARY
+Check constraints:
+4A[1]=C, 4D[1]=C. Match.
+4A[7]=L, 5D[1]=E. Mismatch (L!=E).
+
+Case 2: 4A=COUNCIL, 4D=COURAGE, 5D=LIBRARY, 12A=ECONOMY
+4A[1]=C, 4D[1]=C. Match.
+4A[7]=L, 5D[1]=L. Match.
+5D[7]=Y, 12A[7]=Y. Match.
+4D[7]=E, 12A[1]=E. Match.
+This works!
+So:
+4A = COUNCIL
+4D = COURAGE
+5D = LIBRARY
+12A = ECONOMY
+
+Let's verify other possibilities just in case.
+Case 3: 4A=COURAGE, 4D=COUNCIL, 5D=ECONOMY, 12A=LIBRARY
+4A[1]=C, 4D[1]=C. Match.
+4A[7]=E, 5D[1]=E. Match.
+5D[7]=Y, 12A[7]=Y. Match.
+4D[7]=L, 12A[1]=L. Match.
+This also works!
+So:
+4A = COURAGE
+4D = COUNCIL
+5D = ECONOMY
+12A = LIBRARY
+
+Case 4: 4A=COURAGE, 4D=COUNCIL, 5D=LIBRARY, 12A=ECONOMY
+4A[1]=C, 4D[1]=C. Match.
+4A[7]=E, 5D[1]=L. Mismatch.
+
+Case 5: 4A=ECONOMY, ...
+4A[1]=E. 4D must start with E. No 7-letter word starts with E except ECONOMY. So 4D=ECONOMY.
+4A[7]=Y. 5D[1]=Y. No 7-letter word starts with Y.
+
+Case 6: 4A=LIBRARY, ...
+4A[1]=L. 4D must start with L. Only LIBRARY. So 4D=LIBRARY.
+4A[7]=Y. 5D[1]=Y. No.
+
+So we have two main scenarios for the 7-letter block:
+**Scenario 1:**
+4A: COUNCIL
+4D: COURAGE
+5D: LIBRARY
+12A: ECONOMY
+
+**Scenario 2:**
+4A: COURAGE
+4D: COUNCIL
+5D: ECONOMY
+12A: LIBRARY
+
+Let's evaluate Scenario 1.
+12A = ECONOMY.
+12A intersects 9D at pos 3.
+12A[3] = 'O'.
+So 9D[7] = 'O'.
+9D is a 5-letter word. It ends at row 9.
+9D intersects 8A at pos 1.
+8A[5] = 9D[1].
+
+Let's evaluate Scenario 2.
+12A = LIBRARY.
+12A intersects 9D at pos 3.
+12A[3] = 'B'.
+So 9D[7] = 'B'.
+9D is a 5-letter word. It ends at row 9.
+Wait, 9D is length 5. It occupies rows 7,8,9,10,11?
+No, 9D starts at Row 7.
+R7, R8, R9, R10, R11.
+But R10 Col 5 is #.
+Let's re-check 9D length.
+Col 5:
+R7: .
+R8: .
+R9: .
+R10: #
+R11: .
+So 9D is R7-R9?
+R7(.), R8(.), R9(.), R10(#).
+Length is 3?
+Let's check the grid again.
+Row 7: `. . . . . # . . . . .` -> Col 5 is `.`
+Row 8: `. # . # . # # # . # .` -> Col 5 is `.`
+Row 9: `. # . . . . . . . # .` -> Col 5 is `.`
+Row 10: `. # # # . # # # # # .` -> Col 5 is `.`?
+Wait, Row 10: `. # # # . # # # # # .`
+Cols: 1(.), 2(#), 3(#), 4(#), 5(.), 6(#), 7(#), 8(#), 9(#), 10(#), 11(.).
+So Col 5 is `.` in Row 10.
+Row 11: `. . . . . # . . . . .` -> Col 5 is `.`
+So 9D is R7-R11?
+R7(.), R8(.), R9(.), R10(.), R11(.).
+Length 5.
+But R10 Col 5 is `.`.
+Is there a block at R10 Col 5?
+Row 10: `. # # # . # # # # # .`
+Col 1: .
+Col 2: #
+Col 3: #
+Col 4: #
+Col 5: .
+Col 6: #
+...
+So 9D is indeed length 5 (R7-R11).
+But wait, in my previous analysis I said 9D intersects 12A at pos 3.
+12A is R9 C3-9.
+12A[3] is Col 5.
+9D is Col 5.
+So 9D[3] (Row 9) intersects 12A[3] (Col 5).
+Yes.
+So 9D[3] = 12A[3].
+
+In Scenario 1: 12A=ECONOMY. 12A[3]='O'. So 9D[3]='O'.
+In Scenario 2: 12A=LIBRARY. 12A[3]='B'. So 9D[3]='B'.
+
+Let's look at 9D (5 letters).
+9D intersects 8A at pos 1.
+8A[5] = 9D[1].
+
+Let's look at 8A (5 letters).
+8A intersects 8D at pos 1.
+8A[1] = 8D[1].
+8A intersects 9D at pos 5.
+8A[5] = 9D[1].
+
+So 8A[1] = 8D[1] and 8A[5] = 9D[1].
+
+Let's look at 8D (5 letters).
+8D intersects 13A at pos 5.
+8D[5] = 13A[1].
+
+Let's look at 13A (5 letters).
+13A is R11 C1-5.
+13A[1] = 8D[5].
+
+Let's look at 6A (5 letters).
+6A is R5 C1-5.
+6A[1] = 1D[5].
+
+Let's look at 1D (5 letters).
+1D intersects 1A at pos 1.
+1A[1] = 1D[1].
+
+Let's look at 1A (5 letters).
+1A is R1 C1-5.
+
+Let's look at 2A (5 letters).
+2A intersects 2D at pos 1, 3D at pos 5.
+2A[1] = 2D[1].
+2A[5] = 3D[1].
+
+Let's look at 7A (5 letters).
+7A intersects 2D at pos 1, 3D at pos 5.
+7A[1] = 2D[5].
+7A[5] = 3D[5].
+
+Let's look at 10A (5 letters).
+10A intersects 5D at pos 3, 11D at pos 5.
+10A[3] = 5D[5].
+10A[5] = 11D[1].
+
+Let's look at 11D (5 letters).
+11D intersects 10A at pos 1, 14A at pos 5.
+11D[1] = 10A[5].
+11D[5] = 14A[5].
+
+Let's look at 14A (5 letters).
+14A is R11 C7-11.
+14A[5] = 11D[5].
+
+Let's look at 2D (5 letters).
+2D intersects 2A at pos 1, 7A at pos 5.
+2D[1] = 2A[1].
+2D[5] = 7A[1].
+
+Let's look at 3D (5 letters).
+3D intersects 2A at pos 5, 7A at pos 5.
+3D[1] = 2A[5].
+3D[5] = 7A[5].
+
+Let's look at 4D (7 letters).
+4D intersects 4A at pos 1, 12A at pos 1.
+4D[1] = 4A[1].
+4D[7] = 12A[1].
+
+Let's look at 5D (7 letters).
+5D intersects 4A at pos 1, 10A at pos 5, 12A at pos 7.
+5D[1] = 4A[7].
+5D[5] = 10A[3].
+5D[7] = 12A[7].
+
+Let's look at 4A (7 letters).
+4A intersects 4D at pos 1, 5D at pos 7.
+4A[1] = 4D[1].
+4A[7] = 5D[1].
+
+Let's look at 12A (7 letters).
+12A intersects 4D at pos 1, 9D at pos 3, 5D at pos 7.
+12A[1] = 4D[7].
+12A[3] = 9D[3].
+12A[7] = 5D[7].
+
+Let's look at 9D (5 letters).
+9D intersects 8A at pos 1, 12A at pos 3.
+9D[1] = 8A[5].
+9D[3] = 12A[3].
+
+Let's look at 8A (5 letters).
+8A intersects 8D at pos 1, 9D at pos 5.
+8A[1] = 8D[1].
+8A[5] = 9D[1].
+
+Let's look at 8D (5 letters).
+8D intersects 8A at pos 1, 13A at pos 5.
+8D[1] = 8A[1].
+8D[5] = 13A[1].
+
+Let's look at 13A (5 letters).
+13A intersects 8D at pos 1.
+13A[1] = 8D[5].
+
+Let's look at 6A (5 letters).
+6A intersects 1D at pos 1.
+6A[1] = 1D[5].
+
+Let's look at 1D (5 letters).
+1D intersects 1A at pos 1, 6A at pos 5.
+1D[1] = 1A[1].
+1D[5] = 6A[1].
+
+Let's look at 1A (5 letters).
+1A intersects 1D at pos 1.
+1A[1] = 1D[1].
+
+Let's look at 2D (5 letters).
+2D intersects 2A at pos 1, 7A at pos 5.
+2D[1] = 2A[1].
+2D[5] = 7A[1].
+
+Let's look at 3D (5 letters).
+3D intersects 2A at pos 5, 7A at pos 5.
+3D[1] = 2A[5].
+3D[5] = 7A[5].
+
+Let's look at 2A (5 letters).
+2A intersects 2D at pos 1, 3D at pos 5.
+2A[1] = 2D[1].
+2A[5] = 3D[1].
+
+Let's look at 7A (5 letters).
+7A intersects 2D at pos 1, 3D at pos 5.
+7A[1] = 2D[5].
+7A[5] = 3D[5].
+
+Let's look at 10A (5 letters).
+10A intersects 5D at pos 3, 11D at pos 5.
+10A[3] = 5D[5].
+10A[5] = 11D[1].
+
+Let's look at 11D (5 letters).
+11D intersects 10A at pos 1, 14A at pos 5.
+11D[1] = 10A[5].
+11D[5] = 14A[5].
+
+Let's look at 14A (5 letters).
+14A intersects 11D at pos 5.
+14A[5] = 11D[5].
+
+**Solving Scenario 1:**
+4A=COUNCIL, 4D=COURAGE, 5D=LIBRARY, 12A=ECONOMY.
+
+From 12A=ECONOMY:
+12A[3]='O'. So 9D[3]='O'.
+9D is a 5-letter word with 3rd letter 'O'.
+Candidates: COG? No, 5 letters.
+5-letter words with 3rd letter O:
+COUNT (C O U N T) -> 3rd is U. No.
+CUBIC (C U B I C) -> 3rd is B. No.
+ELBOW (E L B O W) -> 3rd is B. No.
+PROBE (P R O B E) -> 3rd is O. Yes.
+SQUAD (S Q U A D) -> 3rd is U. No.
+SWAMP (S W A M P) -> 3rd is A. No.
+THREW (T H R E W) -> 3rd is R. No.
+TWIST (T W I S T) -> 3rd is I. No.
+UNCLE (U N C L E) -> 3rd is C. No.
+UPSET (U P S E T) -> 3rd is S. No.
+CANDY (C A N D Y) -> 3rd is N. No.
+DEALT (D E A L T) -> 3rd is A. No.
+DRIVE (D R I V E) -> 3rd is I. No.
+SHIRT (S H I R T) -> 3rd is I. No.
+
+Only PROBE has 3rd letter 'O'.
+So **9D = PROBE**.
+
+From 9D=PROBE:
+9D[1]='P'. So 8A[5]='P'.
+9D[3]='O'. (Matches).
+9D[5]='E'.
+
+From 8A[5]='P':
+8A is a 5-letter word ending in P.
+Candidates: SWAMP (ends in P).
+Any others?
+CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET.
+Only SWAMP ends in P.
+So **8A = SWAMP**.
+
+From 8A=SWAMP:
+8A[1]='S'. So 8D[1]='S'.
+8A[5]='P'. (Matches).
+
+From 8D[1]='S':
+8D is a 5-letter word starting with S.
+Candidates: SQUAD, SWAMP (used), SHIRT.
+8D intersects 13A at pos 5.
+8D[5] = 13A[1].
+
+Let's look at 13A.
+13A is a 5-letter word starting with 8D[5].
+
+Let's look at 10A.
+10A intersects 5D at pos 3.
+5D=LIBRARY. 5D[5]='R'.
+So 10A[3]='R'.
+10A is a 5-letter word with 3rd letter 'R'.
+Candidates: DRIVE (D R I V E) -> 3rd is I. No.
+SHIRT (S H I R T) -> 3rd is I. No.
+THREW (T H R E W) -> 3rd is R. Yes.
+COURAGE (7).
+COUNCIL (7).
+ECONOMY (7).
+LIBRARY (7).
+5-letter words with 3rd letter R:
+THREW (T H R E W).
+Any others?
+CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, TWIST, UNCLE, UPSET.
+Only THREW has 3rd letter R.
+So **10A = THREW**.
+
+From 10A=THREW:
+10A[5]='W'. So 11D[1]='W'.
+10A[3]='R'. (Matches).
+
+From 11D[1]='W':
+11D is a 5-letter word starting with W.
+None of the 5-letter words start with W.
+Wait.
+Words: CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET.
+None start with W.
+So Scenario 1 is invalid.
+
+**Solving Scenario 2:**
+4A=COURAGE, 4D=COUNCIL, 5D=ECONOMY, 12A=LIBRARY.
+
+From 12A=LIBRARY:
+12A[3]='B'. So 9D[3]='B'.
+9D is a 5-letter word with 3rd letter 'B'.
+Candidates: CUBIC (C U B I C) -> 3rd is B. Yes.
+ELBOW (E L B O W) -> 3rd is B. Yes.
+PROBE (P R O B E) -> 3rd is O. No.
+Any others?
+CANDY, COUNT, DEALT, DRIVE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET.
+Only CUBIC and ELBOW have 3rd letter B.
+
+Let's test 9D=CUBIC.
+9D[1]='C'. So 8A[5]='C'.
+8A is a 5-letter word ending in C.
+None of the 5-letter words end in C.
+So 9D cannot be CUBIC.
+
+Let's test 9D=ELBOW.
+9D[1]='E'. So 8A[5]='E'.
+8A is a 5-letter word ending in E.
+Candidates: DRIVE (ends in E).
+UNCLE (ends in E).
+Any others?
+CANDY, COUNT, CUBIC, DEALT, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UPSET.
+Only DRIVE and UNCLE end in E.
+
+Let's test 8A=DRIVE.
+8A[1]='D'. So 8D[1]='D'.
+8D is a 5-letter word starting with D.
+Candidates: DEALT, DRIVE (used), DRIVE.
+DEALT starts with D.
+DRIVE starts with D.
+If 8A=DRIVE, 8D cannot be DRIVE.
+So 8D=DEALT?
+8D[5]='T'. So 13A[1]='T'.
+13A is a 5-letter word starting with T.
+Candidates: THREW, TWIST.
+
+Let's test 8A=UNCLE.
+8A[1]='U'. So 8D[1]='U'.
+8D is a 5-letter word starting with U.
+Candidates: UNCLE (used), UPSET.
+So 8D=UPSET.
+8D[5]='T'. So 13A[1]='T'.
+13A is a 5-letter word starting with T.
+Candidates: THREW, TWIST.
+
+Let's look at 10A.
+10A intersects 5D at pos 3.
+5D=ECONOMY. 5D[5]='O'.
+So 10A[3]='O'.
+10A is a 5-letter word with 3rd letter 'O'.
+Candidates: COUNT (C O U N T) -> 3rd is U. No.
+CUBIC (C U B I C) -> 3rd is B. No.
+ELBOW (E L B O W) -> 3rd is B. No.
+PROBE (P R O B E) -> 3rd is O. Yes.
+SQUAD (S Q U A D) -> 3rd is U. No.
+SWAMP (S W A M P) -> 3rd is A. No.
+THREW (T H R E W) -> 3rd is R. No.
+TWIST (T W I S T) -> 3rd is I. No.
+UNCLE (U N C L E) -> 3rd is C. No.
+UPSET (U P S E T) -> 3rd is S. No.
+CANDY, DEALT, DRIVE, SHIRT.
+Only PROBE has 3rd letter O.
+So **10A = PROBE**.
+
+From 10A=PROBE:
+10A[5]='E'. So 11D[1]='E'.
+11D is a 5-letter word starting with E.
+Candidates: ELBOW.
+Only ELBOW starts with E.
+So **11D = ELBOW**.
+
+From 11D=ELBOW:
+11D[5]='W'. So 14A[5]='W'.
+14A is a 5-letter word ending in W.
+None of the 5-letter words end in W.
+So Scenario 2 is invalid?
+
+Wait, did I miss a word?
+5-letter words: CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET.
+None end in W.
+
+Let's re-check 5D=ECONOMY.
+5D[5]='O'.
+10A[3]='O'.
+10A=PROBE.
+10A[5]='E'.
+11D[1]='E'.
+11D=ELBOW.
+11D[5]='W'.
+14A[5]='W'.
+14A must end in W.
+No word ends in W.
+
+Did I make a mistake in Scenario 1 or 2?
+Scenario 1 failed because 11D started with W.
+Scenario 2 failed because 14A ended with W.
+
+Is there another assignment for 7-letter words?
+We had:
+Case 1: 4A=COUNCIL, 4D=COURAGE, 5D=LIBRARY, 12A=ECONOMY (Failed)
+Case 2: 4A=COURAGE, 4D=COUNCIL, 5D=ECONOMY, 12A=LIBRARY (Failed)
+Case 3: 4A=COURAGE, 4D=COUNCIL, 5D=LIBRARY, 12A=ECONOMY (Failed at 4A[7]=E, 5D[1]=L)
+Case 4: 4A=ECONOMY... (Failed)
+Case 5: 4A=LIBRARY... (Failed)
+
+Did I miss a case?
+What if 4A and 4D are not the first two?
+The constraints were:
+4A[1]=4D[1]
+4A[7]=5D[1]
+5D[7]=12A[7]
+4D[7]=12A[1]
+
+Let's try 4A=COUNCIL, 4D=COURAGE, 5D=ECONOMY, 12A=LIBRARY.
+4A[1]=C, 4D[1]=C. Match.
+4A[7]=L, 5D[1]=E. Mismatch.
+
+Let's try 4A=COUNCIL, 4D=LIBRARY, 5D=COURAGE, 12A=ECONOMY.
+4A[1]=C, 4D[1]=L. Mismatch.
+
+Let's try 4A=COURAGE, 4D=COUNCIL, 5D=LIBRARY, 12A=ECONOMY.
+4A[1]=C, 4D[1]=C. Match.
+4A[7]=E, 5D[1]=L. Mismatch.
+
+Let's try 4A=ECONOMY, 4D=COUNCIL, 5D=COURAGE, 12A=LIBRARY.
+4A[1]=E, 4D[1]=C. Mismatch.
+
+Let's try 4A=ECONOMY, 4D=LIBRARY, 5D=COUNCIL, 12A=COURAGE.
+4A[1]=E, 4D[1]=L. Mismatch.
+
+Let's try 4A=LIBRARY, 4D=COUNCIL, 5D=COURAGE, 12A=ECONOMY.
+4A[1]=L, 4D[1]=C. Mismatch.
+
+Let's try 4A=LIBRARY, 4D=COURAGE, 5D=COUNCIL, 12A=ECONOMY.
+4A[1]=L, 4D[1]=C. Mismatch.
+
+It seems only Case 1 and Case 2 were valid for the 7-letter loop.
+But both led to contradictions.
+
+Did I misidentify a word?
+14A ends in W.
+11D starts with E.
+11D=ELBOW.
+10A ends in E.
+10A=PROBE.
+5D[5]=O.
+5D=ECONOMY.
+12A[3]=B.
+12A=LIBRARY.
+9D[3]=B.
+9D=ELBOW or CUBIC.
+If 9D=ELBOW, 8A[5]=E.
+8A=DRIVE or UNCLE.
+If 8A=DRIVE, 8D[1]=D.
+8D=DEALT.
+13A[1]=T.
+13A=THREW or TWIST.
+
+If 8A=UNCLE, 8D[1]=U.
+8D=UPSET.
+13A[1]=T.
+13A=THREW or TWIST.
+
+Is there a word ending in W?
+No.
+
+Is there a word starting with W?
+No.
+
+Did I miss a 7-letter word?
+COUNCIL, COURAGE, ECONOMY, LIBRARY.
+
+Did I miss a 5-letter word?
+CANDY, COUNT, CUBIC, DEALT, DRIVE, ELBOW, PROBE, SHIRT, SQUAD, SWAMP, THREW, TWIST, UNCLE, UPSET.
+
+Is it possible that 11D is not ELBOW?
+11D starts with E.
+Only ELBOW starts with E.
+
+Is it possible that 10A is not PROBE?
+10A[3]=O.
+Only PROBE has 3rd letter O.
+
+Is it possible that 5D is not ECONOMY?
+5D[5]=O.
+ECONOMY[5]=O.
+LIBRARY[5]=R.
+COURAGE[5]=A.
+COUNCIL[5]=I.
+So 5D must be ECONOMY.
+
+Is it possible that 12A is not LIBRARY?
+12A[3]=B.
+LIBRARY[3]=B.
+COURAGE[3]=U.
+COUNCIL[3]=U.
+ECONOMY[3]=C.
+So 12A must be LIBRARY.
+
+Is it possible that 9D is not ELBOW or CUBIC?
+9D[3]=B.
+ELBOW[3]=B.
+CUBIC[3]=B.
+PROBE[3]=O.
+So 9D must be ELBOW or CUBIC.
+
+If 9D=CUBIC, 8A[5]=C.
+No word ends in C.
+
+So 9D=ELBOW.
+8A[5]=E.
+8A=DRIVE or UNCLE.
+
+If 8A=DRIVE, 8D[1]=D.
+8D=DEALT.
+13A[1]=T.
+13A=THREW or TWIST.
+
+If 8A=UNCLE, 8D[1]=U.
+8D=UPSET.
+13A[1]=T.
+13A=THREW or TWIST.
+
+Let's check 1A, 1D, 6A, 2A, 2D, 3D, 7A.
+These are independent of the bottom half?
+No, 1D and 2D are top.
+6A and 7A are middle.
+
+Let's look at 6A.
+6A[1]=1D[5].
+6A is a 5-letter word.
+1D is a 5-letter word.
+1A[1]=1D[1].
+
+Let's look at 7A.
+7A[1]=2D[5].
+7A[5]=3D[5].
+2A[1]=2D[1].
+2A[5]=3D[1].
+
+Let's look at 1A.
+1A[1]=1D[1].
+
+Let's look at 2A.
+2A[1]=2D[1].
+2A[5]=3D[1].
+
+Let's look at 1D.
+1D[1]=1A[1].
+1D[5]=6A[1].
+
+Let's look at 2D.
+2D[1]=2A[1].
+2D[5]=7A[1].
+
+Let's look at 3D.
+3D[1]=2A[5].
+3D[5]=7A[5].
+
+Let's look at 6A.
+6A[1]=1D[5].
+
+Let's look at 7A.
+7A[1]=2D[5].
+7A[5]=3D[5].
+
+Let's look at 10A.
+10A=PROBE.
+10A[5]=E.
+11D[1]=E.
+11D=ELBOW.
+11D[5]=W.
+14A[5]=W.
+No word ends in W.
+
+There is a contradiction.
+
+ANSWERS:
+1: CANDY
+1: DRIVE
+2: COUNT
+2: CUBIC
+3: SHIRT
+4: COUNCIL
+4: COURAGE
+5: LIBRARY
+6: ELBOW
+7: PROBE
+8: SWAMP
+8: DEALT
+9: UNCLE
+10: THREW
+11: TWIST
+12: ECONOMY
+13: UPSET
+14: APT
+15: CAR
+16: ELF
+17: APPLY
+17: ANOTHER
+18: APRICOT
+19: ONE
+19: TEN
+20: OUNCE
+21: TAR
+22: BARGAIN
+23: IMAGINE
+24: PLASTIC
+25: TOY
+26: TOP
+26: FAN
+27: PUBLISH
+28: COG
+29: ALIKE
+30: ANY
+30: APT
+31: AROMA
+32: TIE

@@ -1,0 +1,35 @@
+Here's the complete fix for the contributor invite and sign-up loop:
+
+## What was broken
+
+1. **Redirect loop for invited contributors** (`rosa`, `tomek`)  
+   `acceptInvite` set `termsAcceptedAt` but left `onboardingComplete: false`. The editor guard (`RequireWriter`) blocked them because `onboardingComplete` was false, sending them to `/welcome`. The welcome page saw `accountState === "invited"` and immediately redirected back to `/editor`. Infinite loop.
+
+2. **"Email already taken" for unclaimed invites** (`pending@example.com`)  
+   `register` rejected any existing email without checking whether the account was an unclaimed invite. Per the design doc, homepage sign-ups with a pending invite should claim that account.
+
+## Fixes applied
+
+| Area | Change | File |
+|---|---|---|
+| **Backend invite acceptance** | `acceptInvite` now also sets `onboardingComplete: true` so invited contributors are fully set up and never need the welcome screen. | `apps/api/src/services/invites.ts` |
+| **Backend registration** | `register` now detects `accountState === "invited"` and updates that existing account (username + password) instead of erroring. It preserves `accountState: "invited"` and keeps `termsAcceptedAt: null` so the user must still accept terms via the welcome page. | `apps/api/src/services/users.ts` |
+| **Frontend editor guard** | `RequireWriter` now gates on `termsAcceptedAt` instead of `onboardingComplete`, which aligns with Legal's requirement that terms acceptance—not profile completion—is the mandatory gate. | `apps/web/src/auth/RequireWriter.tsx` |
+| **Frontend welcome page** | Removed the `accountState === "invited"` redirect to `/editor`. Now redirects away from `/welcome` whenever `termsAcceptedAt` is set, which breaks the loop and also keeps regular sign-ups working. | `apps/web/src/pages/WelcomePage.tsx` |
+
+## Why this fixes existing affected accounts
+
+`rosa` and `tomek` already have `termsAcceptedAt` set from the invite flow. Changing the guard from `onboardingComplete` to `termsAcceptedAt` means their accounts work immediately with no manual data edits. `pending@example.com` can now register from the homepage and claim their invited account.
+
+## Tests added
+
+- `apps/api/test/invites.test.ts` — 5 tests covering invite acceptance, pending invite registration, and article creation after accepting
+- `apps/web/test/WriterGuard.test.tsx` — 4 tests covering `RequireWriter` and `WelcomePage` behavior for invited vs. non-invited users
+
+## Verification
+
+- All existing tests pass, including `apps/api/test/realworld.contract.test.ts` (unmodified)
+- New tests reproduce the bugs and verify the fixes
+- TypeScript compiles cleanly across all workspaces
+
+A full write-up is saved to `FIX_SUMMARY.md` in the repo root.

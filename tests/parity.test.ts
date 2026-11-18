@@ -1,4 +1,4 @@
-// Parity with the old page: the typed core, fed the real generated site-data, must reproduce the leaderboard
+// Parity with the old page: the typed core, fed the frozen generated site-data, must reproduce the leaderboard
 // numbers in docs/rewrite/golden-numbers.json (rank, overall, tier scores, runs, in-progress and
 // provisional flags, time, tok/s, cost) for v4 and v3: the chat, agentic and Combined sections, the
 // provisional on/off and tier-excluded scenarios, sort orders and single-filter boards. Differences are
@@ -10,13 +10,7 @@ import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { B03_MODELS, ECLIPSE_COST_MODELS, RULES, classify, type Rule } from './allowlist';
-import { ROOT, haveData, loadIndex, runScenarios, type Diff, type ScenarioRun } from './golden';
-
-if (!haveData()) {
-  throw new Error(
-    'No site data at static/data. Run `npm run data` (see README) or generate it with `crucible site-data`.',
-  );
-}
+import { ROOT, loadIndex, runScenarios, type Diff, type ScenarioRun } from './golden';
 
 const runs: ScenarioRun[] = runScenarios();
 

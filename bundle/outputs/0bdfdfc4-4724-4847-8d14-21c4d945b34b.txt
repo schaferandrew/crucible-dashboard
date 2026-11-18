@@ -1,0 +1,44 @@
+⏺ bash(command=ls -R src/)
+  ⎿ cli.js
+dates.js
+report.js
+store.js
+tools.js
+validate.js
+⏺ read(path=src/cli.js)
+  ⎿ // Argument parsing and the commands. `main` never touches process.argv or process.exit, so tests can call it.
+
+import { ToolStore } from "./store.js";
+import { addTool, auditLines, findTools, loanToo
+⏺ read(path=src/dates.js)
+  ⎿ // Calendar helpers on "YYYY-MM-DD" strings. Everything is UTC so results never depend on the machine.
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+export function isIsoDate(text) {
+  if (typeof text !== "st
+⏺ read(path=src/store.js)
+  ⎿ // The tool collection and its JSON file. Listeners hear about every change the service makes.
+
+import fs from "node:fs";
+import { normalizeTool } from "./validate.js";
+
+export class ToolStore {
+  con
+⏺ read(path=src/tools.js)
+  ⎿ // The lending rules. Every function takes the store; `today` is always passed in ("YYYY-MM-DD").
+
+import { addDays, daysBetween } from "./dates.js";
+import { isStatus } from "./validate.js";
+
+export 
+⏺ bash(command=cat src/cli.js > src/cli.ts)
+  ⎿ (no output)
+⏺ read(path=src/validate.js)
+  ⎿ // Turns one raw record from the JSON file into a tool. Older files leave fields out.
+
+import { isIsoDate } from "./dates.js";
+
+export const STATUSES = ["available", "loaned", "retired"];
+
+export func

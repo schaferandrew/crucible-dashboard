@@ -1,0 +1,7 @@
+All done. I read all three receipts in inbox/, added three rows to `giving-log.csv`, and filed each PDF under `records/`:
+
+- **Maple Street Community Church — $250.00, check, Nov 17 2024** (reissued statement; a different gift than the ones already logged) → `records/2024/2024-11-17_Maple-Street-Community-Church.pdf`, tax year 2024
+- **Hope Harbor Food Pantry — $180.00, card, Dec 31 2025** (the letter was dated Jan 4, but the gift was received Dec 31) → `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf`, tax year 2025
+- **Riverbend Public Radio — $60.00, card, Jan 2 2026** (monthly sustainer payment; I ignored the "2025 totaled $660" summary line) → `records/2026/2026-01-02_Riverbend-Public-Radio.pdf`, tax year 2026
+
+The new rows were inserted in date order, matching the existing column format. inbox/ is now empty, and no existing rows or record files were modified.

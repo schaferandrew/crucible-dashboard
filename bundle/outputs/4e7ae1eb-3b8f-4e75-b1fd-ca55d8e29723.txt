@@ -1,0 +1,2 @@
+The numbers are in. Let me verify the first-affected-request correlation against both raw logs to be sure.
+

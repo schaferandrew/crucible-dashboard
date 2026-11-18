@@ -1,0 +1,1 @@
+The login 401 was because my test client didn't set `Content-Type`, so Express never parsed the body. Also there's a stale server process. Let me fix both.

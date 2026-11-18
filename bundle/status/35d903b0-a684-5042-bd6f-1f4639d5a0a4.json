@@ -1,0 +1,12 @@
+[
+ {
+  "record": "status",
+  "format_version": 3,
+  "run_uuid": "35d903b0-a684-5042-bd6f-1f4639d5a0a4",
+  "at": "2026-11-11T06:49:03+00:00",
+  "withdrawn": {
+   "reason": "served over LM Link with no hardware or serving machine recorded; archived by the maintainer"
+  },
+  "by": "maintainer"
+ }
+]

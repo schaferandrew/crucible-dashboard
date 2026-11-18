@@ -1,0 +1,5 @@
+Landlocked: Bolivia, Kazakhstan, Austria, Jordan, Laos, Paraguay, Serbia, Ethiopia, Uzbekistan, Zambia, Iraq, Hungary, Mongolia
+Not landlocked: Croatia, Slovenia, Eritrea, Mozambique, Bosnia and Herzegovina, Vietnam, Togo, DR Congo, Belgium
+Doubly landlocked: Uzbekistan
+
+**Note on Bosnia:** It technically has a small (~20 km) Adriatic Sea coastline at Neum, so it's not strictly landlocked — though its sea access is effectively cut off by surrounding Croatian territory.

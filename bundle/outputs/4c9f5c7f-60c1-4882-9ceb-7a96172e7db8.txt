@@ -1,0 +1,44 @@
+All four sources were available, so nothing needed to be flagged as missing. The brief is written to `morning-brief.md` in the workspace:
+
+# Morning Brief — Wednesday, September 2, 2026
+
+## Weather
+
+**Today (Wed Sept 2):** 68°F / 55°F, partly cloudy, 10% chance of precipitation, wind 8 mph (Saint Paul, MN). Currently 68°F, partly cloudy.
+
+**Facts:** No meaningful rain risk today. Thursday brings scattered showers (30%, wind 12 mph); Friday is sunny, 74/59.
+**Recommendation:** No rain prep needed today; pack for Thursday if anything is outdoors.
+
+## Outstanding work
+
+Left open by yesterday's emails:
+1. **Q3 expense report — due TODAY 5:00 PM** (finance, 2:15 PM). Miss it and it slips to next month's payroll.
+2. **Client reply outstanding** (client, 4:45 PM): confirm whether the revised proposal can be delivered by **Friday** before they brief their team.
+3. **Q3 review results** (Alex, 10:30 AM): review complete and ahead of schedule; Alex asked to discuss in the planning meeting — that's on your calendar today.
+4. **1-on-1 follow-ups** (Jamie, 9:00 AM): career goals, next-quarter priorities, team building — review notes before the 1:00 PM budget meeting.
+
+## Emails
+
+- **Unanswered — client@example.com** (4:45 PM): the only email in yesterday's batch with no response on file; they're explicitly waiting on your yes/no about Friday.
+- finance: deadline reminder, not a reply request. alex: informational, handled in today's planning meeting. jamie: informational; no reply required.
+- **Recommendation:** Reply to the client first, then file the expense report (hard 5:00 PM cutoff).
+
+## Calendar
+
+Today, CT: **9:30–10:30 Planning** (Room B, Alex) · **10:00–11:00 Vendor demo** (Zoom) · **1:00–2:00 Budget meeting** (Conf. Room A, Jamie).
+
+**Conflict:** Planning and the vendor demo **overlap 10:00–10:30** — you can't be in Room B and on Zoom at once. Planning is where Alex wants the Q3-review discussion, so it shouldn't be the one dropped.
+**Recommendation:** Decide before 9:30 — shift the demo to 10:30 or delegate it; if it's immovable, join Planning late (9:30–10:00) and take the Q3 discussion as a short follow-up with Alex.
+
+## News
+
+1. **Twin Cities Tech Conference returns** (StarTribune, high) — registration opens **Friday**; 50+ speakers on AI and startup funding.
+2. **Maplewood Park renovation complete** (Pioneer Press, medium) — grand reopening Saturday.
+3. **State Fair attendance down 3%** (StarTribune, low) — cooler weather cited.
+**Recommendation:** Register Friday if interested — note that's also your workshop/project-review day.
+
+## Top 3 things to do today
+
+1. **Submit the Q3 expense report by 5:00 PM** — hard deadline; missing it delays payment a month.
+2. **Reply to the client confirming the revised proposal's Friday delivery** — they're blocked on your answer.
+3. **Resolve the 9:30 Planning / 10:00 Vendor demo overlap before 9:30** — shift or delegate the demo so you can cover the Q3 review with Alex.

@@ -1,0 +1,83 @@
+Here's the completed editorial-review feature, with every existing test still green and new tests covering the privacy and workflow rules.
+
+### What was built
+
+**Shared types & validation**
+- `Article` now carries `status: "draft" | "in_review" | "published"` and `reviewComment: string | null`.
+- `CreateArticleInput` accepts an optional `status: "draft"`.
+- Added `reviewArticleSchema` for the reject body.
+
+**Database & repositories**
+- `ArticleRow` now stores `status` (default `"published"` when omitted) and `reviewComment`.
+- `listArticles` grew `status` and `excludeAuthorId` filters.
+- `updateArticleRow` can mutate `status` and `reviewComment`.
+- `popularTags` only counts **published** articles so tags from drafts don’t leak.
+
+**App wiring**
+- `createApp(db, config)` now accepts `{ editors?: string[] }`.
+- `server.ts` reads the comma-separated `EDITORS` environment variable.
+
+**Services – the rules**
+- `createArticle` defaults to `"published"` unless `status: "draft"` is passed.
+- `assertArticleVisible` enforces the privacy wall: unpublished articles are visible **only** to their author and configured editors; everyone else gets a `404` (same as “doesn’t exist”, so existence itself is not leaked).
+- `listArticlesForQuery`, `feed`, `getArticle`, `favorite`, `unfavorite`, and comment operations all go through that visibility gate.
+- `submitArticle` (draft → in_review), `approveArticle` (in_review → published), and `rejectArticle` (in_review → draft with comment) enforce the right permissions:
+  - Only the author may submit.
+  - Only editors may approve/reject.
+  - No one may approve/reject their own article.
+  - Invalid transitions → `422`; unauthorized callers → `403`.
+- `reviewQueue` returns in-review articles **oldest first**, excluding the editor’s own work.
+- `userArticles` returns the signed-in user’s articles of every status, newest first, with an optional `?status=` filter.
+- `presentArticle` includes `status` in all responses. `reviewComment` is included only for the article’s author and editors; everyone else gets `null`.
+
+**Routes**
+- Added:
+  - `POST /api/articles/:slug/submit`
+  - `POST /api/articles/:slug/approve`
+  - `POST /api/articles/:slug/reject`
+  - `GET /api/articles/review-queue`
+  - `GET /api/user/articles`
+
+**Web app (simple)**
+- `EditorPage` now lets authors **Save as Draft** or publish.
+- `ArticlePage` shows:
+  - `status` badge,
+  - **Submit for Review** for drafts (author only),
+  - **Approve** and **Reject with feedback** for in-review articles (editor only),
+  - editor feedback to the author.
+- `MyArticlesPage` lets authors browse all their articles by status and read feedback.
+- `ReviewQueuePage` gives editors a simple list to work through.
+- `ArticlePreview` hides the Favorite button for unpublished articles and shows a status badge instead.
+
+### Tests
+
+- `apps/api/test/realworld.contract.test.ts` — **19/19 passing, untouched**.
+- `apps/api/test/editorial.test.ts` — **12 new tests** covering:
+  - draft vs published creation,
+  - public 404s on drafts/in-review articles,
+  - author visibility of their own unpublished work,
+  - review-comment privacy,
+  - submit/approve/reject permissions and 422/403 cases,
+  - review queue ordering and self-exclusion,
+  - `userArticles` filtering,
+  - hidden comments on unpublished articles,
+  - tags only counting published articles.
+
+- `apps/web/test/*` — **7/7 passing**.
+
+### Call-by-call
+
+1. **Default articles remain published.** The contract test creates articles without a `status`; we default to `"published"` so global feeds, tags, favorites, and article retrieval behave exactly as before.
+2. **Public lists filter to `status: "published"`** in `listArticlesForQuery`, `feed`, and `popularTags`. This keeps unapproved work completely private without changing existing query semantics.
+3. **Individual slug lookups return `404` for hidden articles.** This is stronger than a `403` because it hides the fact that the slug exists at all.
+4. **Comments are gated through `assertArticleVisible`.** An unpublished article’s comments are inaccessible, satisfying “nothing derived from it leaks.”
+5. **Review comments are restricted in the presenter**, not the service, so the field is always present in the JSON shape (matching the mobile contract) but its value is sanitized for non-author/non-editor viewers.
+
+### What to flag in code review
+
+1. **In-memory sort for review queue.** `reviewQueue` fetches up to `MAX_PAGE_SIZE` (100) rows and reverses them in memory to get oldest-first. In a real DB-backed app this should be a query-level `ORDER BY createdAt ASC` with real pagination.
+2. **Editors are identified by plain username strings.** `isEditor` does an `Array.includes`. For many editors this is fine; at scale it should be a `Set`, and looking up users by ID rather than username would avoid rename issues.
+3. **No “re-submit after rejection” guard.** A rejected article goes back to draft with a comment. The author can immediately re-submit. If the brief wanted a cooldown or revision requirement, that’s not enforced.
+4. **Web app editor detection is implicit.** The client doesn’t know whether the current user is an editor until the API returns a `403`. A nicer UX would surface editor status on login (e.g. adding `isEditor` to `User`), but that would change the contract-tested `User` shape. We kept the existing shape and let the API gate it.
+5. **No pagination on review queue.** The endpoint returns up to 100 articles and hopes that’s enough. A real implementation needs offset/limit query params.
+6. **Tags on unpublished articles still exist in the join table.** They’re just filtered out of `popularTags`. If you added a direct “articles by tag” endpoint that bypassed the status filter, they’d leak. The current `listArticlesForQuery` already filters by `status: "published"`, so the hole is closed, but it’s worth documenting.

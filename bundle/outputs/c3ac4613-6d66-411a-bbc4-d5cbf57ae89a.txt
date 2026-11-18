@@ -1,0 +1,32 @@
+Here's my fact-checking of each claim, with reasoning:
+
+1. **Battle of Hastings in 1066** — Correct. William the Conqueror defeated King Harold II on October 14, 1066. ✓
+
+2. **King Richard sealed Magna Carta at Runnymede in 1215** — The year (1215) and location (Runnymede) are right, but it was **King John**, not Richard I, who sealed the charter. ✗
+
+3. **Columbus first reached the Americas in 1493** — Wrong date. His first voyage landed in the Americas on October 12, **1492**. In 1493 he made his second voyage. ✗
+
+4. **Declaration of Independence adopted July 4, 1776** — Correct (conventionally dated; independence was voted for two days earlier on July 2). ✓
+
+5. **Storming of the Bastille in July 1789** — Correct. It happened on July 14, 1789. ✓
+
+6. **Napoleon defeated at Waterloo in 1812** — Wrong date. The Battle of Waterloo was fought in **1815**. ✗
+
+7. **Titanic sank in April 1913** — Wrong year. It sank on April 15, **1912**. ✗
+
+8. **India gained independence from Britain in August 1947** — Correct (August 15, 1947). ✓
+
+9. **Armstrong and Aldrin landed on the Moon in July 1969** — Correct (Apollo 11, July 20–21, 1969). ✓
+
+10. **Berlin Wall fell in November 1991** — Wrong year. It fell on November 9, **1989**. ✗
+
+11. **Germany reunified the year after the Berlin Wall fell** — Correct. The wall fell in 1989; reunification occurred October 3, 1990. ✓
+
+12. **Mandela elected President of South Africa in 1994** — Correct (first election April 1994, inaugurated May 1994). ✓
+
+ERRORS:
+2: King John (not Richard)
+3: 1492
+6: 1815
+7: 1912
+10: 1989

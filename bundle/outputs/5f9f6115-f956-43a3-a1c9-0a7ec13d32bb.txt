@@ -1,0 +1,16 @@
+## Reasoning
+
+Current time is **Tuesday, September 1, 2026, 11:20 AM** (America/Chicago). I checked my calendar for later today and tomorrow around the 3:30 slot.
+
+Events on **Tuesday, Sept 1**:
+- Standup — 9:00–9:30
+- 1:1 with Jamie — 11:00–12:00
+- Lunch — 12:00–13:00
+- Design review — 14:00–**15:30 (3:30 PM)**
+- Customer call — 16:00–17:00
+
+At **3:30 PM today**, the Design review ends exactly then, and there is no event between 3:30 PM and the 4:00 PM customer call. So the 3:30 slot itself is open (the only nearby meeting ends precisely at that moment).
+
+(Note: if you meant **Wednesday Sept 2** at 3:30 PM, that would be *busy* — there's a Budget review running 15:00–16:00. But the default reading of "at 3:30" is later today.)
+
+ANSWER: free

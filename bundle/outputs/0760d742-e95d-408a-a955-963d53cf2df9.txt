@@ -1,0 +1,20 @@
+## Reasoning
+
+Current time is **Monday, Aug 31, 2026, 08:30 CDT**. I overlapped my busy blocks with Jamie's over the rest of this week (Mon–Fri) and looked for any continuous 1-hour window where *both* of us are free.
+
+Here's what each day offers during normal business hours:
+
+| Day | Both-free windows (daytime) |
+|-----|------------------------------|
+| Mon Aug 31 | Only after **17:00** (morning–afternoon fully blocked for both) |
+| Tue Sep 1 | Only after **17:00** (10:30–11:00 is just 30 min — too short) |
+| Wed Sep 2 | **13:00–14:00**, and after 15:30 |
+| Thu Sep 3 | **11:00–12:00** and **13:00–14:00** (both full hours) |
+| Fri Sep 4 | **10:30–12:00** (a 90-min window), plus after 15:00 |
+
+Monday and Tuesday only open up in the evening, so I've prioritized clean daytime slots. The Friday morning/early-afternoon slot is the most flexible (nearly an hour of slack). Thursday has two solid full-hour windows. Wednesday's midday slot works too.
+
+**OPTIONS:**
+2026-09-04 10:30 America/Chicago
+2026-09-04 11:00 America/Chicago
+2026-09-02 13:00 America/Chicago

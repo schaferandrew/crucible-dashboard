@@ -1,0 +1,14 @@
+⏺ bash(command=ls -la /Users/schafer/.crucible/workspaces/lmstudio_nvidia_n)
+  ⎿ total 256
+drwxr-xr-x@  14 schafer  staff    448 Nov 11 00:33 .
+drwxr-xr-x@  12 schafer  staff    384 Nov 11 00:33 ..
+drwxr-xr-x@  14 schafer  staff    448 Nov 11 00:33 .git
+-rw-r--r--@   1 schafer  st
+⏺ bash(command=ls -la /Users/schafer/.crucible/workspaces/lmstudio_nvidia_n)
+  ⎿ total 32
+drwxr-xr-x@  6 schafer  staff   192 Oct 29 20:00 .
+drwxr-xr-x@ 14 schafer  staff   448 Nov 11 00:33 ..
+-rw-r--r--@  1 schafer  staff  1703 Oct 29 20:00 dashboard.html
+-rw-r--r--@  1 schafer  
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ Open the local application in a real browser and diagnose why the dashboard intermittently shows a blank state after login. Reproduce the issue, inspect the browser console and network requests, ident

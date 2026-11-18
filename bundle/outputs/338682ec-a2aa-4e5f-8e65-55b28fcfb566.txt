@@ -1,0 +1,9 @@
+The signing of Magna Carta (1215) is the earliest event. Next comes Gutenberg’s Bible printing around 1455. The French Revolution began in 1789, followed by World War I starting in 1914. The first Moon landing occurred in 1969, and finally the Berlin Wall fell in 1989.
+
+ORDER:
+1. The signing of Magna Carta — 1215
+2. The printing of the Gutenberg Bible — 1455
+3. The start of the French Revolution — 1789
+4. The start of the First World War — 1914
+5. The first Moon landing — 1969
+6. The fall of the Berlin Wall — 1989

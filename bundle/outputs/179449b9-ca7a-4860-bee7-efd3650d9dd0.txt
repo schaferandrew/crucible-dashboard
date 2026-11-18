@@ -1,0 +1,2 @@
+`localStorage` is missing from vitest's `KEYS`, and Node 26's native `localStorage` getter (which returns `undefined` without `--localstorage-file`) shadows jsdom's. Let me probe what's actually accessible in the jsdom test environment:
+

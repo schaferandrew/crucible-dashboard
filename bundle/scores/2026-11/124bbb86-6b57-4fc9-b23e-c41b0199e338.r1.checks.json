@@ -1,0 +1,46 @@
+{
+ "record": "score",
+ "format_version": 3,
+ "run_uuid": "124bbb86-6b57-4fc9-b23e-c41b0199e338",
+ "rubric_version": 1,
+ "rubric_hash": "e3084c4e34f85e94",
+ "method": "checks",
+ "scored_at": "2026-11-18T20:15:26.176791+00:00",
+ "crucible_version": "2.2.0",
+ "raw": {
+  "passed": 0,
+  "total": 1,
+  "unit": "points"
+ },
+ "score": 0.0,
+ "scale": 10,
+ "capped_at": null,
+ "passed": false,
+ "items": [
+  {
+   "id": "team",
+   "type": "items",
+   "group": "Team",
+   "label": "Line 1 names Michigan State (Michigan State University, MSU or the Spartans); the University of Michigan, Michigan or the Wolverines scores nothing.",
+   "passed": false,
+   "detail": "no answer to check",
+   "share": 0.0,
+   "items": [
+    {
+     "id": "school",
+     "label": "Question 1 is Michigan State",
+     "passed": false,
+     "detail": "no answer to check"
+    }
+   ]
+  }
+ ],
+ "groups": [
+  {
+   "id": "Team",
+   "passed": 0.0,
+   "total": 1,
+   "detail": "no answer to check"
+  }
+ ]
+}
