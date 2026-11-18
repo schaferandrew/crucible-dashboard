@@ -28,8 +28,8 @@ jobs:
 
       - run: npm ci
 
-      # Generated data is never committed. CRUCIBLE_READ_TOKEN is only needed while the Crucible and
-      # site repos are private; without it the default token is used.
+      # Generated data is never committed. CRUCIBLE_READ_TOKEN is only needed when the Crucible
+      # repository is private; without it the default token is used.
       - name: Generate site data
         uses: ./.github/actions/site-data
         with:

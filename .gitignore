@@ -43,7 +43,7 @@ Thumbs.db
 !.vscode/extensions.json
 *.swp
 
-# CI checkouts (crucible, site bundle)
+# CI checkout (Crucible tooling)
 .ci/
 
 # Screenshot harness output (npm run shots); never committed

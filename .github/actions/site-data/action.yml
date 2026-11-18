@@ -5,7 +5,7 @@ description: >
 
 inputs:
   token:
-    description: Token that can read schaferandrew/crucible and schaferandrew/schaferandrew.github.io.
+    description: Token that can read schaferandrew/crucible.
     required: false
     default: ${{ github.token }}
 
@@ -28,14 +28,6 @@ runs:
         path: .ci/crucible
         token: ${{ inputs.token }}
 
-    # Until the bundle moves into this repo (bundle/), it is published in the site repo.
-    - name: Check out the bundle (site repo)
-      uses: actions/checkout@v4
-      with:
-        repository: schaferandrew/schaferandrew.github.io
-        path: .ci/site
-        token: ${{ inputs.token }}
-
     - name: Install uv
       uses: astral-sh/setup-uv@v6
 
@@ -44,9 +36,9 @@ runs:
       run: |
         rm -rf static/data
         uv run --project .ci/crucible crucible site-data \
-          --bundle .ci/site/_data/crucible \
-          --outputs .ci/site/crucible-data/outputs \
-          --display .ci/site/_data/crucible_display.yml \
-          --fallbacks .ci/site/_data/crucible_fallbacks.yml \
+          --bundle bundle \
+          --outputs bundle/outputs \
+          --display bundle/display.yml \
+          --fallbacks bundle/fallbacks.yml \
           --out static/data
         test -f static/data/meta.json

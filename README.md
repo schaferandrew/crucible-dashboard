@@ -1,13 +1,8 @@
 # crucible-dashboard
 
 The results dashboard for [Crucible](https://github.com/schaferandrew/crucible), a harness that runs local and
-cloud LLMs on real-world tasks. It is a static SvelteKit app intended for
-[schaferandrew.com/crucible-dashboard/](https://www.schaferandrew.com/crucible-dashboard/), to replace the
-Jekyll dashboard at [/crucible/](https://www.schaferandrew.com/crucible/).
-
-> **Status:** the SvelteKit MVP implements every dashboard page in [PR #6](https://github.com/schaferandrew/crucible-dashboard/pull/6).
-> Cleanup and validation precede the portfolio dashboard cutover. Start with [docs/rewrite/](docs/rewrite/README.md)
-> and the [MVP handoff](docs/rewrite/mvp-handoff.md).
+cloud LLMs on real-world tasks. It is a static SvelteKit app available at
+[schaferandrew.com/crucible-dashboard/](https://www.schaferandrew.com/crucible-dashboard/).
 
 ## How it fits together
 
@@ -23,7 +18,7 @@ crucible run  ──►  crucible publish  ──►  bundle/          immutable
                                      GitHub Pages  /crucible-dashboard/
 ```
 
-The bundle currently lives in the portfolio repository, under `_data/crucible/`; moving it to this repo's `bundle/` is a cutover step.
+This repository owns the published format-3 bundle in `bundle/`, including run outputs and dashboard display configuration.
 
 - **Records are never hand-edited.** Fixes go into Crucible's registry and are applied by `crucible site-data`,
   or a run is republished.
@@ -67,15 +62,12 @@ npm run test:ui   # browser smoke checks against a running dev server (Playwrigh
 npm run size      # size budget on the build: index.json <= 100 KB, first-load JS+CSS <= 150 KB (gzip)
 ```
 
-**Data.** `static/data/` is generated, never committed. `npm run data:gen` works on any machine, cloud
-sessions included: it shallow-clones Crucible at the ref in `.crucible-version` and the published bundle
-(`schaferandrew.github.io`) into `.cache/`, runs `crucible site-data` into `.cache/site-data`, and links
-`static/data` to it. Rerun it to refresh. If you already have a `crucible site-data` output folder, point at it
-instead: `CRUCIBLE_SITE_DATA=<folder> npm run data`. To preview a results PR before merging, run
-`CRUCIBLE_SITE_REPO=/path/to/portfolio-worktree npm run data:gen` using the local portfolio worktree.
-After a results-only merge in the portfolio, run the dashboard’s Deploy workflow on `main` to publish it.
-CI generates data via `.github/actions/site-data`.
-The contract is `docs/site-data-format.md` in Crucible.
+**Data.** `static/data/` is generated from this checkout’s `bundle/`. Run `npm run data:gen` on the
+results branch to preview changes before merging. The command installs Crucible at the ref in
+`.crucible-version`, runs `crucible site-data`, and links its output to `static/data`. To link an
+existing output folder, use `CRUCIBLE_SITE_DATA=<folder> npm run data`. CI uses the same bundle, and
+the Deploy workflow publishes changes on pushes to `main`. See Crucible’s `docs/site-data-format.md`
+for the generated data contract.
 
 **URLs.** Everything is served under `/crucible-dashboard/`, in dev too. View state is query parameters with
 today's names: `?mode=chat&suite=v3&exclude=forge&harness=pi&where=local&hw=m5-pro-48gb&quant=q4_k_m&provisional=1`.
