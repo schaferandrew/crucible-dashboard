@@ -5,10 +5,10 @@
   "id": "v4",
   "version": "4.0",
   "cut_at": "2026-10-31",
-  "status": "current",
+  "status": "past",
   "changelog_url": "https://github.com/schaferandrew/crucible/blob/main/SUITE_CHANGELOG.md#suite-v4"
  },
- "crucible_version": "3.10.0",
+ "crucible_version": "3.11.0",
  "scoring_policy": {
   "coverage_min": 0.75,
   "in_progress_below": 0.75,
@@ -1178,7 +1178,7 @@
    "summary": "I keep track of our charitable giving for the tax return each year.",
    "prompt": "I keep track of our charitable giving for the tax return each year. This folder has my giving log (giving-log.csv), records/ with the receipts I've already filed, and inbox/ with some new receipts I just scanned and downloaded.\n\nGo through everything in inbox/. Read each PDF, add a row to giving-log.csv for the gift it records, filling in every column the way the existing rows do, and file the PDF under records/ where it belongs, named the way the ones already there are. Leave inbox/ empty when you're done, and don't change any of the existing rows or files.\n\nWhen you've finished, tell me briefly what you filed and where.",
    "rules": [],
-   "added_in": null
+   "added_in": "v5"
   },
   {
    "id": "grade-binary-search-answer",
@@ -1543,7 +1543,7 @@
    "summary": "This is Toolshed, a small inventory and lending tracker for a community tool library, written in plain JavaScript (ES modules, Node 18+).",
    "prompt": "This is Toolshed, a small inventory and lending tracker for a community tool library, written in plain JavaScript (ES modules, Node 18+). Read README.md first.\n\nPort it to TypeScript with strict typing, without changing what it does.\n\nWhat to do:\n1. Convert every module in `src/` to TypeScript (`.ts`) and remove the `.js` originals. Keep the module names, the exported names and the call signatures, so `import { main } from \"./cli\"` still works.\n2. Add a `tsconfig.json` at the project root that turns on `strict`, covers `src/`, and makes `npx tsc -p tsconfig.json` pass with no errors. Don't switch off any strict option, don't use `// @ts-ignore`, `// @ts-nocheck` or `// @ts-expect-error`, and don't write `any`.\n3. Type the data as it really is. A tool's status is one of its three values, not a string; the fields that can hold `null` are typed as nullable; the events the store announces are a union you can narrow on its `type`; data read from the JSON file is untrusted until it has been checked.\n4. Behavior stays identical: the same command output, error messages, exit codes, saved JSON and audit lines for the same input. Fix nothing and improve nothing while you are in there; if something looks odd, port it as it is.\n5. The tests in `test/` must keep passing as they are (`npm test`). They are plain JavaScript and import the modules without a file extension; don't weaken or delete any of them.\n\n`package.json` and the lockfile stay as they are: `typescript`, `@types/node` and `vitest` are already installed. Only `src/` and `tsconfig.json` count. Run `npx tsc -p tsconfig.json` and `npm test` before you finish, and end with a short summary of the places where the types were not obvious.",
    "rules": [],
-   "added_in": null
+   "added_in": "v5"
   },
   {
    "id": "landlocked-countries",
@@ -1859,7 +1859,7 @@
    "tier": "forge",
    "status": "provisional",
    "version": 1,
-   "rubric_version": 1,
+   "rubric_version": 2,
    "weight": null,
    "scoring": {
     "method": "hidden_tests",
@@ -1912,7 +1912,7 @@
    "summary": "This is the website for Lantern Books, a small bookshop, built on Next.js 14 with the Pages Router.",
    "prompt": "This is the website for Lantern Books, a small bookshop, built on Next.js 14 with the Pages Router. Read README.md first.\n\nMigrate the whole site to the App Router. Everything the site serves today must come from `app/` at the project root, and the `pages/` folder must be gone when you finish.\n\nRequirements:\n- Migrate every page and the API route: the home page, the book pages, the genre pages, search, about, the custom not-found page, the shared layout that wraps every page, and `/api/books`.\n- Keep every URL. Keep the HTTP status codes, including 404 for anything unknown, and the API's status codes for bad requests and unsupported methods.\n- For the same data, keep the rendered HTML content the same: the same text, links and navigation, including which navigation link is marked as the current page. Each page keeps its title and description.\n- Keep the rendering behaviour the pages had: pages that were built ahead of time stay built ahead of time, and a page that was rendered on every request keeps being rendered on every request.\n- Keep the existing tests passing (`npm test`), and make sure `npm run build` succeeds.\n- Do not add dependencies, and do not change package.json, the lockfile or the config files. You may change files under app/, components/, lib/ and styles/ (and delete pages/).\n\nEnd with a short summary of what you changed and anything that behaves differently from before.",
    "rules": [],
-   "added_in": null
+   "added_in": "v5"
   },
   {
    "id": "morning-brief-priorities",
@@ -2517,7 +2517,7 @@
    "summary": "This is the Juniper Inn booking desk, a small PHP app from 2014: a router, a flat-file data layer (data/rooms.json and two CSV files), a quote calculator, date helpers and one HTML page.",
    "prompt": "This is the Juniper Inn booking desk, a small PHP app from 2014: a router, a flat-file data layer (data/rooms.json and two CSV files), a quote calculator, date helpers and one HTML page. It runs from the command line, for example `php app.php '/quote?room=101&checkin=2024-03-19&nights=2&guests=1'`. Read README.md first.\n\nWe're retiring PHP on this machine. Rewrite the app in Ruby so the front desk can keep using it exactly as before.\n\nWhat we need:\n1. `ruby app.rb '<request>'`, run from the repo root, gives the same output and exit status as `php app.php '<request>'` for every request: the same JSON (as parsed values: same keys, values and types of container) or the same HTML text, and exit status 0 or 1 in the same cases. \"The same\" means the PHP app's actual behaviour, quirks included, not what the README or a comment says it should do. The front desk's habits depend on it.\n2. Put the Ruby code in app.rb and lib/. Write idiomatic Ruby, standard library only: no gems, no Bundler, nothing to install. It must run on the `ruby` installed here (check `ruby -v`).\n3. Port the legacy tests: `ruby test/run_tests.rb` must read the fixture cases in tests/fixtures/cases.json, run each request through your Ruby app, compare the status and body the way tests/run_tests.php does, print what failed and exit non-zero if anything did. All the cases must pass. Add more tests if you like.\n4. Don't change data/, tests/fixtures/ or the PHP files; they are the reference. You may leave the PHP files in place.\n\nPHP may not be installed here, so you might not be able to run the old app to compare; the PHP source and the fixtures are the spec. Read the PHP carefully: the fixtures don't cover every request the desk sends.\n\nWhen you're done, end with a short summary of how the Ruby app is laid out and any PHP behaviour you had to reproduce deliberately.",
    "rules": [],
-   "added_in": null
+   "added_in": "v5"
   },
   {
    "id": "proofread-customer-email",
@@ -3217,7 +3217,7 @@
     "Taxi is 41 minutes (17:15 is peak traffic; off-peak is 26).",
     "The run called search_flights, get_restaurant and get_travel_time (read from the session, not the reply)."
    ],
-   "added_in": null
+   "added_in": "v5"
   },
   {
    "id": "two-calendar-slots-json",

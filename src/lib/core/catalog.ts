@@ -32,6 +32,7 @@ export interface SuiteInfo {
   hasCombined: boolean;
   tasks: CatalogTask[];
   taskById: Map<TaskId, CatalogTask>;
+  tiebreakTask: CatalogTask | null;
   categoryWeights: Map<string, number>;
   coverageMin: number;
   inProgressBelow: number;
@@ -54,8 +55,12 @@ export function suiteInfo(catalog: Catalog): SuiteInfo {
   const hit = cache.get(catalog);
   if (hit) return hit;
 
-  const tasks = catalog.tasks.filter((t) => t && t.id);
-  const taskById = new Map<TaskId, CatalogTask>(tasks.map((t) => [t.id, t]));
+  const catalogTasks = catalog.tasks.filter((t) => t && t.id);
+  const taskById = new Map<TaskId, CatalogTask>(catalogTasks.map((t) => [t.id, t]));
+  const tiebreakTask =
+    catalogTasks.find((t) => t.id === catalog.scoring_policy?.tiebreak_task && t.status === 'provisional') ??
+    null;
+  const tasks = catalogTasks.filter((t) => t !== tiebreakTask);
 
   const seen = new Set<string>();
   const tiers: CatalogTier[] = [];
@@ -145,6 +150,7 @@ export function suiteInfo(catalog: Catalog): SuiteInfo {
     hasCombined: orderedModes.length > 1 && !orderedModes.some((m) => (m.id as string) === COMBINED),
     tasks,
     taskById,
+    tiebreakTask,
     categoryWeights: new Map(
       catalog.categories
         .filter((c) => c && c.id && typeof c.weight === 'number')

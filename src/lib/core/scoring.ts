@@ -474,7 +474,7 @@ function buildSection(index: SuiteIndex, modeId: string, provisional: boolean): 
         index,
         setup.id,
         view.aggTiers(exclude).map((t) => t.id),
-        provisional,
+        provisionalTasks.length > 0,
       );
       const out: RowStats = {
         candidate: c,
@@ -761,7 +761,7 @@ function buildCombined(index: SuiteIndex, provisional: boolean): View {
               index,
               c.entity,
               aggTiers(exclude).map((t) => t.id),
-              provisional,
+              provTotal > 0,
             );
       const out: RowStats = {
         candidate: c,
@@ -895,7 +895,7 @@ export function sortRows(index: SuiteIndex, rows: readonly Row[], sort: SortSpec
   const info = cacheOf(index).info;
   const tierKey = sort.key === OVERALL || info.tiers.some((t) => t.id === sort.key);
   const resultOf = (s: Row) => (sort.key === OVERALL ? s.overall : (s.tier[sort.key] ?? null));
-  return rows.slice().sort((a, b) => {
+  const sorted = rows.slice().sort((a, b) => {
     if (a.ran !== b.ran) return a.ran ? -1 : 1;
     if (a.inProgress !== b.inProgress) return a.inProgress ? 1 : -1;
     if (tierKey) {
@@ -916,6 +916,27 @@ export function sortRows(index: SuiteIndex, rows: readonly Row[], sort: SortSpec
     if (va > vb) return sort.dir;
     return a.label < b.label ? -1 : 1;
   });
+  const task = info.tiebreakTask;
+  if (!task || sort.key !== OVERALL) return sorted;
+
+  // Only scored image results in an exact Overall tie compete. Untested rows keep their positions.
+  const ties = new Map<number, { position: number; row: Row; score: number }[]>();
+  sorted.forEach((row, position) => {
+    if (!isRanked(row)) return;
+    const score = row.candidate.members
+      .map((setup) => (setup ? blockMean(cellsOf(index, setup.id).get(task.id)?.provisional) : null))
+      .find((value) => value !== null);
+    if (score === undefined) return;
+    const overall = row.overall.score!;
+    const group = ties.get(overall) ?? [];
+    group.push({ position, row, score });
+    ties.set(overall, group);
+  });
+  for (const group of ties.values()) {
+    const ranked = group.slice().sort((a, b) => b.score - a.score);
+    group.forEach(({ position }, i) => (sorted[position] = ranked[i]!.row));
+  }
+  return sorted;
 }
 
 /** A row is ranked when it ran, has finished and has a full overall score. */

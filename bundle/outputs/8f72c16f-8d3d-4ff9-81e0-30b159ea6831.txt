@@ -1,0 +1,14 @@
+The clues force the seating as follows:
+
+- Chair 1 must be the person who likes green (clue 3).
+- Dave likes red and Carol likes yellow, so neither can sit in chair 1.
+- Therefore chair 1 is either Alice or Bob, with color green.
+- Since Alice sits immediately to the left of the blue person (clue 1), Alice cannot be the blue person herself. So Alice must be the green person in chair 1, and Bob must be the blue person in chair 2.
+- That leaves Dave and Carol for chairs 3 and 4.
+- Carol sits somewhere to the right of the red person (clue 4), and Dave is the red person (clue 5). So Dave must be in chair 3 and Carol in chair 4.
+
+Chair 1: Alice, green  
+Chair 2: Bob, blue  
+Chair 3: Dave, red  
+Chair 4: Carol, yellow  
+ANSWER: Dave

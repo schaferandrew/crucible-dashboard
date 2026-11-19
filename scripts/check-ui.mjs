@@ -170,16 +170,19 @@ async function json(path) {
 // Find a real repeated run with output so this check survives changing data and UUIDs.
 const meta = await json('meta.json');
 const months = await json('recent/index.json');
-const recent = await json(`recent/${months.months[0].id}.json`);
 let repeat;
-for (const item of recent.runs.slice(0, 50)) {
-  const run = await json(`runs/${item.run_uuid}.json`);
-  const sibling = run.suites?.[meta.current_suite]?.siblings?.find((s) => s.run_uuid !== run.run_uuid);
-  if (run.output && sibling) {
-    const other = await json(`runs/${sibling.run_uuid}.json`);
-    if (other.output) {
-      repeat = { run, other };
-      break;
+findRepeat: for (const month of months.months) {
+  const recent = await json(`recent/${month.id}.json`);
+  for (const item of recent.runs) {
+    const run = await json(`runs/${item.run_uuid}.json`);
+    if (!run.output) continue;
+    for (const sibling of run.suites?.[meta.current_suite]?.siblings ?? []) {
+      if (sibling.run_uuid === run.run_uuid) continue;
+      const other = await json(`runs/${sibling.run_uuid}.json`);
+      if (other.output) {
+        repeat = { run, other };
+        break findRepeat;
+      }
     }
   }
 }
@@ -287,8 +290,7 @@ try {
     await page.getByRole('heading', { name: 'Summary', exact: true }).waitFor();
     await page.getByRole('heading', { name: 'Reliability', exact: true }).waitFor();
     await page.getByRole('button', { name: 'Show checks', exact: true }).first().click();
-    await settled();
-    assert.ok(await page.getByRole('link', { name: 'open the run', exact: true }).count());
+    await page.getByRole('link', { name: 'open the run', exact: true }).first().waitFor();
     // Keep an expanded task while the first comparison side is replaced. Checks must follow the UUIDs.
     const extra = await page
       .getByLabel('Add a setup')
@@ -305,6 +307,7 @@ try {
     await page.waitForFunction(() => new URL(location.href).searchParams.get('s')?.split(',').length === 2);
     await settled();
     const checkLinks = page.getByRole('link', { name: 'open the run', exact: true });
+    await checkLinks.nth(1).waitFor();
     assert.equal(await checkLinks.count(), 2, 'The expanded task stays open with the new sides');
     const selectedIds = new URL(page.url()).searchParams.get('s').split(',');
     for (const link of await checkLinks.all()) {

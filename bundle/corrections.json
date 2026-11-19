@@ -59,6 +59,12 @@
    "reason": "local key without the maker"
   },
   {
+   "base": "qwen3.8-27b",
+   "to_base": "qwen/qwen3.8-27b",
+   "maker": "qwen",
+   "reason": "Whitehall's Bartowski GGUF uses an LM Studio key without the maker namespace."
+  },
+  {
    "base": "qwen3.8-27b-splash",
    "to_base": "qwen/qwen3.8-27b",
    "maker": "qwen",

@@ -1,0 +1,41 @@
+We have data. Need markdown with sections. Use important emails: likely those flagged? We can pick all. Calendar events for today 2026-09-02. News high importance. Spanish practice paragraph.
+
+Let's craft.## Emails
+
+- **From:** alex@example.com  
+  **Subject:** Project update – Q3 review completed  
+  **Body:** The Q3 review is now complete and ahead of schedule. Let's discuss the results in our planning meeting.
+
+- **From:** jamie@example.com  
+  **Subject:** Meeting notes from yesterday  
+  **Body:** Notes from yesterday's 1‑on‑1: discussed career goals, next quarter priorities, and team building activities.
+
+- **From:** finance@example.com  
+  **Subject:** Reminder: Q3 expense report due Wednesday 5 PM  
+  **Body:** Your Q3 expense report must be submitted by 5:00 PM on Wednesday, September 2. Reports that miss the cutoff are paid with next month’s payroll.
+
+- **From:** client@example.com  
+  **Subject:** Question about the proposal timeline  
+  **Body:** Hi, can you confirm whether the revised proposal can be delivered by Friday? I need an answer before I brief my team. Please reply when you can.
+
+## Calendar
+
+### Today – September 2, 2026 (America/Chicago)
+
+| Time | Event | Location |
+|------|-------|----------|
+| 09:30 – 10:30 | Planning | Room B |
+| 10:00 – 11:00 | Vendor demo | Zoom |
+| 13:00 – 14:00 | Budget meeting | Conference Room A |
+
+## News
+
+- **Twin Cities Tech Conference Returns** – *StarTribune*  
+  The annual tech conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies. Registration opens this Friday.
+
+- **Maplewood Park Renovation Complete** – *Pioneer Press*  
+  Renovations to Maplewood Park finished ahead of schedule, adding new walking trails and a children's playground. Grand reopening is Saturday.
+
+## Spanish practice
+
+Hoy tienes una reunión de planificación con Alex a las 9:30 a.m., seguida de una demostración del proveedor y la reunión presupuestaria a la 1:00 p.m.; aprovecha para repasar los puntos clave en español y preparar tus comentarios.

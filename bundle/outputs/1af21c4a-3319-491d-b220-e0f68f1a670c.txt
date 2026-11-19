@@ -1,0 +1,8 @@
+I fixed two clear errors: “then” should be “than” in the comparison, and “to fast” should be “too fast.” I left a few stylistic choices unchanged because they may be deliberate rather than accidental.
+
+CORRECTED:
+Mara stepped off the train and into a city that smelled like rain, hot asphalt, and somebody's breakfast. The station was louder than she remembered it, all brakes shrieking and people talking too fast. She could feel the old neighborhood somewhere beyond the buildings, waiting. Not waiting for her, exactly. That would have been too kind. Still—she was back. And she didn't know whether to laugh, or leave.
+
+POSSIBLY INTENTIONAL:
+"laugh, or": I left the comma before “or” because it may create a deliberate pause in the final sentence rather than being an obvious punctuation error.
+"Not waiting for her, exactly": I left this fragment as written because it appears to be a deliberate clipped continuation of the previous line and fits the author's voice.
