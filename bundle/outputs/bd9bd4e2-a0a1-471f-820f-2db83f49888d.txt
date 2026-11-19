@@ -1,0 +1,3 @@
+⏺ bash(command=find /Users/schafer/.crucible/workspaces/lmstudio_recursives)
+  ⎿ /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_flint_interest-calculator-cli_20261119_075834/prompt.txt
+/Users/schafer/.crucible/workspaces/lmstudio_recursivesi_flint_interest-calculator-cli
