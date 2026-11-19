@@ -1,0 +1,1 @@
+Now let me also fix an issue with my lib/leads.ts - the validation function needs to properly check for whitespace-only strings:

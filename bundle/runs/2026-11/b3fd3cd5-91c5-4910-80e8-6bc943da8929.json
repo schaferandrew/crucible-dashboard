@@ -1,0 +1,104 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "b3fd3cd5-91c5-4910-80e8-6bc943da8929",
+ "run_path": "lmstudio_qwen3.8-27b@reasoning-high/multi-step-competition-math/20261119_055438",
+ "legacy_run_id": null,
+ "started_at": "2026-11-19T05:54:38.030658+00:00",
+ "ended_at": "2026-11-19T06:06:41.566428+00:00",
+ "elapsed_s": 722.69,
+ "task": {
+  "id": "multi-step-competition-math",
+  "version": 1,
+  "rubric_version": 1,
+  "content_hash": "fa3e7d98ab144ac2",
+  "rubric_hash": "72028ed7b1732171",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/qwen3.8-27b",
+  "base": "qwen3.8-27b",
+  "publisher": "bartowski",
+  "artifact": "bartowski/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q3_K_S.gguf",
+  "format": "gguf",
+  "quant": "Q3_K_S",
+  "reasoning": {
+   "requested": "high",
+   "resolved": "high",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 32768,
+  "variant_key": "qwen3.8-27b|bartowski|gguf|q3_k_s",
+  "display": "qwen3.8-27b · Q3_K_S",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "none"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": "LM Link",
+  "device": "Whitehall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "rtx-5070-ti-16gb",
+  "class": "discrete_gpu",
+  "accelerators": [
+   {
+    "name": "NVIDIA RTX 5070 Ti 16GB",
+    "memory_gb": 16,
+    "count": 1
+   }
+  ],
+  "system_memory_gb": 32.0,
+  "cpu": "AMD Ryzen 7 7700",
+  "offload": null,
+  "label": "Whitehall"
+ },
+ "outcome": {
+  "status": "context_limit",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": 468,
+  "tokens_out": 32300,
+  "model_responses": 1,
+  "ttft_s": 0.611,
+  "ttft_avg_s": 0.611,
+  "response_time_avg_s": 722.677,
+  "output_tokens_per_s": 44.7,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 70415
+ },
+ "output_ref": null,
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "a67d4f6",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:d4a85f0f8a15657147f03ee5b75ec9172e9f42279e819a89b6daea2215cf7186",
+  "submitter": null,
+  "verification": null
+ }
+}

@@ -1,0 +1,18 @@
+Task complete. Here's my report:
+
+## Report
+
+**Setup:** The app wasn't running, so I started it (`npm start`, port 3456) and confirmed `/login.html` was served (HTTP 200).
+
+**Step 1 — First login attempt:** Following the skill's Login Procedure, I logged in as `testuser` with the documented password `correctpassword`. Result: **HTTP 401 `{"error":"invalid_credentials"}`** — the "Invalid username or password" symptom.
+
+**Diagnosis:** I verified locally that `scrypt("correctpassword", salt="tu-9b3e")` = `472071...eb9d`, which does **not** match the stored hash `530e52...5ac` in `accounts.json`. The account is active (`active: true`), so this was not a deactivated account, and no prior session/cookies existed, ruling out stale cookies. → **Wrong Password**: the actual password had drifted from what SKILL.md documents.
+
+**Recovery (per skill's Wrong Password procedure):**
+1. `POST /api/reset-password-request` with `username=testuser` → received reset URL `/reset-password.html?token=reset_747bc22e10d9d7e2&user=testuser`
+2. `POST /api/reset-password` with the token and new password `correctpassword` (restoring the documented value) → `{"success":true}`
+3. Re-login as `testuser`/`correctpassword` → **HTTP 200** `{"success":true,"redirect":"/dashboard.html"}`, signed session cookie issued (`sess_aae1fe3b1e8aeda2`)
+
+**Final state:** Authenticated dashboard confirmed — `GET /api/dashboard` with the session cookie returns HTTP 200: `{"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}`. The audit log records the full sequence: `login_failed(invalid_credentials) → reset_requested → password_reset → login_success → dashboard_ok`. No authentication was bypassed and no application code was modified — only the skill's provided pages/APIs were used, with the password reset done programmatically as permitted.
+
+FAILURE: Wrong Password

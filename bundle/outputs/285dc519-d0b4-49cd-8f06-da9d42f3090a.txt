@@ -1,0 +1,199 @@
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express RE
+  ⎿ # Accessibility audit: Conduit web app (summary)
+
+External audit against WCAG 2.2 AA, tested with VoiceOver (macOS Safari), NVDA (Firefox) and keyboard only. Overall result: **fail**. We need to pass 
+⏺ bash(command=find apps/web -type f \( -name "*.tsx" -o -name "*.ts" \) | )
+  ⎿ apps/web/src/api/client.ts
+apps/web/src/App.tsx
+apps/web/src/auth/AuthContext.tsx
+apps/web/src/components/ArticleList.tsx
+apps/web/src/components/ArticlePreview.tsx
+apps/web/src/components/ConfirmDial
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ interface Props {
+  open: boolean;
+  title: string;
+  message: string;
+  confirmLabel?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}
+
+/** Confirmation overlay for destructive actions. */
+  ⎿ import { useState } from "react";
+
+interface Props {
+  text: string;
+  /** characters shown before "Read more" */
+  limit?: number;
+}
+
+/** Long article bodies start collapsed. */
+export function ReadM
+  ⎿ import { useState } from "react";
+
+interface Props {
+  tags: string[];
+  /** the selected tag, or null for all */
+  value: string | null;
+  onChange: (tag: string | null) => void;
+}
+
+/** "Filter by ta
+  ⎿ import type { Article } from "@conduit/shared";
+import { useState } from "react";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+
+/** Toggles a favorite. Shows the
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import { useEffect, useState } from "react";
+
+/** Brief confirmation ("Article published") that fades after a few seconds. */
+export function Toast({ message }: { message: string | null }) {
+  const [
+  ⎿ import type { ArticleListQuery, ArticlesResponse } from "@conduit/shared";
+import { useEffect, useState } from "react";
+import { ArticlePreview } from "./ArticlePreview";
+import { Pagination } from ".
+  ⎿ import type { Article } from "@conduit/shared";
+import { Link } from "react-router-dom";
+import { FavoriteButton } from "./FavoriteButton";
+
+export function ArticlePreview({ article }: { article: Arti
+  ⎿ interface Props {
+  total: number;
+  pageSize: number;
+  page: number; // 0-based
+  onChange: (page: number) => void;
+}
+
+/** Numbered page links for offset-based lists. */
+export function Pagination({
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { Article, Comment } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { api } fr
+  ⎿ import { type FormEvent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ApiError, api } from "../api/client";
+import { Toast } from "../compone
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import { useCallback, useEffect, useState } from "react";
+import type { ArticleListQuery } from "@conduit/shared";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+i
+  ⎿ import { type FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
+
+export function LoginPage() {
+  const { login } = useA
+  ⎿ import type { ArticleListQuery, Profile } from "@conduit/shared";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../api/cl
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { ArticleList, PAGE_SIZE } from "../src/
+  ⎿ import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { api } from "../src/api/client";
+import
+  ⎿ import type { Article, ArticlesResponse } from "@conduit/shared";
+import { render } from "@testing-library/react";
+import type { ReactElement } from "react";
+import { MemoryRouter } from "react-router
+  ⎿ import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach, vi } from "vitest";
+
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  localStor
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ bash(command=cat apps/web/package.json && ls apps/web/node_modules/.bin 2)
+  ⎿ import react from "@vitejs/plugin-react";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: { "/api": `http://localhost:${proces
+  ⎿ {
+  "name": "@conduit/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run"
+  },
+  "dependencies": {
+
+⏺ bash(command=ls apps/web/node_modules 2>/dev/null | head -5; ls node_modu)
+  ⎿ @adobe
+@asamuzakjp
+@babel
+@conduit
+@csstools
+
+
+Command exited with code 1
+⏺ bash(command=find apps/web -name "*.css" | grep -v node_modules; cat apps)
+  ⎿ import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { App } from "./App";
+import { AuthProvider } from "./auth/A
+⏺ bash(command=cat apps/web/index.html; cat apps/web/src/App.tsx)
+  ⎿ <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conduit</title>
+  </head>
+  <body>
+    <d
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { User } from "@conduit/shared";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { api, setToken } from "../api/client"
+  ⎿ import type {
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld

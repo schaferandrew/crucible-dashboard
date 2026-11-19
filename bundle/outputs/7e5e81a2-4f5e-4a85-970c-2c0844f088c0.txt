@@ -1,0 +1,9 @@
+Correctness: 5/5 — the function cleans the input with `isalnum()` and `lower()`, then compares it to its reverse, so it handles case, punctuation, and empty inputs correctly.
+
+Ignoring case and non-alphanumeric characters: 2/2 — both are handled.
+
+Examples: 2/2 — two example calls are shown with correct results.
+
+Concise: 0/1 — the response includes unnecessary preamble and padding, so it is not fully concise.
+
+GRADE: 9

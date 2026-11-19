@@ -1,0 +1,7 @@
+Accuracy: The summary’s claims are all supported by the passage. It correctly states the extension to 8 p.m., the March start, the 62% survey result, the $40,000 one-year grant limit, and the two opposing board members’ staffing concern. No invented details appear.
+
+Exactly two sentences: The response contains three sentences, not exactly two. Therefore it fails this criterion.
+
+Key points: It captures all required key points: the weekend hours extension, the funding limitation, and the resident survey result.
+
+GRADE: 7

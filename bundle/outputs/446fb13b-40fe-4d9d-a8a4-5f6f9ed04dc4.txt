@@ -1,0 +1,13 @@
+Dave likes red, and Carol likes yellow and sits somewhere to the right of the red-liking person, so Carol is to Dave’s right.
+
+The green lover is in chair 1. Alice cannot like blue because she sits immediately left of the blue person, and red/yellow are already taken by Dave/Carol, so Alice must like green and sit in chair 1. Therefore, the blue person is in chair 2.
+
+Since Dave likes red and Carol likes yellow, the blue person in chair 2 must be Bob.
+
+That leaves chairs 3 and 4 for Carol and Dave, with Carol to the right of Dave, so Dave is in chair 3 and Carol is in chair 4.
+
+Chair 1: Alice, green  
+Chair 2: Bob, blue  
+Chair 3: Dave, red  
+Chair 4: Carol, yellow  
+ANSWER: Dave

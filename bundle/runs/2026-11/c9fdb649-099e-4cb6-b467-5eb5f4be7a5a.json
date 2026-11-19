@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "c9fdb649-099e-4cb6-b467-5eb5f4be7a5a",
+ "run_path": "lmstudio_laguna-xs-2.1/blank-dashboard-debug/20261119_071635",
+ "legacy_run_id": null,
+ "started_at": "2026-11-19T07:16:36.626926+00:00",
+ "ended_at": "2026-11-19T07:27:30.098738+00:00",
+ "elapsed_s": 652.42,
+ "task": {
+  "id": "blank-dashboard-debug",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "1cd54ceb401f0947",
+  "rubric_hash": "c99e9bf61025cb59",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/laguna-xs-2.1",
+  "base": "laguna-xs-2.1",
+  "publisher": "poolside",
+  "artifact": "poolside/Laguna-XS-2.1-GGUF",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 33280,
+  "variant_key": "laguna-xs-2.1|poolside|gguf|q4_k_m",
+  "display": "laguna-xs-2.1 · Q4_K_M",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "none"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Ironwood",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m1-pro-32gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 32.0,
+  "cpu": "Apple M1 Pro",
+  "offload": null,
+  "label": "Ironwood"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": 2,
+  "tests_failed": 0,
+  "tool_calls": 49,
+  "tokens_in": 730410,
+  "tokens_out": 9782,
+  "model_responses": 51,
+  "ttft_s": 7.219,
+  "ttft_avg_s": 2.095,
+  "response_time_avg_s": 10.881,
+  "output_tokens_per_s": 22.3,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/c9fdb649-099e-4cb6-b467-5eb5f4be7a5a.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "a67d4f6",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:71359c0c9883bcc59c9bd0d0cfe08371460fcda0c29b14764b83cea9cad00170",
+  "submitter": null,
+  "verification": null
+ }
+}

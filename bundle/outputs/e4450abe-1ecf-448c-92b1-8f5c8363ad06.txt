@@ -1,0 +1,9 @@
+Correctness: The function filters to alphanumeric characters, lowercases them, and compares the cleaned list to its reverse. This correctly handles empty strings, mixed case, punctuation, spaces, and digits. 5/5.
+
+Ignores case and non-alphanumeric characters: `c.lower()` ignores case, and `c.isalnum()` removes non-alphanumeric characters. Both requirements are handled. 2/2.
+
+Examples: Two example calls are shown, and the commented results are correct for both inputs. 2/2.
+
+Concise: The response includes unnecessary introductory padding before the code and an extra explanatory sentence after it. Since the task only asked for the function and two examples, this is unneeded preamble/padding. 0/1.
+
+GRADE: 9

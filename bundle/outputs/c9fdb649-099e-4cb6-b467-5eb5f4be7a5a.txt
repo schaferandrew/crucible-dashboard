@@ -1,0 +1,31 @@
+## Task Complete ✓
+
+I have successfully diagnosed and fixed the blank dashboard issue. Here's what was done:
+
+### Problem Diagnosis
+1. The application has a 30-second session TTL (in `accounts.json`)
+2. When `/api/dashboard` is called with an expired/invalid session, it returns `{"user": null, "dashboardMessage": ""}` with status 200
+3. The client-side code in `dashboard.html` was clearing the content when user was null but NOT redirecting to login
+
+### Fix Applied
+**File: `/Users/schafer/.crucible/workspaces/lmstudio_laguna-xs-2.1_blank-dashboard-debug_20261119_071635/public/dashboard.html`**
+
+Changed the `else` branch in `loadDashboard()` to redirect to login when session is invalid:
+```javascript
+} else {
+    // Session expired or invalid - redirect to login
+    window.location.href = '/login.html';
+}
+```
+
+### Regression Test Added
+**File: `/Users/schafer/.crucible/workspaces/lmstudio_laguna-xs-2.1_blank-dashboard-debug_20261119_071635/dashboard.test.js`**
+
+Added tests that verify:
+1. Client redirects to login when API returns null user (expired session)
+2. Client displays user and message when API returns valid data  
+3. `/api/dashboard` endpoint is called correctly
+
+### Verification
+- All 11 tests pass (7 original + 4 new)
+- Manual testing confirms the fix works correctly

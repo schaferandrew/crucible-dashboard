@@ -1,0 +1,3 @@
+The response accurately includes the key details about the hours extension, survey, funding limit, and opposition. However, it contains three sentences rather than the required two, so it fails the sentence-count criterion.
+
+GRADE: 7

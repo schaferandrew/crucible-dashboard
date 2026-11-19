@@ -1,0 +1,3 @@
+I see a critical case! Line `2026-10-23T16:48:48.362Z rid=0031402 user=maria_k GET /api/articles/article-036 200 3ms cache=HIT` - this is one of the users who reported issues!
+
+Let me search for more evidence and also look at what was stored in the cache before being served to another user.</think>

@@ -1,0 +1,50 @@
+I see an issue with the retireTool function. Looking at the original JavaScript code, it sets `retiredReason` to "unknown" if no reason is provided or if reason is empty after trim. But I need to verify this matches what the tests expect.
+
+Let me also check if there's any issue with how we handle the borrower field when returning a tool - in the returnTool function, I'm accessing `tool.borrower!` which assumes it's never null for loaned tools, but TypeScript doesn't know that guarantee.
+
+Actually wait - looking at my code again, I have:
+```typescript
+const borrower = tool.borrower!;
+```
+
+But then in the emit call I use `borrower` directly (which is now a string after the `!` assertion). Let me trace through this more carefully.
+
+Looking at returnTool in tools.ts:
+- When status is "loaned", we know borrower and dueDate are non-null (from the invariant)
+- So `tool.borrower!` should be safe, but TypeScript doesn't know that
+
+Actually, looking at my emit call:
+```typescript
+store.emit({ type: "returned", tool, borrower, lateDays });
+```
+
+The `ReturnedEvent` interface expects `borrower: string`, so I need to pass a string. After the `!` assertion on line 43, `borrower` is of type `string | null` (because TypeScript doesn't narrow it). But since we know status is "loaned", it should be non-null.
+
+Let me check if there's an issue with how I'm handling this. Actually, looking at my code:
+```typescript
+const borrower = tool.borrower!;
+tool.status = "available";
+tool.borrower = null;
+```
+
+Wait, the `!` on `tool.borrower` just removes the nullable from the type for that access, but doesn't change the underlying property. So `borrower` should be typed as `string | null`. But since we're emitting with status still "loaned" (before changing it), this should work.
+
+Actually wait - I'm setting `tool.borrower = null` AFTER getting `const borrower = tool.borrower!`, so the value captured in `borrower` is correct before it's cleared.
+
+But there might be a TypeScript issue here. Let me check:
+
+```typescript
+interface ReturnedEvent {
+  type: "returned";
+  tool: Tool;
+  borrower: string;
+  lateDays: number;
+}
+```
+
+And I'm emitting:
+```typescript
+store.emit({ type: "returned", tool, borrower, lateDays });
+```
+
+Where `borrower` is of type `string | null`. This could be a problem. Let me fix this properly by asserting or using the value correctly:

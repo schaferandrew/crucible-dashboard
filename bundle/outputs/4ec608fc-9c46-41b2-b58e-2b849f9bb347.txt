@@ -1,0 +1,1 @@
+Now let me restructure the tests: move the API route tests to their colocated location, and add component tests for the page (the actual bug) in `app/page.test.tsx`:

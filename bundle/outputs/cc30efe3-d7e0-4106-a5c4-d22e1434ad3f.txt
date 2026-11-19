@@ -1,0 +1,15 @@
+I checked for objective language errors first, then flagged claims that are misleading, imprecise, unclear, or overstated.
+
+ERRORS:
+3: are
+6: its
+12: than
+
+FLAGS:
+1: misleading
+3: imprecise
+4: misleading
+8: misleading
+11: overstated
+14: overstated
+18: overstated

@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "4d382049-06a8-42a0-9453-dc52f46a3bf9",
+ "run_path": "lmstudio_recursivesi_flint/grade-binary-search-answer/20261119_074212",
+ "legacy_run_id": null,
+ "started_at": "2026-11-19T07:42:12.234138+00:00",
+ "ended_at": "2026-11-19T07:42:58.462074+00:00",
+ "elapsed_s": 45.45,
+ "task": {
+  "id": "grade-binary-search-answer",
+  "version": 1,
+  "rubric_version": 1,
+  "content_hash": "e914619e43d38223",
+  "rubric_hash": "8f27c5af40bbe68b",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/recursivesi/flint",
+  "base": "recursivesi/flint",
+  "publisher": "recursivesi",
+  "artifact": "recursivesi/flint",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 100352,
+  "variant_key": "recursivesi/flint|recursivesi|gguf|q4_k_m",
+  "display": "flint · Q4_K_M",
+  "origin": {
+   "maker": "recursivesi",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": "LM Link",
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": 306,
+  "tokens_out": 2698,
+  "model_responses": 1,
+  "ttft_s": 0.914,
+  "ttft_avg_s": 0.914,
+  "response_time_avg_s": 45.442,
+  "output_tokens_per_s": 60.6,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 11073
+ },
+ "output_ref": "outputs/4d382049-06a8-42a0-9453-dc52f46a3bf9.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "a67d4f6",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:388617c607098785b9e8b9eb7a8e8403abf72f3861f97b3a8b474bb02ce36c16",
+  "submitter": null,
+  "verification": null
+ }
+}

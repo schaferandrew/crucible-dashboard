@@ -1,0 +1,8 @@
+The calculation matches my manual verification (interest = 1051.27 - 1000 = 51.27).
+
+Now I need to think about whether there are any issues with floating point precision or edge cases that might cause problems. Let me also consider if I should add a test for the known expected value case mentioned in the problem:
+
+"Tests and docs
+- Write automated tests in tests/ (pytest or unittest) covering ordinary cases, zero interest, monthly compounding, recurring contributions at both frequencies, invalid input and a known expected-value case."
+
+I already have tests that cover these. Let me also add one more test for quarterly compounding to be thorough:</think>Let me add a few more specific tests for edge cases and ensure comprehensive coverage:

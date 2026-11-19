@@ -1,0 +1,1 @@
+Let me start the server and then try to log in as testuser. I'll create a script to handle this:

@@ -1,0 +1,7 @@
+ANSWERS:
+Flight: PL09
+Total: 287
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41
