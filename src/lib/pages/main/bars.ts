@@ -4,16 +4,9 @@
 
 import type { Row } from '$lib/core/scoring';
 
-/** Rows the chart plots: those with an overall score; in-progress last, partial after complete, best first. */
+/** Rows with an overall score, highest score first. Exact ties keep their input order. */
 export function barRows(rows: readonly Row[]): Row[] {
-  return rows
-    .filter((r) => r.overall.score !== null)
-    .sort(
-      (a, b) =>
-        Number(a.inProgress) - Number(b.inProgress) ||
-        Number(a.overall.partial) - Number(b.overall.partial) ||
-        b.overall.score! - a.overall.score!,
-    );
+  return rows.filter((r) => r.overall.score !== null).sort((a, b) => b.overall.score! - a.overall.score!);
 }
 
 /** "qwen3.6-35b-a3b · on": the reasoning level is what tells two rows of a model apart (B-15). */
