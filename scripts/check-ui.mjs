@@ -336,6 +336,11 @@ try {
     assert.ok(detail, 'A maker must link to a model detail page');
     await page.goto(new URL(detail, base).href);
     await settled();
+    assert.equal(
+      await page.getByRole('heading', { name: 'Models', level: 1, exact: true }).count(),
+      0,
+      'A known model URL must open its details',
+    );
     await noOverflow();
     await page.emulateMedia({ colorScheme: 'dark' });
     await noOverflow();
