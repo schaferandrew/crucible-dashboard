@@ -1,0 +1,21 @@
+The morning brief is complete. I created `morning-brief.md` in the workspace with all required elements:
+
+**## Emails** — Highlights from yesterday (Tue, Sep 1):
+- Q3 review completed ahead of schedule (Alex) — results to discuss in today's planning meeting
+- Q3 expense report due today (Wed) by 5:00 PM (Finance) — late reports get paid with next month's payroll
+- Client's question on the revised proposal timeline (needs reply before Friday's team briefing (Client)
+- Jamie's notes from yesterday's 1-on-1 (career goals, next quarter priorities, team building)
+
+**## Calendar** — Today's events (Wed, Sep 2, America/Chicago):
+- 9:30–10:30 AM: Planning (Room B) — discuss Q3 review results
+- 10:00–11:00 AM: Vendor demo (Zoom)
+- 1:00–2:00 PM: Budget meeting (Conference Room A)
+
+**## News** — Top stories for Saint Paul, MN:
+- Twin Cities Tech Conference Returns (high) — registration opens this Friday
+- Maplewood Park Renovation Complete (medium) — grand reopening Saturday
+- State Fair Attendance Drops Slightly (low)
+
+**## Spanish practice** — Single Spanish paragraph tying the day's content (Q3 review, planning meeting, finances) to practice using the subjunctive: *"Esta mañana completamos la revisión del tercer trimestre y ahora debemos preparar los resultados para la reunión de planificación. Para practicar nuestro español, hablemos sobre el proyecto, las finanzas y el equipo usando el subjuntivo, así podremos expresar con fluidez las ideas importantes del día."*
+
+The document contains exactly the four required `##` sections in the specified order, with the final section ending the brief and nothing after it.

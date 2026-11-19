@@ -1,0 +1,27 @@
+⏺ bash(command=ls -la /Users/schafer/.crucible/workspaces/lmstudio_recursiv)
+  ⎿ total 16
+drwxr-xr-x@  5 schafer  staff  160 Nov 19 17:13 .
+drwxr-xr-x@ 14 schafer  staff  448 Nov 19 17:13 ..
+drwxr-xr-x@ 14 schafer  staff  448 Nov 19 17:13 .git
+-rw-r--r--@  1 schafer  staff   47 No
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=ls -la /Users/schafer/ 2>/dev/null; ls -la /Users/schafer/.p)
+  ⎿ node_modules/
+.next/
+dist/
+__pycache__/
+.venv/
+f291c78 Seeded workspace
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	prompt.txt
+
+nothing added to c
+  ⎿ total 704
+drwxr-x---+  65 schafer  staff   2080 Nov 19 14:29 .
+drwxr-xr-x    5 root     admin    160 Nov  4 15:55 ..
+-r--------    1 schafer  staff      7 Jul 27 17:09 .CFUserTextEncoding
+-rw-r--r--@ 
+⏺ bash(command=cat "/Users/schafer/.crucible/workspaces/lmstudio_recursives)
+⏺ bash(command=find /Users/schafer -maxdepth 2 -iname "*weather*" -o -maxde)
