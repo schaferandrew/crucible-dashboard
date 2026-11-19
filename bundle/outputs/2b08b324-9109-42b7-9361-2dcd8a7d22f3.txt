@@ -1,0 +1,12 @@
+Based on the freebusy information I've retrieved, I can see that all team members are currently available (no busy times were reported). This makes it easier to find suitable meeting times.
+
+Since all team members are free, I'll recommend three time slots that would work well for a team meeting in the next two weeks. Let me look at some typical working hours and find suitable slots:
+
+1. First option: A mid-week morning in the Chicago time zone (America/Chicago), which is a common time for team meetings as it works well across different time zones.
+2. Second option: A mid-week afternoon in the Chicago time zone, which is also a good general meeting time.
+3. Third option: A Thursday morning in the Chicago time zone, which provides a good alternative that avoids Friday afternoon meetings.
+
+OPTIONS:
+2026-11-23 10:00 America/Chicago
+2026-11-25 14:00 America/Chicago
+2026-11-26 10:00 America/Chicago
