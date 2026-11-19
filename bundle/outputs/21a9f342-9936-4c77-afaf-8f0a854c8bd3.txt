@@ -1,0 +1,1 @@
+I see - the CSV.new returns an array of arrays. Let me simplify this and use a more straightforward approach:

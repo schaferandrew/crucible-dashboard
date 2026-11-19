@@ -1,0 +1,16 @@
+## Login Report
+
+**What happened:**
+
+1. **Started the login service** (`npm start` on `http://localhost:3456`).
+2. **First login attempt** as the designated test user (`testuser` / `correctpassword`) via `POST /api/login` → **failed with HTTP 401 / `invalid_credentials`**. No session cookie was issued.
+3. **Diagnosed the failure:** Cross-checked the stored scrypt hash for `testuser` against the documented password using the app's own hashing scheme — the stored hash did **not** match `correctpassword`. The failure was therefore a **Wrong Password` (the credential was incorrect), not a deactivated account or stale session (there was no session yet, and the `deactivated` account's hash *did* verify correctly).
+4. **Ran the skill's recovery procedure:** Called `POST /api/reset-password-request` for `testuser`, received reset URL (`reset_87cc297c8fb52597`), then completed `POST /api/reset-password` with a new password, and logged in with the new credentials.
+5. **Second login attempt** → **HTTP 200**, session cookie issued (`sess_b7699cf4efe67c0f`).
+6. **Confirmed the authenticated dashboard:** `GET /api/dashboard` returned `{"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}` and `/dashboard.html` returned **200**.
+
+**Final state:** The test user is now signed in and landed on the authenticated dashboard (`/dashboard.html` → 200, dashboard data OK).
+
+**Audit trail:** `login_failed` (invalid_credentials) → `reset_requested` → `password_reset` → `login_success` → `login_success` → `dashboard_ok`.
+
+FAILURE: Wrong Password

@@ -1,0 +1,5 @@
+The response fails the main criteria. It states the wrong complexity (O(n log n) instead of O(log n)), so it earns 0/4 for correct complexity. It does not explain that each step halves the remaining search range, so it earns 0/3 for explanation. It incorrectly says binary search works on any array sorted or not, rather than stating the input must be sorted, so it earns 0/2 for precondition. For clarity, the response is somewhat structured and has a summary, so it earns 1/1.
+
+Total earned: 1/10.
+
+GRADE: 1

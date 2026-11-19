@@ -1,0 +1,454 @@
+⏺ bash(command=find /Users/schafer/.crucible/workspaces/lmstudio_recursives)
+  ⎿ /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_flint_cache-leak-incident_20261119_085617
+/Users/schafer/.crucible/workspaces/lmstudio_recursivesi_flint_cache-leak-incident_20261119_085617/CH
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_recursivesi_fli)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_recursivesi_fli)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express RE
+  ⎿ # Support notes: favorites / follow state wrong (escalated)
+
+Collected by the support team. Times are UTC.
+
+- **Ticket #4812** (first report), from user `maria_k`: "The heart icon is filled on posts I
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_recursivesi_fli)
+  ⎿ total 9064
+drwxr-xr-x@ 5 schafer  staff      160 Oct 29 15:32 .
+drwxr-xr-x@ 4 schafer  staff      128 Oct 26 10:29 ..
+-rw-r--r--@ 1 schafer  staff  3899821 Oct 26 10:29 access.log
+-rw-r--r--@ 1 schafe
+  ⎿ # Changelog
+
+## 1.8.0 (2026-10-23)
+
+- perf: request pipeline changes for production (PERF-212, PERF-219)
+- chore: bump express, supertest and vitest (DEP-88)
+- docs: README run instructions (DOC-41)
+-
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_recursivesi_fli)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-22T09:03:00.000Z deploy api v1.7.2 rollback=false status=succeeded
+2026-10-23T16:36:10.000Z deploy api v1.8.0 started by ci (commit 7f3e91c, 6 changes since v1.7.2)
+2026-10-23T16:36:10.000Z re
+  ⎿ 2026-10-22T00:00:00.090Z rid=0000001 user=user1401 GET /api/profiles/user2020 200 40ms
+2026-10-22T00:00:00.190Z rid=0000002 user=- GET /api/articles?limit=10&offset=10 200 271ms
+2026-10-22T00:00:35.82
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ apps/api/src/app.ts
+apps/api/src/auth/tokens.ts
+apps/api/src/db.ts
+apps/api/src/errors.ts
+apps/api/src/middleware/auth.ts
+apps/api/src/middleware/responseCache.ts
+apps/api/src/repositories/articles.ts
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import type { NextFunction, Request, Response } from "express";
+
+interface Entry {
+  status: number;
+  body: unknown;
+  storedAt: number;
+}
+
+export interface ResponseCacheOptions {
+  ttlMs: number;
+  
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import type { LoginInput, Profile, RegisterInput, UpdateUserInput, User } from "@conduit/shared";
+import type { Db } from "../db";
+import { checkPassword, hashPassword } from "../auth/tokens";
+import 
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import { type Db, type UserRow, nextId } from "../db";
+
+export function findUserById(db: Db, id: number): UserRow | undefined {
+  return db.users.get(id);
+}
+
+export function findUserByEmail(db: Db, em
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../er
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import request from "supertest";
+import { describe, expect, it } from "vitest";
+import { createApp } from "../src/app";
+import { createDb } from "../src/db";
+
+describe("response cache", () => {
+  it("
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import type {
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import type { Article, Comment } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { api } fr
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 88998d9 Seeded workspace
+?? package-lock.json
+?? prompt.txt
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the of
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 153:2026-10-23T16:42:10.634Z DEBUG cache store key=/api/articles?tag=react
+154:2026-10-23T16:42:16.807Z DEBUG cache store key=/api/articles/article-089
+155:2026-10-23T16:42:17.086Z DEBUG cache store k
+  ⎿ 6:2026-10-22T03:42:16.310Z WARN slow query articles.list 1610ms
+13:2026-10-22T05:28:21.288Z WARN slow query articles.list 1907ms
+17:2026-10-22T06:24:23.814Z WARN slow query articles.list 1259ms
+18:202
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 8118 cache store key
+1954 cache hit key
+  54 slow query articles.list
+   9 gc pause 9ms
+   8 gc pause 10ms
+   7 gc pause 37ms
+   7 gc pause 35ms
+   7 gc pause 20ms
+   6 gc pause 3ms
+   6 gc pause 31ms
+  ⎿ 153:2026-10-23T16:42:10.634Z DEBUG cache store key=/api/articles?tag=react
+154:2026-10-23T16:42:16.807Z DEBUG cache store key=/api/articles/article-089
+155:2026-10-23T16:42:17.086Z DEBUG cache store k
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 8118 store
+1954 hit
+ 164 pause
+  54 query
+   4 webhook:
+  ⎿ 1749:2026-10-23T18:06:01.000Z INFO support webhook: ticket #4812 opened by maria_k (category=data-incorrect)
+1993:2026-10-23T18:19:35.000Z INFO support webhook: ticket #4815 opened by devon (category=
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ =====
+10294
+1749:2026-10-23T18:06:01.000Z INFO support webhook: ticket #4812 opened by maria_k (category=data-incorrect)
+1993:2026-10-23T18:19:35.000Z INFO support webhook: ticket #4815 opened by devo
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 5859 /api/tags
+1913 /api/articles/feed
+1748 /api/articles?limit=10&offset=10
+1746 /api/articles
+1690 /api/articles?limit=10
+1559 /api/user
+ 243 /api/articles?tag=life
+ 239 /api/articles?tag=design
+ 23
+  ⎿ 20439 2026-10-22
+20757 2026-10-23
+2485 2026-10-24
+====
+   27410
+   12432
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 12429 
+====
+1959 200
+====
+2348 200
+   1 204
+   1 404
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2350 cache=
+1959 cache=HIT
+8120 cache=MISS
+===METHOD-COUNTS===
+1572 DELETE
+38975 GET
+3133 POST
+   1 PUT
+===PATHS-WITH-HIT===
+1959 200
+===PATHS-WITH-MISS===
+8120 200
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 31252 
+2350 cache=-
+1959 cache=HIT
+8120 cache=MISS
+===METHOD===
+1572 DELETE
+38975 GET
+3133 POST
+   1 PUT
+===PATHS-HIT===
+1959 
+===PATHS-MISS===
+8120 
+===CACHE-OTHER===
+2026-10-22T00:00:00.090Z rid=000
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 31252 
+===
+1149 /api/tags
+ 235 /api/articles
+ 198 /api/articles?limit=10&offset=10
+ 195 /api/articles?limit=10
+   9 /api/articles?tag=react
+   9 /api/articles?tag=design
+   7 /api/articles?tag=rust
+  
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ ---- total lines:
+   43681
+---- uniq cache values with counts:
+31252 
+2350 cache=-
+1959 cache=HIT
+8120 cache=MISS
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ cat: illegal option -- A
+usage: cat [-belnstuv] [file ...]
+====
+1: [2026-10-22T00:00:00.090Z]
+2: [rid=0000001]
+3: [user=user1401]
+4: [GET]
+5: [/api/profiles/user2020]
+6: [200]
+7: [40ms]
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 0000000    2   0   2   6   -   1   0   -   2   2   T   0   0   :   0   0
+0000020    :   0   0   .   0   9   0   Z       r   i   d   =   0   0   0
+0000040    0   0   0   1       u   s   e   r   =   u  
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 12429
+43681
+====
+2026-10-23T16:42:10.634Z rid=0031254 user=- GET /api/articles?tag=react 200 404ms cache=MISS
+2026-10-23T16:42:16.807Z rid=0031255 user=priya.writes GET /api/articles/article-089 200 4
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 4215 GET /api/tags
+1369 GET /api/articles/feed
+1263 GET /api/articles?limit=10&offset=10
+1218 GET /api/articles?limit=10
+1214 GET /api/articles
+1095 GET /api/user
+ 177 GET /api/articles?tag=life
+ 173 
+  ⎿ 6351 2026-10-23
+1769 2026-10-24
+====
+1717 2026-10-23
+ 242 2026-10-24
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ lines WITHOUT cache, by date:
+20439 2026-10-22
+10813 2026-10-23
+lines WITH cache=-, by date+method:
+ 434 DELETE
+1009 GET
+ 906 POST
+   1 PUT
+1876 2026-10-23
+ 474 2026-10-24
+GET lines without cache, by 
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 761 user=- /api/tags 200
+  63 user=- /api/articles 200
+  56 user=- /api/articles?limit=10&offset=10 200
+  56 user=- /api/articles?limit=10 200
+  11 user=maria_k /api/tags 200
+   6 user=tomasz /api/tag
+  ⎿ 31257:2026-10-23T16:42:17.597Z rid=0031257 user=- GET /api/tags 200 4ms cache=HIT
+31270:2026-10-23T16:42:58.156Z rid=0031270 user=- GET /api/tags 200 4ms cache=HIT
+31271:2026-10-23T16:42:58.648Z rid=0
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-23T16:44:00.076Z user=user2294 /api/tags
+2026-10-23T16:44:15.179Z user=user1287 /api/articles?limit=10
+2026-10-23T16:44:29.956Z user=user1853 /api/tags
+2026-10-23T16:45:28.242Z user=user0253 /
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-23T16:48:48.362Z user=maria_k /api/articles/article-036
+2026-10-23T16:56:56.768Z user=user0245 /api/profiles/user0859
+2026-10-23T17:03:58.358Z user=user0105 /api/profiles/user0151
+2026-10-23T1
+  ⎿ 558 /api/articles<slug>
+ 388 /api/tags
+  20 /api/profiles/<user>
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 1959 /tmp/hits.txt
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 172 /api/articles
+   3 /api/articles/fixing-a-typo-in-production
+   2 /api/articles/draft-i-meant-to-delete
+   2 /api/articles/article-092
+   2 /api/articles/article-037
+   1 /api/articles/article-790
+  ⎿ 558 articles
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-23T18:06:01.000Z INFO support webhook: ticket #4812 opened by maria_k (category=data-incorrect)
+2026-10-23T18:19:35.000Z INFO support webhook: ticket #4815 opened by devon (category=data-incor
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ ---DEBUG non-cache:
+---counts:
+168
+10072
+54
+---info sample:
+2026-10-23T18:06:01.000Z INFO support webhook: ticket #4812 opened by maria_k (category=data-incorrect)
+2026-10-23T18:19:35.000Z INFO suppor
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 140:2026-10-23T15:34:46.165Z INFO gc pause 29ms heap=298MB
+141:2026-10-23T15:41:21.089Z INFO gc pause 20ms heap=311MB
+142:2026-10-23T15:48:16.203Z WARN slow query articles.list 1125ms
+143:2026-10-23T1
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 10562:2026-10-22T16:42:10.773Z rid=0010562 user=- GET /api/tags 200 34ms
+10563:2026-10-22T16:42:11.454Z rid=0010563 user=- GET /api/articles/article-004 200 274ms
+10564:2026-10-22T16:42:13.778Z rid=00
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-22T00:15:35.606Z rid=0000109 user=user0850 POST /api/articles/article-089/favorite 200 43ms
+2026-10-22T00:38:22.674Z rid=0000274 user=user0580 GET /api/articles/article-089 200 427ms
+2026-10-2
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ ====
+2026-10-23T16:56:56.768Z rid=0031573 user=user0245 GET /api/profiles/user0859 200 3ms cache=HIT
+2026-10-23T17:02:15.893Z rid=0031701 user=- GET /api/profiles/user2230 200 1ms cache=HIT
+2026-10-23
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-23T00:00:17.399Z user=user0150 DELETE /api/articles/article-089/favorite 200 53ms 
+2026-10-23T01:45:13.715Z user=user0977 GET /api/articles/article-089 200 261ms 
+2026-10-23T02:12:10.672Z user
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 68
+/api/tags
+/api/tags
+/api/tags
+/api/articles?limit=10
+/api/tags
+/api/articles?limit=10&offset=30
+/api/articles?limit=10
+/api/tags
+/api/tags
+/api/tags
+/api/articles
+/api/articles
+/api/tags
+/api/tags
+
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 31255:2026-10-23T16:42:16.807Z rid=0031255 user=priya.writes GET /api/articles/article-089 200 427ms cache=MISS
+31540:2026-10-23T16:55:05.754Z rid=0031540 user=user0905 POST /api/articles/article-089/
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 2026-10-23T16:42:17.597Z rid=0031257 user=- GET /api/tags 200 4ms cache=HIT
+2026-10-23T16:42:58.156Z rid=0031270 user=- GET /api/tags 200 4ms cache=HIT
+2026-10-23T16:42:58.648Z rid=0031271 user=- GET 
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ signed-in users with cache=HIT on article-detail/profiles endpoints, all time:
+      75
+user=devon user=maria_k user=priya.writes user=tomasz user=user0013 user=user0037 user=user0074 user=user0100 us
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ first/last lines:
+2026-10-22T00:00:00.090Z rid=0000001 user=user1401 GET /api/profiles/user2020 200 40ms
+2026-10-24T05:59:36.915Z rid=0043679 user=- GET /api/articles/article-020 200 304ms cache=MISS
+
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 71 /tmp/affected_candidates.txt
+user=devon user=maria_k user=priya.writes user=tomasz user=user0013 user=user0037 user=user0074 user=user0100 user=user0105 user=user0127 user=user0137 user=user0168 us
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ NOMATCH 30825 2026-10-23T16:24:11.495Z rid=0030825 user=user1795 GET /api/articles?tag=react 200 321ms
+NOMATCH 30826 2026-10-23T16:24:12.912Z rid=0030826 user=user1293 GET /api/articles/article-618 20
+⏺ bash(command=cat > /tmp/analyze2.py <<'EOF'
+import re, datetime
+
+pat = re)
+  ⎿ parsed 43681 bad 0
+cross-user HITs (signed-in<->signed-in, within 60s): 575
+2026-10-23T16:44:00.076000+00:00 served_by= user2294 stored_by= user0868 /api/tags age_s= 8.668
+2026-10-23T16:44:15.179000+0
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ apps/api/src/middleware:
+auth.ts
+responseCache.ts
+
+apps/api/src/repositories:
+articles.ts
+comments.ts
+users.ts
+
+apps/api/src/routes:
+articles.ts
+pagination.ts
+profiles.ts
+tags.ts
+users.ts
+
+apps/api/sr
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ ---
+1959
+---
+34393:2026-10-23T18:57:19.803Z rid=0034390 user=user1389 GET /api/articles/fixing-a-typo-in-production 200 2ms cache=HIT
+34396:2026-10-23T18:57:26.803Z rid=0034392 user=user0559 GET /api/
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../er
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import type { NextFunction, Request, Response } from "express";
+
+interface Entry {
+  status: number;
+  body: unknown;
+  storedAt: number;
+}
+
+export interface ResponseCacheOptions {
+  ttlMs: number;
+  
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import request from "supertest";
+import { describe, expect, it } from "vitest";
+import { createApp } from "../src/app";
+import { createDb } from "../src/db";
+
+describe("response cache", () => {
+  it("
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import {
+  type Article,
+  type ArticlesResponse,
+  type CreateArticleInput,
+  type UpdateArticleInput,
+  slugify,
+} from "@conduit/shared";
+import type { ArticleRow, Db } from "../db";
+import { forbi
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ import type { NextFunction, Request, Response } from "express";
+import { verifyToken } from "../auth/tokens";
+import { unauthorized } from "../errors";
+
+declare global {
+  // eslint-disable-next-line 
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_recursivesi_)
+  ⎿ 31254:2026-10-23T16:42:10.634Z rid=0031254 user=- GET /api/articles?tag=react 200 404ms cache=MISS
+31255:2026-10-23T16:42:16.807Z rid=0031255 user=priya.writes GET /api/articles/article-089 200 427ms 

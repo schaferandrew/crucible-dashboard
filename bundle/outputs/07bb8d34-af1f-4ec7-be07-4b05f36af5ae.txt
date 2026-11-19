@@ -1,0 +1,38 @@
+Now I need to understand the full picture. Let me look at what the invites repository has and also check for a function to find pending invites by email:
+
+Looking at the code:
+1. `findInvite(db, token)` - finds invite by token
+2. There's no `findPendingInviteByEmail` function
+
+I need to add this function to handle the case where someone registers with an email that has a pending invite.
+
+Let me also understand what happens when a user "claims" a pending invite:
+- They already have an account created with username like `invited-xxxx`, passwordHash="" (no password)
+- We need to update their password and accept terms
+
+Now let me implement the fixes:
+
+**Fix 1**: Add a function to find pending invites by email in repositories/users.ts
+
+**Fix 2**: Modify register() in services/users.ts to check for pending invite and claim it
+
+**Fix 3**: Fix RequireWriter.tsx to allow invited users with accepted terms to access editor
+
+Let me also check if there's an issue with the WelcomePage redirect logic. Looking at the code again:
+
+```tsx
+// WelcomePage.tsx
+useEffect(() => {
+  if (user?.accountState === "invited") navigate("/editor", { replace: true });
+}, [user, navigate]);
+```
+
+This should work for invited users... but wait, this effect runs AFTER the redirect from RequireWriter. Let me trace through again:
+
+1. User accepts invite → API returns user with `termsAcceptedAt` set, navigates to `/editor`
+2. RequireWriter sees `!onboardingComplete` (which is false) → redirects to `/welcome`
+3. WelcomePage renders, checks if `accountState === "invited"` → should navigate to `/editor`
+
+Wait, the issue might be that `user?.termsAcceptedAt` isn't being set correctly on the frontend after acceptInvite? Let me check...
+
+Actually wait, let me re-read the acceptInvite code:</think>Let me trace through the flow more carefully. I need to understand what happens when a user accepts an invite:

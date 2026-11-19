@@ -1,0 +1,6 @@
+Good progress! The main issue is with the search page - `useSearchParams` needs to be wrapped in a suspense boundary for server-side rendering. Since this is a client-side component that fetches data dynamically, I should either:
+
+1. Make it fully client-side and skip SSG
+2. Or wrap it in Suspense
+
+Let me look at how to handle this properly. The search page was using `getServerSideProps` equivalent (client-side with hooks), so it shouldn't be statically generated at all. Let me update the approach:
