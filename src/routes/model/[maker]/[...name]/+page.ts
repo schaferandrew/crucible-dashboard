@@ -7,7 +7,8 @@ export const entries: EntryGenerator = modelEntries;
 
 export const load: PageLoad = async ({ fetch, parent, params }) => {
   const { meta } = await parent();
-  const model = `${params.maker}/${params.name}`;
+  // The rest parameter includes the trailing slash enforced by the dashboard layout.
+  const model = `${params.maker}/${params.name.replace(/\/+$/, '')}`;
   const index = await loadIndex(fetch, meta.current_suite);
   const known = (i: typeof index) => !!i.entities.models[model] || !!i.other[model];
   let found = known(index);
