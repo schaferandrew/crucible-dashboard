@@ -1,0 +1,93 @@
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ This is Conduit, a RealWorld (realworld.how) monorepo: an Express API in apps/api, a React app in apps/web, and shared types and validation in packages/shared. Read README.md first.
+
+Product brief: ed
+⏺ bash(command=ls -R)
+  ⎿ ./node_modules/setprototypeof:
+index.d.ts
+index.js
+LICENSE
+package.json
+README.md
+test
+
+./node_modules/setprototypeof/test:
+index.js
+
+./node_modules/side-channel:
+CHANGELOG.md
+index.d.ts
+index.js
+LICE
+⏺ bash(command=find . -type d \( -name "api" -o -name "web" -o -name "share)
+  ⎿ ./node_modules/tsx/dist/esm/api
+./node_modules/tsx/dist/cjs/api
+./node_modules/rollup/dist/shared
+./node_modules/rollup/dist/es/shared
+./node_modules/pathe/dist/shared
+./packages/shared
+./apps/web
+./a
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express RE
+⏺ bash(command=find ./apps/api -type f \( -name "*.ts" -o -name "*.js" \) |)
+  ⎿ ./apps/api/src/app.ts
+./apps/api/src/auth/tokens.ts
+./apps/api/src/db.ts
+./apps/api/src/errors.ts
+./apps/api/src/middleware/auth.ts
+./apps/api/src/repositories/articles.ts
+./apps/api/src/repositories/
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../er
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ import {
+  type Article,
+  type ArticlesResponse,
+  type CreateArticleInput,
+  type UpdateArticleInput,
+  slugify,
+} from "@conduit/shared";
+import type { ArticleRow, Db } from "../db";
+import { forbi
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's u
+⏺ bash(command=grep -rn "CreateArticleInput" packages/shared/)
+  ⎿ packages/shared/src/validation.ts:62:export type CreateArticleInput = z.infer<typeof createArticleSchema>["article"];
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ import { z } from "zod";
+
+// Request bodies, as the RealWorld spec wraps them ({ user: {...} }, { article: {...} }, ...).
+
+export const registerSchema = z.object({
+  user: z.object({
+    username: z.s
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron)
+  ⎿ import type { Article, Comment, Profile, User } from "@conduit/shared";
+import type { ArticleRow, CommentRow, Db, UserRow } from "../db";
+import { favoritesCount, isFavorited, tagsForArticle } from ".
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_nvidia_nemotron, limit=50)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin

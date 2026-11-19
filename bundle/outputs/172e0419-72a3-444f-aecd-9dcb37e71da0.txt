@@ -1,0 +1,8 @@
+<|channel|>commentary…We need to ask user preferences.I’ll need a quick clarification before I start processing the receipts:
+
+| Question | Options |
+|----------|---------|
+| **How should each receipt be recorded in `giving-log.csv`?** | • Date, Amount, Donor, Description (the columns used in the existing log) |
+| **Do you want me to parse the PDFs automatically or review each extracted entry before adding it?** | • Automatic – add directly <br>• Manual review – show extracted data for confirmation |
+
+Please let me know which choices you’d prefer.

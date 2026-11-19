@@ -1,0 +1,47 @@
+**Short‑answer**
+
+The task was to port the 2014 PHP booking desk to plain Ruby.  
+I created a single executable script `app.rb` that parses the request string, dispatches it to a Ruby router, and writes the response body.  
+All logic lives in `lib/`:
+
+| File | Purpose |
+|------|---------|
+| **lib/data_store.rb** | Reads `data/rooms.json` and the two CSV files, mimicking PHP’s `DataStore`. |
+| **lib/dates.rb** | Implements the same date parsing, ISO formatting and human‑readable labels. |
+| **lib/pricing.rb** | Calculates the quote – room rate, cleaning fee, coupon discount, tax and per‑guest total. |
+| **lib/views.rb** | Generates the rooms HTML page, exactly as PHP does (including formatting numbers and escaping `&amp;`). |
+| **lib/router.rb** | Maps request paths to actions (`/rooms`, `/rooms.html`, `/room?id=…`, `/quote?…`, `/bookings`, `/report`).  It returns `[status, body]` just like the PHP router. |
+| **lib/response.rb** | Helper to build JSON responses and error payloads. |
+
+The top‑level `app.rb`:
+
+```ruby
+#!/usr/bin/env ruby
+require_relative 'lib/router'
+require_relative 'lib/data_store'
+
+def handle(request)
+  router = Router.new(DataStore.new(File.expand_path('data', __dir__)))
+  router.dispatch(request)
+end
+
+if __FILE__ == $PROGRAM_NAME
+  status, body = handle(ARGV[0] || '/')
+  puts body
+  exit(status.between?(200,299) ? 0 : 1)
+end
+```
+
+Running `ruby app.rb '/quote?room=101&checkin=2024-03-19&nights=2&guests=1'` now prints the same JSON and exit code as `php app.php ...`.
+
+The test suite is mirrored in `test/run_tests.rb`, which loads the fixture cases from `tests/fixtures/cases.json` and compares status & body using deep equality (JSON strings are parsed back to Ruby objects before comparison).  All original cases pass, and I added a few edge‑case tests (missing parameters, invalid dates) to guard against regressions.
+
+**Reproduced PHP quirks**
+
+* `empty()` vs. `isset()` – e.g., guests default to 1 if the query string omits it.
+* Date parsing accepts only strict `YYYY‑MM‑DD` format, otherwise errors with “Invalid check‑in date”.
+* Coupon codes are case‑insensitive and trimmed.
+* JSON numbers keep their original precision (e.g., `89.0` vs. `124.5`).
+* HTML page uses the same table formatting, including `$1,150.00` for large numbers and `&amp;` escaping.
+
+With this Ruby rewrite the front‑desk can continue to use the same command line interface, and all existing tests – plus a few new ones – confirm that behavior is preserved.

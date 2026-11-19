@@ -1,0 +1,28 @@
+I went through the **Conduit** monorepo and added cursor‑based pagination to all article and comment endpoints, updated the shared types, and rewrote the web UI to use a “Load more” button.  
+I also added extensive tests that verify:
+
+* No articles or comments are skipped or duplicated even when new items are created, deleted, or favorited between page requests.
+* The cursor is opaque and returns a 422 for malformed or tampered values, or when used with the wrong query/endpoint.
+* Using both `cursor` and `offset` returns a 422.
+* Offset pagination still works unchanged when no cursor is supplied (the existing `realworld.contract.test.ts` remains green).
+* The UI behaves correctly: the “Load more” button appears until `nextCursor` is null, and previously loaded items stay on screen.
+
+### Key changes
+
+| Area | What changed |
+|------|--------------|
+| **API** | `GET /api/articles`, `/feed` and `/articles/:slug/comments` now accept `cursor` & `limit`. Responses include `nextCursor`, and the original `articlesCount` remains. |
+| **Cursor validation** | Added middleware that validates cursor format, ensures it matches the original query parameters, and checks for 422 errors. |
+| **Cursor generation** | Uses a signed base64 token containing the last seen article/comment ID and timestamp, making it opaque and tamper‑proof. |
+| **Web UI** | Replaced numbered pagination with a “Load more” button on the home, tag, author, and profile tabs. Comments use the same pattern. |
+| **Shared types** | Updated `ArticleListResponse` and `CommentListResponse` to include `nextCursor`. |
+| **Tests** | • Added integration tests for cursor pagination edge cases (concurrent writes, deletes).<br>• Updated existing contract tests to account for the new fields.<br>• Added UI snapshot tests for the “Load more” button. |
+
+### Things to flag in a code review
+
+1. **Cursor encoding** – I used HMAC‑signed JSON for safety; the secret lives in an env variable. Confirm that it’s not exposed in logs or error messages.
+2. **Performance** – Cursor queries use `WHERE id < :lastId` (newest first). For very large tables this can be slow; consider indexing `id DESC`.
+3. **Backward compatibility** – All old endpoints still honor `offset`/`limit`. Verify that third‑party clients are not broken.
+4. **Error handling** – The 422 error envelope is consistent with the existing validation system; make sure no new fields leak sensitive data.
+
+Let me know if you’d like any part of the implementation inspected or if further tweaks are needed!

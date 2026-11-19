@@ -1,0 +1,38 @@
+**Summary of changes**
+
+| Area | What was done |
+|------|----------------|
+| **Shared types** (`packages/shared/src/types.ts`) | • Added `nextCursor?: string` to `ArticlesResponse` and `CommentsResponse`.<br>• Added optional `cursor?: string` field to the request query type `ArticleListQuery`. |
+| **Cursor utilities** (`apps/api/src/utils/cursor.ts`) | • Implemented `buildFilterFingerprint`, `encodeCursor`, `decodeCursor`, and a URL‑safe helper. The fingerprint is built from the filter values (`tag|authorId|favoritedById`) so that a cursor generated for one filter set cannot be used with a different filter set. |
+| **Article repository** (`apps/api/src/repositories/articles.ts`) | • Re‑implemented `listArticles` to accept an optional `cursor` (in addition to `offset`).<br>• The function now returns `{ rows, count, nextCursor? }`. <br>• Cursor handling decodes the token, validates the fingerprint against the current filter, and determines the correct start index so that pages never skip or duplicate items, even when articles are added/removed between requests. |
+| **Article router** (`apps/api/src/routes/articles.ts`) | • Parses `limit`, `offset`, and `cursor` from the query string.<br>• Validates that `offset` and `cursor` are not used together and that a cursor is accompanied by a non‑zero `limit`.<br>• Calls the new `listArticles` implementation directly, returning `{ articles, articlesCount, nextCursor }`. |
+| **Feed endpoint** (`apps/api/src/routes/articles.ts`) | • Parses pagination parameters exactly as the normal list endpoint.<br>• Builds a filter consisting of the viewer’s followed author IDs and passes it to `listArticles`.<br>• Returns the same paginated shape with `nextCursor`. |
+| **Comments endpoint** (`apps/api/src/routes/articles.ts`) | • Supports optional `limit` and `cursor` query parameters.<br>• When a cursor is supplied, it decodes the token, determines the correct start position in the article’s comment list, and slices the requested page size.<br>• Computes `nextCursor` from the last item of the returned slice (if more comments remain).<br>• Keeps existing behaviour (no limit/cursor → all comments) for backward compatibility. |
+| **Tests** | • Added a new test file `apps/api/test/cursor.pagination.test.ts` that checks:<br> - Normal offset pagination still works when no cursor is sent.<br> - `nextCursor` is present on subsequent pages.<br> - Supplying both `offset` and `cursor` yields a 422 response.<br> - Using an invalid/malformed cursor yields a 422 response.<br> - Using a cursor that was created with different filter parameters yields a 422 response (enforcing the “cursor is only valid for the query that produced it” rule).<br>• Added unit tests for the new `listArticlesCursor` logic and for the comment pagination endpoint. |
+| **Backward compatibility** | • All existing endpoints continue to work unchanged when called without a `cursor`. <br>• Existing offset‑based tests (`realworld.contract.test.ts`) remain green because the default behaviour (no cursor) is untouched. |
+
+---
+
+### Code review flags
+
+1. **In‑memory store concurrency** – The current implementation uses plain JavaScript objects (`Map`s and arrays) which are not safe for true concurrent writes. In a production environment a real database with ACID guarantees would be required.
+
+2. **Fingerprint collisions** – The fingerprint is a simple concatenation of filter values (`tag|authorId|favoritedById`). If filter values themselves contain the `|` character, the fingerprint could become ambiguous. A more robust approach (e.g., JSON‑encoding the filter object) would eliminate this risk.
+
+3. **Test coverage** – While basic validation and pagination tests are added, comprehensive tests that simulate rapid concurrent writes (create/delete articles while paging) are still missing. Adding integration tests that spawn multiple request handlers and verify “no‑skip/no‑duplicate” behavior under race conditions would strengthen confidence.
+
+4. **Error handling consistency** – All 422 responses now follow the standard `{ errors: { <field>: [...] } }` envelope defined by the RealWorld spec. Ensure that any future error messages adhere to this shape.
+
+---
+
+**What was changed**
+
+- Shared type definitions (`types.ts`) – added `nextCursor` and `cursor` fields.
+- New utility module (`utils/cursor.ts`) – cursor encoding/decoding with fingerprint validation.
+- Repository method `listArticles` – now supports optional cursor, returns `nextCursor`.
+- Article list route (`/api/articles`) – parses pagination params, validates them, uses the new repository method, and returns `nextCursor`.
+- Feed route (`/api/articles/feed`) – same pagination logic applied to the follower‑based filter.
+- Comments route (`/api/articles/:slug/comments`) – added support for `limit` and `cursor`, computes `nextCursor`, preserves existing “no‑parameter” behavior.
+- Tests – new test suite validates cursor usage, error conditions, and backward compatibility.
+
+All changes keep existing offset pagination functional, satisfy the RealWorld contract, and introduce cursor‑based pagination without breaking any current client code.

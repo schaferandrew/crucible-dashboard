@@ -1,0 +1,21 @@
+Here's a summary of what was done:
+
+## Bug Diagnosis
+
+**Root Cause:** `app/page.tsx` uses client-side React hooks (`useState`, `useEffect`) and client-side `fetch()`, but was missing the **`"use client"`** directive at the top of the file.
+
+In Next.js App Router, all components are **server components by default**. Without `"use client"`, React hooks are silently ignored, `account` stays `null`, and the page is stuck showing "Loading..." forever — the account name and plan are never rendered.
+
+## Fix Applied
+
+**`app/page.tsx`** — Added `'use client';` as the first line to mark it as a client component, enabling `useState`, `useEffect`, and `fetch` to work correctly.
+
+## Tests Added
+
+**`app/page.component.test.tsx`** — New test file (jsdom environment) that:
+1. Mocks `fetch` to return the acct_1 account data
+2. Verifies the initial "Loading..." state
+3. Waits for the fetch to resolve
+4. Asserts that "Name: Alice" and "Plan: Pro" are rendered
+
+The existing API route tests in `app/page.test.tsx` were preserved as-is.

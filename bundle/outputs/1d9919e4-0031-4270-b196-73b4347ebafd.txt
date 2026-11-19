@@ -1,0 +1,43 @@
+**Morning Brief – September 2, 2026**
+
+## Weather
+- **Location:** Saint Paul, MN  
+- **Today’s forecast (Sep 2):** Partly Cloudy, high 68 °F / low 55 °F.  
+- **Precipitation:** 10 % chance of showers, light rain possible in the afternoon.  
+- **Wind:** 8 mph from the southwest.  
+
+## Outstanding work
+| Action | Owner | Deadline / Urgency |
+|--------|-------|--------------------|
+| Submit Q3 expense report | You | **5 PM Wednesday** – required for payroll |
+| Reply to client about proposal timeline | You | Needs response before the team brief |
+| Review Q3 review feedback in planning meeting | Alex | Discussed in yesterday’s 1‑on‑1; action item for today |
+| Follow up on vendor demo notes | Alex | After the 10‑00 – 11‑00 demo |
+
+## Emails
+| From | Subject | Key point |
+|------|---------|-----------|
+| alex@example.com | Project update – Q3 review completed | Review ahead of schedule; discuss results in planning meeting |
+| jamie@example.com | Meeting notes from yesterday | Career goals, next‑quarter priorities, team building activities |
+| finance@example.com | Reminder: Q3 expense report due Wednesday 5 PM | Deadline reminder |
+| client@example.com | Question about the proposal timeline | Need confirmation on Friday delivery |
+
+## Calendar
+**Today (Sep 2)**
+- **09:30 – 10:30 AM:** Planning (Room B) – Alex  
+- **10:00 – 11:00 AM:** Vendor demo (Zoom) – Alex & vendor@example.com  
+- **01:00 – 02:00 PM:** Budget meeting (Conference Room A) – Jamie  
+
+**Upcoming**
+- **Sep 3 09:00 – 10:00 AM:** Standup – Jamie  
+- **Sep 3 11:00 – 12:00 PM:** Interview – Alex  
+
+## News
+1. **Twin Cities Tech Conference Returns** – Annual tech conference back in Minneapolis; registration opens Friday. (StarTribune)  
+2. **Maplewood Park Renovation Complete** – New walking trails and playground; grand reopening Saturday. (Pioneer Press)  
+3. **State Fair Attendance Drops Slightly** – 3 % decline, attributed to cooler weather. (StarTribune)
+
+## Top 3 things to do today
+1. Submit the Q3 expense report by 5 PM.  
+2. Respond to the client’s proposal timeline question before the team brief.  
+3. Attend the 10‑00 – 11‑00 vendor demo and capture key action items for follow‑up.

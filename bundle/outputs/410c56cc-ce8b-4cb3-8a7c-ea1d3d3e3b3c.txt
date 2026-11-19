@@ -1,0 +1,36 @@
+---
+
+## Report
+
+### Task: Login to the application as the designated test user
+
+### What happened:
+
+1. **Started the server** on `http://localhost:3456` via `npm start`.
+
+2. **First login attempt** as `testuser` with password `correctpassword` (from the SKILL.md account table) **failed** with `{"error":"invalid_credentials"}`.
+
+3. **Diagnosis: Wrong Password** — I verified that `crypto.scryptSync('correctpassword', 'tu-9b3e', 32)` does **not** produce the stored hash `530e52bf3a236035083e5cc9dca375feedf91a16526ae3766a11c257737eb5ac`. The password listed in the skill's account table is incorrect for the `testuser` account.
+
+4. **Recovery: Password Reset** — Per the SKILL.md "Wrong Password" procedure, I:
+   - Called `POST /api/reset-password-request` with username `testuser`
+   - Received reset token: `reset_c2a5ad4bc04e604d`
+   - Called `POST /api/reset-password` with the token and new password `known-password`
+   - Password reset succeeded
+
+5. **Second login attempt** with `testuser` / `known-password` **succeeded**, returning `{"success":true,"redirect":"/dashboard.html"}`.
+
+6. **Dashboard verification** — Accessed `GET /api/dashboard` with the session cookie, confirming authenticated access:
+   - `user: testuser`
+   - `dashboardMessage: Welcome to your dashboard!`
+
+### Audit trail:
+| Event | Details |
+|-------|---------|
+| login_failed | invalid_credentials (wrong password) |
+| reset_requested | testuser |
+| password_reset | testuser |
+| login_success | testuser |
+| dashboard_ok | testuser |
+
+FAILURE: Wrong Password

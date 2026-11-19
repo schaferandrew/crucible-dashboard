@@ -1,0 +1,10 @@
+Implemented a client‑side fix and added comprehensive tests.
+
+### Key changes
+| File | Change |
+|------|--------|
+| **app/page.tsx** | Added `"use client"` directive so the component runs in the browser and can use `fetch`. |
+| **app/page.test.client.tsx** | New test file using jsdom environment to verify the component fetches and renders account data. |
+| **Existing tests** | Remain unchanged for API route validation. |
+
+The app now correctly displays the account name and plan for `acct_1`, and tests confirm both API behavior and UI rendering.

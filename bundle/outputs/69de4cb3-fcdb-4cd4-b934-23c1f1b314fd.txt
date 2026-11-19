@@ -1,0 +1,15 @@
+I’ve added the core package (`interest/__init__.py` and `interest/__main__.py`) that implements argument parsing, validation, calculation logic, and the CLI entry point. The tool now supports all required flags, compounding frequencies, optional contributions, JSON output, and error handling as described.  
+
+You can run the calculator with:
+
+```bash
+python -m interest --principal 1000 --rate 5 --years 10 --compound annually
+```
+
+For JSON output:
+
+```bash
+python -m interest --principal 1000 --rate 5 --years 10 --compound annually --json
+```
+
+The package is ready for further test and documentation additions.

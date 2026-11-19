@@ -1,0 +1,28 @@
+Done. Here's a summary of what was built:
+
+**Project structure:**
+```
+interest/
+├── __init__.py
+├── __main__.py      # CLI entry point with argparse
+└── calculator.py    # Core calculation logic
+tests/
+├── __init__.py
+└── test_calculator.py  # 30 tests, all passing
+README.md
+```
+
+**Key implementation details:**
+- Iterates month-by-month to correctly handle contributions at calendar month ends regardless of compounding frequency
+- For `--months N`, converts to total months and determines which compounding periods fall within that time
+- Daily compounding maps periods to actual calendar days using cumulative month-day counts
+- All validation exits with non-zero status and a short message on stderr (no tracebacks)
+
+**Test coverage (30 tests):**
+- Basic compounding: annually, quarterly, monthly, daily
+- Known value case: $1000 at 5% for 1 year monthly → $1051.16
+- Zero interest and zero principal edge cases
+- Monthly and annual contributions at 0% and with interest
+- Contributions with quarterly compounding
+- `--months` vs `--years` paths
+- CLI: text output, JSON output, all error cases (negative values, missing/contradictory flags, non-numeric input, etc.)

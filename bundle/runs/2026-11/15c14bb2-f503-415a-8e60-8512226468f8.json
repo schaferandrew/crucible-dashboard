@@ -1,0 +1,104 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "15c14bb2-f503-415a-8e60-8512226468f8",
+ "run_path": "lmstudio_qwen_qwen3.6-35b-a3b@reasoning-off/landlocked-countries/20261118_222152",
+ "legacy_run_id": null,
+ "started_at": "2026-11-18T22:21:52.253910+00:00",
+ "ended_at": "2026-11-18T22:21:55.624057+00:00",
+ "elapsed_s": 2.85,
+ "task": {
+  "id": "landlocked-countries",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "7b5379ce8b6a3e04",
+  "rubric_hash": "f75bb0a15226bc61",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/qwen/qwen3.6-35b-a3b",
+  "base": "qwen/qwen3.6-35b-a3b",
+  "publisher": "qwen",
+  "artifact": "qwen/qwen3.6-35b-a3b",
+  "format": "mlx",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "off",
+   "resolved": "off",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 262144,
+  "variant_key": "qwen/qwen3.6-35b-a3b|qwen|mlx|q4_k_m",
+  "display": "qwen3.6-35b-a3b · Q4_K_M",
+  "origin": {
+   "maker": "qwen",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": "LM Link",
+  "device": "Whitehall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "rtx-5070-ti-16gb",
+  "class": "discrete_gpu",
+  "accelerators": [
+   {
+    "name": "NVIDIA RTX 5070 Ti 16GB",
+    "memory_gb": 16,
+    "count": 1
+   }
+  ],
+  "system_memory_gb": 32.0,
+  "cpu": "AMD Ryzen 7 7700",
+  "offload": null,
+  "label": "Whitehall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": 147,
+  "tokens_out": 71,
+  "model_responses": 1,
+  "ttft_s": 0.933,
+  "ttft_avg_s": 0.933,
+  "response_time_avg_s": 2.848,
+  "output_tokens_per_s": 37.1,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 0
+ },
+ "output_ref": "outputs/15c14bb2-f503-415a-8e60-8512226468f8.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "6faa751",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:4e33d49363c371ffd60077aa09f55f3b74dbe1a6b89a120e1e088d915c666681",
+  "submitter": null,
+  "verification": null
+ }
+}

@@ -1,0 +1,37 @@
+## Emails
+
+- **From:** alex@example.com  
+  **Subject:** Project update – Q3 review completed  
+  **Body:** The Q3 review is now complete and ahead of schedule. Let's discuss the results in our planning meeting.
+
+- **From:** jamie@example.com  
+  **Subject:** Meeting notes from yesterday  
+  **Body:** Notes from yesterday's 1‑on‑1: discussed career goals, next quarter priorities, and team building activities.
+
+- **From:** finance@example.com  
+  **Subject:** Reminder: Q3 expense report due Wednesday 5 PM  
+  **Body:** Your Q3 expense report must be submitted by 5:00 PM on Wednesday, September 2. Reports that miss the cutoff are paid with next month’s payroll.
+
+- **From:** client@example.com  
+  **Subject:** Question about the proposal timeline  
+  **Body:** Hi, can you confirm whether the revised proposal can be delivered by Friday? I need an answer before I brief my team. Please reply when you can.
+
+## Calendar
+
+- **09:30 – 10:30** Planning (Room B) – Alex  
+- **10:00 – 11:00** Vendor demo (Zoom) – Alex, vendor@example.com  
+- **13:00 – 14:00** Budget meeting (Conference Room A) – Jamie  
+
+## News
+
+- **Twin Cities Tech Conference Returns**  
+  *Annual tech conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies. Registration opens this Friday.* – StarTribune  
+  [Read more](https://www.startribune.com/tech-conference-2026)
+
+- **Maplewood Park Renovation Complete**  
+  *Renovations to Maplewood Park finished ahead of schedule, adding new walking trails and a children's playground. Grand reopening is Saturday.* – Pioneer Press  
+  [Read more](https://www.twincities.com/maplewood-park-renovation)
+
+## Spanish practice
+
+Hoy, después de revisar los correos y la agenda, podrías aprovechar el descanso para preparar una breve presentación sobre las nuevas tendencias en inteligencia artificial que se discutirán en la conferencia de tecnología del Twin Cities, asegurándote de incluir ejemplos relevantes para tu equipo.

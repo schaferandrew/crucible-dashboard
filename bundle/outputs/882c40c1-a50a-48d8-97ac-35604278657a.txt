@@ -1,0 +1,34 @@
+## Weather
+- **Current:** 68 °F, Partly Cloudy.  
+- **Today’s forecast (2026‑09‑02):** 68 °F high, 55 °F low, Partly Cloudy with a 10 % chance of precipitation and 8 mph wind.  
+- **Wind:** 8 mph from the west.  
+
+## Outstanding work
+| Source | Item | Priority for today |
+|--------|------|--------------------|
+| Email (Finance) | Q3 expense report due 5 PM | **Urgent** – must be submitted today. |
+| Email (Client) | Proposal timeline question | **High** – reply to confirm Friday delivery. |
+| Calendar | Planning meeting 9:30‑10:30 AM | **Medium** – review agenda and prepare status update. |
+| Calendar | Vendor demo 10:00‑11:00 AM | **Medium** – confirm demo details and prepare questions. |
+| Calendar | Budget meeting 1:00‑2:00 PM (Jamie) | **Medium** – review budget items and prepare notes. |
+
+## Emails
+- **Finance@example.com:** Reminder that the Q3 expense report is due Wednesday 5 PM.  
+- **Client@example.com:** Request for confirmation on proposal delivery by Friday.  
+
+*No other unread or actionable emails were received yesterday.*
+
+## Calendar
+- **9:30 – 10:30 AM:** Planning (Room B) – Alex only.  
+- **10:00 – 11:00 AM:** Vendor demo (Zoom) – Alex, vendor@example.com.  
+- **1:00 – 2:00 PM:** Budget meeting (Conference Room A) – Jamie only.  
+
+*All other events are either past or scheduled for later dates.*
+
+## News
+- No news source was available for today.  
+
+## Top 3 things to do today
+1. Submit the Q3 expense report by 5 PM.  
+2. Respond to the client’s proposal timeline question with a clear delivery date.  
+3. Attend and prepare for the Planning meeting at 9:30 AM, ensuring all agenda items are ready.

@@ -1,0 +1,29 @@
+## Summary
+
+### Root Cause
+The dashboard showed a blank state when the session expired (after 30 seconds) because `dashboard.html`'s `loadDashboard()` function set both `user` and `message` text content to empty strings when `data.user` was falsy — instead of handling the expired session properly.
+
+### Reproduction
+1. Login → get session cookie
+2. Wait 31 seconds (session TTL = 30s)
+3. Visit `/dashboard.html` → API returns `{ user: null, dashboardMessage: "" }`
+4. Dashboard JS sets both elements to `''` → **blank page**
+
+### Fix (`public/dashboard.html`)
+Changed the `else` branch in `loadDashboard()` from:
+```js
+// OLD (blank state):
+document.getElementById('user').textContent = '';
+document.getElementById('message').textContent = '';
+```
+To:
+```js
+// NEW (redirect to login):
+window.location.href = '/login.html';
+```
+
+### Regression Tests Added (2)
+1. **Server-side** (`server.test.js`): Verifies `/api/dashboard` returns `{ user: null, dashboardMessage: '' }` for invalid sessions
+2. **Client-side** (`server.test.js`): Verifies `dashboard.html` contains `window.location.href = '/login.html'` in the else branch and does NOT use `textContent = ''`
+
+**All 9 tests pass** (7 original + 2 new).

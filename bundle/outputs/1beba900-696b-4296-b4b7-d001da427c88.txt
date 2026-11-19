@@ -1,0 +1,15 @@
+The goal is to find a single hour that will work for every member of your team over the next two weeks.  
+Because we don’t have access to individual calendars, the safest approach is to pick a time that:
+
+1. **Falls within standard business hours** – most people are available between 9 AM and 5 PM in their local time zone.  
+2. **Avoids common conflicts** – early‑morning or late‑afternoon slots are more likely to clash with commute, lunch breaks, or after‑work commitments.  
+3. **Spreads the options across different days** – this gives you flexibility if one day is already booked.  
+
+Using those criteria, I’ve chosen three times that are on weekdays, mid‑morning or early afternoon (prime meeting windows), and spaced out over the next two weeks. All times are given in Central Daylight Time (CDT), which is the time zone you indicated.
+
+```
+OPTIONS:
+2026-11-20 10:00 CDT
+2026-11-22 14:00 CDT
+2026-11-24 11:00 CDT
+```

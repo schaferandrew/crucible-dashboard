@@ -1,0 +1,33 @@
+**Accuracy (4):**
+The response contains three sentences, but let's evaluate the accuracy of the claims within them against the passage.
+1. "The Millbrook library board voted to extend weekend hours to 8 p.m. starting in March..." - The passage states the hours are extended *from* 5 p.m. *to* 8 p.m. Saying "extend... to 8 p.m." is accurate regarding the end time, though it omits the start time. However, the next clause says "...following a survey where 62% of residents asked for evening access." The passage says 62% said evening access was their "top request," which is semantically equivalent to asking for it. This sentence is accurate.
+2. "The change is funded by a $40,000 grant that covers one year..." - Accurate.
+3. "...and the board will revisit it next winter if no further money is found." - Accurate.
+4. "Two board members opposed the decision over staffing concerns." - Accurate.
+
+All claims are supported by the text. No invented details. Score: 4/4.
+
+**Exactly two sentences (3):**
+The criteria explicitly require the summary to be "exactly two sentences long."
+The agent's response is:
+1. "The Millbrook library board voted to extend weekend hours to 8 p.m. starting in March, following a survey where 62% of residents asked for evening access."
+2. "The change is funded by a $40,000 grant that covers one year, and the board will revisit it next winter if no further money is found."
+3. "Two board members opposed the decision over staffing concerns."
+
+This is three sentences. Therefore, it fails this criterion completely. Score: 0/3.
+
+**Key points (3):**
+The criteria require capturing:
+1. The hours extension: Yes ("extend weekend hours to 8 p.m.").
+2. The funding limit: Yes ("covers one year", "no further money is found").
+3. The resident survey: Yes ("survey where 62% of residents asked for evening access").
+
+All key points are captured. Score: 3/3.
+
+**Total Score:**
+Accuracy: 4
+Sentences: 0
+Key Points: 3
+Total: 7
+
+GRADE: 7
