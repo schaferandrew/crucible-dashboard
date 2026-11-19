@@ -73,6 +73,16 @@ describe('bars', () => {
     expect(shortName('a'.repeat(30))).toBe('a'.repeat(30));
   });
 
+  it('plots scores in descending order across coverage groups and preserves exact ties', () => {
+    const row = sc.visible[0]!;
+    const complete = { ...row, overall: { ...row.overall, partial: false, score: 22.9 } };
+    const partial = { ...row, overall: { ...row.overall, partial: true, score: 45.9 } };
+    const tied = { ...partial, label: 'Same score' };
+    const running = { ...partial, inProgress: true, overall: { ...partial.overall, score: 50 } };
+    const unscored = { ...complete, overall: { ...complete.overall, score: null } };
+    expect(barRows([complete, partial, tied, unscored, running])).toEqual([running, partial, tied, complete]);
+  });
+
   it('wide columns are at most 24 px in 56 px slots; narrow is one bar per 38 px row', () => {
     const rows = barRows(sc.visible);
     const wide = layoutBars(rows, 10, 900, false);

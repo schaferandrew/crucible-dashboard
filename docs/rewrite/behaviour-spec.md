@@ -360,7 +360,7 @@ There is no standalone "run" route: a run's detail is a panel opened in place. T
 
 #### Leaderboard column chart ("bars")
 
-- [ ] MAIN-BARS-01 A column chart above the table plots the Overall score (the single-tier section's tier) of every shown row that has a non-null overall; sorted: in-progress last, partial after complete, then score descending. Hidden (and legend hidden) when no row qualifies. `main:758-769`, `[BUG?]` OQ-03
+- [ ] MAIN-BARS-01 A column chart above the table plots the Overall score (the single-tier section's tier) of every shown row that has a non-null overall, in descending score order. Exact ties keep their input order. Hidden (and legend hidden) when no row qualifies. `main:758-769`, `[BUG?]` OQ-03
 - [ ] MAIN-BARS-02 Legend: Local / Cloud swatches (only kinds present) and, if any bar is partial, "Partial: a tier has under 75% of its tasks scored" with a hatched swatch. `main:770-782`
 - [ ] MAIN-BARS-03 Wide layout (container width >= 640 and viewport not narrow): y axis 0, max/2, max (max = overall maximum for the included tiers); bars at most 24 px wide in slots of at most 56 px (a short list stays grouped left); value printed on each bar cap; names angled -45° under the axis, kept as `model · reasoning` and cut to 29 characters + "…" past 30; rounded data end (4 px), square baseline. `main:784-829,845-846`
 - [ ] MAIN-BARS-04 Narrow layout (viewport narrow or container < 640 px): one horizontal bar per row, name above, value after the bar; row height 38. `main:792-804`
