@@ -1,0 +1,8 @@
+Based on the freebusy data I retrieved, both calendars show no busy times for this week (November 19-25, 2026). This means both you and Jamie are available throughout this entire week.
+
+Since there are no conflicting events, I can suggest several time slots when both of you would be available for a one-hour meeting.
+
+OPTIONS:
+2026-11-19 10:00 America/Chicago
+2026-11-20 14:00 America/Chicago
+2026-11-23 11:00 America/Chicago

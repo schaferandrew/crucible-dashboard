@@ -5,7 +5,7 @@
   import { scope } from '$lib/core/scope';
   import { OVERALL, type SortSpec } from '$lib/core/scoring';
   import { cap } from '$lib/core/format';
-  import { link, suiteParam } from '$lib/paths';
+  import { link, suiteParam, taskHref } from '$lib/paths';
   import Bars from '$lib/pages/main/Bars.svelte';
   import CompareTray from '$lib/pages/main/CompareTray.svelte';
   import Heatmap from '$lib/pages/main/Heatmap.svelte';
@@ -123,6 +123,12 @@
 
   <h2>Leaderboard</h2>
   <p class="note muted">{leaderboardNote(sc).join(' ')}</p>
+  {#if info.tiebreakTask && sc.view.parts.some((part) => part.id === info.tiebreakTask?.mode)}
+    <p class="note muted">
+      <a href={taskHref(info.tiebreakTask.id, suiteQ)}>The image task</a> breaks exact {info.overallLabel}
+      ties between setups with image scores. It does not affect the average or coverage.
+    </p>
+  {/if}
 
   <ErrorBoundary what="the chart">
     <Bars

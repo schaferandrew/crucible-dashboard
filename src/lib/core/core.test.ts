@@ -11,7 +11,7 @@ import {
 } from './context';
 import { normalizeIndex } from './normalize';
 import { scope, facet, changeSection } from './scope';
-import { betterConfig, gateVerdict, rankRows, sectionView, viewFor } from './scoring';
+import { betterConfig, buildRows, gateVerdict, rankRows, sectionView, sortRows, viewFor } from './scoring';
 import { COMBINED, asSetupId, asSuiteId, asTierId } from './types';
 
 const env = { currentSuite: asSuiteId('s'), suites: [asSuiteId('s'), asSuiteId('old')] };
@@ -180,6 +180,31 @@ describe('scoring on a synthetic suite', () => {
     const ctx = { ...defaultContext(env), filters: { harness: new Set(['pi']) } };
     expect(scope(idx, ctx).rows).toHaveLength(2);
   });
+});
+
+it('uses optional image scores only between ranked setups with an exact Overall tie', () => {
+  const index = syntheticIndex();
+  index.catalog.scoring_policy.tiebreak_task = 'p1';
+  const image = index.cells.find((cell) => cell.task === 'p1')!;
+  index.cells.push({
+    ...image,
+    setup: asSetupId('better-image'),
+    provisional: { ...image.provisional!, mean: 10 },
+  });
+  const view = sectionView(index, 'chat', true);
+  expect(view.tasks.map((task) => task.id)).toEqual(['c1', 'c2']);
+  expect(view.provisionalTasks).toEqual([]);
+
+  const [row] = buildRows(index, view);
+  const other = (label: string, id: string) => {
+    const setup = { ...row!.setup, id: asSetupId(id) };
+    return { ...row!, label, rowKey: label, setup, candidate: { ...row!.candidate, members: [setup] } };
+  };
+  const rows = [other('A', 's-chat'), other('B', 'no-image'), other('C', 'better-image')];
+  expect(sortRows(index, rows, { key: 'overall', dir: -1 }).map((r) => r.label)).toEqual(['C', 'B', 'A']);
+  expect([...rankRows(index, rows).keys()]).toEqual(['C', 'B', 'A']);
+  rows[0] = { ...rows[0]!, overall: { ...rows[0]!.overall, score: rows[0]!.overall.score! + 0.01 } };
+  expect(sortRows(index, rows, { key: 'overall', dir: -1 }).map((r) => r.label)).toEqual(['A', 'B', 'C']);
 });
 
 describe('unknown data never throws', () => {

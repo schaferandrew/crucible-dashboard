@@ -1,0 +1,4 @@
+Three remaining issues:
+
+1. **Order of checks**: Self-approval check fires before status check. Need to check status first.
+2. **Review queue ordering**: Should be oldest first, not newest first.

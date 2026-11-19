@@ -1,0 +1,34 @@
+I've created your morning brief based on the weather, email, calendar, and news information. The brief is now saved in morning_brief.md with all the required sections formatted as requested.
+
+Here's a summary of what I've included:
+
+## Weather
+- Current conditions in Saint Paul, MN: 68°F, partly cloudy
+- Today's forecast: High of 68°F, low of 55°F, partly cloudy with 10% precipitation
+
+## Outstanding work
+- Q3 expense report due by 5:00 PM (hard deadline)
+- Client proposal timeline confirmation needed by Friday
+- Planning meeting at 9:30 AM
+
+## Emails
+- Q3 review completion update from Alex
+- Meeting notes from Jamie's 1-on-1
+- Q3 expense report deadline reminder from Finance
+- Client inquiry about proposal timeline
+
+## Calendar
+- Today: Planning meeting at 9:30 AM, Budget meeting at 1:00 PM
+- Tomorrow: Standup, Interview, Project review
+
+## News
+- Twin Cities Tech Conference returning to Minneapolis
+- Maplewood Park renovation complete
+- State Fair attendance slightly down
+
+## Top 3 things to do today
+1. Submit Q3 expense report by 5:00 PM
+2. Respond to client about proposal timeline
+3. Attend planning meeting at 9:30 AM
+
+The brief follows your exact specifications with the required sections in order and focuses on items requiring attention today rather than general summaries.

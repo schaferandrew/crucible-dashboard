@@ -1,0 +1,65 @@
+## 1. Savings account (compound interest)
+
+**Formula:** A = P(1 + r/n)^(nt)
+
+- P = $5,000, r = 0.04, n = 12, t = 3
+
+$$A = 5000\left(1 + \frac{0.04}{12}\right)^{12\times3} = 5000\,(1.003333...)^{36}$$
+
+Monthly rate: 0.04 ÷ 12 = 0.003333…
+Growth factor: (1.003333…)³⁶ ≈ 1.12727190
+
+$$A = 5000 \times 1.12727190 = 5636.359...$$
+
+**≈ $5,636.36**
+
+---
+
+## 2. Flooring boxes
+
+Total area needed (with waste):
+$$1850 \times 1.10 = 2035\text{ sq ft}$$
+
+Boxes required:
+$$\frac{2035}{23.5} = 86.5957...$$
+
+You can't buy a partial box, so round **up**.
+
+**= 87 boxes** (check: 87 × 23.5 = 2044.5 sq ft ≥ 2035 ✓)
+
+---
+
+## 3. Road trip gas cost
+
+Gallons needed:
+$$\frac{412}{34} = 12.117647... \text{ gallons}$$
+
+Cost (don't round the gallons yet):
+$$12.117647... \times 3.89 = 47.1376...$$
+
+**≈ $47.14**
+
+---
+
+## 4. Dinner split four ways
+
+Tip is on the pre-tax amount:
+$$0.18 \times 172.00 = 30.96$$
+
+Total to split (bill including tax + tip):
+$$186.40 + 30.96 = 217.36$$
+
+Per person:
+$$\frac{217.36}{4} = 54.34$$
+
+**≈ $54.34 each**
+
+*(Note: if "the total" is meant to be pre-tax + tip only, excluding the tax already baked into the bill, it would be (172.00 + 30.96) ÷ 4 = $50.74.)*
+
+---
+
+## ANSWERS
+1. $5,636.36
+2. 87 boxes
+3. $47.14
+4. $54.34

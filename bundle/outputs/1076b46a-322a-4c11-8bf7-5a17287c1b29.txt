@@ -1,0 +1,57 @@
+## Problem 1
+
+Count integers in [1, 10000] divisible by 3 or 7 (union), then remove those also divisible by 21.
+
+- Divisible by 3: ⌊10000/3⌋ = 3333
+- Divisible by 7: ⌊10000/7⌋ = 1428
+- Divisible by both (i.e., by 21): ⌊10000/21⌋ = 476
+
+Union: $3333 + 1428 - 476 = 4285$. Every multiple of 21 lies in this union, so subtract all 476:
+$$4285 - 476 = 3809.$$
+
+## Problem 2
+
+Powers of 7 mod 100 cycle with period 4: $7,\,49,\,43,\,1$ (since $7^4 = 2401 \equiv 1$).
+$$2026 \bmod 4 = 2 \implies 7^{2026} \equiv 7^2 = 49.$$
+
+## Problem 3
+
+Let $f(n)$ count tilings of a 2×n board. Classify by the tile covering the top-right cell:
+- **Vertical domino** (fills column n): leaves f(n−1)
+- **Two horizontal dominoes** into column n−1: fills columns n and n−1, leaves f(n−2)
+- **2×2 square**: fills columns n and n−1, leaves f(n−2)
+
+$$f(n) = f(n-1) + 2f(n-2), \qquad f(0)=1,\ f(1)=1.$$
+
+Check: $f(2)=3$ (two verticals, two horizontals, one square ✓), $f(3)=5$ ✓.
+
+$$\begin{array}{c|c}
+n & f(n)\\\hline
+0&1\\1&1\\2&3\\3&5\\4&11\\5&21\\6&43\\7&85\\8&171\\9&341\\10&683\\11&1365\\12&\mathbf{2731}
+\end{array}$$
+
+## Problem 4
+
+Largest is exactly 4 ⟺ all dice ≤ 4, but not all ≤ 3:
+$$P = \left(\tfrac{4}{6}\right)^3 - \left(\tfrac{3}{6}\right)^3 = \frac{8}{27} - \frac{1}{8} = \frac{64-27}{216} = \frac{37}{216}.$$
+
+## Problem 5
+
+Each child has $2\times 7 = 14$ equally likely types; sample space is $14^2 = 196$.
+
+Let B = "at least one boy-Tuesday." Children who are *not* boy-Tuesday: girls (7) + non-Tuesday boys (6) = 13.
+$$|B| = 196 - 13^2 = 27.$$
+
+Both-boys with at least one Tuesday-boy: both-boys outcomes $= 7\times7 = 49$, minus those with no Tuesday $= 6\times 6 = 36$:
+$$|A\cap B| = 49 - 36 = 13.$$
+
+$$P(\text{both boys}\mid B) = \frac{13}{27}.$$
+
+---
+
+ANSWERS
+1. 3809
+2. 49
+3. 2731
+4. 37/216
+5. 13/27

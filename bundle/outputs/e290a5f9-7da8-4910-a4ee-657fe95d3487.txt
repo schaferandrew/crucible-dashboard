@@ -1,0 +1,30 @@
+1. Multiples of 3: \(\lfloor 10000/3\rfloor=3333\)  
+   Multiples of 7: \(\lfloor 10000/7\rfloor=1428\)  
+   Multiples of 21: \(\lfloor 10000/21\rfloor=476\)  
+   Count \(=(3333-476)+(1428-476)=3809\).
+
+2. Since \(7^4=2401\equiv 1 \pmod{100}\), the powers repeat every 4.  
+   \(2026\equiv 2 \pmod 4\), so \(7^{2026}\equiv 7^2=49 \pmod{100}\).
+
+3. A valid tiling can be viewed as a sequence of width-1 blocks (vertical domino) and width-2 blocks (either one \(2\times2\) square or two horizontal dominoes, giving 2 choices).  
+   Thus the count satisfies \(a_n=a_{n-1}+2a_{n-2}\), with \(a_0=1,a_1=1\).  
+   Computing to \(n=12\) gives \(a_{12}=2731\).
+
+4. \(\Pr(\max=4)=\Pr(\text{all }\le 4)-\Pr(\text{all }\le 3)\)
+   \[
+   =\left(\frac46\right)^3-\left(\frac36\right)^3
+   =\frac8{27}-\frac18
+   =\frac{37}{216}.
+   \]
+
+5. Each child has 14 equally likely sex/day possibilities, so there are \(14^2=196\) ordered outcomes.  
+   Outcomes with at least one boy born on Tuesday: \(196-13^2=27\).  
+   Among both-boy families, those with at least one Tuesday boy: \(7^2-6^2=13\).  
+   Probability \(=13/27\).
+
+ANSWERS
+1. 3809
+2. 49
+3. 2731
+4. 37/216
+5. 13/27

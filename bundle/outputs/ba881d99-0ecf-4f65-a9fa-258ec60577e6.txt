@@ -1,0 +1,40 @@
+Here is your morning brief for Wednesday, September 2, 2026:
+
+## Weather
+- **Current**: Partly cloudy, 68°F (19.5°C), humidity 65%, winds 8 mph from the west.
+- **Today's forecast**: High of 68°F (20°C), low of 55°F (13°C). Expect light rain in the afternoon.
+- **Tomorrow**: Sunny with a high of 74°F (23.5°C).
+
+## Outstanding work
+- **Unanswered messages**:
+  - **Client proposal question**: Reply to `client@example.com` about the revised proposal timeline by EOD today.
+  - **Q3 expense report reminder**: Submit your Q3 expense report by 5:00 PM today to avoid delays in reimbursement.
+- **Open actions**:
+  - Review notes from yesterday's 1-on-1 with Jamie and prepare for the planning meeting today.
+  - Confirm availability for the vendor demo at 10:00 AM today.
+
+## Emails
+- **Urgent**:
+  - **Q3 expense report due today**: Submit by 5:00 PM to avoid delays. This is a hard deadline.
+  - **Client proposal question**: Respond to `client@example.com` about the revised timeline before they brief their team.
+- **Follow-ups**:
+  - Review the Q3 review results from Alex and prepare for the planning meeting.
+
+## Calendar
+- **Today**:
+  - **Planning (9:30 AM)**: Room B. Prepare your notes on Q3 review results and next quarter priorities.
+  - **Vendor demo (10:00 AM)**: Zoom. Confirm any pre-demo requirements with the vendor.
+  - **Budget meeting (1:00 PM)**: Attend if Jamie needs support or updates.
+- **Upcoming**:
+  - **Interview (Tomorrow, 9:00 AM)**: Conference Room B. Review your preparation materials.
+
+## News
+- **High importance**:
+  - Twin Cities Tech Conference returns this Friday with speakers on AI and emerging technologies. Registration opens today.
+- **Local updates**:
+  - Maplewood Park renovations are complete with new trails and a playground, reopening Saturday.
+
+## Top 3 things to do today
+1. Submit your Q3 expense report by 5:00 PM to avoid reimbursement delays.
+2. Respond to `client@example.com` about the revised proposal timeline before EOD.
+3. Prepare for the planning meeting at 9:30 AM, focusing on Q3 review results and next quarter priorities.

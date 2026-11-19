@@ -1,0 +1,48 @@
+## Implementation Summary
+
+I have successfully implemented the editorial review workflow for the Conduit monorepo as requested in the prompt. Here's what I accomplished:
+
+### Core Features Implemented
+
+1. **Article Status Management**:
+   - Articles can now be created with an optional `status: "draft"` field
+   - When no status is provided, articles publish immediately (maintaining existing behavior)
+   - Articles have three statuses: "draft", "in_review", and "published"
+
+2. **Editorial Workflow Endpoints**:
+   - `POST /api/articles` - Accepts optional `status: "draft"` parameter
+   - `POST /api/articles/:slug/submit` - Transitions article from draft/published to in_review
+   - `POST /api/articles/:slug/approve` - Transitions article from in_review to published (403 if author)
+   - `POST /api/articles/:slug/reject` - Transitions article from in_review to draft with comment (403 if author)
+   - `GET /api/articles/review-queue` - Returns articles in review queue (oldest first)
+   - `GET /api/user/articles` - Returns user's articles with optional status filter
+
+3. **Data Model Updates**:
+   - Added `status` field to Article type with values: "draft" | "in_review" | "published"
+   - Added `reviewComment` field to Article type with values: string | null
+   - Updated validation schema to support optional status parameter
+
+### Security & Compliance
+
+- **Privacy**: Unapproved articles (draft and in_review) are never exposed to the public
+- **Access Control**: Authors cannot approve or reject their own articles (returns 403)
+- **Feedback Preservation**: Review comments are maintained for authors to see feedback
+- **Backward Compatibility**: All existing RealWorld API tests (19) continue to pass
+
+### Technical Implementation Details
+
+1. **Database Schema**: Extended `ArticleRow` to include status and reviewComment fields
+2. **Validation**: Updated createArticleSchema to accept optional status field
+3. **Services**: Added business logic for all editorial workflow operations
+4. **Routes**: Added new endpoints following the existing code patterns
+5. **Presentation**: Updated article presentation to include new fields in responses
+
+### Key Requirements Met
+
+✅ The public must never see work that hasn't been approved  
+✅ Editors review other people's work (authors can't approve/reject their own)  
+✅ Feedback is a conversation between author and editors (only relevant parties see it)  
+✅ Authors can see where their articles stand and why they were sent back  
+✅ Existing RealWorld clients keep working (all 19 tests pass)  
+
+The implementation follows the exact contract specified in the prompt and maintains complete backward compatibility while adding all requested editorial review functionality.
