@@ -1,5 +1,5 @@
 <script lang="ts">
-  // "Every variant" (MODEL-VAR-01/02, B-19): a row is an ordinary filter set (quant, reasoning, harness, ...);
+  // "Every variant" (MODEL-VAR-01/02, B-19): a row selects a variant across its deployments;
   // picking it again clears it. Each variant shows its best setup in scope. Rows outside the filters are
   // dimmed, a row that would leave nothing is disabled. Two to four ticked variants can be compared.
   import { fmtPercent } from '$lib/core/format';

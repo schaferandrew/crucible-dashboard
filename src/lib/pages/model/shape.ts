@@ -148,7 +148,13 @@ function bestOf(list: readonly RowStats[]): RowStats | null {
 
 const flatStats = (sc: Scope): RowStats[] => sc.rows.flatMap((r) => r.variants);
 
-export function variantTable(index: SuiteIndex, all: Scope, sc: Scope, ctx: DataContext): VariantTable {
+export function variantTable(
+  index: SuiteIndex,
+  all: Scope,
+  sc: Scope,
+  ctx: DataContext,
+  pickedVariant?: string,
+): VariantTable {
   const combined = sc.view.kind === 'combined';
   const everything = flatStats(all);
   const ids = new Set(everything.flatMap((st) => st.candidate.members.map((m) => m?.id)));
@@ -179,7 +185,7 @@ export function variantTable(index: SuiteIndex, all: Scope, sc: Scope, ctx: Data
       if (v !== null) target[d] = v;
     }
     if (hasLocal && hasCloud && sample.where !== 'local') target.where = sample.where;
-    const picked = isPicked(ctx.filters, target);
+    const picked = pickedVariant === undefined ? isPicked(ctx.filters, target) : pickedVariant === key;
     const deps = (l: RowStats[]) => new Set(l.map((st) => st.candidate.first.deployment)).size;
     rows.push({
       key,
@@ -250,10 +256,20 @@ export function deploymentTable(
   sc: Scope,
   ctx: DataContext,
   runs: readonly SlimRun[] | null,
+  pickedVariant?: string,
 ): DeploymentTable {
   const view = sc.view;
   const inScope = new Set(sc.setups.map((s) => s.id as string));
   const picking = without(ctx, DEPLOYMENT_DIMS);
+  const variantSetups =
+    pickedVariant === undefined
+      ? null
+      : new Set(
+          all.view
+            .candidates()
+            .filter((c) => variantKeyOf(c) === pickedVariant)
+            .flatMap((c) => c.members.map((m) => m?.id)),
+        );
   const groups = new Map<string, Setup[]>();
   for (const s of all.setups) {
     const l = groups.get(s.deployment);
@@ -265,7 +281,7 @@ export function deploymentTable(
   const rows: (DeploymentRow & { weight: number })[] = [];
   for (const [id, list] of groups) {
     const here = list.filter((s) => inScope.has(s.id));
-    const would = list.filter((s) => passes(s, picking, view));
+    const would = list.filter((s) => (!variantSetups || variantSetups.has(s.id)) && passes(s, picking, view));
     const use = here.length ? here : would.length ? would : list;
     const dep = index.entities.deployments[id];
     const sample = list[0]!;
@@ -583,8 +599,17 @@ export function makerEntries(index: SuiteIndex, maker: string, sc: Scope): Maker
 }
 
 /** The scope of a model with only the model pinned (its whole section), and the scope the reader's filters leave. */
-export function scopesOf(index: SuiteIndex, ctx: DataContext): { all: Scope; sc: Scope } {
-  return { all: scope(index, wholeModel(ctx)), sc: scope(index, ctx) };
+export function scopesOf(
+  index: SuiteIndex,
+  ctx: DataContext,
+  pickedVariant?: string,
+): { all: Scope; sc: Scope } {
+  return {
+    all: scope(index, wholeModel(ctx)),
+    sc: scope(index, ctx, {
+      candidateFilter: pickedVariant === undefined ? undefined : (c) => variantKeyOf(c) === pickedVariant,
+    }),
+  };
 }
 
 /** The sections a model has setups in (for the default section, B-18). */

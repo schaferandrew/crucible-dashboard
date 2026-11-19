@@ -5,9 +5,11 @@ import { defaultContext, type DataContext } from '$lib/core/context';
 import { normalizeIndex } from '$lib/core/normalize';
 import type { SuiteId, SuiteIndex } from '$lib/core/types';
 import { abSentence, abDimOf, speedPhrase } from './ab';
-import { depStats, normalizeModelRuns, scoredRunOf, type SlimRun } from './runs';
+import { indexRuns, depStats, normalizeModelRuns, scoredRunOf, type SlimRun } from './runs';
 import { translateModelParams } from './params';
 import {
+  areaGroups,
+  countedStates,
   deploymentTable,
   didNotFinish,
   findMaker,
@@ -102,6 +104,19 @@ describe.skipIf(!have)('the model page on real data', () => {
     expect(sc.setups.some((s) => s.id === headline(sc)!.setup.id)).toBe(true);
     ctx = toggleFilters(ctx, row.target, vt.clear);
     expect(Object.keys(ctx.filters)).toEqual(['model']);
+  });
+
+  it('uses exactly the selected Combined variant for task results', () => {
+    const ctx = ctxOf(index, 'combined');
+    const { all, sc } = scopesOf(index, ctx);
+    const row = variantTable(index, all, sc, ctx).rows[1]!;
+    const scoped = scopesOf(index, ctx, row.key).sc;
+    const picked = variantTable(index, all, scoped, ctx, row.key);
+    expect(picked.rows.filter((r) => r.picked && r.inScope).map((r) => r.key)).toEqual([row.key]);
+    expect(picked.shown).toBe(1);
+    const groups = areaGroups(index, scoped.view, headline(scoped)!, indexRuns(runs), countedStates(ctx));
+    const taskSetups = new Set(groups.flatMap((g) => g.tasks.map((t) => t.setup.id)));
+    expect(taskSetups).toEqual(new Set(row.stats.candidate.members.flatMap((m) => (m ? [m.id] : []))));
   });
 
   it('a deployment row filters and dims the others', () => {

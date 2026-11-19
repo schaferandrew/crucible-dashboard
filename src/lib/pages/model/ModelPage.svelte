@@ -1,6 +1,6 @@
 <script lang="ts">
   // One model (`/model/<maker>/<name>`), on the shared DataContext with `model` pinned (B-19). Variant and
-  // deployment are ordinary filters; the tiles, areas, deployments, variants, A/B, tasks and "other runs" are
+  // deployment narrow the scope; the tiles, areas, deployments, variants, A/B and tasks are
   // all derived from the same scope().
   import { afterNavigate } from '$app/navigation';
   import { onMount, untrack } from 'svelte';
@@ -37,6 +37,7 @@
     sectionsRan,
     toggleFilters,
     variantTable,
+    without,
     whereText,
     type DeploymentRow,
     type VariantRow,
@@ -77,7 +78,10 @@
     await settle();
   });
   afterNavigate(({ type }) => {
-    if (type !== 'enter') void cs.syncFromUrl().then(settle);
+    if (type !== 'enter') {
+      pickedVariant = undefined;
+      void cs.syncFromUrl().then(settle);
+    }
   });
 
   // The model's runs, per suite (the file is fetched on demand; the load function supplied the current suite's)
@@ -112,19 +116,22 @@
   const maker = $derived(model?.maker ?? modelId.slice(0, modelId.indexOf('/')));
   const makerName = $derived(makerLabelOf(index, maker));
   const ran = $derived(sectionsRan(index, modelId));
-  const { all, sc } = $derived(scopesOf(index, ctx));
+  let pickedVariant = $state<string>();
+  const { all, sc } = $derived(scopesOf(index, ctx, pickedVariant));
   const best = $derived(headline(sc));
   const view = $derived(sc.view);
   const states = $derived(countedStates(ctx));
-  const vt = $derived(variantTable(index, all, sc, ctx));
-  const dt = $derived(deploymentTable(index, all, sc, ctx, runList));
+  const vt = $derived(variantTable(index, all, sc, ctx, pickedVariant));
+  const dt = $derived(deploymentTable(index, all, sc, ctx, runList, pickedVariant));
   const groups = $derived(best ? areaGroups(index, view, best, byCell, states) : []);
   const bars = $derived(areaBars(groups));
   const dnf = $derived(runList ? didNotFinish(index, sc, runList) : []);
   const other = $derived(otherCounts(index, modelId, ctx, view, runList));
   const otherInfo = $derived(describeNotShown(other));
   const harnessVaries = $derived(vt.dims.includes('harness'));
-  const filtersOn = $derived(Object.entries(ctx.filters).some(([d, s]) => d !== 'model' && s && s.size));
+  const filtersOn = $derived(
+    pickedVariant !== undefined || Object.entries(ctx.filters).some(([d, s]) => d !== 'model' && s && s.size),
+  );
   const bestDeployment = $derived(
     best ? (index.entities.deployments[best.setup.deployment]?.label ?? best.setup.deployment) : '',
   );
@@ -157,8 +164,16 @@
 
   const pickDeployment = (r: DeploymentRow) =>
     void cs.update(toggleFilters(cs.ctx, { deployment: r.id }, ['deployment']));
-  const pickVariant = (r: VariantRow) => void cs.update(toggleFilters(cs.ctx, r.target, vt.clear));
+  const pickVariant = (r: VariantRow) => {
+    pickedVariant = r.picked ? undefined : r.key;
+    void cs.update(without(cs.ctx, vt.clear));
+  };
+  const updateControls: typeof cs.update = (next) => {
+    pickedVariant = undefined;
+    return cs.update(next);
+  };
   const clearFilters = () => {
+    pickedVariant = undefined;
     const keep = { model: cs.ctx.filters.model! };
     void cs.update({ ...cs.ctx, filters: keep });
   };
@@ -192,7 +207,7 @@
     index={cs.index}
     meta={data.meta}
     {ctx}
-    onctx={cs.update}
+    onctx={updateControls}
     {sc}
     pinned={['model']}
     dims={DIMS}
@@ -284,11 +299,11 @@
       <h2 id="h-vars">Every variant</h2>
       <p class="note muted">
         {#if view.kind === 'combined'}
-          One variant per section, alike but for the harness, scored added together. Comparing is per section.
+          Select a row to show its variant in each section. Select it again to clear. Comparing is per
+          section.
         {:else}
-          Each variant is shown by its best setup in scope. Select a row to filter to that variant (its
-          {vt.dims.length ? listPhrase(vt.dims.map((d) => d)) : 'settings'}); select it again to clear. Tick
-          two to four to compare them.
+          Each variant is shown by its best setup in scope. Select a row to show its task results. Select it
+          again to clear. Tick two to four to compare them.
         {/if}
       </p>
       <ErrorBoundary what="the variants">
