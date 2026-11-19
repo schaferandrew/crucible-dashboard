@@ -1,0 +1,12 @@
+[
+ {
+  "record": "status",
+  "format_version": 3,
+  "run_uuid": "0f00cf84-e8e2-4b8b-a389-796a7890e103",
+  "at": "2026-11-19T23:28:20+00:00",
+  "withdrawn": {
+   "reason": "Weight metadata missing; superseded by a scored Flint Q4_K_M GGUF Pi rerun."
+  },
+  "by": "maintainer"
+ }
+]

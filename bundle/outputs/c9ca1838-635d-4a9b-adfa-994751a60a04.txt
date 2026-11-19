@@ -1,0 +1,35 @@
+The task is complete. Here's a full summary of the investigation and fix:
+
+## Diagnosis
+
+**Root cause chain:**
+1. Login (`POST /api/login`) creates an in-memory session with a **30s TTL** (`accounts.json` → `sessionTtlSeconds: 30`) and redirects to `/dashboard.html`.
+2. The dashboard client (`public/dashboard.html`) calls `GET /api/dashboard` and renders only `if (data.user) { … } else { set textContent '' }`.
+3. When the session expires (i.e., the dashboard is opened a little after logging in), the server's `getDashboardData` returns an error, and the route responded with **`HTTP 200` + `{ user: null, dashboardMessage: '' }`**.
+4. The client treated "no user" as success-path content and **silently blanked the user/message fields** → intermittent blank dashboard (only manifests after the 30s TTL lapses).
+
+**Reproduction (via HTTP against `npm start` on :3456):**
+- Valid session → `200 {"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}`
+- After sleeping past the 30s TTL → `200 {"user":null,"dashboardMessage":""}` → **blank state** ✅ reproduced
+
+## Fix (underlying application code)
+
+- **`server.js`**: `/api/dashboard` now returns **`401`** with a meaningful body (`{ error: 'no_session' | 'stale_session' | 'expired_session', user: null, … }`) for missing/stale/expired sessions instead of a `200 OK` blank response.
+- **`public/dashboard.html`**: client now checks `res.ok`, wraps `fetch` in try/catch, and — when there's no user or the request failed — renders a friendly, actionable message (`SESSION_ERROR_MESSAGES`: "You are not signed in…", "Your session is no longer valid…", "Your session has expired. Please log in again.") instead of silently clearing the content.
+
+## Regression tests added
+
+- **`server.test.js`**: new test — dashboard request with no session must return `401` + `error: 'no_session'` (fails on the old code which returned `200`).
+- **`dashboard.test.js`** (new, jsdom): runs the real dashboard markup + inline script with a mocked `fetch` and asserts:
+  - expired session (old `200 blank` shape) → friendly "session has expired" message, **not blank**
+  - API rejection (`401 expired_session`) → friendly message
+  - successful session → renders user + welcome message
+  - network failure → error message
+
+**Validated**: temporarily stashing the fixes made the new tests fail (confirming they catch the bugs); with fixes restored, `npm test` → **12/12 tests pass**.
+
+## Verification
+
+- Live server: expired session now yields `401 {"error":"expired_session",...}`; valid session yields the welcome payload.
+- Client behavior verified in jsdom against the real page markup (friendly messages render; no blank state).
+- Note: no real Chrome/Chromium binary or Playwright is available in this environment, so browser-level verification was done via HTTP against the running server and jsdom-driven script execution.
