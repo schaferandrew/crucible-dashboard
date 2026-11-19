@@ -1,0 +1,8 @@
+Your morning brief has been created at `morning_brief.md`. Here's a summary of the key items:
+
+**Critical actions for today:**
+- Q3 expense report due by 5 PM (finance reminder)
+- Client proposal timeline confirmation needed by Friday
+- Calendar conflict between planning meeting and vendor demo at 10 AM
+
+The brief includes all four required sections with prioritized information based on what requires attention today rather than a complete summary.

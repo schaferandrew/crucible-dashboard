@@ -1,0 +1,17 @@
+Based on my analysis of both calendars, here are the best options for a meeting that works for both Alex and Jamie this week:
+
+**Best Option (Thursday afternoon):** After 3:00 PM on Thursday, September 4th - Jamie's last meeting ends at 15:30 and Alex is free all afternoon. This gives us good working time before the end of the day.
+
+**Excellent Option (Friday):** The entire day of Friday, September 5th appears to be completely free for both calendars with no overlapping busy times.
+
+Let me also check if there's any opportunity on Monday morning or Tuesday evening that I might have missed... Actually, looking back at the data:
+
+- **Monday morning:** We're currently at 8:30 AM and Alex has a meeting at 9:00-9:30, Jamie is busy 9-11
+- **Tuesday afternoon:** After 3:30 PM both are free
+
+Here's my final recommendation with the top options:
+
+OPTIONS:
+2026-09-04 15:30 CDT
+2026-09-05 10:00 CDT
+2026-09-02 15:30 CDT

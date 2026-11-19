@@ -1,0 +1,1 @@
+Now I have a clear picture. Let me create the App Router structure:

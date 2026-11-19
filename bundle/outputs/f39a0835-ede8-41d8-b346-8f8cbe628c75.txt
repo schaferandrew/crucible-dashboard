@@ -1,0 +1,1 @@
+I need to analyze the calendar data to find all valid meeting slots between Alex and Jamie. Let me write a Python script to calculate this systematically.

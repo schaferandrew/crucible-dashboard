@@ -1,0 +1,17 @@
+Now I have all the information needed to answer the three questions:
+
+**Answer Summary:**
+
+1. **Flight**: SL114 (Skylark) - non-stop flight departing at 08:15, arriving at 10:40, total cost $279 (bag included in fare). This is the cheapest valid option that meets all criteria: departs ≥07:00, arrives ≤12:00, at most one stop, and within budget.
+
+2. **Restaurant**: Harbor Grill - seafood restaurant with peanut-free AND sesame-free kitchen (verified via get_restaurant), 1.3 miles walking distance from the Larkspur Inn (within 1.5 mile requirement).
+
+3. **Distance/Time**: The Larkspur Inn is 14.2 miles from Larkspur Airport by road, and a taxi would take 41 minutes if departing at 17:15 (rush hour time).
+
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41
