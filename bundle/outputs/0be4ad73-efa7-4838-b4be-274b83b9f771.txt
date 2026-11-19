@@ -1,0 +1,28 @@
+Done. The page now renders `Name: Alice` / `Plan: Pro` directly in the server-rendered HTML, and the API route still works.
+
+## Diagnosis
+
+`app/page.tsx` was a **Server Component** (no `"use client"` directive) but used `useState`, `useEffect`, and browser `fetch` — all Client-Component-only APIs. Next.js threw at render time:
+
+```
+⨯ useState only works in Client Components. Add the "use client" directive...
+```
+
+so the page crashed into an error boundary (a 404 shell) and acct_1's name/plan never appeared. A secondary type error (`useState(null)` → `account` narrows to `never`) also broke `next build`.
+
+## Fix (idiomatic App Router: server-side data access)
+
+- **`lib/accounts.ts`** (new): the simulated database + `getAccount(id)`, shared as a single source of truth.
+- **`app/page.tsx`**: now a plain Server Component that reads `getAccount('acct_1')` at render time and renders the same markup (`main`/`h1`/Name/Plan). No hooks, no client fetch — data is in the initial HTML (route prerenders as static).
+- **`app/api/account/route.ts`**: unchanged behavior (200 with JSON / 404 for missing or unknown id), now backed by the shared module.
+
+## Tests
+
+- **`app/page.test.tsx`** (new): renders the page via `renderToStaticMarkup`, mimicking Next.js server-component rendering where client effects never run. Asserts Alice/Pro are in the SSR output and no `Loading...` placeholder. Verified it **fails against the original buggy code** (`expected '<p>Loading...</p>' to contain '<h1>Account</h1>'`) and passes with the fix — so it's a true regression test for this bug class.
+- **`app/api/account/route.test.ts`**: the existing API tests, moved here (they previously lived in `page.test.tsx`).
+
+## Verification
+
+- `npm test`: 3/3 pass
+- `next build`: compiles clean; `/` is static-prerendered
+- Live server: page HTML contains `<p>Name: <!-- -->Alice</p><p>Plan: <!-- -->Pro</p>` and the API returns `{"name":"Alice","plan":"Pro"}`
