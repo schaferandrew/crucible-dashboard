@@ -66,6 +66,7 @@ export interface Scope {
 export interface ScopeOptions {
   showInProgress?: boolean;
   sort?: SortSpec;
+  candidateFilter?: (candidate: Candidate) => boolean;
 }
 
 /** The setups of a view that appear in at least one of its candidates. */
@@ -83,7 +84,15 @@ function candidatePasses(c: Candidate, ctx: DataContext, view: View, skip?: Dim)
 export function scope(index: SuiteIndex, ctx: DataContext, opts: ScopeOptions = {}): Scope {
   const view = viewFor(index, ctx.section, ctx.provisional);
   const exclude = ctx.exclude as ReadonlySet<TierId>;
-  const inView = setupsInView(view);
+  const matches = (c: Candidate) => candidatePasses(c, ctx, view) && (opts.candidateFilter?.(c) ?? true);
+  const inView = opts.candidateFilter
+    ? new Set(
+        view
+          .candidates()
+          .filter(matches)
+          .flatMap((c) => c.members.flatMap((m) => (m ? [m.id] : []))),
+      )
+    : setupsInView(view);
   const setups = allSetups(index).filter((s) => inView.has(s.id) && passes(s, ctx, view));
 
   const cells: Cell[] = [];
@@ -91,14 +100,10 @@ export function scope(index: SuiteIndex, ctx: DataContext, opts: ScopeOptions = 
     for (const [task, cell] of cellsOf(index, s.id)) if (view.taskIds.has(task as never)) cells.push(cell);
   }
 
-  const rows = sortRows(
-    index,
-    buildRows(index, view, (c) => candidatePasses(c, ctx, view), exclude),
-    {
-      key: OVERALL,
-      dir: -1,
-    },
-  );
+  const rows = sortRows(index, buildRows(index, view, matches, exclude), {
+    key: OVERALL,
+    dir: -1,
+  });
   const rank = rankRows(index, rows);
   const show = !!opts.showInProgress;
   const visible = visibleRows(rows, show);
