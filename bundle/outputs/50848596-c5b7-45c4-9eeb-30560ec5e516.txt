@@ -1,0 +1,12 @@
+I checked your primary calendar (Alex Rivera) for **Tuesday, September 1, 2026** around **3:30 PM Central time**.
+
+Today's events are:
+- Standup — 9:00–9:30 AM
+- 1:1 with Jamie — 11:00 AM–12:00 PM
+- Lunch — 12:00–1:00 PM
+- Design review — 2:00–**3:30 PM** (Conference Room A)
+- Customer call — **4:00**–5:00 PM
+
+The Design review ends exactly at 3:30 PM, and the next event (Customer call) doesn't start until 4:00 PM. So there's a free window from 3:30 to 4:00 PM — you're open right at 3:30.
+
+ANSWER: free

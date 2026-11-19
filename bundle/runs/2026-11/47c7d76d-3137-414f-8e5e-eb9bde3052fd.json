@@ -1,0 +1,104 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "47c7d76d-3137-414f-8e5e-eb9bde3052fd",
+ "run_path": "lmstudio_qwen3.8-27b@reasoning-high/travel-planning-agent/20261119_172225",
+ "legacy_run_id": null,
+ "started_at": "2026-11-19T17:22:25.877381+00:00",
+ "ended_at": "2026-11-19T17:23:21.823237+00:00",
+ "elapsed_s": 55.2,
+ "task": {
+  "id": "travel-planning-agent",
+  "version": 1,
+  "rubric_version": 1,
+  "content_hash": "0b0723ef8c5ce93f",
+  "rubric_hash": "9d8e0c84768c23b5",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/qwen3.8-27b",
+  "base": "qwen3.8-27b",
+  "publisher": "bartowski",
+  "artifact": "bartowski/Qwen3.8-27B-GGUF/Qwen3.8-27B-Q3_K_S.gguf",
+  "format": "gguf",
+  "quant": "Q3_K_S",
+  "reasoning": {
+   "requested": "high",
+   "resolved": "high",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 32768,
+  "variant_key": "qwen3.8-27b|bartowski|gguf|q3_k_s",
+  "display": "qwen3.8-27b · Q3_K_S",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "none"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": "LM Link",
+  "device": "Whitehall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "rtx-5070-ti-16gb",
+  "class": "discrete_gpu",
+  "accelerators": [
+   {
+    "name": "NVIDIA RTX 5070 Ti 16GB",
+    "memory_gb": 16,
+    "count": 1
+   }
+  ],
+  "system_memory_gb": 32.0,
+  "cpu": "AMD Ryzen 7 7700",
+  "offload": null,
+  "label": "Whitehall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 13,
+  "tokens_in": 29459,
+  "tokens_out": 2413,
+  "model_responses": 6,
+  "ttft_s": 1.921,
+  "ttft_avg_s": 0.936,
+  "response_time_avg_s": 9.068,
+  "output_tokens_per_s": 49.5,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/47c7d76d-3137-414f-8e5e-eb9bde3052fd.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "a67d4f6",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:70093ca9818744b4ac10f4a6186e5454ce5f97a7d7945e643c429d121466311e",
+  "submitter": null,
+  "verification": null
+ }
+}

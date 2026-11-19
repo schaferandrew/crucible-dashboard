@@ -1,0 +1,1 @@
+The first report timestamp comes from app.log (ticket #4812 at 18:06:01). Now let me correlate cache hits with access-log users to find the first affected request and count affected users:

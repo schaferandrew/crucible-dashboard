@@ -1,0 +1,20 @@
+## Report: Login to the Login Service
+
+**What I did:**
+1. Read the site skill (`SKILL.md`) — the login service runs at `http://localhost:3456`, with test accounts `testuser / correctpassword` (Active) and `deactivated / correctpassword` (Deactivated).
+2. Started the application via `npm start` (Express server on port 3456).
+3. Attempted the first login as the designated test user (`testuser` / `correctpassword`) via the login flow.
+4. **Diagnosis:** The login failed — `POST /api/login` returned `401 {"error":"invalid_credentials"}`, which the UI maps to the symptom *"Invalid username or password"*. The account itself is marked Active, so the failure was a **Wrong Password**.
+
+**Recovery (per the skill's procedure):**
+- Used the "Forgot password?" flow: `POST /api/reset-password-request` issued reset token `reset_d42a94db7c22d5cf` for `testuser`.
+- Completed the reset: `POST /api/reset-password` with the token and a new password → reset succeeded.
+- Re-attempted login with the new credentials → `200 {"success":true,"redirect":"/dashboard.html"}`, and a signed session cookie (`sessionId=sess_2d74f98ad47f2458...`) was issued.
+
+**Final state:**
+- Reached the authenticated dashboard: `GET /api/dashboard` returned `{"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}` with a valid session.
+- The audit log (`.crucible/audit.jsonl`) confirms the sequence: `login_failed` → `reset_requested` → `password_reset` → `login_success` → `dashboard_ok`.
+
+I did not bypass authentication, clear cookies, or touch any application code; all recovery went through the skill's supported reset endpoints.
+
+FAILURE: Wrong Password

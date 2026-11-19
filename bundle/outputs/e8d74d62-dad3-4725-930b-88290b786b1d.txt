@@ -1,0 +1,1 @@
+The file mount misbehaved. Let me pipe the test script via stdin instead:

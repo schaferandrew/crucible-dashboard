@@ -1,0 +1,3 @@
+Confirmed: jsdom emits a `jsdomError` with message `"Not implemented: navigation to another Document"` when page code sets `location.href` — my regression test can listen for that to assert the redirect. Now let me implement the fix.
+
+**Fix 1 — server.js**: signal invalid/expired sessions explicitly (401 + error code) instead of a silent 200 with `user: null`, and expose the session store for tests:

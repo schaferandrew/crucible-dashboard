@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "3dd3cb43-a7f7-4e6e-90a6-686b613b3f4a",
+ "run_path": "lmstudio_qwen3.8-27b@reasoning-high/morning-brief-spanish/20261119_072648",
+ "legacy_run_id": null,
+ "started_at": "2026-11-19T07:26:48.135641+00:00",
+ "ended_at": "2026-11-19T07:26:49.705666+00:00",
+ "elapsed_s": 0.87,
+ "task": {
+  "id": "morning-brief-spanish",
+  "version": 2,
+  "rubric_version": 3,
+  "content_hash": "a6695597fb3c2428",
+  "rubric_hash": "01912ad7b66e347c",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/qwen3.8-27b",
+  "base": "qwen3.8-27b",
+  "publisher": null,
+  "artifact": null,
+  "format": null,
+  "quant": null,
+  "reasoning": {
+   "requested": "high",
+   "resolved": "high",
+   "resolved_source": "requested"
+  },
+  "context_loaded": null,
+  "variant_key": "qwen3.8-27b|-|-|-",
+  "display": "qwen3.8-27b",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "none"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": null,
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m1-pro-32gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 32.0,
+  "cpu": "Apple M1 Pro",
+  "offload": null,
+  "label": "Ironwood"
+ },
+ "outcome": {
+  "status": "failed",
+  "harness_status": "ERROR (exit 1)",
+  "returncode": 1,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 0,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "model_responses": 1,
+  "ttft_s": null,
+  "ttft_avg_s": null,
+  "response_time_avg_s": 0.046,
+  "output_tokens_per_s": null,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/3dd3cb43-a7f7-4e6e-90a6-686b613b3f4a.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "a67d4f6",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:94ff5a210caa27c1c460faca9c59147ff2deb009c138457e50859ea67c573b7c",
+  "submitter": null,
+  "verification": null
+ }
+}

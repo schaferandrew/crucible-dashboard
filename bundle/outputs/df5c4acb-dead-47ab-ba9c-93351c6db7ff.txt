@@ -1,0 +1,14 @@
+All done. Everything checks out — the git diff confirms only three rows were added and no existing rows or files were touched.
+
+**What I filed:**
+
+1. **Maple Street Community Church — $250.00, check (no. 1129), gift date Nov 17, 2024** → `records/2024/2024-11-17_Maple-Street-Community-Church.pdf`
+   - This was a reissued statement replacing the original 2024 receipt. I logged only the $250 gift and ignored the $500 pledge balance, which the document explicitly notes is not part of this gift.
+
+2. **Hope Harbor Food Pantry — $180.00, card, gift date Dec 31, 2025** → `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf`
+   - The letter is dated Jan 4, 2026 (the scan date), but the gift was received Dec 31, 2025 — so it belongs in tax year 2025.
+
+3. **Riverbend Public Radio — $60.00, card, gift date Jan 2, 2026** → `records/2026/2026-01-02_Riverbend-Public-Radio.pdf`
+   - A monthly sustainer payment; the "$660 in 2025" line is just a year-to-date summary, not this gift.
+
+All three rows were added to `giving-log.csv` in chronological order (matching how the existing log is sorted), and **inbox/ is now empty**.

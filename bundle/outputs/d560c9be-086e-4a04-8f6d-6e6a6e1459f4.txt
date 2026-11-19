@@ -1,0 +1,61 @@
+Done — all four sources were available and the brief is saved to `morning-brief.md`. Full text:
+
+# Morning Brief — Wednesday, September 2, 2026
+
+All four sources (weather, email, calendar, news) were available; nothing is missing.
+
+## Weather
+
+**Saint Paul, MN**
+
+- Today: high 68°F / low 55°F, partly cloudy, 10% chance of precipitation, wind 8 mph. Current conditions: 68°F, humidity 65%.
+- Outlook: Thursday sunny (74/59); Friday scattered showers with a 30% chance — relevant if anything depends on Friday's weather.
+
+**Recommendation:** No special precautions needed today; bring a light layer for the evening (low of 55°F).
+
+## Outstanding work
+
+Items left open by yesterday's emails, in priority order:
+
+1. **Q3 expense report** — due today at 5:00 PM (finance reminder sent Sept 1). Reports missing the cutoff are paid with next month's payroll. → Action: submit before 5:00 PM today.
+2. **Reply to client on proposal timeline** — client@example.com asked yesterday whether the revised proposal can be delivered by Friday and needs an answer before briefing their team. Still unanswered as of this brief. → Action: reply today with a confirmed date (or a realistic alternative).
+3. **Q3 review results for the Planning meeting** — Alex reported the Q3 review is complete and ahead of schedule, and wants to discuss the results in today's planning meeting (9:30 AM, Room B). → Action: have the results ready before 9:30 AM.
+4. **1-on-1 follow-ups** — Jamie's notes cover career goals, next-quarter priorities, and team-building activities; no explicit deadline or ask is stated in the email. → Lower priority: review the notes and schedule a short follow-up this week if action items exist.
+
+## Emails
+
+Four emails received yesterday (Sept 1). Prioritized by what requires attention today:
+
+- **finance@example.com — "Reminder: Q3 expense report due Wednesday 5 PM"** (Sept 1, 14:15 UTC): deadline is today at 5:00 PM; late reports are paid with next month's payroll. → Action: submit the report before 5:00 PM.
+- **client@example.com — "Question about the proposal timeline"** (Sept 1, 16:45 UTC): asks to confirm whether the revised proposal can be delivered by Friday; needs an answer before briefing their team. Unanswered. → Action: reply today.
+- **alex@example.com — "Project update - Q3 review completed"** (Sept 1, 10:30 UTC): Q3 review is complete and ahead of schedule; wants to discuss results in the planning meeting. → Action: prepare the results for today's 9:30 AM Planning meeting.
+- **jamie@example.com — "Meeting notes from yesterday"** (Sept 1, 09:00 UTC): notes from the 1-on-1 covering career goals, next-quarter priorities, and team-building activities. No explicit ask or deadline stated. → Action: review; follow up this week only if action items exist.
+
+## Calendar
+
+Today (Wednesday, Sept 2), timezone America/Chicago:
+
+- **9:30–10:30 AM — Planning** (Room B) with Alex.
+- **10:00–11:00 AM — Vendor demo** (Zoom) with Alex and vendor@example.com.
+- **1:00–2:00 PM — Budget meeting** (Conference Room A) with Jamie.
+
+⚠️ **Conflict:** Planning (9:30–10:30) overlaps the first 30 minutes of Vendor demo (10:00–11:00). → Recommendation: decide before 10 AM — leave planning early, ask the vendor to start at 10:30, or delegate one.
+
+Upcoming days:
+
+- **Thu Sept 3:** Standup 9–10 AM (Zoom); Interview 11 AM–12 PM (Conference Room B) with Alex.
+- **Fri Sept 4:** Workshop 9–11 AM (Main Hall); Project review 2–3 PM (Conference Room A). Note: Friday's calendar has a morning workshop and an afternoon project review — factor this in when confirming the client's proposal delivery date.
+
+## News
+
+Local news for Saint Paul, MN:
+
+- **Twin Cities Tech Conference Returns** (StarTribune, high importance): annual conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies; registration opens this Friday. → Recommendation: register when it opens Friday if you want to attend.
+- **Maplewood Park Renovation Complete** (Pioneer Press, medium importance): renovations finished ahead of schedule — new walking trails and a children's playground; grand reopening Saturday. Weekend option, no action today.
+- **State Fair Attendance Drops Slightly** (StarTribune, low importance): 3% attendance decline, cooler-than-average weather cited. No action needed.
+
+## Top 3 things to do today
+
+1. Submit the Q3 expense report before the 5:00 PM deadline — hard deadline; missing it defers payment a month.
+2. Reply to client@example.com confirming whether the revised proposal can be delivered by Friday — they are waiting on your answer to brief their team; check Friday's calendar (workshop 9–11 AM, project review 2–3 PM) before committing.
+3. Bring Q3 review results to the 9:30 AM Planning meeting with Alex and resolve the 10:00 AM overlap between Planning and Vendor demo (leave early, shift the demo to 10:30, or delegate).

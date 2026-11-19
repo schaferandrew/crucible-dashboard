@@ -1,0 +1,15 @@
+I checked both calendars for this week (Mon Aug 31 – Fri Sep 4, all times CDT). Jamie's calendar is shared free/busy-only, so I compared busy blocks directly.
+
+**Reasoning:**
+
+- **Monday & Tuesday — no hour-long overlap.** Monday: the only mutual gaps are ≤30 min (e.g., 8:30–9:00; Jamie's 11:00–12:00 gap collides with my roadmap workshop, and 13:00–14:00 with my design review). Tuesday: Jamie is busy 9:30–10:30 and 12:00–14:30; my free windows (9:30–11:00, 13:00–14:00) only overlap Jamie's gaps by ~30 min each.
+- **Wednesday — first real slot.** Jamie is busy until 15:30 (last block ends then); I'm free from 14:00 after planning. Mutual free window: **15:30–17:00** (90 min) → a 60-min meeting at 15:30 fits with buffer.
+- **Thursday — mid-morning slot.** Jamie is free 10:30–12:00; my sprint review ends 11:00 and lunch starts 12:00, so the overlap is exactly **11:00–12:00**. (Also 13:00–14:00 works since I declined the design sync that would otherwise block it.)
+- **Friday — most flexible.** Both of us are completely free **15:00–17:00** (a full 2-hour window), and also share a 90-min gap at 10:30–12:00.
+
+Best first = earliest in the week, with later options offering better time-of-day or more flexibility:
+
+OPTIONS:
+2026-09-02 15:30 CDT
+2026-09-03 11:00 CDT
+2026-09-04 15:00 CDT

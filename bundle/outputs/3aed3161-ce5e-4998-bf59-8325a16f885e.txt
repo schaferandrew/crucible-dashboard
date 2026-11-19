@@ -1,0 +1,32 @@
+Done. The morning brief is saved to `brief.md` in the workspace. Here it is:
+
+# Morning Brief — Wednesday, September 2, 2026
+
+## Emails
+
+- **Finance — Q3 expense report due today at 5 PM:** Your Q3 expense report must be submitted by 5:00 PM today (Wednesday, September 2). Reports that miss the cutoff are paid with next month's payroll. This is your most time-sensitive item this morning.
+- **Client — Question about the proposal timeline:** The client wants confirmation of whether the revised proposal can be delivered by Friday; they need an answer before briefing their team. Reply when you can.
+- **Alex — Project update, Q3 review completed:** The Q3 review is done and ahead of schedule. Alex suggests discussing the results in today's 9:30 AM planning meeting.
+- **Jamie — Meeting notes from yesterday:** Notes from your 1-on-1 covering career goals, next quarter priorities, and team building activities.
+
+## Calendar
+
+Today (Wednesday, September 2):
+
+- **9:30–10:30 AM — Planning** · Room B · with Alex
+- **10:00–11:00 AM — Vendor demo** · Zoom · with Alex and vendor@example.com
+- **1:00–2:00 PM — Budget meeting** · Conference Room A · with Jamie
+
+⚠️ Note: the Planning meeting (9:30–10:30) overlaps with the Vendor demo (10:00–11:00). You'll need to leave planning early or reschedule one of them.
+
+## News
+
+- **Twin Cities Tech Conference Returns** (StarTribune): The annual tech conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies. Registration opens this Friday — worth signing up if you're interested.
+- **Maplewood Park Renovation Complete** (Pioneer Press): Renovations finished ahead of schedule, adding new walking trails and a children's playground. Grand reopening is Saturday.
+- **State Fair Attendance Drops Slightly** (StarTribune): Minnesota State Fair attendance fell 3% this year, with cooler-than-average weather cited as the factor.
+
+## Spanish practice
+
+Hoy es miércoles y tienes un día bastante ocupado: a las 9:30 de la mañana tienes una reunión de planificación con Alex para revisar los resultados del análisis del tercer trimestre, que se completó antes de lo previsto; justo después, a las 10:00, hay una demostración del proveedor por Zoom, pero ten en cuenta que se solapa con la reunión de planificación, así que tendrás que salir antes o reprogramar. No olvides enviar el informe de gastos antes de las cinco de la tarde, porque si no cumples el plazo, el pago se retrasará hasta la nómina del mes siguiente; además, responde al cliente lo antes posible para confirmar si puedes entregar la propuesta revisada el viernes, ya que necesita tu respuesta antes de informar a su equipo. Por la tarde, a la una, tienes una reunión de presupuesto con Jamie en la sala A. Si te queda tiempo libre, puedes inscribirte en la conferencia tecnológica de los Twin Cities —la inscripción abre este viernes— o visitar el parque Maplewood, que reabre el sábado con nuevos senderos para caminar y un área de juegos para niños.
+
+Key highlights: the expense report is due **today at 5 PM**, you have a **scheduling conflict** between Planning and the Vendor demo this morning, and the client is waiting on your answer about Friday's proposal delivery.

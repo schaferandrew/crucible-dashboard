@@ -1,0 +1,107 @@
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ bash(command=find /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27)
+  ⎿ # Brightline Windows site
+
+A small Next.js 14 (App Router) site. The quote request form lives at `/contact`:
+
+- `app/contact/page.tsx`: the page
+- `app/contact/LeadForm.tsx`: the form
+- `app/api/leads
+  ⎿ /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@reasoning-high_react-lead-form_20261119_155128/app/contact/LeadForm.tsx
+/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@reasoning-high
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { FormEvent } from "react";
+
+const values = { name: "", email: "", company: "", message: "" };
+
+export default function LeadForm() {
+  async function handleSubmit(event: FormEvent<HTMLForm
+  ⎿ import LeadForm from "./LeadForm";
+
+export const metadata = { title: "Get a free quote | Brightline Windows" };
+
+export default function ContactPage() {
+  return (
+    <main>
+      <h1>Get a free quot
+  ⎿ import { saveLead } from "@/lib/leads";
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const lead = await saveLead(body);
+  return Response.json({ lead }, { sta
+  ⎿ import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+
+export interface Lead {
+  name: string;
+  email: string;
+  company: string;
+  message: string;
+}
+
+export i
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ // @vitest-environment node
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { afterEach, beforeEach, describe, expect, it } from 
+  ⎿ {
+  "name": "react-lead-form",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run"
+  },
+  "dep
+  ⎿ import react from "@vitejs/plugin-react";
+import path from "node:path";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: { alias: { "@": pa
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@, timeout=300)
+  ⎿ import type { ReactNode } from "react";
+
+export const metadata = { title: "Brightline Windows" };
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang
+  ⎿ import Link from "next/link";
+
+export default function Home() {
+  return (
+    <main>
+      <h1>Brightline Windows</h1>
+      <p>Replacement windows and doors, installed in a day.</p>
+      <Link href
+  ⎿ {
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInte
+  ⎿ @asamuzakjp
+@babel
+@csstools
+---
+                      ^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at e_ (/Users/schafer/.crucible/workspaces/lmst

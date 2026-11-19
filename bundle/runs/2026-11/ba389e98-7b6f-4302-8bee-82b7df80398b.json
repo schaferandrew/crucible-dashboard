@@ -1,0 +1,110 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "ba389e98-7b6f-4302-8bee-82b7df80398b",
+ "run_path": "lmstudio_recursivesi_flint/blank-dashboard-debug/20261119_083607",
+ "legacy_run_id": null,
+ "started_at": "2026-11-19T08:36:08.427222+00:00",
+ "ended_at": "2026-11-19T08:56:10.014061+00:00",
+ "elapsed_s": 1200.61,
+ "task": {
+  "id": "blank-dashboard-debug",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "1cd54ceb401f0947",
+  "rubric_hash": "c99e9bf61025cb59",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/recursivesi/flint",
+  "base": "recursivesi/flint",
+  "publisher": "recursivesi",
+  "artifact": "recursivesi/flint",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 100352,
+  "variant_key": "recursivesi/flint|recursivesi|gguf|q4_k_m",
+  "display": "flint · Q4_K_M",
+  "origin": {
+   "maker": "recursivesi",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": "LM Link",
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "timeout",
+  "harness_status": "TIMEOUT",
+  "returncode": 143,
+  "timed_out": true,
+  "invalid": {
+   "reason": "Contaminated: the agent read files in crucible's checkout outside its workspace (see leaks).",
+   "marked_at": "2026-11-19T08:56:16.548722+00:00"
+  },
+  "leaks": [
+   "/Users/schafer/Developer/crucible/r",
+   "/Users/schafer/Developer/crucible/runs/openrouter_anthropic_claude-sonnet-5.5/browser_tool/C5/20261025_063449/workspace",
+   "/Users/schafer/Developer/crucible/runs/openrouter_anthropic_claude-sonnet-5.5/browser_tool/C5/20261025_063449/workspace/prompt.txt",
+   "/Users/schafer/Developer/crucible/runs/openrouter_anthropic_claude-sonnet-5.5/browser_tool/C5/20261025_063449/workspace/prompt.txt</path",
+   "/Users/schafer/Developer/crucible/runs/openrouter_anthropic_claude-sonnet-5.5/browser_tool/C5/20261025_063449/workspace/prompt.txt\\",
+   "/Users/schafer/Developer/crucible/runs/openrouter_anthropic_claude-sonnet-5.5/browser_tool/C5/20261025_063449/workspace/prompt.txt\\\\\\",
+   "/Users/schafer/Developer/crucible/runs/openrouter_anthropic_claude-sonnet-5.5/browser_tool/C5/20261025_063449/workspace\\",
+   "/Users/schafer/Developer/crucible\\"
+  ]
+ },
+ "metrics": {
+  "tests_passed": 7,
+  "tests_failed": 0,
+  "tool_calls": 61,
+  "tokens_in": 1273768,
+  "tokens_out": 28520,
+  "model_responses": 36,
+  "ttft_s": 1.878,
+  "ttft_avg_s": 1.935,
+  "response_time_avg_s": 27.634,
+  "output_tokens_per_s": 30.8,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/ba389e98-7b6f-4302-8bee-82b7df80398b.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "a67d4f6",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:5638d13d731248b39e60256b5a0be373209e56d4d55ac7fc1e2888c7948b3c7c",
+  "submitter": null,
+  "verification": null
+ }
+}

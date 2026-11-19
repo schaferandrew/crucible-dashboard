@@ -1,0 +1,32 @@
+All three questions answered from the tools. Here's my reasoning:
+
+**Q1 — Flight:** Checked all 7 flights against every constraint:
+- NW201 ($234): departs 06:10 → fails "departs 07:00 or later"
+- CJ550 ($255): 2 stops → fails "at most one stop"
+- TA77 ($274): layover only 50 min → fails "layover at least 60 minutes"
+- NW318 ($275): arrives 12:30 → fails "by 12:00 noon"
+- PL09 ($287): passes all constraints (departs 07:20, arrives 11:10, 1 stop, 75-min layover)
+- **SL114 ($279)**: departs 08:15 ✓, arrives 10:40 ✓, nonstop ✓, first checked bag included (fee $0), total $279 ≤ $300 ✓ — cheapest of the two qualifying flights
+- SL330 ($349): exceeds $300 budget
+
+**Q2 — Restaurant:** Checked kitchen allergen notes for all six Larkspur restaurants:
+- Saffron Table: shared peanut-oil fryer → unsafe (peanut)
+- Golden Noodle & Tidewater Bistro: sesame oil / in-house sesame buns on shared surfaces → unsafe (sesame)
+- Harbor Grill, Fennel & Fig, Maple & Rye: kitchens free of both peanuts and sesame ✓
+
+Then verified actual walking distances from the Larkspur Inn (not straight-line):
+- Harbor Grill: **1.3 mi walk** ✓ within 1.5
+- Fennel & Fig: 1.9 mi walk ✗ (river crossing detour)
+- Maple & Rye: 2.8 mi walk ✗
+
+So Harbor Grill is the only safe restaurant within walking range.
+
+**Q3 — Airport transfer:** Driving distance from Larkspur Inn to Larkspur Airport = **14.2 miles**. A taxi leaving the airport at 17:15 hits peak/rush-hour traffic → **41 minutes**.
+
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41

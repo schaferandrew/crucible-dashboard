@@ -1,0 +1,185 @@
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ bash(command=find /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express RE
+  ⎿ /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@reasoning-high_editorial-review-workflow_20261119_163003/packages/shared/src/validation.ts
+/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's u
+  ⎿ import { z } from "zod";
+
+// Request bodies, as the RealWorld spec wraps them ({ user: {...} }, { article: {...} }, ...).
+
+export const registerSchema = z.object({
+  user: z.object({
+    username: z.s
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin
+  ⎿ import express, { type Express } from "express";
+import { type Db, createDb } from "./db";
+import { errorHandler, notFound } from "./errors";
+import { articlesRouter } from "./routes/articles";
+import
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import { createApp } from "./app";
+import { createDb } from "./db";
+import { seed } from "./seed";
+
+const port = Number(process.env.PORT ?? 3000);
+const db = createDb();
+if (process.env.SEED !== "0") 
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../er
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import {
+  type Article,
+  type ArticlesResponse,
+  type CreateArticleInput,
+  type UpdateArticleInput,
+  slugify,
+} from "@conduit/shared";
+import type { ArticleRow, Db } from "../db";
+import { forbi
+  ⎿ import { type ArticleRow, type Db, nextId } from "../db";
+
+export function findArticleBySlug(db: Db, slug: string): ArticleRow | undefined {
+  for (const article of db.articles.values()) if (article.s
+⏺ read(path=/Users/schafer/workspaces/lmstudio_qwen3.8-27b@reasoning-hig)
+  ⎿ ENOENT: no such file or directory, access '/Users/schafer/workspaces/lmstudio_qwen3.8-27b@reasoning-high_editorial-review-workflow_20261119_163003/apps/api/src/services/presenters.ts'
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { Article, Comment, Profile, User } from "@conduit/shared";
+import type { ArticleRow, CommentRow, Db, UserRow } from "../db";
+import { favoritesCount, isFavorited, tagsForArticle } from ".
+  ⎿ import { loginSchema, registerSchema, updateUserSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+im
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { NextFunction, Request, Response } from "express";
+import { verifyToken } from "../auth/tokens";
+import { unauthorized } from "../errors";
+
+declare global {
+  // eslint-disable-next-line 
+  ⎿ import type { ErrorRequestHandler } from "express";
+import { ZodError } from "zod";
+import { toErrorEnvelope } from "@conduit/shared";
+
+/** An error with an HTTP status and a RealWorld error envelope.
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@)
+  ⎿ 273 apps/api/test/realworld.contract.test.ts
+      40 apps/api/test/helpers.ts
+      33 apps/api/src/seed.ts
+      74 apps/web/src/api/client.ts
+      71 apps/web/src/pages/ArticlePage.tsx
+      52 ap
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the of
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import request from "supertest";
+import type { Express } from "express";
+import { createApp } from "../src/app";
+import { createDb } from "../src/db";
+
+/** A fresh app over an empty database, with a c
+  ⎿ import type { Db } from "./db";
+import { createArticle, favorite } from "./services/articles";
+import { addComment } from "./services/comments";
+import { follow, register } from "./services/users";
+im
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@)
+  ⎿ import type {
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld
+  ⎿ api
+App.tsx
+auth
+components
+main.tsx
+pages
+import { Link, Route, Routes } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
+import { ArticlePage } from "./pages/ArticlePage";
+impo
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import { type FormEvent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ApiError, api } from "../api/client";
+
+export function EditorPage() {
+ 
+  ⎿ import type { Article, Comment } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { api } fr
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { ArticleListQuery, Profile } from "@conduit/shared";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../api/cl
+  ⎿ ENOENT: no such file or directory, access '/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@reasoning-high_editorial-review-workflow_20261119_20261119/apps/web/src/auth/AuthContext.tsx'
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { User } from "@conduit/shared";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { api, setToken } from "../api/client"
+  ⎿ import { useCallback, useEffect, useState } from "react";
+import type { ArticleListQuery } from "@conduit/shared";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+i
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+  ⎿ import type { ArticleListQuery, ArticlesResponse } from "@conduit/shared";
+import { useEffect, useState } from "react";
+import { ArticlePreview } from "./ArticlePreview";
+import { Pagination } from ".
+  ⎿ export * from "./types";
+export * from "./validation";
+export * from "./slug";
+⏺ read(path=/Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@rea)
+⏺ bash(command=cd /Users/schafer/.crucible/workspaces/lmstudio_qwen3.8-27b@)
+  ⎿ import { Router } from "express";
+import type { Db } from "../db";
+import { optionalAuth, requireAuth } from "../middleware/auth";
+import { follow, getProfile, unfollow } from "../services/users";
+
+ex
+  ⎿ {
+  "name": "conduit-monorepo",
+  "private": true,
+  "description": "Conduit: a RealWorld (realworld.how) implementation. Express API + React web app sharing one TypeScript package.",
+  "workspaces": 

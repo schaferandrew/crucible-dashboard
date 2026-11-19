@@ -1,0 +1,22 @@
+Done. `slots.json` is written to the working directory and validated.
+
+**Summary of the solution:**
+
+- **Window**: Mon 2026-08-31 → Mon 2026-09-07, all times America/Chicago (-05:00), no DST transition in range.
+- **Candidates**: starts on the hour/half-hour from 09:00 to 16:00 each day (a 60-min meeting must end by 17:00).
+- **Overlap rule**: strict interval intersection — back-to-back (meeting ends exactly when an event starts, or vice versa) is allowed.
+
+**Result: 85 valid slots**, verified programmatically against both calendars:
+| Day | Valid starts |
+|---|---|
+| Mon 08-31 | 11:00, 11:30, 12:00, 15:30, 16:00 (5) |
+| Tue 09-01 | 10:00–14:00 in :00/:30 steps (9) |
+| Wed 09-02 | 10:30–12:00, 14:00–16:00 (9) |
+| Thu 09-03 | 09:00–10:00, 12:00–14:00, 16:00 (9) |
+| Fri 09-04 | 11:00–13:00, 15:00–16:00 (8) |
+| Sat/Sun/Mon | all 15 slots each day (no events) |
+
+**Top 3** — all weekdays, all back-to-back with an existing meeting (zero gap), none starting in the first or last hour of the day; ties broken by preferring midday times on distinct days:
+1. **2026-09-03T12:00** — Thu noon, right after Alex's Interview ends at 12:00; Jamie free until his 15:00 Review.
+2. **2026-09-04T13:00** — Fri, ends exactly when Alex's Project review starts at 14:00; Jamie free since Workshop ended 11:00.
+3. **2026-09-02T14:00** — Wed, starts exactly when Jamie's Budget meeting ends at 14:00; Alex has a clear afternoon.
