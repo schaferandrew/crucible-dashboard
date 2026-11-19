@@ -1,0 +1,11 @@
+Implemented a fully‑featured, accessible form that:
+
+* **Manages state** with `useState` for values, errors and success.
+* **Validates** name, email and message (trim‑only), providing inline error messages and ARIA attributes.
+* **Focuses** the first invalid field on submit.
+* **Submits** a clean JSON payload (trimmed, lower‑cased email) to `/api/leads`.
+* **Handles** API 201 success by showing a `lead-success` element; on 422 it displays server‑provided errors.
+* **Keeps** all typed data after validation failures and prevents default browser validation with `noValidate`.
+* **Preserves element IDs** (`lead-form`, `lead-name`, etc.) required by end‑to‑end tests.
+
+The form now builds with `npm run build`, renders correctly on the server, and works in development. No new dependencies were added; only files under `app/` were modified.

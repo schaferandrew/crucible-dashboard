@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "14506235-31f0-4434-992c-d9138009001c",
+ "run_path": "lmstudio_openai_gpt-oss-20b@reasoning-medium/letter-from-1863/20261118_224945",
+ "legacy_run_id": null,
+ "started_at": "2026-11-18T22:49:45.016015+00:00",
+ "ended_at": "2026-11-18T22:50:24.247335+00:00",
+ "elapsed_s": 38.57,
+ "task": {
+  "id": "letter-from-1863",
+  "version": 1,
+  "rubric_version": 2,
+  "content_hash": "f73283c0960967b1",
+  "rubric_hash": "44543ae2a21316cd",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/openai/gpt-oss-20b",
+  "base": "openai/gpt-oss-20b",
+  "publisher": "openai",
+  "artifact": "openai/gpt-oss-20b",
+  "format": "gguf",
+  "quant": "MXFP4",
+  "reasoning": {
+   "requested": "medium",
+   "resolved": "medium",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 131072,
+  "variant_key": "openai/gpt-oss-20b|openai|gguf|mxfp4",
+  "display": "gpt-oss-20b · MXFP4",
+  "origin": {
+   "maker": "openai",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Ironwood",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m1-pro-32gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 32.0,
+  "cpu": "Apple M1 Pro",
+  "offload": null,
+  "label": "Ironwood"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": 277,
+  "tokens_out": 1520,
+  "model_responses": 1,
+  "ttft_s": 1.431,
+  "ttft_avg_s": 1.431,
+  "response_time_avg_s": 38.567,
+  "output_tokens_per_s": 40.9,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 3683
+ },
+ "output_ref": "outputs/14506235-31f0-4434-992c-d9138009001c.txt",
+ "provenance": {
+  "crucible_version": "2.2.0",
+  "crucible_commit": "6faa751",
+  "crucible_dirty": false,
+  "machine_id": "m_f554f42a74a5",
+  "machine_label": "Ironwood",
+  "source": "crucible-run",
+  "content_hash": "sha256:ee8fbd3950c4c823f7c5757c0e28db9f5005e6a170d85e718187bd7e284e9d81",
+  "submitter": null,
+  "verification": null
+ }
+}

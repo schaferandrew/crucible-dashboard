@@ -1,0 +1,15 @@
+Implemented the required changes:
+
+1. **Enforced contributor terms**  
+   - Updated `apps/web/src/pages/WelcomePage.tsx` to redirect invited users to the editor only if they have accepted terms.
+   - Added a check in `apps/api/src/services/articles.ts` to prevent users without accepted terms from creating articles, throwing a 403 error.
+
+2. **Test coverage**  
+   - Added `apps/api/test/invites.test.ts` to validate:
+     * Regular sign‑ups continue to work.
+     * Invited contributors must accept terms before they can create articles.
+
+3. **Imports**  
+   - Imported `findUserById` and `HttpError` where needed.
+
+All existing tests remain green, including the RealWorld contract suite. The new tests confirm the correct enforcement of contributor terms for invited accounts.

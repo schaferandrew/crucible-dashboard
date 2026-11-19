@@ -1,0 +1,7 @@
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Fennel & Fig
+Walk: 1.9
+Distance: 14.2
+Taxi: 41

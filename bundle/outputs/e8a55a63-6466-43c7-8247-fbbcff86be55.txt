@@ -1,0 +1,1 @@
+I couldn't finish the full conversion within the time available, so I stopped at the point where I had started translating `src/cli.js` to TypeScript.

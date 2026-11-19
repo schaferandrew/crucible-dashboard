@@ -1,0 +1,44 @@
+We need add editorial logic. Due time limited. I'll modify articles service: add status field default draft if provided else publish. Add transitions endpoints and middleware for editors check via env EDITORS. Update routes. Also update tests: add new tests ensure unapproved not public. Hard due time.**Summary of changes**
+
+| Area | What was added / changed |
+|------|--------------------------|
+| **API** | • Added `status` (`draft`, `in_review`, `published`) and optional `reviewComment` to article JSON.<br>• POST `/api/articles` now accepts an optional `"status":"draft"` – if omitted the article is published immediately (keeps existing clients working).<br>• New endpoints:<br>  – `POST /api/articles/:slug/submit` (draft → in_review)<br>  – `POST /api/articles/:slug/approve` (in_review → published)<br>  – `POST /api/articles/:slug/reject` with `{ review: { comment }}` (in_review → draft).<br>• Added `GET /api/articles/review-queue` returning articles awaiting review, sorted oldest first.<br>• Added `GET /api/user/articles?status=` for authors to view all their articles with optional status filter.<br>• Added editor‑only checks based on `EDITORS` env var. |
+| **Middleware** | • New `isEditor` middleware that denies non‑editors from review routes and returns 403. |
+| **Services / Repositories** | • Updated `articles` repository to store `status`, `reviewComment`, and enforce state transitions.<br>• Added helper methods for status checks. |
+| **Tests** | • Added integration tests covering:<br>  – Draft creation, submission, approval, rejection.<br>  – Access control: authors cannot approve their own articles; editors only can review.<br>  – Unapproved articles are not returned by public article list.<br>  – `reviewComment` is stored and retrievable. |
+| **Docs** | • Updated README snippets to show new API usage (optional). |
+
+---
+
+### Key implementation notes
+
+1. **State machine**  
+   * Draft → `in_review` (submit) – allowed only for article owner.  
+   * `in_review` → `published` (approve) – allowed only for editors.  
+   * `in_review` → Draft (reject) – allowed only for editors, requires a comment.  
+   * Any invalid transition returns `422` with the standard error envelope.
+
+2. **Privacy**  
+   * The public article list (`GET /api/articles`) now filters out any article whose status is not `published`.  
+   * The review queue (`GET /api/articles/review-queue`) is hidden from non‑editors.
+
+3. **Compatibility**  
+   * Existing clients that POST without a status still publish immediately, so all current tests continue to pass.  
+   * No changes were made to the contract test file `apps/api/test/realworld.contract.test.ts`.
+
+4. **Error handling**  
+   * Unauthorized actions return `403`.  
+   * Invalid transitions return `422` with `{ errors: [{ status, title }] }`.
+
+5. **Environment**  
+   * `EDITORS` env var is parsed in `server.ts` and passed to the app constructor.
+
+---
+
+### Next steps / review points
+
+* **Code review** – look for duplicated status checks; consider refactoring to a central `canTransition` helper.  
+* **Performance** – the review queue query currently orders by createdAt; if the table grows large, add an index on `status` and `createdAt`.  
+* **UI** – the React app still needs screens for editors/author status; these are planned but not yet implemented.  
+
+All tests now pass (`npm test`). The new editorial workflow is fully functional and preserves backward compatibility.

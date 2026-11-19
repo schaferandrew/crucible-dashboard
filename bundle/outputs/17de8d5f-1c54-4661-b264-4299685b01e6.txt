@@ -1,0 +1,2 @@
+The login attempt was not successful.  
+**FAILURE: Stale/Invalid Cookies**

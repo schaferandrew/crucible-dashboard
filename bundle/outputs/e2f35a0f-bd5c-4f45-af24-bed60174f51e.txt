@@ -1,0 +1,7 @@
+Implemented user‑specific cache isolation:
+
+- **Updated `responseCache`** to append a unique identifier (`|uid=<id>`) to the cache key when a user is signed in, preventing cross‑user cache hits.
+- **Added `responseCacheUser.test.ts`** to verify that cached responses are not shared between different authenticated users while still working for anonymous requests.
+- **Created `incident/POSTMORTEM.md`** template with placeholders for timestamps, user count, and detailed incident information.
+
+All existing tests continue to pass; the new regression test ensures this bug is caught in future builds.

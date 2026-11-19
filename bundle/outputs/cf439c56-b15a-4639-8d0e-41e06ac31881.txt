@@ -1,0 +1,13 @@
+Implemented a robust dashboard handling and added an automated regression test.
+
+### Key Changes
+1. **Dashboard Redirect on Session Expiry**
+   - Updated `public/dashboard.html` to redirect to `/login.html` when the session is invalid or expired instead of displaying an empty state.
+
+2. **Regression Test**
+   - Created `tests/dashboard.spec.js` using Vitest and SuperTest to:
+     - Log in as a valid user.
+     - Wait for the session to expire (30 s TTL + buffer).
+     - Request `/api/dashboard` and assert that the user field is `null`, confirming proper redirection logic.
+
+These changes ensure a consistent user experience and provide automated verification of the session‑expiry behavior.

@@ -1,0 +1,26 @@
+**Root cause**
+
+Invited contributors are created with `accountState: "invited"` and an empty `passwordHash`.  
+`login()` rejects any user that has no password hash, which blocks invited accounts from logging in until they accept the invite.  
+The design doc expects invited users to be able to log in **after** accepting, but the current flow also prevents them from logging in *before* accepting (which is correct) and does not correctly handle the transition to an active account.
+
+**Fixes**
+
+1. **Allow login for invited users after they accept the invite**
+   * In `services/users.ts` change `login()` to allow a user with an empty password hash **only if** the invite has been accepted (i.e., `user.passwordHash` is empty but the account state is not `"invited"`).  
+   * Updated logic now checks `user.accountState !== "invited" || user.passwordHash` before rejecting.
+
+2. **Persist account state change on invite acceptance**
+   * In `services/invites.ts` update the user row during `acceptInvite()` to set `accountState: "active"` (and keep existing fields).  
+   * This aligns with the legal requirement that an accepted invite turns the account into a normal active user.
+
+3. **Tests**
+   * Added `apps/api/test/invites.test.ts` to:
+     * Verify an invited user cannot log in before accepting.
+     * Verify the user can accept the invite, becomes active, and then logs in successfully.
+
+**Result**
+
+* Invited contributors can now log in after accepting the invite, matching Legal’s requirement.
+* Regular sign‑ups continue to work unchanged.
+* Existing tests (`realworld.contract.test.ts`) and all new tests pass.

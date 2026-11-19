@@ -1,0 +1,164 @@
+⏺ bash(command=ls -la incident/logs/)
+  ⎿ total 9064
+drwxr-xr-x@ 5 schafer  staff      160 Oct 29 15:32 .
+drwxr-xr-x@ 4 schafer  staff      128 Oct 26 10:29 ..
+-rw-r--r--@ 1 schafer  staff  3899821 Oct 26 10:29 access.log
+-rw-r--r--@ 1 schafe
+⏺ read(path=incident/logs/deploy.log)
+  ⎿ 2026-10-22T09:03:00.000Z deploy api v1.7.2 rollback=false status=succeeded
+2026-10-23T16:36:10.000Z deploy api v1.8.0 started by ci (commit 7f3e91c, 6 changes since v1.7.2)
+2026-10-23T16:36:10.000Z re
+⏺ bash(command=find . -type f -name "*.ts" -path "./apps/api/*" | head -20)
+  ⎿ ./apps/api/test/helpers.ts
+./apps/api/test/realworld.contract.test.ts
+./apps/api/test/responseCache.test.ts
+./apps/api/src/middleware/responseCache.ts
+./apps/api/src/middleware/auth.ts
+./apps/api/src/
+⏺ bash(command=grep -r "favorit" apps/api/src/ --include="*.ts")
+  ⎿ apps/api/src/seed.ts:import { createArticle, favorite } from "./services/articles";
+apps/api/src/seed.ts:  favorite(db, "why-cobol-still-runs-the-world", id("ada"));
+apps/api/src/seed.ts:  favorite(db
+⏺ bash(command=grep -r "follow" apps/api/src/ --include="*.ts")
+  ⎿ apps/api/src/seed.ts:import { follow, register } from "./services/users";
+apps/api/src/seed.ts:  follow(db, "grace", id("ada"));
+apps/api/src/repositories/users.ts:// --- follows ---------------------
+⏺ read(path=apps/api/src/repositories/articles.ts)
+  ⎿ import { type ArticleRow, type Db, nextId } from "../db";
+
+export function findArticleBySlug(db: Db, slug: string): ArticleRow | undefined {
+  for (const article of db.articles.values()) if (article.s
+⏺ read(path=apps/api/src/db.ts)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin
+⏺ read(path=apps/api/src/server.ts)
+  ⎿ import { createApp } from "./app";
+import { createDb } from "./db";
+import { seed } from "./seed";
+
+const port = Number(process.env.PORT ?? 3000);
+const db = createDb();
+if (process.env.SEED !== "0") 
+⏺ read(path=apps/api/src/app.ts)
+  ⎿ import express, { type Express } from "express";
+import { type Db, createDb } from "./db";
+import { errorHandler, notFound } from "./errors";
+import { responseCache } from "./middleware/responseCache"
+⏺ read(path=apps/api/src/middleware/responseCache.ts)
+  ⎿ import type { NextFunction, Request, Response } from "express";
+
+interface Entry {
+  status: number;
+  body: unknown;
+  storedAt: number;
+}
+
+export interface ResponseCacheOptions {
+  ttlMs: number;
+  
+⏺ bash(command=grep -n "favorit" incident/logs/app.log | head -20)
+  ⎿ (no output)
+⏺ bash(command=grep -n "favorite" incident/logs/app.log | head -20)
+  ⎿ (no output)
+⏺ bash(command=head -n 20 incident/logs/access.log)
+  ⎿ 2026-10-22T00:00:00.090Z rid=0000001 user=user1401 GET /api/profiles/user2020 200 40ms
+2026-10-22T00:00:00.190Z rid=0000002 user=- GET /api/articles?limit=10&offset=10 200 271ms
+2026-10-22T00:00:35.82
+⏺ bash(command=awk '$4 > "2026-10-23T16:42:10.000Z"' incident/logs/access.l)
+  ⎿ 2026-10-22T00:00:00.090Z rid=0000001 user=user1401 GET /api/profiles/user2020 200 40ms
+2026-10-22T00:00:00.190Z rid=0000002 user=- GET /api/articles?limit=10&offset=10 200 271ms
+2026-10-22T00:00:35.82
+⏺ bash(command=grep "2026-10-23" incident/logs/access.log | head -n 20)
+  ⎿ 2026-10-23T00:00:07.655Z rid=0020440 user=- GET /api/articles?tag=life 200 389ms
+2026-10-23T00:00:17.399Z rid=0020441 user=user0150 DELETE /api/articles/article-089/favorite 200 53ms
+2026-10-23T00:00:
+⏺ bash(command=grep -i "X-Cache" incident/logs/access.log | head -n 20)
+  ⎿ (no output)
+⏺ bash(command=grep -n "favorit\|follow\|article" incident/logs/app.log | h)
+  ⎿ 6:2026-10-22T03:42:16.310Z WARN slow query articles.list 1610ms
+13:2026-10-22T05:28:21.288Z WARN slow query articles.list 1907ms
+17:2026-10-22T06:24:23.814Z WARN slow query articles.list 1259ms
+18:202
+⏺ bash(command=grep -n "cache" incident/logs/app.log | head -20)
+  ⎿ 153:2026-10-23T16:42:10.634Z DEBUG cache store key=/api/articles?tag=react
+154:2026-10-23T16:42:16.807Z DEBUG cache store key=/api/articles/article-089
+155:2026-10-23T16:42:17.086Z DEBUG cache store k
+⏺ bash(command=grep -n "reset\|restart\|error\|panic\|fatal" incident/logs/)
+  ⎿ (no output)
+⏺ bash(command=grep -n "cache\|invalidate\|responseCache" apps/api/src/rout)
+  ⎿ (no output)
+
+Command exited with code 1
+⏺ bash(command=grep -n "cache\|invalidate" apps/api/src/routes/profiles.ts)
+  ⎿ (no output)
+
+Command exited with code 1
+⏺ bash(command=grep -n "cache hit" incident/logs/app.log | grep "2026-10-23)
+  ⎿ 4810:2026-10-23T20:52:39.738Z DEBUG cache hit key=/api/tags age=22s
+4813:2026-10-23T20:52:42.313Z DEBUG cache hit key=/api/articles?limit=10 age=21s
+4815:2026-10-23T20:52:47.554Z DEBUG cache hit key=/
+⏺ bash(command=grep "cache hit" incident/logs/app.log | grep "2026-10-23T16)
+  ⎿ 2026-10-23T16:42:17.597Z DEBUG cache hit key=/api/tags age=0s
+2026-10-23T16:42:58.156Z DEBUG cache hit key=/api/tags age=41s
+2026-10-23T16:42:58.648Z DEBUG cache hit key=/api/tags age=41s
+2026-10-23T1
+⏺ bash(command=grep "article-021" incident/logs/access.log)
+  ⎿ 2026-10-22T01:42:23.714Z rid=0000685 user=user1333 GET /api/articles/article-021 200 220ms
+2026-10-22T02:29:42.356Z rid=0001021 user=user0143 POST /api/articles/article-021/favorite 200 69ms
+2026-10-2
+⏺ read(path=incident/ticket-notes.md)
+  ⎿ # Support notes: favorites / follow state wrong (escalated)
+
+Collected by the support team. Times are UTC.
+
+- **Ticket #4812** (first report), from user `maria_k`: "The heart icon is filled on posts I
+⏺ bash(command=grep "POST /api/articles" incident/logs/access.log | grep "2)
+  ⎿ 2026-10-23T13:26:48.764Z rid=0026647 user=user1985 POST /api/articles/article-018/favorite 200 67ms
+2026-10-23T13:27:20.060Z rid=0026657 user=user1157 POST /api/articles/article-079/favorite 200 110ms
+⏺ bash(command=grep "GET.*article-021" incident/logs/access.log | grep "202)
+  ⎿ 2026-10-23T02:13:54.033Z rid=0021401 user=user1552 GET /api/articles/article-021 200 451ms
+2026-10-23T04:58:43.792Z rid=0022555 user=- GET /api/articles/article-021 200 451ms
+2026-10-23T05:12:59.124Z 
+⏺ bash(command=grep "cache=HIT" incident/logs/app.log | head -10)
+  ⎿ (no output)
+⏺ bash(command=grep "store" incident/logs/app.log | grep "2026-10-23T16:" |)
+  ⎿ 2026-10-23T16:42:10.634Z DEBUG cache store key=/api/articles?tag=react
+2026-10-23T16:42:16.807Z DEBUG cache store key=/api/articles/article-089
+2026-10-23T16:42:17.086Z DEBUG cache store key=/api/tags
+⏺ bash(command=grep "store.*article-" incident/logs/app.log | grep "2026-10)
+  ⎿ 2026-10-23T16:42:16.807Z DEBUG cache store key=/api/articles/article-089
+2026-10-23T16:42:17.683Z DEBUG cache store key=/api/articles/article-746
+2026-10-23T16:42:36.710Z DEBUG cache store key=/api/ar
+⏺ bash(command=awk '/GET.*\/api\/articles/ {print $1" "$2}' incident/logs/a)
+  ⎿ 2026-10-22T00:00:00.190Z rid=0000002
+2026-10-22T00:00:59.019Z rid=0000004
+2026-10-22T00:01:33.077Z rid=0000009
+2026-10-22T00:02:20.363Z rid=0000014
+2026-10-22T00:02:35.877Z rid=0000016
+⏺ bash(command=grep "GET.*\/api\/articles" incident/logs/access.log | grep )
+  ⎿ 2026-10-23T00:00:07.655Z rid=0020440
+2026-10-23T00:00:29.359Z rid=0020444
+2026-10-23T00:00:35.429Z rid=0020445
+2026-10-23T00:01:05.340Z rid=0020448
+2026-10-23T00:01:33.036Z rid=0020452
+⏺ bash(command=grep "GET.*\/api\/articles" incident/logs/access.log | grep )
+  ⎿ 2026-10-23T00:00:07.655Z rid=0020440 user=- GET /api/articles?tag=life 200 389ms
+2026-10-23T00:00:29.359Z rid=0020444 user=user1700 GET /api/articles/article-366 200 337ms
+2026-10-23T00:00:35.429Z rid
+⏺ bash(command=grep "2026-10-23T00:07:08" incident/logs/access.log incident)
+  ⎿ grep: deploy.log: No such file or directory
+
+
+Command exited with code 2
+⏺ bash(command=grep "2026-10-23T00:07:" incident/logs/access.log)
+  ⎿ 2026-10-23T00:07:00.722Z rid=0020495 user=user1808 POST /api/profiles/user0424/follow 200 55ms
+2026-10-23T00:07:01.137Z rid=0020496 user=user0328 POST /api/articles/article-019/favorite 200 66ms
+2026-
+⏺ bash(command=grep "2026-10-23T20:52" incident/logs/access.log incident/lo)
+  ⎿ incident/logs/access.log:2026-10-23T20:52:07.665Z rid=0036948 user=- GET /api/tags 200 2ms cache=HIT
+incident/logs/access.log:2026-10-23T20:52:08.267Z rid=0036949 user=user2153 GET /api/articles/feed 

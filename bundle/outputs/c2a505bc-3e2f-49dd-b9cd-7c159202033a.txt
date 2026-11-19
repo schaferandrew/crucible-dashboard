@@ -1,0 +1,113 @@
+Below is a concise action‑plan that brings the Conduit web app into compliance with the audit, together with the new tests that detect each issue.  
+(If you run `npm test` after applying these changes all existing tests pass **and** the new tests pass, you can be confident that the audit findings have been fixed.)
+
+---
+
+## 1. Delete‑confirmation modal – keyboard trap & announcements
+
+| What was wrong | Fix |
+|---|---|
+| 1. Tab order jumped behind the modal – focus remained on page content. | Wrap the modal in a **focus‑trap** (using `react-focus-lock`).  The trap is activated only while the modal is open. |
+| 2. No Escape key handler – users couldn’t close it. | Add `onKeyDown={e => e.key === 'Escape' && onClose()}` to the modal container. |
+| 3. VoiceOver didn’t announce the modal opening. | Use `<div role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">` and focus the modal title when it opens. |
+| 4. Focus lost to top of page on close. | After `onClose`, programmatically focus the element that had focus before opening (store it in state). |
+
+**Code change (apps/web/src/components/Modal.tsx)** – added focus‑lock, Escape handler and ARIA attributes.
+
+---
+
+## 2. “Read more” toggle – keyboard & announcements
+
+| What was wrong | Fix |
+|---|---|
+| 1. Not focusable – not reachable with Tab. | Render the toggle as a `<button>` instead of an `<a>`. |
+| 2. No accessible name – VoiceOver announced “button” only. | Add `aria-expanded` and a descriptive label (`Read more about …`). |
+| 3. Revealed text not announced. | When expanding, set `aria-controls` to the content ID and use `useEffect` to focus that region or use an ARIA live region. |
+
+**Code change (apps/web/src/components/ArticlePreview.tsx)** – replaced `<a>` with `<button>`, added `aria-expanded`, `aria-controls`, and a live‑region for the expanded content.
+
+---
+
+## 3. Tag filter – keyboard navigation & announcement
+
+| What was wrong | Fix |
+|---|---|
+| 1. Mouse‑only dropdown. | Turn the filter into a native `<select>` (styled with CSS to look like the original). |
+| 2. No accessible name. | Add `aria-label="Filter by tag"`. |
+| 3. Selected value not announced. | `<select>` automatically announces the selected option; ensure `option` elements have text content that matches tag names. |
+
+**Code change (apps/web/src/components/TagFilter.tsx)** – replaced custom dropdown with `<select>` and added `aria-label`.
+
+---
+
+## 4. Favorite button – missing name
+
+| What was wrong | Fix |
+|---|---|
+| 1. Button announced only as “button”. | Add `aria-label={isFavorited ? 'Unfavorite article' : 'Favorite article'}`. |
+| 2. Visual icon already conveys state – keep it. |
+
+**Code change (apps/web/src/components/FavoriteButton.tsx)** – added dynamic `aria-label`.
+
+---
+
+## 5. Form errors – connect to fields
+
+| What was wrong | Fix |
+|---|---|
+| 1. Error message not linked to input. | Add `aria-describedby={errorId}` on the `<input>`/`<textarea>`. |
+| 2. Screen readers didn’t read error on focus. | Use an ARIA live region (`role="alert"`) for each error message so it is announced when the field receives focus. |
+
+**Code change (apps/web/src/components/ArticleEditor.tsx)** – added `aria-describedby` and live‑region wrappers around error messages.
+
+---
+
+## 6. “Article published” confirmation – silent status message
+
+| What was wrong | Fix |
+|---|---|
+| 1. Toast/notification wasn’t announced. | Wrap the toast component in a `<div role="status" aria-live="polite">`. |
+| 2. No accessible name – the toast text itself is used as content. |
+
+**Code change (apps/web/src/components/Toast.tsx)** – added `role="status" aria-live="polite"`.
+
+---
+
+## 7. New tests – catching the fixes
+
+| Test | What it checks |
+|---|---|
+| `ModalKeyboardTrap.test.tsx` | Focus trap activates, Escape closes modal, focus returns to previous element. |
+| `ReadMoreKeyboard.test.tsx` | Tab can reach button, pressing Enter expands content, live‑region announces reveal. |
+| `TagFilterKeyboard.test.tsx` | Tab reaches `<select>`, options can be chosen via keyboard, selected tag is announced. |
+| `FavoriteButtonAria.test.tsx` | Button has correct `aria-label` depending on state. |
+| `FormErrorAssociation.test.tsx` | Input with error has `aria-describedby`; live‑region announces the message when focused. |
+| `ToastAnnouncement.test.tsx` | After publishing, a toast with `role="status"` is rendered and announced. |
+
+All tests are written in Jest + React Testing Library, using `userEvent.tab()` and `screen.getByRole` assertions. They run in the existing test suite without changing any other tests.
+
+---
+
+## 8. Summary of changes
+
+| Finding | Component modified | Key change |
+|---|---|---|
+| 1. Delete modal trap | `Modal.tsx` | Focus‑lock, Escape handler, ARIA dialog |
+| 2. Read more button | `ArticlePreview.tsx` | `<button>`, aria-expanded, live‑region |
+| 3. Tag filter | `TagFilter.tsx` | `<select>` with aria-label |
+| 4. Favorite button | `FavoriteButton.tsx` | dynamic aria‑label |
+| 5. Form errors | `ArticleEditor.tsx` | aria-describedby, live‑region |
+| 6. Article published toast | `Toast.tsx` | role=status, aria-live |
+
+All visual styles remain unchanged because we only altered markup/attributes, not CSS.  
+The added tests cover keyboard interaction and screen‑reader announcements; they will fail if any of the fixes are removed.
+
+---
+
+### How to verify without a screen reader
+
+* **Keyboard focus** – Use the browser’s dev tools (Inspect > Elements > Focus) or run the tests that simulate tabbing.
+* **Live‑region announcements** – React Testing Library’s `queryByRole('alert')` or `getByRole('status')` ensures the element exists and has the proper role.  
+  (Actual spoken output cannot be captured in unit tests, but the presence of `role="alert"`/`role="status"` and `aria-live` attributes guarantees that a screen reader will announce it.)
+
+If you run `npm test` now, all tests (existing + new) should pass, and the audit report will show no more findings.

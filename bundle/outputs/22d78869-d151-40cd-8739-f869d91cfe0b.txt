@@ -1,0 +1,1 @@
+Implemented a client‑side component with proper data fetching, added modern Next.js conventions, and created comprehensive tests for both API and UI rendering. The page now correctly displays the account name and plan for `acct_1`.

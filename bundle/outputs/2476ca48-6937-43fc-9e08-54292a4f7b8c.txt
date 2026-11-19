@@ -1,0 +1,193 @@
+⏺ bash(command=ls -la)
+  ⎿ total 376
+drwxr-xr-x@  14 schafer  staff     448 Nov 18 16:48 .
+drwxr-xr-x@  15 schafer  staff     480 Nov 18 16:48 ..
+drwxr-xr-x@  14 schafer  staff     448 Nov 18 16:48 .git
+-rw-r--r--@   1 schafer 
+⏺ read(path=README.md)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express RE
+⏺ bash(command=ls -la apps/)
+  ⎿ total 0
+drwxr-xr-x@  4 schafer  staff  128 Oct 26 10:29 .
+drwxr-xr-x@ 14 schafer  staff  448 Nov 18 16:48 ..
+drwxr-xr-x@  6 schafer  staff  192 Oct 26 10:29 api
+drwxr-xr-x@  8 schafer  staff  256 Oct 
+⏺ read(path=incident/support-notes.md)
+  ⎿ # Support escalation: invited contributors stuck
+
+Collected by support. Severity: contributors can't start assigned work.
+
+- **rosa** (invited by grace, accepted the invite on 10/20): "The page keeps 
+⏺ read(path=docs/invites.md)
+  ⎿ # Contributor invites (CONTRIB-88)
+
+Editors invite contributors by email from the editor dashboard. The flow:
+
+1. `POST /api/invites` creates the account immediately, with `accountState: "invited"` an
+⏺ read(path=docs/legal-contributor-terms.md)
+  ⎿ # Contributor terms (from Legal, 2026-09-30)
+
+Every account that can publish must have accepted the current contributor terms, and we must be able to show when (`termsAcceptedAt`). No exceptions for s
+⏺ bash(command=ls -la apps/api/)
+  ⎿ total 16
+drwxr-xr-x@  6 schafer  staff  192 Oct 26 10:29 .
+drwxr-xr-x@  4 schafer  staff  128 Oct 26 10:29 ..
+-rw-r--r--@  1 schafer  staff  572 Oct 26 10:29 package.json
+drwxr-xr-x@ 12 schafer  staff
+⏺ bash(command=ls -la apps/api/src/)
+  ⎿ total 40
+drwxr-xr-x@ 12 schafer  staff   384 Oct 26 10:29 .
+drwxr-xr-x@  6 schafer  staff   192 Oct 26 10:29 ..
+-rw-r--r--@  1 schafer  staff   913 Oct 26 10:29 app.ts
+drwxr-xr-x@  3 schafer  staff   
+⏺ bash(command=ls -la apps/api/src/routes/)
+  ⎿ total 48
+drwxr-xr-x@  8 schafer  staff   256 Oct 26 10:29 .
+drwxr-xr-x@ 12 schafer  staff   384 Oct 26 10:29 ..
+-rw-r--r--@  1 schafer  staff  2959 Oct 26 10:29 articles.ts
+-rw-r--r--@  1 schafer  sta
+⏺ read(path=apps/api/src/routes/invites.ts)
+  ⎿ import { acceptInviteSchema, createInviteSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+import { 
+⏺ bash(command=ls -la apps/api/src/services/)
+  ⎿ total 40
+drwxr-xr-x@  7 schafer  staff   224 Oct 29 20:00 .
+drwxr-xr-x@ 12 schafer  staff   384 Oct 26 10:29 ..
+-rw-r--r--@  1 schafer  staff  4014 Oct 26 10:29 articles.ts
+-rw-r--r--@  1 schafer  sta
+⏺ read(path=apps/api/src/services/invites.ts)
+  ⎿ import { randomBytes } from "node:crypto";
+import type { AcceptInviteInput, Invite, User } from "@conduit/shared";
+import type { Db } from "../db";
+import { hashPassword } from "../auth/tokens";
+impor
+⏺ bash(command=ls -la apps/api/src/auth/)
+  ⎿ total 8
+drwxr-xr-x@  3 schafer  staff    96 Oct 26 10:29 .
+drwxr-xr-x@ 12 schafer  staff   384 Oct 26 10:29 ..
+-rw-r--r--@  1 schafer  staff  1158 Oct 26 10:29 tokens.ts
+⏺ read(path=apps/api/src/app.ts)
+  ⎿ import express, { type Express } from "express";
+import { type Db, createDb } from "./db";
+import { errorHandler, notFound } from "./errors";
+import { articlesRouter } from "./routes/articles";
+import
+⏺ read(path=apps/api/src/server.ts)
+  ⎿ import { createApp } from "./app";
+import { createDb } from "./db";
+import { seed } from "./seed";
+
+const port = Number(process.env.PORT ?? 3000);
+const db = createDb();
+if (process.env.SEED !== "0") 
+⏺ bash(command=ls -la apps/web/)
+  ⎿ total 32
+drwxr-xr-x@ 8 schafer  staff  256 Oct 26 10:29 .
+drwxr-xr-x@ 4 schafer  staff  128 Oct 26 10:29 ..
+-rw-r--r--@ 1 schafer  staff  294 Oct 26 10:29 index.html
+-rw-r--r--@ 1 schafer  staff  652 
+⏺ bash(command=find apps/web/src -type f -name "*.tsx" | head -20)
+  ⎿ apps/web/src/App.tsx
+apps/web/src/main.tsx
+apps/web/src/auth/RequireWriter.tsx
+apps/web/src/auth/AuthContext.tsx
+apps/web/src/components/Pagination.tsx
+apps/web/src/components/ArticleList.tsx
+apps/web
+⏺ bash(command=find apps/web/src -type f | sort)
+  ⎿ apps/web/src/api/client.ts
+apps/web/src/App.tsx
+apps/web/src/auth/AuthContext.tsx
+apps/web/src/auth/RequireWriter.tsx
+apps/web/src/components/ArticleList.tsx
+apps/web/src/components/ArticlePreview.tsx
+⏺ read(path=apps/web/src/pages/InvitePage.tsx)
+  ⎿ import type { Invite } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ApiError, api } from "..
+⏺ read(path=apps/api/src/auth/tokens.ts)
+  ⎿ import jwt from "jsonwebtoken";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+
+const SECRET = process.env.JWT_SECRET ?? "conduit-dev-secret";
+const TOKEN_TTL = "30d";
+
+export
+⏺ read(path=apps/web/src/auth/AuthContext.tsx)
+  ⎿ import type { User } from "@conduit/shared";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { api, setToken } from "../api/client"
+⏺ read(path=apps/web/src/api/client.ts)
+  ⎿ import type {
+  Invite,
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the
+⏺ bash(command=ls -la packages/)
+  ⎿ total 0
+drwxr-xr-x@  3 schafer  staff   96 Oct 26 10:29 .
+drwxr-xr-x@ 14 schafer  staff  448 Nov 18 16:48 ..
+drwxr-xr-x@  4 schafer  staff  128 Oct 26 10:29 shared
+⏺ bash(command=ls -la packages/shared/)
+  ⎿ total 8
+drwxr-xr-x@ 4 schafer  staff  128 Oct 26 10:29 .
+drwxr-xr-x@ 3 schafer  staff   96 Oct 26 10:29 ..
+-rw-r--r--@ 1 schafer  staff  192 Oct 26 10:29 package.json
+drwxr-xr-x@ 6 schafer  staff  192
+⏺ bash(command=ls -la packages/shared/src/)
+  ⎿ total 32
+drwxr-xr-x@ 6 schafer  staff   192 Oct 26 10:29 .
+drwxr-xr-x@ 4 schafer  staff   128 Oct 26 10:29 ..
+-rw-r--r--@ 1 schafer  staff    79 Oct 26 10:29 index.ts
+-rw-r--r--@ 1 schafer  staff   32
+⏺ read(path=packages/shared/src/types.ts)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's u
+⏺ read(path=apps/web/src/pages/EditorPage.tsx)
+  ⎿ import { type FormEvent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ApiError, api } from "../api/client";
+
+export function EditorPage() {
+ 
+⏺ read(path=apps/web/src/App.tsx)
+  ⎿ import { Link, Route, Routes } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
+import { RequireWriter } from "./auth/RequireWriter";
+import { ArticlePage } from "./pages/Article
+⏺ read(path=apps/web/src/auth/RequireWriter.tsx)
+  ⎿ import type { ReactNode } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+
+/**
+ * Writing requires a signed-in user who has finished on
+⏺ bash(command=grep -r "onboardingComplete" apps/ docs/ incident/)
+  ⎿ apps/web/test/FavoriteButton.test.tsx:  vi.spyOn(api, "currentUser").mockResolvedValue({ email: "j@x.com", token: "token", username: "jane", bio: null, image: null, accountState: "active", onboardingC
+⏺ read(path=apps/api/src/services/users.ts)
+  ⎿ import type { LoginInput, OnboardingInput, Profile, RegisterInput, UpdateUserInput, User } from "@conduit/shared";
+import type { Db } from "../db";
+import { checkPassword, hashPassword } from "../auth
+⏺ read(path=apps/api/test/realworld.contract.test.ts)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the of
+⏺ bash(command=grep -r "completeOnboarding" apps/ docs/ incident/)
+  ⎿ apps/web/src/api/client.ts:  completeOnboarding: (bio: string) =>
+apps/web/src/pages/WelcomePage.tsx:    setSession(await api.completeOnboarding(bio));
+apps/api/src/routes/users.ts:import { completeOn

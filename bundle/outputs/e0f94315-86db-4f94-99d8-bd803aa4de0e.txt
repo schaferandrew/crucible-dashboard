@@ -1,0 +1,3 @@
+The test user **testuser** was able to log in successfully using the correct password. No failure mode was encountered.
+
+FAILURE: none
