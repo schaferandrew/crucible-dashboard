@@ -4,6 +4,7 @@
   import { fmtCost, fmtScore, fmtSeconds } from '$lib/core/format';
   import type { Row } from '$lib/core/scoring';
   import { setupLabel } from '$lib/labels';
+  import { modelHref } from '$lib/paths';
   import { barRows, layoutBars, barName, type Bar } from './bars';
   import ModelRef from './ModelRef.svelte';
   import { Tip } from './tip.svelte';
@@ -64,7 +65,7 @@
         width={lay.width}
         height={lay.height}
         viewBox="0 0 {lay.width} {lay.height}"
-        role="img"
+        role="group"
         aria-label="{label} score for each model, best first. The table below has the same numbers."
       >
         <defs>
@@ -107,21 +108,16 @@
               >{b.shown}</text
             >
           {/if}
-          <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-          <rect
-            class="hit"
-            x={b.hx}
-            y={b.hy}
-            width={b.hw}
-            height={b.hh}
-            tabindex="0"
-            role="img"
-            aria-label="{b.name}: {label} {fmtScore(b.score)}{b.row.overall.partial ? ', partial' : ''}"
+          <a
+            href={modelHref(b.row.model, suite)}
+            aria-label="View {b.name}: {label} {fmtScore(b.score)}{b.row.overall.partial ? ', partial' : ''}"
             onmouseenter={() => show(b)}
             onfocus={() => show(b)}
             onmouseleave={() => tip.hide()}
             onblur={() => tip.hide()}
-          />
+          >
+            <rect class="hit" x={b.hx} y={b.hy} width={b.hw} height={b.hh} />
+          </a>
         {/each}
       </svg>
     {:else}
@@ -146,7 +142,7 @@
             width={lay.width - lay.left}
             height={lay.height}
             viewBox="0 0 {lay.width - lay.left} {lay.height}"
-            role="img"
+            role="group"
             aria-label="{label} score for each model, best first. The table below has the same numbers."
           >
             <g transform="translate({-lay.left},0)">
@@ -189,21 +185,18 @@
                     >{b.shown}</text
                   >
                 {/if}
-                <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-                <rect
-                  class="hit"
-                  x={b.hx}
-                  y={b.hy}
-                  width={b.hw}
-                  height={b.hh}
-                  tabindex="0"
-                  role="img"
-                  aria-label="{b.name}: {label} {fmtScore(b.score)}{b.row.overall.partial ? ', partial' : ''}"
+                <a
+                  href={modelHref(b.row.model, suite)}
+                  aria-label="View {b.name}: {label} {fmtScore(b.score)}{b.row.overall.partial
+                    ? ', partial'
+                    : ''}"
                   onmouseenter={() => show(b)}
                   onfocus={() => show(b)}
                   onmouseleave={() => tip.hide()}
                   onblur={() => tip.hide()}
-                />
+                >
+                  <rect class="hit" x={b.hx} y={b.hy} width={b.hw} height={b.hh} />
+                </a>
               {/each}
             </g>
           </svg>
@@ -320,10 +313,10 @@
   }
   .hit {
     fill: transparent;
-    cursor: default;
+    cursor: pointer;
   }
   .hit:hover,
-  .hit:focus-visible {
+  a:focus-visible .hit {
     fill: var(--accent-soft);
     fill-opacity: 0.5;
   }
