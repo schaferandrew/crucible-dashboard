@@ -30,6 +30,18 @@
   const what = $derived(scatterWhat(sc, label));
   const sub = $derived(scatterSub(measure, what, skippedLocal(sc.visible, measure)));
   const byNumber = $derived(lay ? lay.dots.slice().sort((a, b) => a.n - b.n) : []);
+  // Keep adjacent points independently clickable even when their full hit areas would overlap.
+  const hitRadii = $derived(
+    lay?.dots.map((dot, _, dots) =>
+      dots.reduce(
+        (radius, other) =>
+          other === dot
+            ? radius
+            : Math.max(6, Math.min(radius, Math.hypot(dot.px - other.px, dot.py - other.py) / 2)),
+        14,
+      ),
+    ) ?? [],
+  );
   const tip = new Tip<Dot>();
   const xText = (r: Row) => (measure === 'time' ? fmtSeconds(r.time) : fmtCost(r.cost, r.local));
   const MEASURES: [Measure, string][] = [
@@ -63,7 +75,7 @@
       width={lay.width}
       height={lay.height}
       viewBox="0 0 {lay.width} {lay.height}"
-      role="img"
+      role="group"
       aria-label="{what} against {measure} per task. The leaderboard has the same numbers."
     >
       <rect
@@ -97,7 +109,7 @@
         >{measure === 'time' ? 'Median time per task' : 'Average cost per task'} (log scale)</text
       >
       {#if lay.frontierPath}<path class="frontier" d={lay.frontierPath} />{/if}
-      {#each lay.dots as d (d.row.rowKey)}
+      {#each lay.dots as d, i (d.row.rowKey)}
         <circle
           class="dot {d.row.local ? 'local' : 'cloud'}"
           class:partial={d.row.overall.partial}
@@ -115,20 +127,16 @@
             text-anchor={d.flip ? 'end' : 'start'}>{d.row.label}</text
           >
         {/if}
-        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-        <circle
-          class="hit"
-          cx={d.px}
-          cy={d.py}
-          r="14"
-          tabindex="0"
-          role="img"
-          aria-label="{d.row.label}: {label} {fmtScore(d.row.overall.score)}, {xText(d.row)}"
+        <a
+          href={modelHref(d.row.model, suite)}
+          aria-label="View {d.row.label}: {label} {fmtScore(d.row.overall.score)}, {xText(d.row)}"
           onmouseenter={() => tip.show(d, d.px, d.py)}
           onfocus={() => tip.show(d, d.px, d.py)}
           onmouseleave={() => tip.hide()}
           onblur={() => tip.hide()}
-        />
+        >
+          <circle class="hit" cx={d.px} cy={d.py} r={hitRadii[i]} />
+        </a>
       {/each}
     </svg>
     {#if tip.item}
@@ -261,6 +269,7 @@
   }
   .plabel {
     fill: var(--fg);
+    pointer-events: none;
   }
   .frontier {
     fill: none;
@@ -290,8 +299,9 @@
   }
   .hit {
     fill: transparent;
+    cursor: pointer;
   }
-  .hit:focus-visible {
+  a:focus-visible .hit {
     stroke: var(--focus);
     stroke-width: 2;
   }
