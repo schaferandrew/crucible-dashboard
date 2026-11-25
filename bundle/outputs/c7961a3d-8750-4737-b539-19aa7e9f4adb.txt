@@ -1,0 +1,7 @@
+⏺ bash(command=ls -la && cat prompt.txt 2>/dev/null | head -5; python3 --ve)
+  ⎿ total 16
+drwxr-xr-x@  5 andrew.schafer@homebot.ai  staff   160 Nov 23 01:03 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 23 01:03 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ bash(command=cat prompt.txt && cat .gitignore && git log --oneline -5 2>/)
+  ⎿ Build a command-line compound-interest calculator in Python 3, standard library only (no third-party packages). Work in the current directory: the package goes in interest/ and the tool runs from this

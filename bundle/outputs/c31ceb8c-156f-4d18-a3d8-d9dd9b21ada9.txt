@@ -1,0 +1,18 @@
+⏺ shell(command=ls -la && cat prompt.txt 2>/dev/null | head -50)
+  ⎿ total 16
+drwxr-xr-x@  5 andrew.schafer@homebot.ai  staff   160 Nov 23 09:18 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 23 09:18 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   384 Nov 23 09:18 .git
+-rw-r--r--@  1 andrew.schafer@homebot.ai  staff    47 Nov 23 09:18 .gitignore
+-r
+⏺ shell(command=python3 --version && python3 -c "import sys; print(sys.execu)
+  ⎿ Python 3.15.0
+/opt/homebrew/opt/python@3.15/bin/python3.15
+node_modules/
+.next/
+dist/
+__pycache__/
+.venv/
+⏺ shell(command=git log --oneline -5 2>&1 | head; git status --short 2>&1 | )
+  ⎿ 8bdd713 Seeded workspace
+?? prompt.txt

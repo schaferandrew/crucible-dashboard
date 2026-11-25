@@ -1,0 +1,18 @@
+Reasoning: I treated only clear grammar/spelling/punctuation mistakes as errors (subject–verb agreement with “one of the two items,” missing apostrophe in “haven’t,” passive participle “crushed,” and a comma before “but” joining two independent clauses). I left “which seem to have passed” alone because its plural antecedent (“days”) makes “seem” correct, and I did not add apologies or change facts/tone. Style items are listed separately and were not applied.
+
+ERRORS:
+were damaged → was damaged
+havent → haven't
+crush on one side → crushed on one side
+last week but → last week, but
+
+CORRECTED:
+Subject: Refund for order 84721
+
+Hi Support,
+I am writing because my order arrived three days late, and one of the two items was damaged. I contacted support last week, but I haven't heard anything back. The box was clearly crushed on one side, and the mug inside has a crack through the handle. I would like a refund for the mug, but please let me know if you need pictures of it. Also, your website says refunds are processed in 5-7 business days, which seem to have passed already for my earlier request. Can you tell me what the status is? Thanks for your help.
+
+STYLE:
+- Use an en dash for ranges (“5–7 business days”).
+- Consider formatting the order reference as “Order #84721” in the subject line.
+- Consider adding a brief closing sign-off if your support template expects one.

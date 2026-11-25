@@ -1,0 +1,1 @@
+The overlap logic works in isolation. Let me debug the full loop directly to find where it goes wrong.

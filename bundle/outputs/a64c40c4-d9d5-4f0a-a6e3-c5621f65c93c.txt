@@ -1,0 +1,6 @@
+- Accuracy (4): The summary correctly states the extension of weekend hours, the survey result, and the funding details without adding any invented information → earns 4 points.  
+- Exactly two sentences (3): The response contains three sentences, violating the “exactly two sentences” requirement → earns 0 points for this criterion.  
+- Key points (3): The summary includes the hours extension, the funding limit ($40,000 covering one year), and the resident survey result → meets the key‑point requirement → earns 3 points.  
+
+Total earned = 4 + 0 + 3 = 7 out of 10.  
+GRADE: 7

@@ -1,0 +1,16 @@
+**Reasoning:**  
+I reviewed the email sentence by sentence, identifying only objective errors in grammar, spelling, and punctuation that change meaning or correctness, without altering facts or adding apology. The three clear issues are: (1) subject-verb agreement ("one of the two items" is singular, so "was" not "were"), (2) a missing apostrophe in the contraction "haven't," and (3) an incorrect word form after "was clearly" — "crush" should be the past participle "crushed." The phrase "which seem to have passed" is grammatically ambiguous depending on reference, so I left it unchanged to avoid introducing style changes. No other errors were found.
+
+**ERRORS:**  
+one of the two items were damaged → one of the two items was damaged  
+I havent heard anything back → I haven't heard anything back  
+was clearly crush on one side → was clearly crushed on one side
+
+**CORRECTED:**  
+Subject: Refund for order 84721
+
+Hi Support,
+I am writing because my order arrived three days late, and one of the two items was damaged. I contacted support last week but I haven't heard anything back. The box was clearly crushed on one side, and the mug inside has a crack through the handle. I would like a refund for the mug, but please let me know if you need pictures of it. Also, your website says refunds are processed in 5-7 business days, which seem to have passed already for my earlier request. Can you tell me what the status is? Thanks for your help.
+
+**STYLE:**  
+STYLE: none

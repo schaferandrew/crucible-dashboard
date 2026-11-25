@@ -1,0 +1,12 @@
+Done. `slots.json` is saved in the working directory with 85 valid slots and a top3 of three weekday options.
+
+**How it was computed:**
+- Window: Mon 2026-08-31 09:00 → Mon 2026-09-07 17:00 (America/Chicago), 60-minute meetings starting on the hour or half hour, running entirely within 9:00 AM–5:00 PM local time.
+- A slot is valid if it doesn't strictly overlap any busy event of Alex or Jamie (back-to-back allowed); no availability was inferred outside the window.
+
+**Top 3 picks** (weekdays, back-to-back with an existing meeting so gaps are minimized, and avoiding the first/last available hour — 09:00 and 16:00 starts):
+1. `2026-08-31T11:00` — Monday, right after Alex's standup ends (11:00).
+2. `2026-09-01T10:00` — Tuesday, right after Jamie's standup ends (10:00).
+3. `2026-09-02T10:30` — Wednesday, right when Alex's planning meeting ends (10:30).
+
+All three starts appear in `valid_slots`, and the file is valid JSON in the required shape.

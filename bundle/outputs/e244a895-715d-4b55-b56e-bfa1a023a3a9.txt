@@ -1,0 +1,38 @@
+
+
+Here's my reasoning:
+
+**Flight Analysis:**
+I checked all 7 flights against the criteria (total cost ≤ $300, departs ≥ 07:00, arrives ≤ 12:00, at most 1 stop, layover ≥ 60 min):
+
+- NW201: departs 06:10 → fails (before 07:00)
+- CJ550: 2 stops → fails (more than 1 stop)
+- TA77: layover 50 min → fails (less than 60 min)
+- NW318: arrives 12:30 → fails (after noon)
+- PL09: departs 07:20, arrives 11:10, 1 stop with 75 min layover, cost = $262 + $25 = $287 ✓
+- SL114: departs 08:15, arrives 10:40, 0 stops, first bag free, cost = $279 + $0 = $279 ✓
+- SL330: cost = $349 → fails (over $300)
+
+Cheapest qualifying flight: **SL114 at $279**
+
+**Restaurant Analysis:**
+Checked all restaurants within 1.5 miles walking distance for peanut-free AND sesame-free kitchens:
+- Saffron Table: not peanut-free, not sesame-free → fails
+- Golden Noodle: not sesame-free → fails
+- Harbor Grill: peanut-free ✓, sesame-free ✓, walk distance 1.3 miles ✓
+- Tidewater Bistro: not sesame-free → fails
+- Fennel & Fig: peanut-free ✓, sesame-free ✓, but walk distance 1.9 miles → fails
+
+Only safe option: **Harbor Grill at 1.3 miles walking**
+
+**Distance/Travel Time:**
+- Driving distance: 14.2 miles
+- Taxi at 17:15 (with peak traffic): 41 minutes
+
+ANSWERS:
+Flight: SL114
+Total: 279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41

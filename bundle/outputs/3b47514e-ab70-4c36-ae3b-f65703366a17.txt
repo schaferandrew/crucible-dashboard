@@ -1,0 +1,118 @@
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+  ⎿ EISDIR: illegal operation on a directory, read
+⏺ bash(command=ls -la /Users/andrew.schafer@homebot.ai/.crucible/workspaces)
+  ⎿ total 32
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff   320 Nov 20 22:40 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 20 22:40 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ bash(command=ls -la /Users/andrew.schafer@homebot.ai/.crucible/workspaces)
+⏺ bash(command=ls -la /Users/andrew.schafer@homebot.ai/.crucible/workspaces)
+⏺ bash(command=ls -la /Users/andrew.schafer@homebot.ai/.crucible/workspaces)
+  ⎿ # Juniper Inn booking desk
+
+The front desk's quoting tool, written in PHP in 2014 and patched since. It has no database: rooms
+live in `data/rooms.json`, bookings and coupons in CSV files under `data/
+  ⎿ <?php
+/**
+ * Juniper Inn booking desk, command-line entry point.
+ *
+ *   php app.php '/quote?room=101&checkin=2024-03-19&nights=2&guests=1'
+ *
+ * Prints the response body. Exit status 0 for a 2xx resp
+  ⎿ total 24
+drwxr-xr-x@  5 andrew.schafer@homebot.ai  staff  160 Nov 17 12:08 .
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff  320 Nov 20 22:40 ..
+-rw-r--r--@  1 andrew.schafer@homebot.ai  staff  266 N
+  ⎿ total 48
+drwxr-xr-x@  7 andrew.schafer@homebot.ai  staff   224 Nov 17 12:08 .
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff   320 Nov 20 22:40 ..
+-rw-r--r--@  1 andrew.schafer@homebot.ai  staff  146
+  ⎿ total 8
+drwxr-xr-x@  4 andrew.schafer@homebot.ai  staff  128 Nov 17 12:08 .
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff  320 Nov 20 22:40 ..
+drwxr-xr-x@  3 andrew.schafer@homebot.ai  staff   96 No
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebit.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+  ⎿ <?php
+/**
+ * Flat-file storage: rooms in JSON, bookings and coupons in CSV. No database.
+ */
+class DataStore
+{
+    private $dir;
+
+    public function __construct($dir)
+    {
+        $this->dir = rtrim
+  ⎿ <?php
+/**
+ * Date helpers. Everything runs in UTC (app.php sets the default timezone).
+ *
+ * Accepted check-in formats: 2024-03-09 and 03/09/2024 (month/day/year, as the front desk types it).
+ */
+clas
+  ⎿ <?php
+/**
+ * Quote calculator: nightly rate, weekend surcharge, extra guests, cleaning, coupon, lodging tax.
+ * Every money figure is rounded to cents with round().
+ */
+class Pricing
+{
+    const TAX_R
+  ⎿ ENOENT: no such file or directory, access '/Users/andrew.schafer@homebit.ai/.crucible/workspaces/lmstudio_nvidia-nemotron-3.5-lightning-30b-a3b_php-booking-to-ruby_20261121_044012/src/Router.php'
+  ⎿ <?php
+/**
+ * The one HTML page: the room list for the lobby screen.
+ */
+class Views
+{
+    public static function roomsPage(array $rooms)
+    {
+        $html = "<!DOCTYPE html>\n";
+        $html .= "<h
+  ⎿ <?php
+/**
+ * Fixture tests: every case in fixtures/cases.json is a request, the status it must answer with and
+ * the body it must return (JSON compared as decoded values, HTML as text).
+ *
+ *   php t
+⏺ bash(command=ls -la /Users/andrew.schafer@homebot.ai/.crucible/workspaces)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+  ⎿ total 8
+drwxr-xr-x@ 3 andrew.schafer@homebot.ai  staff    96 Nov 17 12:08 .
+drwxr-xr-x@ 4 andrew.schafer@homebot.ai  staff   128 Nov 17 12:08 ..
+-rw-r--r--@ 1 andrew.schafer@homebot.ai  staff  1962 No
+  ⎿ [
+  {"request":"/rooms","status":200,"body":[{"id":"101","name":"Garden Single","rate":89.0,"max_guests":1},{"id":"102","name":"Harbor Double","rate":124.5,"max_guests":3},{"id":"201","name":"Loft Sui
+⏺ bash(command=cat /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lm)
+  ⎿ <?php
+/**
+ * Maps a request line like "/quote?room=101&nights=2" to [status, body].
+ *
+ *   /rooms          all rooms, JSON
+ *   /rooms.html     the rooms page, HTML
+ *   /room?id=       one room, JSO
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+⏺ read(path=/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstud)
+  ⎿ [
+  {"id": "101", "name": "Garden Single", "rate": "89.00", "max_guests": 1, "cleaning_fee": 20, "extra_guest_fee": "15"},
+  {"id": "102", "name": "Harbor Double", "rate": "124.50", "max_guests": "3",
+  ⎿ id,room_id,guest,checkin,nights,guests,paid
+B001,101,Ada Park,2024-03-01,2,1,1
+B002,102,Luis Ortega,2024-03-02,3,2,0
+B003,201,Mina Okafor,2024-03-08,4,3,yes
+B004,102,Sam Reed,2024-03-15,1,2,
+B005,301,
+  ⎿ code,percent,min_nights
+SPRING10,10,2
+WEEKLY,15,7
+STAFF,50,0
+⏺ bash(command=ruby -v)
+  ⎿ ruby 2.6.10p210 (2022-04-12 revision 67958) [universal.arm64e-darwin26]

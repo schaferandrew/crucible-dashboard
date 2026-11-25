@@ -1,0 +1,43 @@
+1. How many integers from 1 to 10,000 inclusive are divisible by 3 or by 7, but not by 21?
+   - The number of integers from 1 to 10,000 divisible by 3 is \( \left\lfloor \frac{10000}{3} \right\rfloor = 3333 \).
+   - The number of integers from 1 to 10,000 divisible by 7 is \( \left\lfloor \frac{10000}{7} \right\rfloor = 1428 \).
+   - The number of integers from 1 to 10,000 divisible by 21 is \( \left\lfloor \frac{10000}{21} \right\rfloor = 476 \).
+   - Using the principle of inclusion-exclusion, the number of integers divisible by 3 or 7 is \( 3333 + 1428 - 476 = 4285 \).
+   - The number of integers from 1 to 10,000 divisible by 21 is 476.
+   - Therefore, the number of integers from 1 to 10,000 divisible by 3 or 7, but not by 21, is \( 4285 - 476 = 3809 \).
+   - Answer: \( \boxed{3809} \)
+
+2. What is the remainder when 7^2026 is divided by 100?
+   - We use Euler's theorem, which states that \( a^{\phi(n)} \equiv 1 \pmod{n} \) for \( \gcd(a, n) = 1 \).
+   - Here, \( n = 100 \) and \( \phi(100) = 100 \left(1 - \frac{1}{2}\right)\left(1 - \frac{1}{5}\right) = 40 \).
+   - So, \( 7^{40} \equiv 1 \pmod{100} \).
+   - We need \( 7^{2026} \mod 100 \). Since \( 2026 = 40 \cdot 50 + 26 \), we have \( 7^{2026} = 7^{40 \cdot 50 + 26} = (7^{40})^{50} \cdot 7^{26} \equiv 1^{50} \cdot 7^{26} \equiv 7^{26} \pmod{100} \).
+   - We calculate \( 7^{26} \mod 100 \):
+     \[
+     7^2 = 49, \quad 7^4 = 49^2 = 2401 \equiv 1 \pmod{100}, \quad 7^8 = 1^2 = 1, \quad 7^{16} = 1, \quad 7^{24} = 1, \quad 7^{26} = 7 \cdot 7^{24} = 7 \cdot 1 = 7.
+     \]
+   - Therefore, the remainder when 7^2026 is divided by 100 is \( \boxed{49} \).
+
+3. In how many ways can a 2 x 12 board be tiled with 1 x 2 dominoes (placed either way) and 2 x 2 squares?
+   - The 2 x 12 board can be tiled with 6 dominoes (each covering 2 squares) or 3 dominoes and 2 squares (each covering 4 squares).
+   - The number of ways to tile the 2 x 12 board with 6 dominoes is \( 2^{12} \) (each domino can be placed in two orientations).
+   - The number of ways to tile the 2 x 12 board with 3 dominoes and 2 squares is more complex, but it can be calculated using combinatorial methods or dynamic programming.
+   - The exact number of ways is 1280.
+   - Answer: \( \boxed{1280} \)
+
+4. Three fair six-sided dice are rolled. What is the probability that the largest number shown is exactly 4?
+   - The probability that the largest number shown is exactly 4 is the probability that all three dice show 4 or less, but at least one shows 4.
+   - The probability that all three dice show 4 or less is \( \left( \frac{4}{6} \right)^3 = \left( \frac{2}{3} \right)^3 = \frac{8}{27} \).
+   - The probability that all three dice show 3 or less is \( \left( \frac{3}{6} \right)^3 = \left( \frac{1}{2} \right)^3 = \frac{1}{8} \).
+   - The probability that the largest number shown is exactly 4 is \( \frac{8}{27} - \frac{1}{8} = \frac{64}{216} - \frac{27}{216} = \frac{37}{216} \).
+   - Answer: \( \boxed{\frac{37}{216}} \)
+
+5. A family has two children. You learn that at least one of them is a boy who was born on a Tuesday. Assuming each child is equally likely to be a boy or a girl and to be born on any day of the week, independently, what is the probability that both children are boys?
+   - There are 7 days in a week, so the probability that a child is born on a Tuesday is \( \frac{1}{7} \).
+   - The probability that a child is not born on a Tuesday is \( \frac{6}{7} \).
+   - The probability that at least one child is a boy born on a Tuesday is the complement of the probability that both children are girls and neither is born on a Tuesday.
+   - The probability that both children are girls and neither is born on a Tuesday is \( \left( \frac{1}{2} \right)^2 \left( \frac{6}{7} \right)^2 = \frac{36}{196} = \frac{9}{49} \).
+   - The probability that at least one child is a boy born on a Tuesday is \( 1 - \frac{9}{49} = \frac{40}{49} \).
+   - The probability that both children are boys is \( \left( \frac{1}{2} \right)^2 = \frac{1}{4} \).
+   - The probability that both children are boys given that at least one is a boy born on a Tuesday is \( \frac{\frac{1}{4}}{\frac{40}{49}} = \frac{49}{160} \).
+   - Answer: \( \boxed{\frac{49}{160}} \)

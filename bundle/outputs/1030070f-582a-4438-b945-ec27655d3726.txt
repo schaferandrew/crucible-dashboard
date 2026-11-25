@@ -1,0 +1,1 @@
+The baseline is captured and the server stopped. Now let me check how Next 14 handles `usePathname` during static generation and route-handler method handling, since those affect the migration design.

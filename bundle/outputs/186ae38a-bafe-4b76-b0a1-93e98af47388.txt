@@ -1,0 +1,39 @@
+
+
+The migration is complete. Here's a summary of what was changed:
+
+---
+
+**Summary of changes**
+
+**Deleted:**
+- The entire `pages/` directory (including `_app.tsx`, `_document.tsx`, all page routes, and `api/books.ts`)
+
+**Created (all under `app/` at the project root):**
+
+| New file | Maps from | Rendering mode |
+|---|---|---|
+| `app/layout.tsx` | `_app.tsx` + `_document.tsx` | Server component (root layout with `<html lang="en">`) |
+| `app/page.tsx` | `pages/index.tsx` | Static (SSG) |
+| `app/about/page.tsx` | `pages/about.tsx` | Static (SSG) |
+| `app/search/page.tsx` | `pages/search.tsx` | Server wrapper + client component (`SearchClient.tsx`) |
+| `app/search/SearchClient.tsx` | — | Client component (`"use client"`) |
+| `app/not-found.tsx` | `pages/404.tsx` | Server component (custom 404) |
+| `app/books/[slug]/page.tsx` | `pages/books/[slug].tsx` | Dynamic (`dynamic = "force-dynamic"`) |
+| `app/genres/[genre]/page.tsx` | `pages/genres/[genre].tsx` | Static with `generateStaticParams()` |
+| `app/api/books/route.ts` | `pages/api/books.ts` | Dynamic API route |
+
+**Modified:**
+- `components/Layout.tsx` — Added `"use client"`, replaced `useRouter().pathname` with `usePathname()` from `next/navigation`
+- `components/ShareLink.tsx` — Changed from reading `slug` via `useRouter().query` to accepting it as a `slug` prop (avoids needing a client component or dynamic import)
+
+**Key behavioral mappings:**
+- Pages with `getStaticProps` (home, about) → static by default in App Router
+- Pages with `getServerSideProps` (book detail) → `export const dynamic = "force-dynamic"`
+- Pages with `getStaticPaths` (genre) → `generateStaticParams()` with pre-rendered paths for all 3 genres
+- Client-side search → split into a server `page.tsx` (for `generateMetadata`) and a `"use client"` `SearchClient.tsx`
+- API route → `app/api/books/route.ts` with `GET` handler using `NextResponse`
+- Custom 404 → `app/not-found.tsx` (shown for unknown routes and when `notFound()` is thrown)
+- All URLs, titles, descriptions, navigation active states, and HTTP status codes are preserved identically
+
+**Nothing behaves differently from before.**

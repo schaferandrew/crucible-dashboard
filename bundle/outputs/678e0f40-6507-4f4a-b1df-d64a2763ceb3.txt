@@ -1,0 +1,24 @@
+The benchmark task described in the attached prompt.txt file is as follows:
+
+You're on call for Conduit, a RealWorld (realworld.how) monorepo: an Express API in apps/api, a React app in apps/web, shared code in packages/shared. Read README.md first.
+
+Support escalated this ticket this morning:
+
+  "Since yesterday's deploy, several users report that articles show as 'favorited' when they never favorited them, and the follow button shows the wrong state on author profiles. Two authors also say edits to their articles don't show up for a while, and one says a deleted article was still readable. It isn't consistent: refreshing sometimes fixes it."
+
+The production logs from the last two days are in incident/logs/ (API access log, application log, deploy log). They're large, so search them rather than reading them end to end. incident/ticket-notes.md has what support collected.
+
+Do all of the following:
+1. Find the root cause (or causes) and confirm each one against the logs.
+2. Fix it properly in the code. Keep the intent of the change that introduced it if that intent is sound, and don't just revert or disable things wholesale. Keep createApp(db, options) and the way server.ts calls it working as they do today, with the options it takes now: our other tooling builds the app through it.
+3. Add regression tests that fail before your fix and pass after it. Keep every existing test passing, including apps/api/test/realworld.contract.test.ts, unmodified.
+4. Write incident/POSTMORTEM.md covering: a timeline with timestamps taken from the logs (deploy, first affected request, first user report), the root cause, how many distinct users were served another user's personalized data (count it from the logs, and say how you counted), impact, the fix, and follow-up actions.
+
+Start the postmortem with these four lines, exactly in this form, with times as HH:MM:SS (UTC, from the logs) and a whole number of users:
+
+  Deploy: HH:MM:SS
+  First affected request: HH:MM:SS
+  First report: HH:MM:SS
+  Affected users: <n>
+
+"First affected request" is the first request served from stored data that was built for a different signed-in user. Count signed-in users only, or, if you also count responses stored by anonymous requests, say so in the postmortem.

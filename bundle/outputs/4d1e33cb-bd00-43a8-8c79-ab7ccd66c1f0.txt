@@ -1,0 +1,24 @@
+The morning brief is written to `morning-brief.md`. Here it is:
+
+## Emails
+- **Alex — Project update (Q3 review completed)**: The Q3 review is complete and ahead of schedule; results to be discussed in the planning meeting.
+- **Jamie — Meeting notes from yesterday**: Yesterday's 1-on-1 covered career goals, next quarter priorities, and team building activities.
+- **Finance — Reminder: Q3 expense report due Wednesday 5 PM**: The Q3 expense report must be submitted by 5:00 PM today (September 2); reports that miss the cutoff are paid with next month's payroll. Action needed today.
+- **Client — Question about the proposal timeline**: Client asks whether the revised proposal can be delivered by Friday and needs an answer before briefing their team; reply when you can.
+
+## Calendar
+Today, Wednesday, September 2 (America/Chicago):
+- 9:30–10:30 AM — Planning, Room B (Alex)
+- 10:00–11:00 AM — Vendor demo, Zoom (with vendor@example.com) — overlaps the tail of Planning
+- 1:00–2:00 PM — Budget meeting, Conference Room A (Jamie)
+
+## News
+Saint Paul, MN:
+- **Twin Cities Tech Conference Returns** (high) — Annual tech conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies; registration opens this Friday.
+- **Maplewood Park Renovation Complete** (medium) — Renovations finished ahead of schedule, adding new walking trails and a children's playground; grand reopening is Saturday.
+- **State Fair Attendance Drops Slightly** (low) — Minnesota State Fair saw a 3% decline in attendance this year, with cooler-than-average weather cited as a factor.
+
+## Spanish practice
+Hoy tengo una reunión de planificación por la mañana y luego una demostración con un proveedor; también hay una reunión presupuestaria en la tarde. Debo enviar mi informe de gastos del tercer trimestre antes de las cinco de la tarde, porque si llego tarde se pagará con el próximo pago. El cliente quiere saber si la propuesta revisada puede entregarse el viernes para poder informar a su equipo. Además, mañana abre la inscripción al Twin Cities Tech Conference y el sábado reabre el parque Maplewood después de las renovaciones. Es un buen día para practicar frases como «¿Puede entregar la propuesta antes del viernes?» o «El informe debe enviarse hoy por la tarde»: así conecto mi trabajo diario con el español que estoy aprendiendo.
+
+Two things worth flagging: the Planning meeting (9:30–10:30) overlaps the Vendor demo (10:00–11:00), and today's 5 PM expense-report deadline plus the client's Friday proposal question are both action items from yesterday's emails.

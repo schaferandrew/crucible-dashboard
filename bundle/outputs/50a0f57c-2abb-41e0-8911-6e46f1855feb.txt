@@ -1,0 +1,32 @@
+
+
+The migration is complete. Here's a summary of what changed:
+
+## Summary of Changes
+
+### Files Created (under `app/`)
+- **`app/layout.tsx`** — Root layout combining the old `_app.tsx` (Layout wrapper + CSS import) and `_document.tsx` (`<html lang="en">` structure). Sets root metadata (title + description).
+- **`app/page.tsx`** — Home page. Server component with `dynamic = "force-static"`, fetches data inline via `getAllBooks()`.
+- **`app/about/page.tsx`** — About page. Static server component with metadata.
+- **`app/search/page.tsx`** — Server wrapper with metadata, renders `<SearchContent />` inside `<Suspense>`.
+- **`app/search/SearchContent.tsx`** — Client component (`'use client'`) handling the interactive search UI with `useSearchParams()`.
+- **`app/books/[slug]/page.tsx`** — Book detail page. Server component with `dynamic = "force-dynamic"` (was `getServerSideProps`), uses `generateMetadata` and calls `notFound()` for unknown slugs.
+- **`app/genres/[genre]/page.tsx`** — Genre listing page. Static with `generateStaticParams` (was `getStaticPaths`), `dynamic = "force-static"`, uses `generateMetadata` and `notFound()`.
+- **`app/not-found.tsx`** — Custom 404 page (was `pages/404.tsx`).
+- **`app/api/books/route.ts`** — API route using `NextResponse` and `URL.searchParams` (was `pages/api/books.ts`).
+
+### Files Modified
+- **`components/Layout.tsx`** — Changed from `useRouter` (`next/router`) to `usePathname` (`next/navigation`), added `'use client'`.
+- **`components/ShareLink.tsx`** — Accepts `slug` as a prop instead of reading from `useRouter().query` (no longer needs client-side hooks).
+
+### Files Deleted
+- Entire `pages/` directory (`_app.tsx`, `_document.tsx`, `index.tsx`, `about.tsx`, `search.tsx`, `404.tsx`, `books/[slug].tsx`, `genres/[genre].tsx`, `api/books.ts`)
+
+### Behavior Preserved
+- **URLs**: All routes identical (`/`, `/books/[slug]`, `/genres/[genre]`, `/search`, `/about`, `/api/books`)
+- **Rendering**: Static pages (home, about, genres) are built ahead of time; dynamic pages (book detail) render on demand; search remains client-side
+- **Metadata**: Same `<title>` and `<meta description>` on every page
+- **Navigation**: Active link highlighting works the same way
+- **404**: Custom not-found page renders for unknown routes/genres
+- **API**: Same response codes (200, 400, 405) and JSON shape
+- **Tests**: All 7 tests pass; `npm run build` succeeds

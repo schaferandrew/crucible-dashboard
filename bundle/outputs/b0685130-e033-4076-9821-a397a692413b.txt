@@ -1,0 +1,11 @@
+Criterion 1 (Correct complexity, 4 pts): The agent states O(n log n) and attributes this to sorting first. Binary search itself is O(log n); the sort is not part of binary search. This is incorrect — 0/4.
+
+Criterion 2 (Explanation, 3 pts): The agent mentions checking the middle element but never explains that each step halves the remaining search range. No correct explanation — 0/3.
+
+Criterion 3 (Precondition, 2 pts): The agent explicitly claims binary search works on any array, sorted or not — the opposite of the required precondition. 0/2.
+
+Criterion 4 (Clarity, 1 pt): The response is short, readable, and has a summary line, so it is reasonably clear and organised in form, even though its content is wrong. 1/1.
+
+Total: 1/10.
+
+GRADE: 1

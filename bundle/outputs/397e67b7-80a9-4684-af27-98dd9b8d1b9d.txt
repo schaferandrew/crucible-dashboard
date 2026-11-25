@@ -1,0 +1,26 @@
+All checks pass. Here's a summary of the diagnosis and fix:
+
+## Diagnosis
+`app/page.tsx` was written as if it were a client component but never declared one — it used `useState`/`useEffect` with no `'use client'` directive, so Next.js treated it as a Server Component. It also had an untyped state (`useState(null)` → inferred `never`), which failed the production build at type-checking time:
+
+```
+Type error: Property 'name' does not exist on type 'never'.  (app/page.tsx:25)
+```
+
+Even past that, the design was wrong for App Router: a client component fetching its own data from an API route just to render static content — a needless round trip and a second copy of the account data (the page had its own `accounts` map plus the API's). The visible tests only covered the API route, never the page, so the broken rendering was undetected.
+
+## Fix (idiomatic modern Next.js)
+- **`lib/accounts.ts`** (new): single source of truth — typed `Account` and a `getAccount(id)` accessor returning `null` for unknown ids.
+- **`app/page.tsx`**: now an async-free Server Component that reads the account directly via `getAccount('acct_1')` and renders it — no hooks, no client fetch, no API round trip. It keeps the existing structure (`<main>` with "Account" heading and Name/Plan paragraphs) and shows a not-found fallback instead of an infinite "Loading..." state.
+- **`app/api/account/route.ts`**: kept as a valid endpoint, but refactored to use the shared `getAccount` (removing the duplicated data map).
+
+## Tests
+- `app/page.test.tsx` rewritten to actually test the page: renders "Name: Alice" / "Plan: Pro" for acct_1, plus a not-found branch (via module mock + dynamic import).
+- Route tests moved to `app/api/account/route.test.ts` (node environment) and unchanged in behavior — still covering the 200 and 404 cases.
+
+## Verification
+- `npm test`: 4/4 passing across both files.
+- `npx next build`: compiles, type-checks, and prerenders `/` statically.
+- Runtime smoke test (`next start`): served HTML contains `<main><h1>Account</h1><p>Name: Alice</p><p>Plan: Pro</p></main>`; the API returns `{"name":"Alice","plan":"Pro"}`.
+
+Note: `next-env.d.ts` was auto-rewritten by Next during the build (added its standard comment block) — that's expected and left as-is.

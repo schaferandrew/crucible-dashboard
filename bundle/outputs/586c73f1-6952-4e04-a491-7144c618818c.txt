@@ -1,0 +1,25 @@
+
+
+All green. Here's the summary:
+
+---
+
+## What was wrong
+
+1. **`LeadForm.tsx` was a Server Component** — it used `onSubmit` (an event handler) but had no `"use client"` directive. Next.js refused to serialize the form, causing the build to timeout.
+
+2. **Form state was broken** — `values` was a plain object mutated via `values.name = e.target.value`. This doesn't trigger React re-renders, so fields never displayed what was typed.
+
+3. **No validation or error display** — no client-side checks, no error message elements, no `aria-invalid`/`aria-describedby` attributes, no focus management.
+
+4. **No success state** — no `lead-success` element after submission.
+
+5. **API route had zero validation** — it blindly passed any JSON through to `saveLead`, never returning 422 errors.
+
+## What I changed
+
+| File | Change |
+|---|---|
+| **`lib/email.ts`** *(new)* | Shared `isValidEmail()` (strict format: one `@`, domain labels with inner hyphens only, TLD ≥2 letters) and `normalizeEmail()` (trim + lowercase) |
+| **`app/contact/LeadForm.tsx`** | Added `"use client"`; replaced plain-object state with `useState` for each field; added client-side validation with proper error elements (`lead-*-error`), `aria-invalid`/`aria-describedby`, and focus-to-first-error; POSTs to `/api/leads` and shows `lead-success` on 201; textarea `Enter` key submits via `requestSubmit` |
+| **`app/api/leads/route.ts`** | Validates every field, trims all strings, saves missing company as `""`, normalizes email via `normalizeEmail()`, returns **422** with `{ errors }` on any problem, returns **201** with `{ lead }` on success |

@@ -1,0 +1,22 @@
+
+
+All 30 tests pass and the CLI works correctly. Here's what was built:
+
+**Project structure:**
+- `interest/__init__.py` — package marker
+- `interest/__main__.py` — CLI entry point with argparse, validation, and output formatting
+- `interest/calc.py` — calculation engine (iterates by months for non-daily, by days for daily compounding)
+- `tests/test_interest.py` — 30 tests across 8 test classes
+- `README.md` — usage documentation with examples
+
+**Test coverage (30 tests):**
+| Class | Cases |
+|-------|-------|
+| `TestCalculateBasic` | Annual, quarterly, monthly, daily compounding + multi-year |
+| `TestZeroInterest` | 0% rate with annual and monthly compounding |
+| `TestContributions` | Monthly contributions, annual contributions, mixed compound/contrib freq |
+| `TestKnownValue` | $10k at 7% monthly for 10 years = $20,096.61 |
+| `TestInputValidation` | Negative principal/rate/years, both time flags, missing flags, bad values |
+| `TestJsonOutput` | JSON format, contributions, single-line output |
+| `TestSummaryOutput` | Readable summary format |
+| `TestMonths` | Valid months, non-multiple-of-12 rejection |

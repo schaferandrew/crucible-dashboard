@@ -1,0 +1,1 @@
+The API route has a compilation issue due to complex error-handling logic in my rewrite. Let me simplify it minimally while keeping the essential spec behavior: normalize fields as required by the task, return 201 with lead data if successful, or 422 with errors on validation failure. I'll keep the implementation clean and type-safe without overly complex conditional checks.

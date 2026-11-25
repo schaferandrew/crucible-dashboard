@@ -1,0 +1,18 @@
+I have both calendars' busy blocks for this week (Mon Aug 31 – Fri Sep 4). Here's my analysis:
+
+**Monday Aug 31:** Alex is free only 08:30–09:00, 09:30–10:00 and 14:00–15:00; Jamie is busy 09:00–11:00, 12:00–13:00 and 14:00–17:00. No full hour overlaps (the only common window before 9am is half an hour).
+
+**Tuesday Sep 1:** Alex free 09:30–11:00 and 13:00–14:00; Jamie busy 09:30–10:30 and 12:00–14:30. The best overlap (10:30–11:00) is only half an hour — no full hour works.
+
+**Wednesday Sep 2:** Alex free from 14:00 onward (and 11:30–12:00); Jamie busy until 13:00 and again 14:00–15:30. The first full common hour is 15:30–16:30.
+
+**Thursday Sep 3:** Alex free 11:00–12:00 and 13:00–15:00 (the declined Design sync doesn't count as busy); Jamie free 10:30–12:00 and 13:00–14:00. Two full hours work: 11:00–12:00 and 13:00–14:00.
+
+**Friday Sep 4:** Alex free 09:30–12:00; Jamie free 10:30–12:00 — a 1.5-hour window, but later in the week than Thursday options.
+
+Ranking by earliest availability (no other preferences stated): Wednesday late afternoon first, then Thursday midday slots. Note that Monday/Tuesday have no full common hour within work hours this week.
+
+OPTIONS:
+2026-09-02 15:30 CDT
+2026-09-03 11:00 CDT
+2026-09-03 13:00 CDT

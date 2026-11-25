@@ -1,0 +1,71 @@
+⏺ bash(command=ls -la && cat README.md)
+  ⎿ total 32
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff   320 Nov 23 03:43 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 23 03:43 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ bash(command=cat app.php && find src tests data -type f | head -50 && rub)
+  ⎿ <?php
+/**
+ * Juniper Inn booking desk, command-line entry point.
+ *
+ *   php app.php '/quote?room=101&checkin=2024-03-19&nights=2&guests=1'
+ *
+ * Prints the response body. Exit status 0 for a 2xx resp
+⏺ bash(command=cat src/Router.php src/DataStore.php src/Dates.php)
+  ⎿ <?php
+/**
+ * Maps a request line like "/quote?room=101&nights=2" to [status, body].
+ *
+ *   /rooms          all rooms, JSON
+ *   /rooms.html     the rooms page, HTML
+ *   /room?id=       one room, JSO
+⏺ bash(command=cat src/Pricing.php src/Views.php tests/run_tests.php && hea)
+  ⎿ <?php
+/**
+ * Quote calculator: nightly rate, weekend surcharge, extra guests, cleaning, coupon, lodging tax.
+ * Every money figure is rounded to cents with round().
+ */
+class Pricing
+{
+    const TAX_R
+⏺ bash(command=cat tests/fixtures/cases.json && cat .gitignore && git log -)
+  ⎿ [
+  {"request":"/rooms","status":200,"body":[{"id":"101","name":"Garden Single","rate":89.0,"max_guests":1},{"id":"102","name":"Harbor Double","rate":124.5,"max_guests":3},{"id":"201","name":"Loft Sui
+⏺ bash(command=which php; php -v 2>&1 | head -3; echo ---; ruby -e 'puts "r)
+  ⎿ /bin/bash: php: command not found
+---
+ruby ok
+⏺ bash(command=cat -A data/bookings.csv; echo ====; cat -A data/coupons.csv)
+  ⎿ cat: illegal option -- A
+usage: cat [-belnstuv] [file ...]
+====
+cat: illegal option -- A
+usage: cat [-belnstuv] [file ...]
+====
+data/rooms.json:   JSON data
+data/bookings.csv: CSV text
+data/coupons.cs
+⏺ bash(command=sed -n 'l' data/bookings.csv; echo ====; sed -n 'l' data/cou)
+  ⎿ id,room_id,guest,checkin,nights,guests,paid$
+B001,101,Ada Park,2024-03-01,2,1,1$
+B002,102,Luis Ortega,2024-03-02,3,2,0$
+B003,201,Mina Okafor,2024-03-08,4,3,yes$
+B004,102,Sam Reed,2024-03-15,1,2,$
+B005
+⏺ bash(command=ruby -e '
+require "date"; require "json"
+# Date normalizatio)
+  ⎿ #<ArgumentError: invalid date>
+#<ArgumentError: invalid date>
+#<Date: 2024-01-31 ((2460341j,0s,0n),+0s,2299161j)>
+#<ArgumentError: invalid date>
+2.68
+24.75
+24.75
+1.01
+3
+-3
+"89.0"
+"198.0"
+"24.75"
+"{\"a

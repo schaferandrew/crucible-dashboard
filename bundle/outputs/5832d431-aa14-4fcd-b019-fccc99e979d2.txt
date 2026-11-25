@@ -1,0 +1,89 @@
+⏺ bash(command=ls -la && cat README.md)
+  ⎿ total 376
+drwxr-xr-x@  14 andrew.schafer@homebot.ai  staff     448 Nov 22 17:52 .
+drwxr-xr-x@   9 andrew.schafer@homebot.ai  staff     288 Nov 22 17:52 ..
+drwxr-xr-x@  12 andrew.schafer@homebot.ai  st
+⏺ bash(command=cat incident/support-notes.md docs/invites.md docs/legal-con)
+  ⎿ # Support escalation: invited contributors stuck
+
+Collected by support. Severity: contributors can't start assigned work.
+
+- **rosa** (invited by grace, accepted the invite on 10/20): "The page keeps 
+⏺ bash(command=find . -path ./node_modules -prune -o -type f -print | grep )
+  ⎿ ./.git/COMMIT_EDITMSG
+./.git/config
+./.git/description
+./.git/HEAD
+./.git/hooks/applypatch-msg.sample
+./.git/hooks/commit-msg.sample
+./.git/hooks/fsmonitor-watchman.sample
+./.git/hooks/post-update.sam
+⏺ bash(command=cat packages/shared/src/types.ts packages/shared/src/index.t)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's u
+⏺ bash(command=cat apps/api/src/db.ts apps/api/src/app.ts apps/api/src/serv)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin
+⏺ bash(command=cat apps/api/src/routes/users.ts apps/api/src/services/users)
+  ⎿ import { loginSchema, onboardingSchema, registerSchema, updateUserSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../mi
+⏺ bash(command=cat apps/api/src/routes/invites.ts apps/api/src/services/inv)
+  ⎿ import { acceptInviteSchema, createInviteSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+import { 
+⏺ bash(command=cat apps/web/src/App.tsx apps/web/src/auth/AuthContext.tsx a)
+  ⎿ import { Link, Route, Routes } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
+import { RequireWriter } from "./auth/RequireWriter";
+import { ArticlePage } from "./pages/Article
+⏺ bash(command=cat apps/web/src/pages/WelcomePage.tsx apps/web/src/pages/In)
+  ⎿ import { type FormEvent, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext
+⏺ bash(command=cat apps/web/src/api/client.ts apps/web/src/pages/EditorPage)
+  ⎿ import type {
+  Invite,
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the
+⏺ bash(command=cat apps/api/src/services/presenters.ts apps/api/src/routes/)
+  ⎿ import type { Article, Comment, Profile, User } from "@conduit/shared";
+import type { ArticleRow, CommentRow, Db, UserRow } from "../db";
+import { favoritesCount, isFavorited, tagsForArticle } from ".
+⏺ bash(command=cat apps/api/test/helpers.ts && ls apps/api/test apps/web/te)
+  ⎿ import request from "supertest";
+import type { Express } from "express";
+import { createApp } from "../src/app";
+import { createDb } from "../src/db";
+
+/** A fresh app over an empty database, with a c
+⏺ bash(command=cat apps/api/test/realworld.contract.test.ts)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the of
+⏺ bash(command=cat apps/web/test/render.tsx apps/web/test/setup.ts apps/web)
+  ⎿ import type { Article, ArticlesResponse } from "@conduit/shared";
+import { render } from "@testing-library/react";
+import type { ReactElement } from "react";
+import { MemoryRouter } from "react-router
+⏺ bash(command=cat apps/web/src/pages/ProfilePage.tsx apps/web/src/pages/Ar)
+  ⎿ import type { ArticleListQuery, Profile } from "@conduit/shared";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../api/cl

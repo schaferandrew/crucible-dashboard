@@ -1,0 +1,5 @@
+<think>The first affected request is confirmed: at 16:44:15, user1287 (signed in) got a HIT on /api/articles?limit=10 that was stored by user0638's MISS at 16:44:05.346Z (age ~9-10s). The app log confirms "cache hit key=/api/articles?limit=10 age=9s" at 16:44:15.179Z.
+
+Wait — but hold on. Is the first affected request really at 16:44:15? Let me check earlier HITs in the post-deploy window that I might have missed because of my "personalized" filter or same-user skip. Let me list all HIT entries after deploy with their source and recipient, sorted by time, for personalized paths.
+
+Also — wait, there's a subtlety: my analysis skipped HITs where the source was anonymous (Case B) but counted them separately; it also skipped tags hits entirely. But what about same-user hits? It printed 0 — let me double check that with a direct query of all personalized HIT entries and their sources/recipients, sorted by time. Let me print the first ~30 personalized HITs after deploy.</think>

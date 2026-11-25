@@ -1,0 +1,37 @@
+1. To calculate the value of the savings account after 3 years with monthly compounding, we use the formula for compound interest: \( A = P \left(1 + \frac{r}{n}\right)^{nt} \), where \( A \) is the amount of money accumulated after n years, including interest, \( P \) is the principal amount (the initial amount of money), \( r \) is the annual interest rate (decimal), \( n \) is the number of times that interest is compounded per year, and \( t \) is the time the money is invested for in years.
+
+Here, \( P = 5000 \), \( r = 0.04 \), \( n = 12 \) (since it's compounded monthly), and \( t = 3 \).
+
+\[
+A = 5000 \left(1 + \frac{0.04}{12}\right)^{12 \times 3}
+\]
+
+\[
+A = 5000 \left(1 + 0.003333\right)^{36}
+\]
+
+\[
+A = 5000 \left(1.003333\right)^{36}
+\]
+
+\[
+A \approx 5000 \times 1.126825
+\]
+
+\[
+A \approx 5634.13
+\]
+
+So, the account is worth $5634.13 after 3 years.
+
+2. To find out how many boxes of flooring are needed, first calculate the total area including the 10% extra for waste. The total area is \( 1850 \times 1.10 = 2035 \) sq ft. Each box covers 23.5 sq ft, so the number of boxes needed is \( \frac{2035}{23.5} \approx 86.52 \). Since you can't buy a fraction of a box, you need to round up to the next whole number, which is 87 boxes.
+
+3. First, calculate the total miles driven: \( 412 \) miles. The car gets 34 miles per gallon, so the total gallons of gas used is \( \frac{412}{34} \approx 12.12 \) gallons. At $3.89 per gallon, the cost is \( 12.12 \times 3.89 \approx 47.24 \) dollars.
+
+4. The pre-tax amount is $172.00, and the tax is \( 18\% \) of $172.00, which is \( 0.18 \times 172.00 = 30.96 \). So the total cost is \( 172.00 + 30.96 = 202.96 \). Splitting the total cost four ways, each person pays \( \frac{202.96}{4} = 50.74 \) dollars.
+
+ANSWERS
+1. 5634.13
+2. 87
+3. 47.24
+4. 50.74

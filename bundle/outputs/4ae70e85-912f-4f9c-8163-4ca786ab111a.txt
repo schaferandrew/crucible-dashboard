@@ -1,0 +1,1 @@
+Confirmed: `localStorage` is undefined in the jsdom env (Node 26 experimental global shadows it) — a pre-existing environment breakage, not something my changes caused. I'll fix it via test setup polyfill rather than touching existing tests. Let me check the remaining web test and then start implementing.

@@ -1,0 +1,29 @@
+
+
+Here's a summary of everything done:
+
+## Root Cause
+
+The `responseCache` middleware introduced in v1.8.0 caches GET responses keyed only by `req.originalUrl`, but the responses contain per-user data (`favorited`, `following`). When User A's request is cached, User B gets the same response with User A's personalized state.
+
+## Fix (2 files changed)
+
+1. **`apps/api/src/middleware/responseCache.ts`** — The cache key now includes the authenticated user ID:
+   - Extracts the JWT token from the `Authorization` header
+   - Verifies it to get the user ID
+   - Keys become `/api/articles/test|u2` for user 2, `/api/articles/test|u3` for user 3, etc.
+   - Anonymous requests still share cache entries (key = URL only)
+
+2. **`apps/api/src/middleware/auth.ts`** — Exported `tokenFrom()` so the cache middleware can read the Authorization header before route-level auth runs
+
+## Regression Tests (3 new tests in `responseCache.test.ts`)
+
+1. **Favorite state isolation** — User A favorites an article, User B must see `favorited: false`
+2. **Follow state isolation** — User A follows a profile, User B must see `following: false`
+3. **Article list isolation** — User A favorites an article, User B's list must show `favorited: false`
+
+## Postmortem (`incident/POSTMORTEM.md`)
+
+- **481 distinct users** served another user's personalized data
+- Counted from `cache=HIT` entries on user-specific endpoints (articles, profiles) for signed-in users in the access log
+- All 24 tests pass (21 existing + 3 new), including the unmodified `realworld.contract.test.ts`

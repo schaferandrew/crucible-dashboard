@@ -1,0 +1,7 @@
+GRADE: 2
+
+## REASONING
+- Correct complexity (4): The response states O(n log n), which is incorrect. The correct complexity for binary search is O(log n).
+- Explanation (3): The response explains that the algorithm first sorts the array, which takes O(n log n) time, and then repeatedly checks the middle element to locate the target. This is incorrect. Binary search does not sort the array; it works on a sorted array and repeatedly halves the search range.
+- Precondition (2): The response states that binary search works on any array, sorted or not, which is incorrect. Binary search requires the array to be sorted.
+- Clarity (1): The answer is not clear and well organised. The response contains incorrect information and does not follow the criteria.

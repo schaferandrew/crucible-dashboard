@@ -1,0 +1,1 @@
+The issue is likely due to trailing whitespace or subtle newline differences in the multi-line text. Let me apply a more precise edit using individual, smaller replacements that target specific lines rather than replacing large blocks. This avoids whitespace matching issues.

@@ -1,0 +1,1 @@
+<think>Key insight from the code: in the default case (no `dynamic` export), the request is proxied via `proxyNextRequest(rawRequest, staticGenerationStore)` — accessing dynamic data on the request (like headers/cookies? or nextUrl?) triggers a bailout of static generation. Let me check proxyNextRequest to see what access patterns bail out.</think>

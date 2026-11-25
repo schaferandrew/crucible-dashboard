@@ -1,0 +1,18 @@
+## Reasoning
+
+To find a common meeting hour for the entire team in the next two weeks (August 31 – September 14, 2026), I:
+
+1. **Identified the team**: From the calendar list, the team consists of 16 members all on the "Platform" team (Alex Rivera as primary, plus Jamie, Priya, Dana, Theo, Lena, Omar, Chloe, Ravi, Sofia, Ben, Nina, Caleb, Mei, Eli, plus Design teammates Jordan and Sam). The meeting must include everyone.
+
+2. **Checked free/busy data** for all 17 calendars over the two-week window using `get_freebusy`. This returned busy blocks for each person.
+
+3. **Analyzed patterns**: Most team members have busy periods starting around 9:00–10:00 AM. Benjamin (ben@example.com) has the densest schedule, often booked 9:00 AM – 5:00 PM, making early morning the most reliable window.
+
+4. **Identified common free slots**: The 8:00–9:00 AM slot on multiple dates is consistently free across all team members' calendars, as no one has busy blocks covering that hour. August 31 is eliminated entirely because Ben is booked 9:00 AM – 5:00 PM that day.
+
+5. **Selected top three options**: September 1, 2, and 3 at 8:00 AM CDT are all fully free for every team member, with September 1 being the earliest and thus best option.
+
+OPTIONS:
+2026-09-01 08:00 CDT
+2026-09-02 08:00 CDT
+2026-09-03 08:00 CDT

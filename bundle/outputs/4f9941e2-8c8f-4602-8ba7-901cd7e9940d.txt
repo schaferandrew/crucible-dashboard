@@ -1,0 +1,37 @@
+### Reasoning:
+1. **Inflation** is a complex phenomenon caused by multiple factors (e.g., demand-pull, cost-push, monetary expansion), not solely due to government money printing. The claim oversimplifies inflation.
+2. CPI is correctly described as tracking a basket of goods/services, but the wording is precise and clear.
+3. "Prices in the basket *are* weighted" (subject-verb agreement error).
+4. The Federal Reserve has no legal requirement to raise rates at 2% CPI; its mandate is flexible (e.g., dual mandate: max employment + stable prices). The claim misrepresents policy.
+5. The Fed’s long-run goal is indeed ~2%, but the phrasing is correct.
+6. Central bank credibility can suffer from persistent misses, but "lose it's" has a typo (*its*).
+7. The natural rate (NAIRU) is an estimate, not a fixed value; 4% may be outdated (e.g., post-2020 shifts).
+8. Unemployment above NAIRU isn’t binary—structural/frictional factors exist beyond "lazy" or "bad policy." The claim is overly simplistic.
+9. QE involves creating bank reserves, not "printing money" directly; hyperinflation is rare and depends on context (e.g., velocity of money).
+10. Correct description of Fed actions post-2008 crisis.
+11. QE doesn’t "inevitably" cause hyperinflation (e.g., Japan/US examples). The claim is overstated.
+12. "More expensive *than* they were before" (incorrect comparison word).
+13. Correct summary of Japan’s 1990s stagnation.
+14. Deflation doesn’t prove monetary policy is "completely ineffective"—Japan’s case is debated (e.g., unorthodox policies later).
+15. Supply-side theory is nuanced; lower taxes *may* encourage investment, but the claim is oversimplified.
+16. Reagan cuts were significant, but phrasing is correct.
+17. Deficit grew in the 1980s, but this doesn’t disprove supply-side economics (e.g., other factors like defense spending).
+18. The deficit/economic growth link is contested; "definitively debunked" is overstated.
+
+---
+
+ERRORS:
+3: are
+6: its
+12: than
+
+FLAGS:
+1: imprecise
+4: misleading
+7: imprecise
+8: unclear
+9: imprecise
+11: overstated
+14: overstated
+15: imprecise
+18: overstated

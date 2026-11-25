@@ -1,0 +1,30 @@
+**Reasoning:**
+
+We are given four friends (Alice, Bob, Carol, Dave), four chairs (1–4 left to right), and four distinct colors (red, blue, green, yellow). We translate each clue:
+
+- **Clue 3:** The person who likes green sits in chair 1. → Chair 1 color = green.
+- **Clue 5:** Dave likes red. → Dave's color = red.
+- **Clue 4:** Carol likes yellow and sits somewhere to the right of the person who likes red. Since Dave likes red, Carol must be in a higher-numbered chair than Dave. Also, Carol ≠ chair 1 (green), Dave ≠ chair 1 (red).
+- **Clue 2:** Bob does not sit in chair 4.
+- **Clue 1:** Alice sits immediately to the left of the person who likes blue. → If Alice is in chair *X*, blue is in chair *X+1*. Alice cannot be in chair 4.
+
+**Step-by-step deduction:**
+
+1. Chair 1 is green. Dave (red) and Carol (yellow) cannot be in chair 1, so chair 1 is either Alice or Bob.
+2. **Try chair 1 = Alice (green).**  
+   - Clue 1 forces blue to be in chair 2 (Alice immediately left of blue).  
+   - The only person left for chair 2 (since Dave=red, Carol=yellow) is **Bob**, so chair 2 = Bob, blue.  
+   - Remaining people: Carol, Dave for chairs 3 and 4. Remaining colors: red, yellow. Clue 5 gives Dave = red; Clue 4 gives Carol = yellow and requires Carol right of Dave → **Dave in 3, Carol in 4**.  
+   - Check Clue 2: Bob is in chair 2, not 4 ✓. All clues are satisfied.
+3. **Try chair 1 = Bob (green).**  
+   - Remaining people for chairs 2–4: Alice, Carol, Dave. Colors left: blue, yellow, red. Dave=red, Carol=yellow.  
+   - Clue 4 forces Dave < Carol in chairs 2–4. Possible (Dave, Carol) pairs: (2,3), (2,4), (3,4).  
+   - Clue 1 requires Alice to have an immediate right neighbor who likes blue. Testing all placements shows the right neighbor of Alice always ends up being either Carol (yellow) or Dave (red), never blue. No valid arrangement exists.
+
+The only consistent assignment is:
+- Chair 1: Alice, green
+- Chair 2: Bob, blue
+- Chair 3: Dave, red
+- Chair 4: Carol, yellow
+
+**ANSWER:** Dave

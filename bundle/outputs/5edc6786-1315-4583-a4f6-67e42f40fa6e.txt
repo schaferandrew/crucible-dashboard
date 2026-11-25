@@ -1,0 +1,1 @@
+I have all the free/busy data. Now let me compute overlapping free slots for the whole Platform team (Alex + 15 others) using a script.

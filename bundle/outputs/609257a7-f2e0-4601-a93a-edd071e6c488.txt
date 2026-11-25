@@ -1,0 +1,18 @@
+Now I have a complete picture. Let me write the report.
+
+**Summary of what happened:**
+
+1. **First login attempt**: Tried to log in as `testuser` with password `correctpassword` (as specified in SKILL.md). The login failed with `"invalid_credentials"`. I verified that the scrypt hash of "correctpassword" with salt "tu-9b3e" does not match the stored hash in accounts.json, confirming a password mismatch.
+
+2. **Diagnosis**: The failure mode is **Wrong Password** - the designated test user's password does not produce the expected hash against the stored salt.
+
+3. **Recovery procedure** (per SKILL.md): Used the "Forgot password?" flow:
+   - POSTed to `/api/reset-password-request` with username `testuser`
+   - Received reset URL: `/reset-password.html?token=reset_607889fb50834a8e&user=testuser`
+   - POSTed to `/api/reset-password` with new password `NewPass123!`
+   - Successfully logged in as `testuser` with the new password
+   - Accessed the dashboard at `http://localhost:3456/dashboard.html` and confirmed authentication via `/api/dashboard`
+
+The initial login failed due to Wrong Password, but I successfully recovered using the password reset flow and ended on the authenticated dashboard.
+
+FAILURE: Wrong Password

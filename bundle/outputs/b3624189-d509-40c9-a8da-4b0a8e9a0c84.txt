@@ -1,0 +1,14 @@
+Reasoning: I separated wording/grammar issues from substantive claims. Objective language fixes are limited to agreement, spelling-adjacent usage (“it’s”→“its”) and “then”→“than.” Claims that overstate causality or make sweeping conclusions are flagged rather than rewritten.
+
+ERRORS:
+3: are
+6: its
+12: than
+
+FLAGS:
+1: misleading
+4: misleading
+8: misleading
+11: overstated
+14: overstated
+18: overstated

@@ -1,0 +1,44 @@
+⏺ bash(command=ls -la && cat README.md)
+  ⎿ total 128
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff    384 Nov 23 18:38 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff    288 Nov 23 18:38 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff  
+⏺ bash(command=find src test data -type f | sort && cat package.json)
+  ⎿ data/tools.json
+src/cli.js
+src/dates.js
+src/report.js
+src/store.js
+src/tools.js
+src/validate.js
+test/cli.test.js
+test/helpers.js
+test/tools.test.js
+{
+  "name": "toolshed",
+  "version": "0.3.0",
+  "pri
+⏺ bash(command=cat src/store.js src/validate.js src/dates.js)
+  ⎿ // The tool collection and its JSON file. Listeners hear about every change the service makes.
+
+import fs from "node:fs";
+import { normalizeTool } from "./validate.js";
+
+export class ToolStore {
+  con
+⏺ bash(command=cat src/tools.js src/report.js src/cli.js)
+  ⎿ // The lending rules. Every function takes the store; `today` is always passed in ("YYYY-MM-DD").
+
+import { addDays, daysBetween } from "./dates.js";
+import { isStatus } from "./validate.js";
+
+export 
+⏺ bash(command=cat test/helpers.js test/cli.test.js test/tools.test.js data)
+  ⎿ import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+
+export const SEED = {
+  nextId: 4,
+  tools: [
+    { id: 1, name: "Cordless drill", category: "power", tags: ["Drill"]

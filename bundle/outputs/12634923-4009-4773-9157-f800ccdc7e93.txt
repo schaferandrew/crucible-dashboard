@@ -1,0 +1,33 @@
+⏺ bash(command=ls -la && cat README.md 2>/dev/null)
+  ⎿ total 296
+drwxr-xr-x@  16 andrew.schafer@homebot.ai  staff     512 Nov 23 16:46 .
+drwxr-xr-x@   9 andrew.schafer@homebot.ai  staff     288 Nov 23 16:46 ..
+drwxr-xr-x@  12 andrew.schafer@homebot.ai  st
+⏺ bash(command=find app lib data -type f | head -50 && echo --- && cat pack)
+  ⎿ app/contact/LeadForm.tsx
+app/contact/page.tsx
+app/layout.tsx
+app/api/leads/route.ts
+app/page.tsx
+lib/leads.test.ts
+lib/leads.ts
+data/.gitkeep
+---
+{
+  "name": "react-lead-form",
+  "version": "0.1.0",
+ 
+⏺ bash(command=cat app/contact/LeadForm.tsx app/contact/page.tsx app/layout)
+  ⎿ import type { FormEvent } from "react";
+
+const values = { name: "", email: "", company: "", message: "" };
+
+export default function LeadForm() {
+  async function handleSubmit(event: FormEvent<HTMLForm
+⏺ bash(command=git log --oneline -5 2>/dev/null; git status --short 2>/dev/)
+  ⎿ e3b0a76 Seeded workspace
+?? prompt.txt
+⏺ bash(command=npm run build 2>&1 | tail -40, timeout=300)
+  ⎿ ^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at e_ (/Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini@

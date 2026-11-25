@@ -1,0 +1,18 @@
+The prompt.txt file contains instructions for fixing a problem with contributor invites in a monorepo. Here's a summary of the tasks and steps to follow:
+
+1. Read the README.md for an overview of the project structure.
+2. Understand the problem: invited contributors can't start the work their editors assigned them.
+3. Review the collected data in incident/support-notes.md.
+4. Review the feature's design in docs/invites.md.
+5. Review Legal's requirements in docs/legal-contributor-terms.md.
+6. Reproduce the problem in a test.
+7. Fix the issue to ensure:
+   - Invited contributors can get to the editor.
+   - Regular sign-ups continue to work as they do today.
+   - Affected accounts work after the fix without manual intervention.
+8. Where the design doc, Legal's requirements, and current behavior disagree, prioritize Legal's requirements.
+9. Add tests to reproduce the problem and ensure it doesn't happen again.
+10. Keep all existing tests passing.
+11. Write a short summary of the root cause, decisions made, and anything to flag in code review.
+
+To start, you should read the README.md to get an overview of the project structure and any relevant context. Then, proceed with the steps outlined above. If you need to execute any commands or make changes, please provide the necessary code or commands.

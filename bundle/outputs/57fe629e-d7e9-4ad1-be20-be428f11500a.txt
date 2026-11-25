@@ -1,0 +1,19 @@
+
+
+Done. All 21 tests pass and `npx tsc -p tsconfig.json` exits cleanly with zero errors.
+
+## Summary of non-obvious typing decisions
+
+1. **`RawTool` interface with `unknown` fields** — Data from the JSON file is untrusted, so every field in `RawTool` is typed as `unknown`. The `normalizeTool` function checks types at runtime before narrowing (e.g., `typeof raw.status !== "string" || !isStatus(raw.status)`), then casts to the known-good values.
+
+2. **`Status` union type** — `"available" | "loaned" | "retired"` used as a type guard (`isStatus(value: string): value is Status`) so TypeScript narrows after the check.
+
+3. **Nullable fields** — `borrower`, `dueDate`, `retiredReason`, and `replacementCost` are explicitly typed as `string | null` or `number | null` to reflect that they can legitimately be absent.
+
+4. **`StoreChange` discriminated union** — The four event types (`AddedEvent`, `LoanedEvent`, `ReturnedEvent`, `RetiredEvent`) share a `type` discriminator so the `auditLines` function can narrow on `event.type` and access the correct extra properties without casts.
+
+5. **`store.tools` element type in `map`/`filter` callbacks** — The `RawTool[]` cast on `raw.tools` was needed because `JSON.parse` returns `unknown[]`; without it TypeScript wouldn't know the map callback's parameter type.
+
+6. **`findTools` filter with type predicate** — The `filter` callback uses a type predicate (`tool is Tool`) to satisfy TypeScript's type narrowing after the `status` check narrows the union.
+
+7. **`overdueTools` filter** — Uses a type predicate to narrow `Tool` to `Tool & { dueDate: string }` (filtering out `null` due dates), so `.localeCompare` is valid on the sort comparator.

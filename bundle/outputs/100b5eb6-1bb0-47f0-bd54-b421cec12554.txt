@@ -1,0 +1,83 @@
+⏺ bash(command=ls -la && cat README.md 2>/dev/null | head -100)
+  ⎿ total 376
+drwxr-xr-x@  12 andrew.schafer@homebot.ai  staff     384 Nov 22 17:38 .
+drwxr-xr-x@   9 andrew.schafer@homebot.ai  staff     288 Nov 22 17:38 ..
+drwxr-xr-x@  12 andrew.schafer@homebot.ai  st
+⏺ bash(command=find apps packages -type f -not -path '*/node_modules/*' | s)
+  ⎿ apps/api/package.json
+apps/api/src/app.ts
+apps/api/src/auth/tokens.ts
+apps/api/src/db.ts
+apps/api/src/errors.ts
+apps/api/src/middleware/auth.ts
+apps/api/src/repositories/articles.ts
+apps/api/src/repos
+⏺ bash(command=cat packages/shared/src/types.ts packages/shared/src/index.t)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's u
+⏺ bash(command=cat apps/api/src/db.ts)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin
+⏺ bash(command=cat apps/api/src/app.ts apps/api/src/server.ts apps/api/src/)
+  ⎿ import express, { type Express } from "express";
+import { type Db, createDb } from "./db";
+import { errorHandler, notFound } from "./errors";
+import { articlesRouter } from "./routes/articles";
+import
+⏺ bash(command=cat apps/api/src/routes/articles.ts apps/api/src/services/ar)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../er
+⏺ bash(command=cat apps/api/src/repositories/articles.ts apps/api/src/servi)
+  ⎿ import { type ArticleRow, type Db, nextId } from "../db";
+
+export function findArticleBySlug(db: Db, slug: string): ArticleRow | undefined {
+  for (const article of db.articles.values()) if (article.s
+⏺ bash(command=cat apps/api/src/services/users.ts apps/api/src/repositories)
+  ⎿ import type { LoginInput, Profile, RegisterInput, UpdateUserInput, User } from "@conduit/shared";
+import type { Db } from "../db";
+import { checkPassword, hashPassword } from "../auth/tokens";
+import 
+⏺ bash(command=cat apps/api/test/realworld.contract.test.ts apps/api/test/h)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the of
+⏺ bash(command=cat apps/web/src/api/client.ts apps/web/src/App.tsx apps/web)
+  ⎿ import type {
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld
+⏺ bash(command=cat apps/web/src/pages/HomePage.tsx apps/web/src/pages/Edito)
+  ⎿ import { useCallback, useEffect, useState } from "react";
+import type { ArticleListQuery } from "@conduit/shared";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+i
+⏺ bash(command=cat apps/web/src/pages/ArticlePage.tsx apps/web/src/pages/Pr)
+  ⎿ import type { Article, Comment } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { api } fr
+⏺ bash(command=cat package.json apps/api/package.json apps/web/package.json)
+  ⎿ {
+  "name": "conduit-monorepo",
+  "private": true,
+  "description": "Conduit: a RealWorld (realworld.how) implementation. Express API + React web app sharing one TypeScript package.",
+  "workspaces": 
+⏺ bash(command=cat apps/web/test/*.tsx apps/web/test/setup.ts apps/web/vite)
+  ⎿ import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { ArticleList, PAGE_SIZE } from "../src/

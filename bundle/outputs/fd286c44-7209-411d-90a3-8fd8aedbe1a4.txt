@@ -1,0 +1,100 @@
+⏺ shell(command=ls -la && cat README.md)
+  ⎿ total 32
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff   320 Nov 23 12:30 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 23 12:30 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   384 Nov 23 12:30 .git
+-rw-r--r--@  1 andrew.schafer@homebot.ai  staff    47 Nov 23 12:30 .gitignore
+-r
+⏺ shell(command=find . -type f -not -path './.git/*' | sort && echo ---- && )
+  ⎿ ./.gitignore
+./app.php
+./data/bookings.csv
+./data/coupons.csv
+./data/rooms.json
+./prompt.txt
+./README.md
+./src/DataStore.php
+./src/Dates.php
+./src/Pricing.php
+./src/Router.php
+./src/Views.php
+./tests/fixtures/cases.json
+./tests/run_tests.php
+----
+<?php
+/**
+ * Juniper Inn booking desk, command-line e
+⏺ shell(command=cat src/Router.php src/DataStore.php src/Dates.php src/Prici)
+  ⎿ <?php
+/**
+ * Maps a request line like "/quote?room=101&nights=2" to [status, body].
+ *
+ *   /rooms          all rooms, JSON
+ *   /rooms.html     the rooms page, HTML
+ *   /room?id=       one room, JSON
+ *   /quote?room=&checkin=&nights=&guests=&coupon=
+ *   /bookings       all bookings; ?room= for o
+⏺ shell(command=cat tests/run_tests.php && echo ===== && cat data/rooms.json)
+  ⎿ <?php
+/**
+ * Fixture tests: every case in fixtures/cases.json is a request, the status it must answer with and
+ * the body it must return (JSON compared as decoded values, HTML as text).
+ *
+ *   php tests/run_tests.php
+ */
+require __DIR__ . '/../app.php';
+
+$cases = json_decode(file_get_contents(__DI
+⏺ shell(command=cat data/rooms.json; echo '---BOOKINGS---'; cat data/booking)
+  ⎿ [
+  {"id": "101", "name": "Garden Single", "rate": "89.00", "max_guests": 1, "cleaning_fee": 20, "extra_guest_fee": "15"},
+  {"id": "102", "name": "Harbor Double", "rate": "124.50", "max_guests": "3", "cleaning_fee": "30.00", "extra_guest_fee": "15"},
+  {"id": "201", "name": "Loft Suite", "rate": "2
+⏺ shell(command=which php; php -v 2>&1 | head -5; ruby -v)
+  ⎿ php not found
+zsh:1: command not found: php
+ruby 2.6.10p210 (2022-04-12 revision 67958) [universal.arm64e-darwin26]
+⏺ shell(command=cat .gitignore; git log --oneline -20 2>&1 | head -30; git s)
+  ⎿ node_modules/
+.next/
+dist/
+__pycache__/
+.venv/
+27a38c6 Seeded workspace
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	prompt.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+⏺ shell(command=which brew; which apt-get; ls /usr/local/bin | head -50)
+  ⎿ /opt/homebrew/bin/brew
+apt-get not found
+aicodemetricsd
+dialog
+docker
+docker-credential-desktop
+docker-credential-ecr-login
+docker-credential-osxkeychain
+jamf
+jamfconnect
+kubectl
+kubectl.docker
+ollama
+selfservice
+starship
+warp-cli
+warp-dex
+warp-diag
+warp-updater
+⏺ shell(command=brew list php 2>&1 | head -3; echo ---; brew info php 2>&1 |)
+  ⎿ Error: No such keg: /opt/homebrew/Cellar/php
+---
+==> php: stable 8.5.12 (bottled), HEAD
+General-purpose scripting language
+https://www.php.net/
+Aliases: php@8.5
+Old Names: php-intl
+Not installed
+From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/p/php.rb
+License: PHP-3.01 AND Zend-2.0

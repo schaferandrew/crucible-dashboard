@@ -1,0 +1,5 @@
+Now I understand the issue clearly. The problem is: when login redirects to dashboard a little later (due to network delays, slow page rendering), the session may have expired slightly by the time the dashboard makes its API request. This causes `{ error: 'expired_session' }` and the frontend shows blank state → intermittent blank display as described.
+
+The fix should be in `dashboard.html`: instead of showing pure blank when session expires, show a helpful message like "Your session has expired. Please log in again." rather than just empty content.
+
+Let me apply this fix:

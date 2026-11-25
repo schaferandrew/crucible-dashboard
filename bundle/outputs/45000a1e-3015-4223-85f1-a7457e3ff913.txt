@@ -1,0 +1,5 @@
+
+
+**Reasoning:** I checked your primary calendar for today, Tuesday, September 1, 2026, at 3:30 PM (America/Chicago timezone). There is a "Design review" event from 2:00 PM to 3:30 PM, which ends exactly at 3:30 PM. The next event ("Customer call") starts at 4:00 PM. Since there is no event occupying the 3:30 PM slot, you are free.
+
+ANSWER: free

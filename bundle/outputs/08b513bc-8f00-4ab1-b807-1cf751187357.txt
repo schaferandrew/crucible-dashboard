@@ -1,0 +1,6 @@
+Reasoning based on event availability shows that on August 31 there is a gap before any scheduled meetings, allowing an hour meeting starting at 09:00 CDT. The next two full‑hour windows are on September 2 and September 4; these give the best first options overall.
+
+OPTIONS:
+2026-08-31 09:00 America/Chicago
+2026-09-02 12:30 CDT
+2026-09-04 14:00 America/Chicago

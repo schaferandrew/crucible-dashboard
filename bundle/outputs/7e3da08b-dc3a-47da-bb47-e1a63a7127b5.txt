@@ -1,0 +1,199 @@
+To complete the benchmark task described in the attached prompt.txt file, we need to create a Python command-line compound-interest calculator. Here's a step-by-step plan:
+
+1. Create a new directory named `interest` in the current workspace.
+2. Inside the `interest` directory, create a file named `interest.py` and write the compound-interest calculator code.
+3. Create a `tests` directory inside the `interest` directory and write automated tests for the calculator.
+4. Create a `README.md` file in the `interest` directory with instructions on how to run the tool and command examples.
+
+Let's start by creating the `interest` directory and the `interest.py` file:
+
+```bash
+cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_allenai_olmocr-2-7b_interest-calculator-cli_20261124_025835
+mkdir interest
+cd interest
+touch interest.py
+```
+
+Now, let's write the compound-interest calculator code in `interest.py`:
+
+```python
+import json
+import sys
+import argparse
+
+def compound_interest(principal, rate, years, months, compound, contribution, contribution_frequency):
+    balance = principal
+    total_contributions = 0
+    interest_earned = 0
+
+    for i in range(years * 12 + months):
+        if i % months == 0:
+            balance += contribution
+            total_contributions += contribution
+        if i % 12 == 0:
+            rate_per_period = rate / compound
+            balance += balance * rate_per_period
+            interest_earned += balance * rate_per_period
+
+    final_balance = balance + total_contributions
+    return {
+        "principal": principal,
+        "total_contributions": total_contributions,
+        "interest_earned": interest_earned,
+        "final_balance": final_balance
+    }
+
+def main():
+    parser = argparse.ArgumentParser(description="Compound interest calculator")
+    parser.add_argument('--principal', type=float, required=True, help="The starting balance")
+    parser.add_argument('--rate', type=float, required=True, help="The annual interest rate in percent")
+    parser.add_argument('--years', type=int, help="The time in years")
+    parser.add_argument('--months', type=int, help="The time in months")
+    parser.add_argument('--compound', choices=['annually', 'quarterly', 'monthly', 'daily'], required=True, help="Compounding periods per year")
+    parser.add_argument('--contribution', type=float, help="The contribution amount")
+    parser.add_argument('--contribution-frequency', choices=['monthly', 'annually'], help="The contribution frequency")
+    parser.add_argument('--json', action='store_true', help="Print JSON instead of summary")
+    args = parser.parse_args()
+
+    if args.years and args.months:
+        print("Error: Both --years and --months are given. Please give exactly one of them.")
+        sys.exit(1)
+    if not args.years and not args.months:
+        print("Error: Neither --years nor --months is given. Please give exactly one of them.")
+        sys.exit(1)
+    if args.contribution and not args.contribution_frequency:
+        print("Error: Contribution given without a frequency. Please specify --contribution-frequency.")
+        sys.exit(1)
+    if args.contribution_frequency and not args.contribution:
+        print("Error: Frequency given without a contribution. Please specify --contribution.")
+        sys.exit(1)
+    if args.contribution_frequency == 'monthly' and args.contribution < 0:
+        print("Error: Monthly contribution cannot be negative.")
+        sys.exit(1)
+    if args.contribution_frequency == 'annually' and args.contribution < 0:
+        print("Error: Annual contribution cannot be negative.")
+        sys.exit(1)
+    if args.contribution_frequency == 'monthly' and args.contribution == 0:
+        print("Error: Monthly contribution cannot be zero.")
+        sys.exit(1)
+    if args.contribution_frequency == 'annually' and args.contribution == 0:
+        print("Error: Annual contribution cannot be zero.")
+        sys.exit(1)
+
+    result = compound_interest(args.principal, args.rate, args.years, args.months, args.compound, args.contribution, args.contribution_frequency)
+    if args.json:
+        print(json.dumps(result))
+    else:
+        print(f"Principal: {result['principal']}")
+        print(f"Total Contributions: {result['total_contributions']}")
+        print(f"Interest Earned: {result['interest_earned']}")
+        print(f"Final Balance: {result['final_balance']}")
+
+if __name__ == "__main__":
+    main()
+```
+
+Next, let's create the `tests` directory and write some tests:
+
+```bash
+mkdir tests
+```
+
+Now, let's write some tests in `tests/test_interest.py`:
+
+```python
+import unittest
+import json
+from interest import compound_interest
+
+class TestInterest(unittest.TestCase):
+    def test_valid_input(self):
+        result = compound_interest(1000, 5, 10, 0, 'monthly', 100, 'monthly')
+        expected = {
+            "principal": 1000,
+            "total_contributions": 1000,
+            "interest_earned": 1000,
+            "final_balance": 2000
+        }
+        self.assertEqual(result, expected)
+
+    def test_json_output(self):
+        result = compound_interest(1000, 5, 10, 0, 'monthly', 100, 'monthly', True)
+        expected = json.dumps({
+            "principal": 1000,
+            "total_contributions": 1000,
+            "interest_earned": 1000,
+            "final_balance": 2000
+        })
+        self.assertEqual(result, expected)
+
+    def test_negative_contribution(self):
+        with self.assertRaises(ValueError):
+            compound_interest(1000, 5, 10, 0, 'monthly', -100, 'monthly')
+
+    def test_zero_contribution(self):
+        result = compound_interest(1000, 5, 10, 0, 'monthly', 0, 'monthly')
+        expected = {
+            "principal": 1000,
+            "total_contributions": 0,
+            "interest_earned": 1000,
+            "final_balance": 2000
+        }
+        self.assertEqual(result, expected)
+
+    def test_invalid_compound(self):
+        with self.assertRaises(ValueError):
+            compound_interest(1000, 5, 10, 0, 'unknown', 100, 'monthly')
+
+    def test_invalid_frequency(self):
+        with self.assertRaises(ValueError):
+            compound_interest(1000, 5, 10, 0, 'monthly', 100, 'unknown')
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+Finally, let's create the `README.md` file:
+
+```markdown
+# interest
+
+A command-line compound-interest calculator in Python 3, standard library only (no third-party packages).
+
+## Usage
+
+Run the tool from this directory as `python -m interest`.
+
+### Flags
+
+- `--principal AMOUNT` (required): the starting balance, zero or more.
+- `--rate PERCENT` (required): the annual interest rate in percent, so 5 means 5%. Zero or more.
+- `--years N` or `--months N`: the time, a positive whole number. Give exactly one of them.
+- `--compound {annually,quarterly,monthly,daily}` (required): 1, 4, 12 or 365 compounding periods a year.
+- `--contribution AMOUNT` and `--contribution-frequency {monthly,annually}` (optional, but given together): that amount, greater than zero, is added at the end of every month or every year.
+- `--json`: print JSON instead of the summary.
+
+## Output
+
+- By default, print a readable summary showing the principal, total contributions, interest earned and final balance.
+- With `--json`, print one JSON object and nothing else: {"principal": ..., "total_contributions": ..., "interest_earned": ..., "final_balance": ...}, each a number rounded to cents.
+
+## Tests and docs
+
+- Write automated tests in tests/ (pytest or unittest) covering ordinary cases, zero interest, monthly compounding, recurring contributions at both frequencies, invalid input and a known expected-value case. They must pass when run from this directory.
+- Write README.md with how to run the tool and command examples.
+```
+
+Now, you can run the tests and ensure everything works as expected:
+
+```bash
+pytest tests/
+```
+
+If the tests pass, you can commit and push the changes:
+
+```bash
+git add interest.py tests/ README.md
+git commit -m "Add compound-interest calculator and tests"
+git push
+```

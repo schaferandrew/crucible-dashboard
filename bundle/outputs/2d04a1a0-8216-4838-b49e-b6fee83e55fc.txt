@@ -1,0 +1,28 @@
+
+
+All 8 tests pass. Here's a summary of the diagnosis and fix:
+
+## Diagnosis
+
+**Root Cause:** In `public/dashboard.html`, the `loadDashboard()` function checks if `data.user` exists. When the session expires (TTL is only 30 seconds), the `/api/dashboard` endpoint returns `{user: null, dashboardMessage: ''}`. The original code handled this by clearing the DOM elements, resulting in a **blank dashboard** instead of redirecting to login.
+
+**Flow:**
+1. User logs in → session created with 30-second TTL
+2. After 30+ seconds, dashboard loads → `/api/dashboard` returns `user: null`
+3. Dashboard JS clears content → shows blank page with no indication of what happened
+
+## Fix Applied
+
+**`public/dashboard.html`** — Changed the `else` branch in `loadDashboard()` from clearing content to redirecting to login:
+```javascript
+// Before: showed blank content
+document.getElementById('user').textContent = '';
+document.getElementById('message').textContent = '';
+
+// After: redirects to login
+window.location.href = '/login.html';
+```
+
+**`server.js`** — Exported the `sessions` Map for testing purposes.
+
+**`server.test.js`** — Added regression test that simulates expired sessions by manipulating `expiresAt` directly, ensuring the API correctly returns `user: null` for expired sessions.

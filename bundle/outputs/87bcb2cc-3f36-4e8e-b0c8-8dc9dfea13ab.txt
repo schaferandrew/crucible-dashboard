@@ -1,0 +1,64 @@
+⏺ shell(command=cat README.md && echo "=====" && ls -la && echo "=====" && c)
+  ⎿ # Toolshed
+
+Inventory and lending tracker for a community tool library. Plain JavaScript (ES modules, Node 18+),
+no runtime dependencies. Data lives in a JSON file (`data/tools.json` by default).
+
+## Layout
+
+- `src/store.js`: `ToolStore`, loads and saves the JSON file and announces changes to listen
+⏺ shell(command=ls -R src test data && echo "=====" && cat .gitignore)
+  ⎿ data:
+tools.json
+
+src:
+cli.js
+dates.js
+report.js
+store.js
+tools.js
+validate.js
+
+test:
+cli.test.js
+helpers.js
+tools.test.js
+=====
+node_modules/
+dist/
+⏺ shell(command=for f in src/*.js; do echo "===== $f ====="; cat -A "$f" | h)
+  ⎿ ===== src/cli.js =====
+cat: illegal option -- A
+usage: cat [-belnstuv] [file ...]
+// Argument parsing and the commands. `main` never touches process.argv or process.exit, so tests can call it.
+
+import { ToolStore } from "./store.js";
+import { addTool, auditLines, findTools, loanTool, overdueTools, r
+⏺ shell(command=for f in test/*.js data/tools.json; do echo "===== $f =====")
+  ⎿ ===== test/cli.test.js =====
+import fs from "node:fs";
+import { describe, expect, it } from "vitest";
+import { main, parseArgs } from "../src/cli";
+import { capture, tempData } from "./helpers";
+
+function run(argv, file = tempData()) {
+  const { lines, out } = capture();
+  const code = main(argv, { 
+⏺ shell(command=ls -la; find . -maxdepth 2 -name "vitest*" -not -path "./nod)
+  ⎿ total 128
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff    384 Nov 23 11:50 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff    288 Nov 23 11:50 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff    384 Nov 23 11:50 .git
+-rw-r--r--@  1 andrew.schafer@homebot.ai  staff     20 Nov 17 12:08 .gitigno
+⏺ shell(command=npm test 2>&1 | tail -20)
+  ⎿ > toolshed@0.3.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini_js-to-typescript-port_20261123_175022
+
+ ✓ test/tools.test.js (15 tests) 9ms
+ ✓ test/cli.test.js (6 tests) 8ms
+
+ Test Files  2 passed (2)
+      Tests  21 pa

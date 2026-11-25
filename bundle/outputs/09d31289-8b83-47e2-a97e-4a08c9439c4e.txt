@@ -1,0 +1,11 @@
+The green-liking person is in chair 1. Since Carol likes yellow and sits to the right of the red-liking person, Carol cannot be in chair 1. Dave likes red, so Dave is not in chair 1 either.
+
+Alice must sit immediately left of the blue-liker. The blue-liker cannot be Carol (yellow) or Dave (red), and Alice cannot be the blue-liker herself, so Bob must like blue. Also Bob is not in chair 4, so Bob is in chair 2 with Alice in chair 1. That makes Alice green, since chair 1 is green.
+
+Dave likes red and cannot be in chair 2 (Bob/blue) or chair 1 (green); he also must be left of Carol, so Dave is in chair 3. Carol then sits in chair 4, to the right of Dave.
+
+Chair 1: Alice, green
+Chair 2: Bob, blue
+Chair 3: Dave, red
+Chair 4: Carol, yellow
+ANSWER: Dave

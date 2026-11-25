@@ -1,0 +1,9 @@
+Accuracy: Every claim in the response is supported by the passage. It says the board extended weekend hours to 8 p.m. starting in March (passage: extend from 5 p.m. to 8 p.m., starting in March) — accurate. The survey detail (62% asked for evening access) matches "62% of residents said evening access was their top request" — a fair simplification, not an invention. The $40,000 grant covering one year and revisiting next winter if no new money is found both match the passage. Two board members opposed over staffing concerns matches "two board members opposed the vote, citing staffing shortages." No invented details. Score: 4/4.
+
+Exactly two sentences: The response contains three sentences — (1) "...asked for evening access." (2) "...no further money is found." (3) "Two board members opposed the decision over staffing concerns." This fails the exactly-two-sentences requirement. Score: 0/3.
+
+Key points: It captures the hours extension (to 8 p.m., starting in March), the funding limit ($40,000 grant covering one year / first year only), and the resident survey (62% asked for evening access). All three required key points are present. Score: 3/3.
+
+Total: 4 + 0 + 3 = 7.
+
+GRADE: 7

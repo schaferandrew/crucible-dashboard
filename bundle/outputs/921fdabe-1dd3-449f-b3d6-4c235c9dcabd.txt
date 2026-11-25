@@ -1,0 +1,69 @@
+To convert the JavaScript code in the `src/` directory to TypeScript, follow these steps:
+
+1. Convert every module in `src/` to TypeScript (`.ts`) and remove the `.js` originals. Keep the module names, the exported names and the call signatures, so `import { main } from "./cli"` still works.
+2. Add a `tsconfig.json` at the project root that turns on `strict`, covers `src/`, and makes `npx tsc -p tsconfig.json` pass with no errors. Don't switch off any strict option, don't use `// @ts-ignore`, `// @ts-nocheck` or `// @ts-expect-error`, and don't write `any`.
+3. Type the data as it really is. A tool's status is one of its three values, not a string; the fields that can hold `null` are typed as nullable; the events the store announces are a union you can narrow on its `type`; data read from the JSON file is untrusted until it has been checked.
+4. Behavior stays identical: the same command output, error messages, exit codes, saved JSON and audit lines for the same input. Fix nothing and improve nothing while you are in there; if something looks odd, port it as it is.
+5. The tests in `test/` must keep passing as they are (`npm test`). They are plain JavaScript and import the modules without a file extension; don't weaken or delete any of them.
+
+`package.json` and the lockfile stay as they are: `typescript`, `@types/node` and `vitest` are already installed. Only `src/` and `tsconfig.json` count. Run `npx tsc -p tsconfig.json` and `npm test` before you finish, and end with a short summary of the places where the types were not obvious.
+
+For example, if you have a file named `cli.js` in `src/`, you would rename it to `cli.ts` and convert its contents to TypeScript. If the file contains:
+
+```javascript
+import { main } from "./cli";
+
+main();
+```
+
+It would become:
+
+```typescript
+import { main } from "./cli";
+
+main();
+```
+
+Continue this process for all `.js` files in `src/`.
+
+Next, create a `tsconfig.json` file at the root of the project with the following content:
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noUnusedVariables": true,
+    "resolveJsonModule": true,
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
+```
+
+After making these changes, run the following commands to ensure everything is working:
+
+```bash
+npx tsc -p tsconfig.json
+npm test
+```
+
+If there are no errors, the conversion is complete. If there are errors, review them and make the necessary corrections.
+
+Summary of places where the types were not obvious:
+- [List any specific places where the types were not obvious, e.g., "The `toolStatus` field in the `Tool` type was not obvious and was inferred as `string`."]

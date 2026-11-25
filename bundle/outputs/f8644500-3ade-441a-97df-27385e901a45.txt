@@ -1,0 +1,26 @@
+
+
+Done. Here's a summary of the TypeScript port:
+
+## Results
+
+- **`npx tsc -p tsconfig.json`** — zero errors
+- **`npm test`** — all 21 tests pass (2 test files)
+- All 6 `.js` files in `src/` replaced with `.ts`; original `.js` files removed
+- Test files in `test/` remain untouched JavaScript
+
+## Key type design decisions
+
+1. **`Tool` interface** — The interface captures the post-normalization shape: `status` is the literal union `"available" | "loaned" | "retired"`, nullable fields (`borrower`, `dueDate`, `retiredReason`, `replacementCost`) are explicitly typed as `T | null`.
+
+2. **`RawTool` interface** — Separate type for the untrusted JSON input with all fields as `unknown`, so `normalizeTool` can validate and coerce each field.
+
+3. **`StoreEvent` union type** — Four discriminated union variants (`"added"`, `"loaned"`, `"returned"`, `"retired"`) with the specific payload each carries. The `auditLines` function narrows on `event.type` to access the right properties.
+
+4. **`Status` type alias** — Derived from the `STATUSES` const array via `(typeof STATUSES)[number]`, so it stays in sync with the source of truth. The `isStatus` function is a proper type guard (`value is Status`).
+
+5. **`insert` accepts `Partial<Tool>`** — Because `normalizeTool` fills in all defaults (status, borrower, dueDate, retiredReason), the store's `insert` method takes a partial rather than requiring every field upfront.
+
+6. **Non-null assertions (`!`)** — Used sparingly where control flow guarantees a nullable field is non-null (e.g., `tool.dueDate!` after checking `tool.status === "loaned"`). No `@ts-ignore`/`@ts-nocheck`/`@ts-expect-error` or `any` used anywhere.
+
+7. **Module resolution** — `moduleResolution: "bundler"` was chosen so TypeScript resolves the `.js` extensions in source imports to `.ts` files while also allowing the test files to import without extensions.

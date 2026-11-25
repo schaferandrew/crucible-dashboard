@@ -1,0 +1,1 @@
+The access log has a `cache=` column (HIT/MISS) which is much more reliable than my timestamp matching. Now let me verify how the middleware behaves with feed requests, since that's critical:

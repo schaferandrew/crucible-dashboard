@@ -1,0 +1,24 @@
+The prompt.txt file describes the following tasks:
+
+1. Migrate the article lists, the feed and comments to cursor pagination, without breaking existing clients.
+2. Update the API endpoints to accept `cursor` alongside `limit` for GET /api/articles and GET /api/articles/feed.
+3. Add `nextCursor` to the API responses for the above endpoints.
+4. Add `articlesCount` to keep the total that matches the filters.
+5. Ensure that cursor pagination never skips or repeats an article, even when articles are created, deleted or favorited between page requests.
+6. Make sure that cursors are opaque and cannot be forgeable into something else.
+7. Ensure that a cursor is only valid for the query that produced it.
+8. Prevent sending both cursor and offset in the same request.
+9. Keep the offset pagination working exactly as before when no cursor is sent.
+10. Update the Web app to replace numbered pagination with a "Load more" button on every article list (home tabs and profile tabs), driven by nextCursor.
+11. Comments on the article page should load the same way.
+12. Update shared types to describe the new response fields.
+13. Add tests that prove the no-skip/no-duplicate guarantee under concurrent writes, the validation rules and the new web behavior.
+14. Keep every existing test passing.
+15. Summarize what you changed and anything you'd flag in code review.
+
+The tasks are to be completed in the following files:
+- apps/api/test/realworld.contract.test.ts
+- apps/web
+- packages/shared
+
+You should start by reading the existing code in these files and making the necessary changes to implement the above requirements. After making the changes, you should write a summary of what you changed and any issues you encountered or would flag in code review.

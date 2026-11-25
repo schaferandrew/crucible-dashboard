@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "1c29f68a-6b49-4e06-8df4-0a3c80dddb5c",
+ "run_path": "lmstudio_qwen_qwen3.6-35b-a3b@reasoning-off/invite-signup-loop/20261120_220814",
+ "legacy_run_id": null,
+ "started_at": "2026-11-20T22:08:21.130020+00:00",
+ "ended_at": "2026-11-20T22:14:18.450488+00:00",
+ "elapsed_s": 356.26,
+ "task": {
+  "id": "invite-signup-loop",
+  "version": 2,
+  "rubric_version": 3,
+  "content_hash": "c6414d81d51c4642",
+  "rubric_hash": "da37117da7bf363d",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/qwen/qwen3.6-35b-a3b",
+  "base": "qwen/qwen3.6-35b-a3b",
+  "publisher": "qwen",
+  "artifact": "lmstudio-community/Qwen3.6-35B-A3B-MLX-6bit",
+  "format": "mlx",
+  "quant": "6bit",
+  "reasoning": {
+   "requested": "off",
+   "resolved": "off",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 262144,
+  "variant_key": "qwen/qwen3.6-35b-a3b|qwen|mlx|mlx-6bit",
+  "display": "qwen3.6-35b-a3b · 6bit",
+  "origin": {
+   "maker": "qwen",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Mac-1783"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": 7,
+  "tests_failed": 0,
+  "tool_calls": 50,
+  "tokens_in": 800391,
+  "tokens_out": 11446,
+  "model_responses": 24,
+  "ttft_s": 16.414,
+  "ttft_avg_s": 2.453,
+  "response_time_avg_s": 11.402,
+  "output_tokens_per_s": 53.3,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/1c29f68a-6b49-4e06-8df4-0a3c80dddb5c.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Mac-1783",
+  "source": "crucible-run",
+  "content_hash": "sha256:9acfe2a593a17cd19cbc5535d9a5a531248c52e3953fc638113b8522de365a46",
+  "submitter": null,
+  "verification": null
+ }
+}

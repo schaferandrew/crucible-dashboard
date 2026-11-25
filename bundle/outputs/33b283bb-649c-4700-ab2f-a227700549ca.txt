@@ -1,0 +1,14 @@
+Reasoning: language errors are limited to agreement, possessive apostrophe and then/than comparison. The economic flags separate factual overstatements from merely hedged or accurate claims; I did not flag sentences that are accurate shorthand (e.g., CPI tracking a basket, Fed’s ~2% goal, QE buying long-term securities, Japan stagnating after the early‑1990s bubble).
+
+ERRORS:
+3: are
+6: its
+12: than
+
+FLAGS:
+1: misleading
+4: misleading
+8: misleading
+11: overstated
+14: overstated
+18: overstated

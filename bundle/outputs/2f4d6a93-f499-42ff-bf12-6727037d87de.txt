@@ -1,0 +1,1 @@
+The metadata resolution handles not-found boundaries properly — `export const metadata` in `not-found.tsx` will be used when a page calls `notFound()`. Now let me create the App Router files.

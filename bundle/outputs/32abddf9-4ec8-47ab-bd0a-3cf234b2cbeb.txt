@@ -1,0 +1,18 @@
+1. Multiples of 3: 3333; multiples of 7: 1428; multiples of 21: 476.  
+   Count = (3333 + 1428 − 476) − 476 = 3809.
+
+2. Powers of 7 mod 100 cycle as 7, 49, 43, 1. Since \(2026\equiv 2\pmod 4\), remainder is 49.
+
+3. Let \(T_n\) be the number of tilings. First column: vertical domino gives \(T_{n-1}\); or a square/two horizontal dominoes across columns 1–2 gives \(2T_{n-2}\). With \(T_0=1,T_1=1\), this yields \(T_{12}=2731\).
+
+4. \(P(\max=4)=P(all\le4)-P(all\le3)=(4/6)^3-(3/6)^3=37/216\).
+
+5. Let \(E\) be the event that at least one child is a boy born Tuesday.  
+   \(P(E)=1-(13/14)^2=27/196\). Both boys and \(E\): \((1/4)[1-(6/7)^2]=13/196\). Ratio = \(13/27\).
+
+ANSWERS
+1. 3809
+2. 49
+3. 2731
+4. 37/216
+5. 13/27

@@ -1,0 +1,19 @@
+The task is to diagnose and fix an intermittent blank state in the dashboard after login for the AllenAI OLMOCR-2-7b model. The dashboard intermittently shows a blank state after login, and the issue needs to be reproduced, diagnosed, and fixed. The app starts with `npm start` on http://localhost:3456, and the test accounts are in SKILL.md. Login sessions last 30 seconds, so the blank state shows up whenever the dashboard is loaded a little after logging in. `npm test` runs the repo's tests.
+
+To complete this task, follow these steps:
+
+1. **Reproduce the issue**: Start the application with `npm start` and log in using the test accounts. Wait for the dashboard to load after login, and observe if it intermittently shows a blank state.
+
+2. **Inspect the browser console and network requests**: Open the browser and navigate to http://localhost:3456. Use the browser's developer tools (F12 or right-click and select "Inspect") to monitor the console and network requests. Look for any errors or failing requests that occur when the dashboard shows a blank state.
+
+3. **Identify the failing request or client-side error**: Once you've identified the failing request or client-side error, note it down. This could be a 404 error, a JavaScript error, or a network request that fails.
+
+4. **Fix the underlying application code**: Based on the identified issue, fix the code that causes the blank state. This might involve fixing a route, a component, or a service that is not loading correctly after login.
+
+5. **Verify the fix in the browser**: After making the fix, start the application again with `npm start` and log in using the test accounts. Ensure that the dashboard does not show a blank state after login.
+
+6. **Add an automated regression test**: Write a test that verifies the dashboard does not show a blank state after login. Use the test framework provided in the repository (e.g., Jest, Mocha) to create a test case that logs in using the test accounts and verifies that the dashboard is loaded correctly.
+
+7. **Run the tests**: After adding the regression test, run `npm test` to ensure that the test passes and the dashboard does not show a blank state after login.
+
+By following these steps, you should be able to diagnose and fix the intermittent blank state in the dashboard after login for the AllenAI OLMOCR-2-7b model.

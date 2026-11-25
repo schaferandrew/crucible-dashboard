@@ -1,0 +1,39 @@
+I have all four sources. Here's my morning brief.
+
+## Weather
+Saint Paul, MN — current: 68°F, Partly Cloudy, humidity 65%, wind 8 mph.
+- Today (Sep 2): high 68 / low 55, Partly Cloudy, ~10% precipitation chance, wind 8 mph.
+- Tomorrow (Sep 3): high 74 / low 59, Sunny, no precipitation expected.
+- Thursday (Sep 4): high 71 / low 57, Scattered Showers, ~30% precipitation chance, wind up to 12 mph — the wettest day of the week; plan outdoor plans accordingly.
+
+## Outstanding work
+From yesterday's emails (2026-09-01), what remains open:
+- **Q3 expense report due today at 5:00 PM** (finance@example.com). Reports missing the cutoff are paid with next month's payroll — this is a hard deadline and the most time-sensitive item.
+- **Client proposal question unanswered** (client@example.com, 4:45 PM yesterday): can the revised proposal be delivered by Friday? Client needs an answer before briefing their team; they asked to reply "when you can" — it is still open today.
+- **Q3 review results to discuss in planning meeting** (alex@example.com, 10:30 AM yesterday): Q3 review is complete and ahead of schedule; Alex wants to discuss results at the planning meeting today.
+- **1-on-1 notes from Jamie** (9:00 AM yesterday): career goals, next quarter priorities, team building activities — informational context for planning/priorities discussion; no explicit action item stated.
+
+## Emails
+Four emails received yesterday; none appear to have been replied to yet:
+- **finance@example.com** — "Reminder: Q3 expense report due Wednesday 5 PM" (14:15). Action required today by 5:00 PM.
+- **client@example.com** — "Question about the proposal timeline" (16:45). Unanswered; client needs a yes/no on Friday delivery before their team briefing. Recommend replying promptly today.
+- **alex@example.com** — "Project update - Q3 review completed" (10:30). Informational; feeds the planning meeting today.
+- **jamie@example.com** — "Meeting notes from yesterday" (09:00). Notes only; no action requested.
+
+## Calendar
+Today, Wednesday Sep 2 (America/Chicago):
+- **9:30–10:30 AM — Planning** (Room B, Alex). Conflicts with the Vendor demo below (overlap 10:00–10:30).
+- **10:00–11:00 AM — Vendor demo** (Zoom, Alex + vendor@example.com). Overlaps Planning by 30 minutes; both list Alex as attendee — needs resolution before 9:30.
+- **1:00–2:00 PM — Budget meeting** (Conference Room A). Only jamie@example.com is listed as an attendee; no user/Alex attendance shown — confirm whether you're expected to attend.
+
+Tomorrow and beyond (context, not today's focus): Sep 3 Standup 9:00 AM (Zoom) and Interview 11:00 AM (Conference Room B, Alex); Sep 4 Workshop 9:00–11:00 AM (Main Hall, Jamie) and Project review 2:00 PM (Conference Room A, Alex).
+
+## News
+- **Twin Cities Tech Conference Returns** (StarTribune, high importance) — annual conference returns to Minneapolis with 50+ speakers on AI, startup funding, emerging tech; registration opens this Friday.
+- **Maplewood Park Renovation Complete** (Pioneer Press, medium) — renovations finished ahead of schedule; new walking trails and children's playground; grand reopening Saturday.
+- **State Fair Attendance Drops Slightly** (StarTribune, low) — Minnesota State Fair saw a 3% attendance decline, with cooler-than-average weather cited as a factor.
+
+## Top 3 things to do today
+1. Submit the Q3 expense report before the 5:00 PM deadline today; missing it means payment slips to next month's payroll.
+2. Reply to client@example.com confirming whether the revised proposal can be delivered by Friday — they need an answer before briefing their team.
+3. Resolve the Planning (9:30) vs Vendor demo (10:00) overlap and attend the planning meeting on Q3 review results; also confirm your attendance at the 1:00 PM Budget meeting, which currently lists only Jamie as attendee.

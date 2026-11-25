@@ -1,0 +1,28 @@
+The fix is complete and verified. Here's a summary:
+
+## Diagnosis
+`app/page.tsx` was a client component that fetched `/api/account?id=acct_1` in a `useEffect` with an untyped `React.useState(null)`. TypeScript narrowed the state to `never`, so the production build failed:
+
+```
+app/page.tsx(25,25): error TS2339: Property 'name' does not exist on type 'never'.
+```
+
+It also duplicated the accounts data (unused in the page) and used a client-side roundtrip for server-owned data — neither working nor idiomatic.
+
+## Fix (modern Next.js approach)
+- **`lib/accounts.ts`** (new): single typed source of truth — `Account` type, the accounts map, and `getAccount(id): Account | null`.
+- **`app/page.tsx`**: now an async Server Component that reads directly from `getAccount('acct_1')` and renders name/plan on the server (no loading state, no client fetch); calls `notFound()` if the account is missing. The page prerenders statically at build time.
+- **`app/api/account/route.ts`**: kept as a thin wrapper over the same shared module — behavior unchanged (200 with the account for known ids, 404 otherwise).
+
+## Tests
+- `app/page.test.tsx` now actually tests the page (jsdom): renders the async server component and asserts Alice / Pro appear.
+- API route tests moved intact to `app/api/account/route.test.ts` (node env) — same two assertions as before.
+- New `lib/accounts.test.ts` covers known id → account, unknown id → null.
+
+## Verification
+- `npm test`: 5/5 passing across 3 files
+- `npx tsc --noEmit`: clean
+- `npm run build`: succeeds (page prerendered as static content)
+- Runtime smoke test via `next start` + curl: page HTML contains `Name: Alice` / `Plan: Pro`; API returns `{"name":"Alice","plan":"Pro"}` for acct_1 and 404 for unknown ids
+
+Note: `next-env.d.ts` was auto-updated by the build (Next adds a standard "do not edit" comment) — left as-is since it's generated.

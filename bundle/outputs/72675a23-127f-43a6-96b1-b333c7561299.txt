@@ -1,0 +1,10 @@
+
+
+Done. `slots.json` has been written with:
+
+- **85 valid slots** across all 8 days (Mon-Fri + weekend), each a 60-minute meeting starting on the hour or half-hour between 9 AM and 5 PM, with no overlap for either Alex or Jamie.
+
+- **Top 3 picks** (all weekdays, midday, avoiding first/last hour):
+  1. **Mon 08/31 11:00** — Right after Alex's Team standup ends, before Design review at 13:00
+  2. **Wed 09/02 14:00** — Right after Jamie's Budget meeting ends
+  3. **Thu 09/03 12:00** — Right after Alex's Interview ends, before Jamie's Review at 15:00

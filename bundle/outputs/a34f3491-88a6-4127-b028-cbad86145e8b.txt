@@ -1,0 +1,32 @@
+Here's your morning brief (saved to `morning-brief.md`):
+
+## Emails
+
+From yesterday (September 1):
+
+- **Alex** — "Project update - Q3 review completed": The Q3 review is done and ahead of schedule; results to be discussed in the planning meeting.
+- **Jamie** — "Meeting notes from yesterday": Notes from yesterday's 1-on-1 covering career goals, next quarter priorities, and team building activities.
+- **Finance** — "Reminder: Q3 expense report due Wednesday 5 PM": The Q3 expense report must be submitted by 5:00 PM today (Wednesday, September 2); reports that miss the cutoff are paid with next month's payroll.
+- **Client** — "Question about the proposal timeline": Asks whether the revised proposal can be delivered by Friday; needs an answer before briefing their team. Please reply when you can.
+
+## Calendar
+
+Today (Wednesday, September 2, America/Chicago):
+
+- **9:30–10:30 AM** — Planning, Room B (Alex)
+- **10:00–11:00 AM** — Vendor demo, Zoom (Alex + vendor) — note this overlaps the tail of the Planning meeting
+- **1:00–2:00 PM** — Budget meeting, Conference Room A (Jamie)
+
+## News
+
+Saint Paul, MN:
+
+- **High** — Twin Cities Tech Conference Returns (StarTribune): The annual tech conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies. Registration opens this Friday.
+- **Medium** — Maplewood Park Renovation Complete (Pioneer Press): Renovations finished ahead of schedule, adding new walking trails and a children's playground. Grand reopening is Saturday.
+- Low priority note: State Fair attendance dropped slightly (3% decline; cooler-than-average weather cited) — StarTribune.
+
+## Spanish practice
+
+Hoy es miércoles y mi día está lleno de reuniones importantes. A las nueve y media tengo una reunión de planificación en la sala B, seguida a las diez de una demostración con un proveedor por Zoom; después, a la una, asistiré a la reunión de presupuesto en la sala de conferencias A. También debo enviar el informe de gastos del tercer trimestre antes de las cinco de la tarde, porque si lo retraso se pagará con el próximo pago. El viernes abre la inscripción para la Conferencia Tecnológica de Twin Cities y el sábado se reabre oficialmente el Parque Maplewood. Es un buen día para practicar: "la reunión" (meeting), "el informe" (report), "la demostración" (demo), "la sala de conferencias" (conference room) y "el próximo pago" (next paycheck) son palabras que uso todos los días en el trabajo.
+
+The brief is saved at `morning-brief.md` in the workspace root.

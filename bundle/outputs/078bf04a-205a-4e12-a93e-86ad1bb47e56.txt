@@ -1,0 +1,1 @@
+I'll restructure the router to avoid all conditional modifier syntax (`if ... then ... else ...`) which isn't supported across all Ruby versions. The approach will be cleaner and fully portable:

@@ -1,0 +1,19 @@
+1. True: Battle of Hastings was October 14, 1066.
+2. Inaccurate king: Magna Carta at Runnymede (June 1215) was sealed by King John; Richard I had died in 1199 and was not the ruler then. The year/place are right.
+3. Inaccurate year: Columbus first reached the Americas in October 1492, not 1493 (1493 was his return to Spain / second voyage era).
+4. True: adopted July 4, 1776.
+5. True: storming of the Bastille occurred July 14, 1789.
+6. Inaccurate year: Waterloo was June 18, 1815 (not 1812).
+7. Inaccurate year: Titanic sank April 15, 1912.
+8. True: independence declared August 15, 1947.
+9. True: Apollo 11 landed July 20, 1969; Armstrong and Aldrin were the two who walked on the Moon (Collins remained in orbit).
+10. Inaccurate year: Berlin Wall fell November 9, 1989.
+11. True: reunification occurred October 3, 1990 — the calendar year after the wall’s fall (Nov 1989).
+12. True: elected/inaugurated as President in 1994 (May 10, 1994).
+
+ERRORS:
+2: King John
+3: 1492
+6: 1815
+7: 1912
+10: 1989

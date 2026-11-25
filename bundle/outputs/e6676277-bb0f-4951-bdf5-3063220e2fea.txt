@@ -1,0 +1,121 @@
+⏺ shell(command=cat prompt.txt && ls -la)
+  ⎿ This is Conduit, a RealWorld (realworld.how) monorepo: an Express API in apps/api, a React app in apps/web, and shared types and validation in packages/shared. Read README.md first.
+
+Product brief: editorial review
+
+We're adding an editorial step before articles go public. Authors write drafts, send
+⏺ shell(command=cat README.md && cat package.json && find . -path ./node_mod)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express REST API implementing the RealWorld API spec
+apps/web         React single-page app that talks to the 
+⏺ shell(command=find . -path ./node_modules -prune -o -type f -print | grep )
+  ⎿ ./apps/api/package.json
+./apps/api/src/app.ts
+./apps/api/src/auth/tokens.ts
+./apps/api/src/db.ts
+./apps/api/src/errors.ts
+./apps/api/src/middleware/auth.ts
+./apps/api/src/repositories/articles.ts
+./apps/api/src/repositories/comments.ts
+./apps/api/src/repositories/users.ts
+./apps/api/src/routes/artic
+⏺ shell(command=cat packages/shared/src/types.ts packages/shared/src/index.t)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's used.
+
+export interface User {
+  email: string;
+  token: string;
+  username: string;
+  bio: string | 
+⏺ shell(command=cat apps/api/src/app.ts apps/api/src/server.ts apps/api/src/)
+  ⎿ import express, { type Express } from "express";
+import { type Db, createDb } from "./db";
+import { errorHandler, notFound } from "./errors";
+import { articlesRouter } from "./routes/articles";
+import { profilesRouter } from "./routes/profiles";
+import { tagsRouter } from "./routes/tags";
+import { u
+⏺ shell(command=cat apps/api/src/routes/articles.ts apps/api/src/services/ar)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../errors";
+import { optionalAuth, requireAuth } from "../middleware/auth";
+import {
+  createArticle,
+  d
+⏺ shell(command=cat apps/api/src/repositories/articles.ts apps/api/src/servi)
+  ⎿ import { type ArticleRow, type Db, nextId } from "../db";
+
+export function findArticleBySlug(db: Db, slug: string): ArticleRow | undefined {
+  for (const article of db.articles.values()) if (article.slug === slug) return article;
+  return undefined;
+}
+
+export function slugTaken(db: Db, slug: string,
+⏺ shell(command=cat apps/api/src/routes/users.ts apps/api/src/services/users)
+  ⎿ import { loginSchema, registerSchema, updateUserSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+import { currentUser, login, register, updateUser } from "../services/users";
+
+export function usersRo
+⏺ shell(command=cat apps/api/src/services/comments.ts apps/api/src/repositor)
+  ⎿ import type { Comment, CreateCommentInput } from "@conduit/shared";
+import type { Db } from "../db";
+import { forbidden, notFound } from "../errors";
+import { findArticleBySlug } from "../repositories/articles";
+import { commentsForArticle, deleteCommentRow, findComment, insertComment } from "../rep
+⏺ shell(command=cat apps/api/test/realworld.contract.test.ts apps/api/test/h)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the official suite, it checks the fields the spec requires; extra fields are allowed.
+import request from 
+⏺ shell(command=cat apps/web/src/api/client.ts apps/web/src/App.tsx apps/web)
+  ⎿ import type {
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld envelope.
+
+export class ApiError extends Error {
+  constructor(
+    public status: number,
+    publ
+⏺ shell(command=cat apps/web/src/pages/HomePage.tsx apps/web/src/pages/Edito)
+  ⎿ import { useCallback, useEffect, useState } from "react";
+import type { ArticleListQuery } from "@conduit/shared";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+import { ArticleList } from "../components/ArticleList";
+
+type Tab = { kind: "global" } | { kind: "fe
+⏺ shell(command=cat apps/web/src/components/ArticleList.tsx apps/web/src/com)
+  ⎿ import type { ArticleListQuery, ArticlesResponse } from "@conduit/shared";
+import { useEffect, useState } from "react";
+import { ArticlePreview } from "./ArticlePreview";
+import { Pagination } from "./Pagination";
+
+export const PAGE_SIZE = 10;
+
+interface Props {
+  /** Loads one page; ArticleList own
+⏺ shell(command=cat apps/web/test/*.tsx apps/web/test/setup.ts && cat tsconf)
+  ⎿ import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { ArticleList, PAGE_SIZE } from "../src/components/ArticleList";
+import { makeArticle, page, renderWithProviders } from "./render";
+
+describ

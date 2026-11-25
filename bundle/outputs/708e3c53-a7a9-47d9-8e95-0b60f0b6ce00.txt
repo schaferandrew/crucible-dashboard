@@ -1,0 +1,31 @@
+Both `npm test` and `npm run build` pass successfully. Here's a summary of what was fixed:
+
+## Summary
+
+### What was wrong with the original `LeadForm.tsx`
+
+1. **`values` was a plain object, not React state** — The local `const values = { ... }` never triggered re-renders, so typing into fields had no visible effect.
+2. **No validation logic** — No required-field checks, no email format validation, no error messages.
+3. **No ARIA attributes** — Missing `aria-invalid` and `aria-describedby` for accessibility/error association.
+4. **No success/failure state** — The submit handler ignored the API response entirely.
+5. **No proper tab order or focus management** — Keyboard users couldn't navigate effectively.
+
+### What changed in `app/contact/LeadForm.tsx`
+
+- Added `'use client'` directive (required for Next.js App Router with hooks)
+- Converted `values` to `useState<LeadValues>` so typed values re-render properly
+- Added `errors` state (`useState<Errors>`) and `success` state (`useState<boolean>`)
+- Implemented `isValidEmail()` with canonical validation: exactly one `@`, no spaces, valid domain labels (letters/digits/inner hyphens only, not starting/ending with hyphen), TLD of at least two letters
+- Implemented `isRequired()` — space-only values count as empty
+- `validate()` sets error messages and returns whether the form is valid
+- `handleSubmit`: 
+  - On invalid input: shows field errors, sets `aria-invalid="true"` + `aria-describedby` pointing at the error span, moves focus to first erroneous field, sends nothing
+  - On valid input: POSTs canonical payload (trimmed name/email/company/message, email lowercased) to `/api/leads`; on 201 shows `#lead-success` in place of the form; on 422 displays API errors with focus management
+- Error spans (`#lead-name-error`, `#lead-email-error`, `#lead-message-error`) render only while their field has an error, with `role="alert"`
+- Success state renders `<div id="lead-success">` replacing the form
+- Company field is optional (no validation required)
+- Tab order follows natural DOM order: `lead-name → lead-email → lead-company → lead-message → lead-submit`
+
+### Verification
+- `npm test` — 1 test passes (lead store tests)
+- `npm run build` — compiles successfully with no errors

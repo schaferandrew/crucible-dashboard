@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "ae5bf8a7-1bb5-4908-b88a-6b575b59c454",
+ "run_path": "lmstudio_granite-4.2-3b/calendar-free-at-330/20261121_203817",
+ "legacy_run_id": null,
+ "started_at": "2026-11-21T20:38:17.189838+00:00",
+ "ended_at": "2026-11-21T20:39:55.962365+00:00",
+ "elapsed_s": 98.15,
+ "task": {
+  "id": "calendar-free-at-330",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "6d145f996bd1436b",
+  "rubric_hash": "d2ed1dccfdb0032f",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/granite-4.2-3b",
+  "base": "granite-4.2-3b",
+  "publisher": "ibm-granite",
+  "artifact": "ibm-granite/granite-4.2-3b-GGUF",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 131072,
+  "variant_key": "granite-4.2-3b|ibm-granite|gguf|q4_k_m",
+  "display": "granite-4.2-3b · Q4_K_M",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": 3000000000,
+   "active_params": null,
+   "source": "gguf"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 4,
+  "tokens_in": 25980,
+  "tokens_out": 6115,
+  "model_responses": 5,
+  "ttft_s": 1.888,
+  "ttft_avg_s": 1.102,
+  "response_time_avg_s": 19.494,
+  "output_tokens_per_s": 66.5,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/ae5bf8a7-1bb5-4908-b88a-6b575b59c454.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:1ee69fbc29163b5dde291f10fe2853a65267c94fb3ba03360bbac1a308de8c9a",
+  "submitter": null,
+  "verification": null
+ }
+}

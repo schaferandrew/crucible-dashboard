@@ -1,0 +1,7 @@
+Reasoning: I treated the closed em dash (“Still—she was back”) and the short fragment (“Not waiting for her, exactly.”) as deliberate style and left them untouched. The clear usage errors are “louder then she remembered it” → comparative needs “than,” and “talking to fast” → unambiguous intended word is “too fast” (there is no valid reading of “to fast” here). I did not remove the comma before “or” in “laugh, or leave”: with only two items that comma is nonstandard, but it can also be a deliberate rhythmic pause, so I kept and flagged it rather than silently deleting it. No other spelling issues found; serial commas and informal wording (“somebody’s breakfast”) are consistent voice and were preserved.
+
+CORRECTED:
+Mara stepped off the train and into a city that smelled like rain, hot asphalt, and somebody's breakfast. The station was louder than she remembered it, all brakes shrieking and people talking too fast. She could feel the old neighborhood somewhere beyond the buildings, waiting. Not waiting for her, exactly. That would have been too kind. Still—she was back. And she didn't know whether to laugh, or leave.
+
+POSSIBLY INTENTIONAL:
+"laugh, or leave": kept the comma before "or" in a two-item list; it may be an intentional beat/pause that matches the fragment rhythm, so removing it could flatten the cadence rather than fix a real error.

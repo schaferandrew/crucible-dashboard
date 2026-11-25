@@ -1,0 +1,32 @@
+All data gathered. Here's my reasoning, then the answers.
+
+**Flight analysis** (criteria: cost ≤ $300 incl. bag fee; depart ≥ 07:00; arrive by 12:00; ≤1 stop; any layover ≥ 60 min):
+- NW201 — departs 06:10 → too early. Excluded.
+- CJ550 — 2 stops → excluded.
+- TA77 — layover 50 min < 60 → excluded.
+- NW318 — arrives 12:30 → after noon. Excluded.
+- PL09 — departs 07:20, arrives 11:10, 1 stop (75 min), cost $262+$25 = $287 ✓ candidate.
+- SL114 — departs 08:15, arrives 10:40, nonstop, bag included in fare → cost $279 ✓ candidate.
+- SL330 — cost $349 > $300 → excluded.
+
+Cheapest valid flight is **SL114** at **$279** (vs PL09's $287).
+
+**Restaurant analysis** (peanut- and sesame-safe kitchen, walking distance ≤ 1.5 mi from the hotel):
+- Saffron Table — not peanut/sesame free → excluded.
+- Golden Noodle — sesame in nearly every dish → excluded.
+- Harbor Grill — no peanuts or sesame stocked; walk 1.3 mi ✓ **candidate**.
+- Tidewater Bistro — sesame buns/shared fryers → excluded (walk 1.4 but unsafe).
+- Fennel & Fig — safe, but walking distance is 1.9 mi (river crossing detour) > 1.5 → excluded.
+- Maple & Rye — safe, but walk 2.8 mi → excluded.
+
+Only **Harbor Grill** qualifies: **1.3 miles** on foot.
+
+**Airport trip**: Road distance from the Inn to Larkspur Airport is **14.2 miles** (drive). A taxi leaving at 17:15 hits peak traffic and takes **41 minutes**.
+
+ANSWERS:
+Flight: SL114
+Total: $279
+Restaurant: Harbor Grill
+Walk: 1.3 miles
+Distance: 14.2 miles
+Taxi: 41 minutes

@@ -1,0 +1,10 @@
+The task is to complete the benchmark task described in the attached prompt.txt file. The prompt.txt file contains instructions for a technical problem related to a monorepo with an Express API, a React app, and shared types. The problem is that invited contributors can't start the work assigned by their editors, and the feature's design and Legal's requirements need to be considered. The instructions include:
+
+- Invited contributors should be able to get to the editor, and regular sign-ups should keep working exactly as they do today.
+- Accounts that are already affected must work after the fix, without anyone editing data by hand.
+- Where the design doc, Legal's requirements and the current behavior disagree, Legal's requirements are the authority: implement the behavior they require, and explain your reasoning.
+- Reproduce the problem in a test before you fix it, and add tests that would have caught it. Keep every existing test passing, including apps/api/test/realworld.contract.test.ts, unmodified.
+
+Finish with a short write-up: the root cause, the decisions you made and why, and anything you'd flag in code review.
+
+Please provide the code or changes you've made to the monorepo, and I'll help you complete the benchmark task.

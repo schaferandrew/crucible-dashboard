@@ -1,0 +1,1 @@
+I have all the free/busy data. Now let me compute common hour-long slots where everyone on the Platform team is free.

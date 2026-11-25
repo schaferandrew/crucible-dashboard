@@ -1,0 +1,22 @@
+The prompt.txt file contains instructions for building a command-line compound-interest calculator in Python 3, using only the standard library and no third-party packages. The tool should be structured as a package in the interest/ directory, and the tool itself should be run from the current directory as `python -m interest`.
+
+The tool should accept the following flags:
+- --principal AMOUNT (required): the starting balance, zero or more.
+- --rate PERCENT (required): the annual interest rate in percent, so 5 means 5%. Zero or more.
+- --years N or --months N: the time, a positive whole number. Give exactly one of them.
+- --compound {annually,quarterly,monthly,daily} (required): 1, 4, 12 or 365 compounding periods a year.
+- --contribution AMOUNT and --contribution-frequency {monthly,annually} (optional, but given together): that amount, greater than zero, is added at the end of every month or every year.
+- --json: print JSON instead of the summary.
+
+The output should be:
+- By default, print a readable summary showing the principal, total contributions, interest earned and final balance.
+- With --json, print one JSON object and nothing else: {"principal": ..., "total_contributions": ..., "interest_earned": ..., "final_balance": ...}, each a number rounded to cents.
+
+Errors:
+- Invalid, negative or contradictory input (a value that is not a number, a negative amount, both --years and --months or neither, a contribution without a frequency or the reverse, an unknown compounding or frequency) exits with a non-zero status and a short message on stderr, not a traceback.
+
+Tests and docs:
+- Write automated tests in tests/ (pytest or unittest) covering ordinary cases, zero interest, monthly compounding, recurring contributions at both frequencies, invalid input and a known expected-value case. They must pass when run from this directory.
+- Write README.md with how to run the tool and command examples.
+
+Let's start by creating the structure for the package and the tool itself. We'll create the interest/ directory and the main script inside it. Then, we'll write the tests and the README.

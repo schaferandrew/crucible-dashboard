@@ -1,0 +1,22 @@
+
+
+## Report
+
+**What happened:**
+
+1. **Started the server** on `http://localhost:3456` via `npm start`.
+
+2. **Attempted initial login** as `testuser` with password `correctpassword` (as listed in SKILL.md's accounts table). The login **failed** with `"error": "invalid_credentials"`.
+
+3. **Diagnosed the failure** by computing the scrypt hash of `correctpassword` with the stored salt `tu-9b3e`. The computed hash (`4720712840acc19d...`) did **not match** the stored hash (`530e52bf3a236035...`). This confirmed the **Wrong Password** failure mode — the password listed in the accounts table was incorrect for the actual stored credential.
+
+4. **Applied recovery procedure** per SKILL.md:
+   - Called `POST /api/reset-password-request` with `username=testuser` → received a reset token.
+   - Called `POST /api/reset-password` with the token and a new password (`resetpassword123`) → success.
+   - Logged in with `testuser` / `resetpassword123` → success, received session cookie.
+
+5. **Verified authentication** by calling `GET /api/dashboard` with the session cookie → returned `{"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}`.
+
+6. **Ended on the authenticated dashboard** at `/dashboard.html`.
+
+FAILURE: Wrong Password

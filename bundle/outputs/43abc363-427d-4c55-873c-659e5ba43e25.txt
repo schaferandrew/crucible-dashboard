@@ -1,0 +1,8 @@
+I need to meet up with Jamie for an hour sometime this week for work. Find a time that works for both of us.
+
+Explain your reasoning first if it helps. Then end your reply with this block, and nothing after it:
+
+OPTIONS:
+YYYY-MM-DD HH:MM <time zone>
+
+One line per option, in 24-hour time, with a time zone abbreviation or name (for example CDT or America/Chicago). Give two or three options, best first.

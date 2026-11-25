@@ -1,0 +1,5 @@
+<think>Only one calendar (Alex Rivera's primary). Today is Tuesday, September 1, 2026. Events today: Standup 9:00–9:30, 1:1 with Jamie 11:00–12:00, Lunch 12:00–13:00, Design review 14:00–15:30, Customer call 16:00–17:00 (all America/Chicago). At 3:30 PM (15:30), the Design review ends exactly then; nothing else is scheduled until the 4:00 PM Customer call. So at 3:30 you are free.</think>
+
+I checked Tuesday, September 1, 2026 (today) on Alex's primary calendar. The only event near that time is the Design review running 2:00–3:30 PM; it ends exactly at 3:30, and the next event (Customer call) starts at 4:00 PM. So at 3:30 PM there is no meeting in progress.
+
+ANSWER: free

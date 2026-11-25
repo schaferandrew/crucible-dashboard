@@ -1,0 +1,13 @@
+Criterion-by-criterion evaluation:
+
+1. Correct complexity (4): The agent states binary search is O(n log n) and attributes this to an initial sort step. This is wrong — binary search does not sort the array; it runs in O(log n) on a sorted input. Score: 0/4.
+
+2. Explanation (3): The required explanation is that each step halves the remaining search range. The agent never says this; instead it gives an incorrect rationale ("the sort dominates") and only vaguely mentions checking the middle element. No halving of the range is explained. Score: 0/3.
+
+3. Precondition (2): The criterion requires stating that the input must already be sorted. The agent does the opposite, claiming binary search "works on any array, sorted or not." Score: 0/2.
+
+4. Clarity (1): Despite being wrong, the response is short, structured, and ends with a summary line; it is easy to read and organised. Clarity is separate from correctness here. Score: 1/1.
+
+Total: 0 + 0 + 0 + 1 = 1 out of 10.
+
+GRADE: 1

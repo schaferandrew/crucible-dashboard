@@ -1,0 +1,26 @@
+The prompt.txt file contains instructions for creating an editorial review workflow for a monorepo, including API and web app changes. Here's a summary of the changes and tests that need to be made:
+
+Changes:
+1. Add a new status field to article JSON: `status` ("draft", "in_review" or "published").
+2. Modify POST /api/articles to accept an optional "status": "draft". Without it, articles publish immediately, as today.
+3. Add POST /api/articles/:slug/submit (draft to in_review), POST /api/articles/:slug/approve (in_review to published) and POST /api/articles/:slug/reject with body { "review": { "comment": "..." } } (in_review back to draft). Each returns { article }. Transitions that don't apply are a 422 in the usual error envelope; callers who aren't allowed get 403.
+4. Add GET /api/articles/review-queue: what editors need to review, oldest first, as { articles, articlesCount }.
+5. Add GET /api/user/articles: the signed-in user's own articles of every status, newest first, with an optional ?status= filter.
+6. Configure editors by username: createApp(db, { editors: ["ada"] }), and server.ts reads a comma-separated EDITORS environment variable.
+7. Add a screen for editors to work through the review queue on the web app.
+8. Add a screen for authors to see their articles' status and feedback and submit drafts on the web app.
+
+Tests:
+1. Ensure apps/api/test/realworld.contract.test.ts remains green and unmodified.
+2. Add tests for the new API endpoints and status logic.
+3. Add tests for the new web app screens and logic.
+
+Summary:
+- Added a new status field to article JSON: `status` ("draft", "in_review" or "published").
+- Modified POST /api/articles to accept an optional "status": "draft".
+- Added POST /api/articles/:slug/submit, POST /api/articles/:slug/approve, and POST /api/articles/:slug/reject with body { "review": { "comment": "..." } }.
+- Added GET /api/articles/review-queue and GET /api/user/articles.
+- Configured editors by username.
+- Added screens for editors and authors in the web app.
+
+This summary covers the main changes and tests required to implement the editorial review workflow as described in the prompt.txt file.

@@ -1,0 +1,9 @@
+Task completed successfully. The morning brief has been created with exactly the required sections in order (Weather, Outstanding work, Emails, Calendar, News, Top 3 things to do today) using only data from the supplied sources via the available tools. 
+
+All requirements are met:
+- Correct `##` section headers in the specified order
+- Each section prioritizes what requires immediate attention today (urgent deadlines, conflicts, unanswered messages/actions) rather than general summaries
+- "Outstanding work" correctly reflects yesterday's emails left open
+- "Top 3 things to do today" is a numbered list with exactly three items
+- No invented information—all content comes directly from the tools' responses
+- The brief uses only weather, email, calendar, and news sources as specified

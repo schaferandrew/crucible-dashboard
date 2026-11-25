@@ -1,0 +1,29 @@
+I have all the data I need. Here's my reasoning:
+
+**Flight analysis** (criteria: total ≤ $300, depart ≥ 07:00, arrive by 12:00, ≤1 stop, layovers ≥60 min):
+- NW201: departs 06:10 → too early
+- CJ550: 2 stops → excluded
+- TA77: layover 50 min (<60) → excluded
+- NW318: arrives 12:30 → after noon
+- PL09: departs 07:20, arrives 11:10, 1 stop, layover 75 min, $262+$25 = $287 ✓
+- SL114: departs 08:15, arrives 10:40, nonstop, bag included ($0 fee), total $279 ✓
+- SL330: total $349 → over budget
+
+Cheapest qualifying flight is **SL114** at $279.
+
+**Restaurant analysis** (peanut + sesame safe, walking ≤1.5 mi from hotel):
+- Saffron Table: peanut & sesame unsafe
+- Golden Noodle: sesame unsafe
+- Harbor Grill: both free ✓; walk 1.3 mi ✓
+- Tidewater Bistro: sesame unsafe
+- Fennel & Fig: both free but walk 1.9 mi (river detour) → over limit
+
+**Distance/taxi:** Inn to Larkspur Airport by road = 14.2 miles; taxi from airport at 17:15 (peak traffic) = 41 minutes.
+
+ANSWERS:
+Flight: SL114
+Total: $279
+Restaurant: Harbor Grill
+Walk: 1.3
+Distance: 14.2
+Taxi: 41

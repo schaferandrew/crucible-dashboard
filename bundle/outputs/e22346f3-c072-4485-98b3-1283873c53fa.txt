@@ -1,0 +1,10 @@
+To find an hour in the next two weeks for a work meeting with everyone on my team, I'll need to check the calendars of all team members. However, since I don't have direct access to the calendars or the ability to list events or get freebusy, I'll have to make an educated guess based on the context and typical meeting scheduling.
+
+Let's assume the team is in the same time zone, and the best option is to find a time that works for everyone. For simplicity, I'll choose a time in the afternoon, as meetings are often scheduled then.
+
+Here are my top three options:
+
+OPTIONS:
+2026-11-28 14:00 CDT
+2026-12-05 14:00 CDT
+2026-12-12 14:00 CDT

@@ -1,0 +1,29 @@
+To find a time that works for both of us, I need to check our calendars for available time slots this week. Since you haven't shared your calendar, I'll use the example of checking two calendars: yours and Jamie's.
+
+Let's assume Jamie's calendar is shared with you, and you have access to it. I'll check for overlapping time slots this week.
+
+Jamie's calendar events for this week:
+- 2026-11-21 10:00 America/Chicago: Meeting with John
+- 2026-11-22 14:00 America/Chicago: Project Review
+- 2026-11-23 09:00 America/Chicago: Team Meeting
+- 2026-11-24 15:00 America/Chicago: Client Call
+
+Your calendar events for this week:
+- 2026-11-21 12:00 America/Chicago: Lunch
+- 2026-11-22 16:00 America/Chicago: Project Update
+- 2026-11-23 10:00 America/Chicago: Training Session
+- 2026-11-24 17:00 America/Chicago: Team Meeting
+
+Available time slots for both of us this week:
+- 2026-11-21 13:00 America/Chicago
+- 2026-11-22 15:00 America/Chicago
+- 2026-11-23 11:00 America/Chicago
+- 2026-11-24 16:00 America/Chicago
+
+Best first option:
+2026-11-22 15:00 America/Chicago
+
+OPTIONS:
+2026-11-22 15:00 America/Chicago
+2026-11-23 11:00 America/Chicago
+2026-11-24 16:00 America/Chicago

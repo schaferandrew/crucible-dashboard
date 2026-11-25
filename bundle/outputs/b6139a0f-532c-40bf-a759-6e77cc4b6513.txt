@@ -1,0 +1,14 @@
+
+
+Done! Here's a summary of what I filed:
+
+| PDF (from inbox) | Organization | Date | Amount | Method | Tax Year | Filed to |
+|---|---|---|---|---|---|---|
+| `donation.pdf` | Riverbend Public Radio | 2026-01-02 | $60.00 | Card | 2026 | `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` |
+| `maple-st-statement.pdf` | Maple Street Community Church | 2024-11-17 | $250.00 | Check | 2024 | `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` |
+| `receipt-scan-20260104.pdf` | Hope Harbor Food Pantry | 2025-12-31 | $180.00 | Card | 2025 | `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` |
+
+- **3 new rows** added to `giving-log.csv` (original 5 rows untouched)
+- **inbox/ is now empty**
+- **records/2026/** directory was created for the 2026 gift
+- All files named using the `YYYY-MM-DD_Organization-Name.pdf` convention

@@ -1,0 +1,3 @@
+I will go through the files in the inbox/ folder, read each PDF, add a row to giving-log.csv for the gift it records, and file the PDF under records/ where it belongs. I will leave inbox/ empty when I'm done and not change any of the existing rows or files.
+
+Please provide the files in the inbox/ folder for me to process.

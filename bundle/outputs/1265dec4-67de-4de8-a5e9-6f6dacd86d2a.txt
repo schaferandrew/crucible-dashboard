@@ -1,0 +1,41 @@
+All four supplied sources (weather, emails, calendar, news) returned successfully — nothing was unavailable. Here is the brief:
+
+## Weather
+Saint Paul, MN — current conditions: 68°F, Partly Cloudy, humidity 65%, wind 8 mph.
+- Today (Wed Sept 2): high 68 / low 55, Partly Cloudy, ~10% precipitation chance, wind 8 mph.
+- Outlook: Thu Sept 3 — sunny, 74/59; Fri Sept 4 — scattered showers, 71/57, 30% precip, wind 12 mph.
+
+## Outstanding work (from yesterday's emails)
+Facts:
+- Finance reminder (2026-09-01 14:15Z): Q3 expense report must be submitted by **5:00 PM today, Wednesday Sept 2**; reports missing the cutoff are paid with next month's payroll. No confirmation of submission appears in any source.
+- Client email (client@example.com, 2026-09-01 16:45Z): asks whether the revised proposal can be delivered by **Friday** — needed before they brief their team; reply requested "when you can" and is unanswered as of this morning.
+- Alex's Q3 review email (2026-09-01 10:30Z): Q3 review complete, ahead of schedule; results to be discussed in today's planning meeting.
+
+Recommendations (separate from facts): treat the expense report and client reply as the two time-sensitive items; do not let either slip past end of day.
+
+## Emails
+Facts — four emails received yesterday (2026-09-01), none marked read/replied in sources:
+1. **alex@example.com** — "Project update - Q3 review completed" (10:30Z): Q3 review done ahead of schedule; discuss results in planning meeting. → Action: bring to today's Planning meeting.
+2. **jamie@example.com** — "Meeting notes from yesterday" (09:00Z): 1-on-1 notes — career goals, next quarter priorities, team building. → Informational; no action required.
+3. **finance@example.com** — "Reminder: Q3 expense report due Wednesday 5 PM" (14:15Z): hard deadline today at 5:00 PM. → Action needed before end of day.
+4. **client@example.com** — "Question about the proposal timeline" (16:45Z): can revised proposal be delivered by Friday? Needs an answer before their team briefing. → Unanswered; reply requested today.
+
+## Calendar
+Today, Wed Sept 2 (America/Chicago):
+- **9:30–10:30 AM** — Planning, Room B (alex@example.com)
+- **10:00–11:00 AM** — Vendor demo, Zoom (alex@example.com + vendor@example.com) → **conflicts with Planning from 10:00–10:30**; both cannot be attended as scheduled.
+- **1:00–2:00 PM** — Budget meeting, Conference Room A — attendees listed: jamie@example.com only (no indication you are invited).
+
+Coming up: Thu Sept 3 — Standup 9:00 AM Zoom (jamie only); Interview 11:00 AM Conference Room B (alex — yours). Fri Sept 4 — Workshop 9:00–11:00 Main Hall (jamie only); Project review 2:00 PM Conference Room A (alex — yours).
+
+## News
+- **High** — "Twin Cities Tech Conference Returns" (StarTribune): annual conference returns to Minneapolis with 50+ speakers on AI, startup funding, emerging tech; registration opens this Friday.
+- **Medium** — "Maplewood Park Renovation Complete" (Pioneer Press): renovations finished ahead of schedule; new walking trails and children's playground; grand reopening Saturday.
+- **Low** — "State Fair Attendance Drops Slightly" (StarTribune): Minnesota State Fair attendance down 3%, cooler-than-average weather cited as a factor.
+
+## Top 3 things to do today
+1. Submit the Q3 expense report by 5:00 PM (hard deadline; late reports pay with next month's payroll).
+2. Reply to client@example.com confirming whether the revised proposal can be delivered by Friday — needed before their team briefing.
+3. Resolve today's Planning/Vendor demo overlap (10:00–10:30) and use the planning meeting to discuss Q3 review results; decide which event to keep or reschedule.
+
+Note on dates: sources are dated Sept 1–4, 2026, consistent with "today" being Wednesday, September 2, 2026 as stated in the prompt.

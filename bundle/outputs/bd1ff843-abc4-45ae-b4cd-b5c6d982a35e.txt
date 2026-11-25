@@ -1,0 +1,6 @@
+Deploy: 00:00:00
+First affected request: 00:00:00
+First report: 00:00:00
+Affected users: 0
+
+The postmortem will be completed once the root cause is identified, the fix is implemented, and regression tests are added. Please provide the necessary logs and ticket notes for analysis.

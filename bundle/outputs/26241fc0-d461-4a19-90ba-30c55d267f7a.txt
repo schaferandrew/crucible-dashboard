@@ -1,0 +1,31 @@
+⏺ bash(command=ls -la && cat README.md)
+  ⎿ total 32
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff   320 Nov 22 18:38 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 22 18:38 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ bash(command=find . -type f | grep -v '.git/' | sort && echo --- && ruby )
+  ⎿ ./.gitignore
+./app.php
+./data/bookings.csv
+./data/coupons.csv
+./data/rooms.json
+./prompt.txt
+./README.md
+./src/DataStore.php
+./src/Dates.php
+./src/Pricing.php
+./src/Router.php
+./src/Views.php
+./tests/
+⏺ bash(command=cat app.php src/Router.php src/DataStore.php src/Pricing.php)
+  ⎿ <?php
+/**
+ * Juniper Inn booking desk, command-line entry point.
+ *
+ *   php app.php '/quote?room=101&checkin=2024-03-19&nights=2&guests=1'
+ *
+ * Prints the response body. Exit status 0 for a 2xx resp
+⏺ bash(command=cat data/rooms.json && echo --- && cat data/bookings.csv && )
+  ⎿ [
+  {"id": "101", "name": "Garden Single", "rate": "89.00", "max_guests": 1, "cleaning_fee": 20, "extra_guest_fee": "15"},
+  {"id": "102", "name": "Harbor Double", "rate": "124.50", "max_guests": "3",
