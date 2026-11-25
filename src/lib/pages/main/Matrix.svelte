@@ -111,10 +111,9 @@
       style={heatStyle(c.mean)}
       aria-label={`${c.label} · Open ${runLabel}`}
       >{text}{#if c.n > 1}<sup>×{c.n}</sup>{/if}
-      {#if card}<span class="run-id">{runLabel}</span>
-      {:else}<span class="run-tooltip" aria-hidden="true">{c.title}<br />Open {runLabel}</span>{/if}</a
+      <span class="run-tooltip" aria-hidden="true">{c.title}<br />Open {runLabel}</span></a
     >
-  {:else}
+  {:else if !linkIndex}
     <button
       type="button"
       class="cell"
@@ -126,6 +125,14 @@
       aria-label={c.label}
       onclick={() => open(row, t)}
       >{text}{#if c.n > 1}<sup>×{c.n}</sup>{/if}</button
+    >
+  {:else}
+    <span
+      class="cell"
+      class:timeout={c.timeout}
+      class:uncounted={c.state === 'uncounted'}
+      style={heatStyle(c.mean)}
+      >{text}{#if c.n > 1}<sup>×{c.n}</sup>{/if}</span
     >
   {/if}
 {/snippet}
@@ -303,7 +310,8 @@
     text-align: center;
     font-variant-numeric: tabular-nums;
   }
-  .cell:hover {
+  a.cell:hover,
+  button.cell:hover {
     border-color: var(--fg);
   }
   .cell.uncounted {
@@ -313,11 +321,6 @@
   }
   .cell.timeout {
     box-shadow: 0 0 0 2px var(--bad);
-  }
-  .run-id {
-    display: block;
-    white-space: nowrap;
-    font-size: var(--text-xs);
   }
   .run-tooltip {
     display: none;
@@ -337,7 +340,16 @@
     font-weight: 500;
     pointer-events: none;
   }
-  .cell:hover .run-tooltip,
+  .cell.card .run-tooltip {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+  @media (hover: hover) {
+    .cell:hover .run-tooltip {
+      display: block;
+    }
+  }
   .cell:focus-visible .run-tooltip {
     display: block;
   }

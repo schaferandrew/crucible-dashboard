@@ -55,7 +55,9 @@
   const suite = $derived(cs.ctx.suite);
   const suiteQ = $derived(suiteParam(suite, data.meta.current_suite));
   const focusedSetup = $derived(cs.ctx.focus ? cs.index.entities.setups[cs.ctx.focus] : undefined);
-  const deploymentScope = $derived(Boolean(cs.ctx.filters.model?.size && cs.ctx.filters.deployment?.size));
+  const hasLinkedScope = $derived(
+    Boolean(focusedSetup || cs.ctx.filters.model?.size || cs.ctx.filters.task?.size),
+  );
   const tasks = $derived(taskTable(cs.index));
   const all = $derived(loaded.flatMap((m) => m.runs.map((r) => toRow(r, suite, cs.index, tasks))));
   const states = $derived(stateCounts(all));
@@ -137,8 +139,7 @@
 
   // A linked setup or deployment may have no runs in the newest month.
   $effect(() => {
-    if ((focusedSetup || deploymentScope) && !inScope.length && nextMonth && !monthLoading && !monthError)
-      untrack(showNext);
+    if (hasLinkedScope && !inScope.length && nextMonth && !monthLoading && !monthError) untrack(showNext);
   });
 
   onMount(() => {

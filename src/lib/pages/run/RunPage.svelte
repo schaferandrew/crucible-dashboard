@@ -6,7 +6,7 @@
   import { page } from '$app/state';
   import { cachedIndex } from '$lib/data';
   import { fmtDate, fmtScore } from '$lib/core/format';
-  import { link, modelHref, runHref, taskHref } from '$lib/paths';
+  import { compareHref, link, modelHref, runHref, runsHref, taskHref } from '$lib/paths';
   import { labelsFromIndex } from '$lib/pages/run/labels';
   import RunOutput from '$lib/pages/run/RunOutput.svelte';
   import {
@@ -42,12 +42,15 @@
   });
   // Links keep a non-current suite
   const suiteQ = $derived(view?.suite && view.suite !== current ? view.suite : undefined);
+  const setupId = $derived(view?.standing?.setup ?? null);
+  const modelRuns = $derived(view?.model.id ? runsHref(suiteQ, { model: view.model.id }) : null);
+  const modelTaskRuns = $derived(
+    view?.model.id && view.task.id ? runsHref(suiteQ, { model: view.model.id, task: view.task.id }) : null,
+  );
   const scoreHeat = $derived(heat(view?.score.value));
 
-  const backHref = $derived(chrome.previous ?? link('/'));
   function back(e: MouseEvent) {
-    // Back goes where the reader came from, with its filters (the history entry keeps them). A deep link has
-    // nowhere to go back to, so the plain link to the leaderboard is followed.
+    // The history entry restores the filters of the page the reader came from.
     if (chrome.previous && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
       e.preventDefault();
       void goBack();
@@ -104,10 +107,14 @@
   <PageHeader
     title={view.task.name}
     docTitle="{view.task.name} · run {view.shortId}"
-    crumbs={[{ label: 'Runs', href: link('/runs/', { suite: suiteQ }) }, { label: `Run ${view.shortId}` }]}
+    crumbs={[
+      { label: 'Runs', href: runsHref(suiteQ) },
+      ...(modelRuns ? [{ label: `${view.model.label} runs`, href: modelRuns }] : []),
+      { label: `Run ${view.shortId}` },
+    ]}
   />
 
-  <p class="back"><a href={backHref} onclick={back}>← Back</a></p>
+  {#if chrome.previous}<p class="back"><a href={chrome.previous} onclick={back}>← Back</a></p>{/if}
 
   <p class="sub">
     <a href={view.model.id ? modelHref(view.model.id, suiteQ) : undefined}>{view.model.label}</a>
@@ -139,14 +146,19 @@
             class:bad={view.outcome.kind === 'error'}>{view.outcome.label}</span
           >
         </p>
-        {#if view.task.id}
-          <p class="links">
-            <a href={taskHref(view.task.id, suiteQ)}>The task</a>
-            {#if view.model.id}· <a href={modelHref(view.model.id, suiteQ)}>The model</a>{/if}
-          </p>
-        {/if}
       </div>
     </section>
+
+    {#if view.task.id || setupId}
+      <nav class="related" aria-label="Related runs and comparisons">
+        {#if modelTaskRuns}<a href={modelTaskRuns}>Same model on this task</a>{/if}
+        {#if view.task.id}
+          <a href={taskHref(view.task.id, suiteQ) + '#best-performers'}>Compare models on this task</a>
+        {/if}
+        {#if setupId}<a href={compareHref([setupId], suiteQ)}>Compare this setup</a>{/if}
+        {#if view.siblings.length}<a href="#h-rep">Repeats of this run</a>{/if}
+      </nav>
+    {/if}
 
     {#if view.notes.length}
       <section class="notes" aria-label="Corrections">
@@ -343,7 +355,11 @@
   .sentence {
     font-weight: 600;
   }
-  .links {
+  .related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: calc(-1 * var(--space-2)) 0 var(--space-5);
     font-size: var(--text-sm);
   }
   .notes {

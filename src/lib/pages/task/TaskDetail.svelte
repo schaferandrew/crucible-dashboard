@@ -295,7 +295,7 @@
     </ErrorBoundary>
   </section>
 
-  <section>
+  <section id="best-performers">
     <h2>Best performers</h2>
     <p class="muted">
       {showAll

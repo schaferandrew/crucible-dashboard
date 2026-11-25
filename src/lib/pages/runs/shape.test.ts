@@ -72,6 +72,13 @@ describe('runs shaping (B-05, B-06)', () => {
     expect(rowMatches(row({}), focused, NO_FILTERS)).toBe(false);
   });
 
+  it('matches model-and-task links for runs without a resolved setup', () => {
+    const related = { ...ctx, filters: { model: new Set(['m/m']), task: new Set(['t']) } };
+    expect(rowMatches(row({}), related, NO_FILTERS)).toBe(true);
+    expect(rowMatches(row({ modelId: 'm/other' }), related, NO_FILTERS)).toBe(false);
+    expect(rowMatches(row({ taskId: 'other-task' }), related, NO_FILTERS)).toBe(false);
+  });
+
   it('a setup filter drops runs whose setup is unknown', () => {
     const f = { ...ctx, filters: { harness: new Set(['pi']) } };
     expect(rowMatches(row({}), f, NO_FILTERS)).toBe(false);

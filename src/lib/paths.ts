@@ -18,6 +18,6 @@ export const modelHref = (model: string, suite?: string) => link(modelPath(model
 export const runHref = (uuid: string, suite?: string) => link(runPath(uuid), { suite });
 export const runsHref = (
   suite?: string,
-  scope?: Partial<Pick<Params, 'setup' | 'model' | 'deployment' | 'mode'>>,
+  scope?: Partial<Pick<Params, 'setup' | 'model' | 'deployment' | 'mode' | 'task'>>,
 ) => link(runsPath(), { suite, ...scope });
 export const compareHref = (setups: string[], suite?: string) => link('/compare/', { s: setups, suite });
