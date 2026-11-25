@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { defaultContext } from '$lib/core/context';
-import type { SuiteId } from '$lib/core/types';
+import { asSetupId, type SuiteId } from '$lib/core/types';
 import {
   NO_FILTERS,
   isFlagged,
@@ -62,6 +62,14 @@ describe('runs shaping (B-05, B-06)', () => {
     expect(rowMatches(b, ctx, { outcome: 'all', state: 'counted' })).toBe(false);
     expect(rowMatches(b, ctx, { outcome: 'error', state: 'invalid' })).toBe(true);
     expect(rowMatches(b, { ...ctx, section: 'chat' as never }, NO_FILTERS)).toBe(false);
+  });
+
+  it('matches a leaderboard link by exact setup ID', () => {
+    const focus = asSetupId('winner');
+    const focused = { ...ctx, focus };
+    expect(rowMatches(row({ setupId: focus }), focused, NO_FILTERS)).toBe(true);
+    expect(rowMatches(row({ setupId: 'another-setup' }), focused, NO_FILTERS)).toBe(false);
+    expect(rowMatches(row({}), focused, NO_FILTERS)).toBe(false);
   });
 
   it('a setup filter drops runs whose setup is unknown', () => {

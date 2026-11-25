@@ -2,7 +2,7 @@
 // Every internal `href` in a component comes from here.
 
 import { base } from '$app/paths';
-import { modelPath, runPath, taskPath, withQuery, type Params } from '$lib/core/urls';
+import { modelPath, runPath, runsPath, taskPath, withQuery, type Params } from '$lib/core/urls';
 
 /** `<base><path>?params`. `path` starts with `/` and is relative to the base. */
 export function link(path: string, params?: Params): string {
@@ -16,4 +16,8 @@ export const suiteParam = (suite: string, current: string): string | undefined =
 export const taskHref = (task: string, suite?: string) => link(taskPath(task), { suite });
 export const modelHref = (model: string, suite?: string) => link(modelPath(model), { suite });
 export const runHref = (uuid: string, suite?: string) => link(runPath(uuid), { suite });
+export const runsHref = (
+  suite?: string,
+  scope?: Partial<Pick<Params, 'setup' | 'model' | 'deployment' | 'mode'>>,
+) => link(runsPath(), { suite, ...scope });
 export const compareHref = (setups: string[], suite?: string) => link('/compare/', { s: setups, suite });

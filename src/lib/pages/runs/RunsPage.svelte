@@ -44,6 +44,7 @@
     untrack(() => (data.firstMonth ? [{ month: data.firstMonth, runs: data.firstRuns }] : [])),
   );
   let monthLoading = $state(false);
+  let monthRequest: Promise<void> | undefined;
   let monthError = $state<string | null>(null);
   const nextMonth = $derived(data.months[loaded.length] ?? null);
 
@@ -53,6 +54,8 @@
 
   const suite = $derived(cs.ctx.suite);
   const suiteQ = $derived(suiteParam(suite, data.meta.current_suite));
+  const focusedSetup = $derived(cs.ctx.focus ? cs.index.entities.setups[cs.ctx.focus] : undefined);
+  const deploymentScope = $derived(Boolean(cs.ctx.filters.model?.size && cs.ctx.filters.deployment?.size));
   const tasks = $derived(taskTable(cs.index));
   const all = $derived(loaded.flatMap((m) => m.runs.map((r) => toRow(r, suite, cs.index, tasks))));
   const states = $derived(stateCounts(all));
@@ -75,9 +78,8 @@
   );
 
   const harnessLabel = (id: string) => cs.index.catalog.harnesses.find((h) => h.id === id)?.label ?? id;
-  function setupText(r: RunRow): string {
-    const s = r.setup;
-    if (!s) return r.setupId ?? '—';
+  const setupText = (r: RunRow) => (r.setup ? formatSetup(r.setup) : (r.setupId ?? '—'));
+  function formatSetup(s: NonNullable<RunRow['setup']>): string {
     const where = s.where === 'local' ? (s.labels.hw ?? 'local') : (s.labels.provider ?? cap(s.where));
     return [
       harnessLabel(s.harness),
@@ -114,20 +116,30 @@
     return cs.update(next);
   };
 
-  async function showNext() {
+  function showNext() {
     const month = nextMonth;
-    if (!month || monthLoading) return;
+    if (!month || monthRequest) return monthRequest;
     monthLoading = true;
     monthError = null;
-    try {
-      const runs = await loadMonth(fetch, month);
-      loaded = [...loaded, { month, runs }];
-    } catch (e) {
-      monthError = e instanceof Error ? e.message : String(e);
-    } finally {
-      monthLoading = false;
-    }
+    monthRequest = loadMonth(fetch, month)
+      .then((runs) => {
+        loaded = [...loaded, { month, runs }];
+      })
+      .catch((e: unknown) => {
+        monthError = e instanceof Error ? e.message : String(e);
+      })
+      .finally(() => {
+        monthRequest = undefined;
+        monthLoading = false;
+      });
+    return monthRequest;
   }
+
+  // A linked setup or deployment may have no runs in the newest month.
+  $effect(() => {
+    if ((focusedSetup || deploymentScope) && !inScope.length && nextMonth && !monthLoading && !monthError)
+      untrack(showNext);
+  });
 
   onMount(() => {
     readUrl();
@@ -174,6 +186,17 @@
   unknownSuite={cs.unknownSuite}
   label="Run filters"
 />
+
+{#if cs.ctx.focus}
+  <p class="focus">
+    {#if focusedSetup}
+      Setup filter · {focusedSetup.labels.model} · {formatSetup(focusedSetup)}
+    {:else}
+      Setup filter · {cs.ctx.focus}
+    {/if}
+    <button type="button" onclick={() => onctx({ ...cs.ctx, focus: undefined })}>Clear setup filter</button>
+  </p>
+{/if}
 
 <div class="bar">
   <label>
@@ -306,6 +329,14 @@
 {/if}
 
 <style>
+  .focus {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    overflow-wrap: anywhere;
+    font-size: var(--text-sm);
+  }
   .bar {
     display: flex;
     flex-wrap: wrap;

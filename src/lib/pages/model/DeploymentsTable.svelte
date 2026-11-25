@@ -12,8 +12,14 @@
   let {
     table,
     onpick,
+    runsHref,
     pending = false,
-  }: { table: DeploymentTable; onpick: (row: DeploymentRow) => void; pending?: boolean } = $props();
+  }: {
+    table: DeploymentTable;
+    onpick: (row: DeploymentRow) => void;
+    runsHref: (row: DeploymentRow) => string;
+    pending?: boolean;
+  } = $props();
 
   const columns: Column<DeploymentRow>[] = [
     { id: 'dep', header: 'Deployment', rowHeader: true, value: (r) => r.label },
@@ -94,6 +100,7 @@
               title="Time, speed and cost here cover only the sections that ran on this deployment."
               >no {m} runs</span
             >{/each}
+          <div class="run-link"><a href={runsHref(r)}>View runs</a></div>
         {:else if col.id === 'packager'}
           {r.packagers.join(', ') || '—'}
         {:else if col.id === 'runs'}{r.stats?.runs ?? '—'}
@@ -140,6 +147,9 @@
   .pick[aria-pressed='true']::before {
     content: '✓ ';
     color: var(--accent);
+  }
+  .run-link {
+    font-size: var(--text-xs);
   }
   .bad {
     color: var(--bad);

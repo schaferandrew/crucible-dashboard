@@ -290,7 +290,11 @@ try {
     await page.getByRole('heading', { name: 'Summary', exact: true }).waitFor();
     await page.getByRole('heading', { name: 'Reliability', exact: true }).waitFor();
     await page.getByRole('button', { name: 'Show checks', exact: true }).first().click();
-    await page.getByRole('link', { name: 'open the run', exact: true }).first().waitFor();
+    await page
+      .locator('tr.detail, div.panel')
+      .getByRole('link', { name: /^Run [0-9a-f]{8}$/ })
+      .first()
+      .waitFor();
     // Keep an expanded task while the first comparison side is replaced. Checks must follow the UUIDs.
     const extra = await page
       .getByLabel('Add a setup')
@@ -306,7 +310,7 @@ try {
       .click();
     await page.waitForFunction(() => new URL(location.href).searchParams.get('s')?.split(',').length === 2);
     await settled();
-    const checkLinks = page.getByRole('link', { name: 'open the run', exact: true });
+    const checkLinks = page.locator('tr.detail, div.panel').getByRole('link', { name: /^Run [0-9a-f]{8}$/ });
     await checkLinks.nth(1).waitFor();
     assert.equal(await checkLinks.count(), 2, 'The expanded task stays open with the new sides');
     const selectedIds = new URL(page.url()).searchParams.get('s').split(',');

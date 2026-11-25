@@ -15,7 +15,7 @@
   import NotShown from '$lib/ui/feedback/NotShown.svelte';
   import PageHeader from '$lib/ui/layout/PageHeader.svelte';
   import { describeNotShown } from '$lib/ui/feedback/notShown';
-  import { runHref, taskHref } from '$lib/paths';
+  import { runHref, runsHref, taskHref } from '$lib/paths';
   import { fmtSeconds, fmtScore } from '$lib/core/format';
   import AbBlock from './AbBlock.svelte';
   import AreaBars from './AreaBars.svelte';
@@ -275,7 +275,12 @@
         again to clear.
       </p>
       <ErrorBoundary what="the deployments" error={loaded?.error} onretry={() => fetchRuns(cs.index.suite)}>
-        <DeploymentsTable table={dt} onpick={pickDeployment} pending={!ready} />
+        <DeploymentsTable
+          table={dt}
+          onpick={pickDeployment}
+          runsHref={(r) => runsHref(sq, { model: modelId, deployment: r.id, mode: ctx.section })}
+          pending={!ready}
+        />
       </ErrorBoundary>
       {#if dnf.length}
         <details class="dnfbox">

@@ -21,10 +21,10 @@
   let { index, sc, suite }: { index: SuiteIndex; sc: Scope; suite?: string } = $props();
 
   const wide = new Wide();
-  let links = $state.raw<RunLinkIndex | null>(null);
+  let links = $state.raw<{ suite: string; index: RunLinkIndex } | null>(null);
+  let nearMatrix = $state(false);
   let failed = $state(false);
   let root: HTMLElement | undefined = $state();
-  let loadedFor = '';
 
   const view = $derived(sc.view);
   const rows = $derived(sc.visible.filter((r) => r.ran));
@@ -32,24 +32,32 @@
   const provIds = $derived(new Set<string>(view.provisionalTasks.map((t) => t.id)));
 
   async function ensureLinks(): Promise<RunLinkIndex | null> {
-    if (links && loadedFor === index.suite) return links;
+    const suiteId = index.suite;
+    if (links?.suite === suiteId) return links.index;
     try {
-      const idx = buildRunLinkIndex(await loadCellRuns(fetch, index.suite));
-      loadedFor = index.suite;
-      links = idx;
+      const idx = buildRunLinkIndex(await loadCellRuns(fetch, suiteId));
+      if (index.suite !== suiteId) return null;
+      links = { suite: suiteId, index: idx };
       failed = false;
       return idx;
     } catch {
-      failed = true;
+      if (index.suite === suiteId) failed = true;
       return null;
     }
   }
 
+  $effect(() => {
+    if (nearMatrix) {
+      failed = false;
+      void ensureLinks();
+    }
+  });
+
   onMount(() => {
     const stop = wide.mount();
     const io = new IntersectionObserver(
-      (e) => {
-        if (e.some((x) => x.isIntersecting)) void ensureLinks();
+      (entries) => {
+        nearMatrix = entries.some((entry) => entry.isIntersecting);
       },
       { rootMargin: '400px' },
     );
@@ -60,7 +68,7 @@
     };
   });
 
-  const linkIndex = $derived(links && loadedFor === index.suite ? links : null);
+  const linkIndex = $derived(links?.suite === index.suite ? links.index : null);
 
   // In Combined a row pairs one setup per section: each task reads its own section's setup (B-23)
   function setupOf(row: Row, task: CatalogTask): string | null {
@@ -80,7 +88,9 @@
   }
 
   async function open(row: Row, t: CatalogTask) {
+    const suiteId = index.suite;
     const idx = await ensureLinks();
+    if (index.suite !== suiteId) return;
     const setup = setupOf(row, t);
     const run = runOf(row, t) ?? (setup ? idx?.get(setup, t.id) : null);
     if (run) await goto(runHref(run, suite));
@@ -91,6 +101,7 @@
   {@const run = runOf(row, t)}
   {@const text = card ? c.card : c.wide}
   {#if run}
+    {@const runLabel = `Run ${run.slice(0, 8)}`}
     <a
       class="cell"
       class:timeout={c.timeout}
@@ -98,9 +109,10 @@
       class:card
       href={runHref(run, suite)}
       style={heatStyle(c.mean)}
-      title={c.title}
-      aria-label={c.label}
-      >{text}{#if c.n > 1}<sup>×{c.n}</sup>{/if}</a
+      aria-label={`${c.label} · Open ${runLabel}`}
+      >{text}{#if c.n > 1}<sup>×{c.n}</sup>{/if}
+      {#if card}<span class="run-id">{runLabel}</span>
+      {:else}<span class="run-tooltip" aria-hidden="true">{c.title}<br />Open {runLabel}</span>{/if}</a
     >
   {:else}
     <button
@@ -279,6 +291,7 @@
     color: var(--faint);
   }
   .cell {
+    position: relative;
     display: inline-block;
     min-width: 2.2rem;
     padding: 2px 4px;
@@ -300,6 +313,33 @@
   }
   .cell.timeout {
     box-shadow: 0 0 0 2px var(--bad);
+  }
+  .run-id {
+    display: block;
+    white-space: nowrap;
+    font-size: var(--text-xs);
+  }
+  .run-tooltip {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 11rem;
+    padding: var(--space-1) var(--space-2);
+    background: var(--surface);
+    color: var(--fg);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    pointer-events: none;
+  }
+  .cell:hover .run-tooltip,
+  .cell:focus-visible .run-tooltip {
+    display: block;
   }
   .cell sup {
     font-size: 0.65em;
