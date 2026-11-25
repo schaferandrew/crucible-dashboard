@@ -34,6 +34,8 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run build
+        env:
+          VITE_RESULTS_UPLOAD_URL: /__upload_test
       - run: npm run size
 
       - name: Install browser for UI checks
@@ -45,4 +47,12 @@ jobs:
           preview_pid=$!
           trap 'kill "$preview_pid"' EXIT
           curl --fail --silent --retry 15 --retry-connrefused --retry-delay 1 http://localhost:4173/crucible-dashboard/ > /dev/null
+          node scripts/check-upload.mjs http://localhost:4173
           npm run test:ui -- http://localhost:4173
+
+      - name: Upload results-page screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-upload-screenshots
+          path: test-results/results-upload/

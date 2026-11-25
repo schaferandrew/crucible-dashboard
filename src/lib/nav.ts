@@ -14,6 +14,7 @@ export type NavId = (typeof NAV)[number]['id'];
 /** Which tab a path (relative to the base) belongs to: the longest nav path that prefixes it. `/run/<id>/` belongs to Runs. */
 export function navFor(here: string): NavId {
   if (here.startsWith('/run/')) return 'runs';
+  if (here === '/upload/') return 'about';
   return (
     NAV.filter((n) => (n.path === '/' ? here === '/' : here.startsWith(n.path))).at(-1)?.id ?? 'leaderboard'
   );

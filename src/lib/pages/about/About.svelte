@@ -169,10 +169,7 @@
   <p><a href={REPO_URL}>{REPO_NAME} on GitHub</a> has the full setup for each harness and provider.</p>
 
   <h2>Share your results</h2>
-  <div class="draft">
-    Coming soon. Once the results format is standardized, you'll be able to submit your own runs, from your
-    models on your hardware, to appear alongside these.
-  </div>
+  <p><a href={link('/upload/')}>Upload your Crucible results</a> for review.</p>
   <p class="back"><a href={link('/')}>← Crucible results</a></p>
 </div>
 
@@ -240,12 +237,6 @@
   code {
     font-family: var(--mono);
     font-size: 0.92em;
-  }
-  .draft {
-    padding: var(--space-3) var(--space-4);
-    border: 1px dashed var(--border-strong);
-    border-radius: var(--radius-lg);
-    color: var(--muted);
   }
   .back {
     margin-top: var(--space-5);

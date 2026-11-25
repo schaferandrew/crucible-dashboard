@@ -10,3 +10,5 @@ docs/
 
 # Crucible generates and validates the results bundle.
 bundle/
+
+upload-api/.wrangler/

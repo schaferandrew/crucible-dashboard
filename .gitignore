@@ -49,3 +49,6 @@ Thumbs.db
 # Screenshot harness output (npm run shots); never committed
 docs/rewrite/shots/
 .cache/
+
+# Local upload Worker state
+upload-api/.wrangler/

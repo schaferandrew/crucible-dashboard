@@ -1,0 +1,21 @@
+{
+  "name": "crucible-results-upload",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-24",
+  "vars": {
+    "DASHBOARD_ORIGIN": "https://www.schaferandrew.com",
+  },
+  "r2_buckets": [
+    {
+      "binding": "RESULTS_INBOX",
+      "bucket_name": "crucible-results-inbox",
+    },
+  ],
+  "ratelimits": [
+    {
+      "name": "UPLOAD_LIMIT",
+      "namespace_id": "1001",
+      "simple": { "limit": 10, "period": 60 },
+    },
+  ],
+}

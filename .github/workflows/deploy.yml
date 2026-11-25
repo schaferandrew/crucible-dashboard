@@ -36,6 +36,8 @@ jobs:
           token: ${{ secrets.CRUCIBLE_READ_TOKEN || github.token }}
 
       - name: Check, test and build
+        env:
+          VITE_RESULTS_UPLOAD_URL: ${{ vars.RESULTS_UPLOAD_URL }}
         run: |
           npm run check
           npm test
