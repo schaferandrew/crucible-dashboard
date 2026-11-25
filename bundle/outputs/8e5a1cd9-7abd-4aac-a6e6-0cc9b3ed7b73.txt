@@ -1,0 +1,215 @@
+⏺ bash(command=ls -la && cat README.md 2>/dev/null | head -100)
+  ⎿ total 376
+drwxr-xr-x@  12 andrew.schafer@homebot.ai  staff     384 Nov 23 02:32 .
+drwxr-xr-x@   9 andrew.schafer@homebot.ai  staff     288 Nov 23 02:32 ..
+drwxr-xr-x@  12 andrew.schafer@homebot.ai  st
+⏺ bash(command=find apps packages -type f -not -path '*/node_modules/*' | s)
+  ⎿ apps/api/package.json
+apps/api/src/app.ts
+apps/api/src/auth/tokens.ts
+apps/api/src/db.ts
+apps/api/src/errors.ts
+apps/api/src/middleware/auth.ts
+apps/api/src/repositories/articles.ts
+apps/api/src/repos
+⏺ read(path=apps/api/src/app.ts)
+⏺ read(path=packages/shared/src/types.ts)
+  ⎿ import express, { type Express } from "express";
+import { type Db, createDb } from "./db";
+import { errorHandler, notFound } from "./errors";
+import { articlesRouter } from "./routes/articles";
+import
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's u
+⏺ read(path=apps/api/src/db.ts)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: strin
+⏺ read(path=apps/api/src/routes/articles.ts)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../er
+⏺ read(path=apps/api/src/services/articles.ts)
+  ⎿ import {
+  type Article,
+  type ArticlesResponse,
+  type CreateArticleInput,
+  type UpdateArticleInput,
+  slugify,
+} from "@conduit/shared";
+import type { ArticleRow, Db } from "../db";
+import { forbi
+⏺ read(path=apps/api/src/repositories/articles.ts)
+  ⎿ import { type ArticleRow, type Db, nextId } from "../db";
+
+export function findArticleBySlug(db: Db, slug: string): ArticleRow | undefined {
+  for (const article of db.articles.values()) if (article.s
+⏺ read(path=apps/api/src/services/presenters.ts)
+⏺ read(path=packages/shared/src/validation.ts)
+  ⎿ import type { Article, Comment, Profile, User } from "@conduit/shared";
+import type { ArticleRow, CommentRow, Db, UserRow } from "../db";
+import { favoritesCount, isFavorited, tagsForArticle } from ".
+  ⎿ import { z } from "zod";
+
+// Request bodies, as the RealWorld spec wraps them ({ user: {...} }, { article: {...} }, ...).
+
+export const registerSchema = z.object({
+  user: z.object({
+    username: z.s
+⏺ read(path=apps/api/src/routes/users.ts)
+⏺ read(path=apps/api/src/services/comments.ts)
+  ⎿ import { loginSchema, registerSchema, updateUserSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+im
+  ⎿ import type { Comment, CreateCommentInput } from "@conduit/shared";
+import type { Db } from "../db";
+import { forbidden, notFound } from "../errors";
+import { findArticleBySlug } from "../repositories
+⏺ read(path=apps/api/src/errors.ts)
+⏺ read(path=apps/api/src/middleware/auth.ts)
+  ⎿ import type { ErrorRequestHandler } from "express";
+import { ZodError } from "zod";
+import { toErrorEnvelope } from "@conduit/shared";
+
+/** An error with an HTTP status and a RealWorld error envelope.
+  ⎿ import type { NextFunction, Request, Response } from "express";
+import { verifyToken } from "../auth/tokens";
+import { unauthorized } from "../errors";
+
+declare global {
+  // eslint-disable-next-line 
+⏺ read(path=apps/api/src/routes/profiles.ts)
+⏺ read(path=apps/api/src/services/users.ts)
+  ⎿ import { Router } from "express";
+import type { Db } from "../db";
+import { optionalAuth, requireAuth } from "../middleware/auth";
+import { follow, getProfile, unfollow } from "../services/users";
+
+ex
+  ⎿ import type { LoginInput, Profile, RegisterInput, UpdateUserInput, User } from "@conduit/shared";
+import type { Db } from "../db";
+import { checkPassword, hashPassword } from "../auth/tokens";
+import 
+⏺ read(path=apps/api/src/repositories/users.ts)
+⏺ read(path=packages/shared/src/index.ts)
+  ⎿ import { type Db, type UserRow, nextId } from "../db";
+
+export function findUserById(db: Db, id: number): UserRow | undefined {
+  return db.users.get(id);
+}
+
+export function findUserByEmail(db: Db, em
+  ⎿ export * from "./types";
+export * from "./validation";
+export * from "./slug";
+⏺ bash(command=cat apps/api/src/routes/pagination.ts apps/api/src/repositor)
+  ⎿ import { DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE } from "@conduit/shared";
+import type { Request } from "express";
+import { unprocessable } from "../errors";
+import type { Page } from "../services/articles";
+⏺ read(path=apps/api/test/realworld.contract.test.ts)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the of
+⏺ read(path=apps/api/test/helpers.ts)
+  ⎿ import request from "supertest";
+import type { Express } from "express";
+import { createApp } from "../src/app";
+import { createDb } from "../src/db";
+
+/** A fresh app over an empty database, with a c
+⏺ read(path=apps/web/src/api/client.ts)
+  ⎿ import type {
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld
+⏺ read(path=apps/web/src/App.tsx)
+  ⎿ import { Link, Route, Routes } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
+import { ArticlePage } from "./pages/ArticlePage";
+import { EditorPage } from "./pages/EditorPage"
+⏺ bash(command=cat apps/web/src/pages/HomePage.tsx apps/web/src/pages/Profi)
+  ⎿ import { useCallback, useEffect, useState } from "react";
+import type { ArticleListQuery } from "@conduit/shared";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+i
+⏺ bash(command=cat apps/web/src/pages/EditorPage.tsx apps/web/src/component)
+  ⎿ import { type FormEvent, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ApiError, api } from "../api/client";
+
+export function EditorPage() {
+ 
+⏺ bash(command=cat apps/web/src/pages/ArticlePage.tsx apps/web/src/auth/Aut)
+  ⎿ import type { Article, Comment } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { api } fr
+⏺ bash(command=cat apps/api/src/routes/tags.ts apps/web/test/ArticleList.te)
+  ⎿ import { Router } from "express";
+import type { Db } from "../db";
+import { popularTags } from "../repositories/articles";
+
+export function tagsRouter(db: Db): Router {
+  const router = Router();
+  ro
+⏺ bash(command=cat apps/api/tsconfig.json apps/web/tsconfig.json tsconfig.b)
+  ⎿ {
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "include": ["src", "test"]
+}
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx":
+⏺ bash(command=npm test 2>&1 | tail -30, timeout=300)
+  ⎿ 11| }
+ ❯ test/FavoriteButton.test.tsx:21:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  test/FavoriteButton.test.tsx > FavoriteButton > unfavorites a favorited article
+TypeError: Cannot read properties of 
+⏺ bash(command=npm run test -w @conduit/api 2>&1 | tail -20; echo ===WEB===, timeout=300)
+  ⎿ > @conduit/api@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini_editorial-review-workflow_20261123_083223/apps/api
+
+⏺ bash(command=node --version; npm ls jsdom vitest 2>&1 | head -20)
+  ⎿ v26.12.1
+conduit-monorepo@ /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini_editorial-review-workflow_20261123_083223
+├─┬ @conduit/api@1.0.0 -> ./apps/api
+⏺ bash(command=cd apps/web && cat > /tmp/env-check.test.ts <<'EOF'
+import {, timeout=120)
+  ⎿ ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/env-check.test.ts > env > has localStorage
+TypeError: Cannot read properties of undefined (reading 'clear')
+ ❯ test/setup.ts:8:16
+      6|   cleanup();
+    
+⏺ bash(command=cd apps/web && node -e "
+const { JSDOM } = require('jsdom');)
+  ⎿ jsdom localStorage: object
+node globalThis.localStorage: undefined
+(node:73974) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warn

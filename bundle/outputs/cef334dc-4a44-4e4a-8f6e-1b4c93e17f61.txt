@@ -1,0 +1,22 @@
+
+
+Here's a summary of the diagnosis and fix:
+
+## Root Cause
+
+The original `page.tsx` used `React.useState` and `React.useEffect` for client-side data fetching but was **missing the `'use client'` directive**. In Next.js 14, using React hooks in a component without `'use client'` causes a build/runtime error because Next.js treats it as a Server Component by default, and Server Components can't use hooks or `fetch`.
+
+## Fix Applied
+
+1. **Converted `page.tsx` to a Server Component** — the idiomatic modern Next.js approach. Instead of client-side `useEffect` + `fetch`, the component now directly imports account data from a shared module and renders it server-side. This eliminates client-side state, loading states, and unnecessary network requests.
+
+2. **Created shared data module** (`app/data/accounts.ts`) — both the page and API route now import from a single source of truth.
+
+3. **Updated API route** (`app/api/account/route.ts`) — imports accounts from the shared module.
+
+4. **Added/updated tests:**
+   - `app/page.test.tsx` — verifies the page renders "Name: Alice" and "Plan: Pro" for acct_1
+   - `app/api/account/route.test.ts` — verifies the API returns correct data and 404s for unknown accounts
+   - Added `@testing-library/jest-dom` setup for proper DOM assertions
+
+5. **Installed `@testing-library/jest-dom`** as a dev dependency.

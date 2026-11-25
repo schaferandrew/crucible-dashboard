@@ -1,0 +1,11 @@
+The task is to complete the accessibility audit for the Conduit web app, fixing every finding so that keyboard and screen reader users can do everything mouse users can. Here's a summary of the process:
+
+1. Read the accessibility audit summary in `docs/accessibility-audit.md`.
+2. For each finding, ensure the web app is accessible to keyboard and screen reader users.
+3. Keep the visual design the same.
+4. Keep each component's name, file and props as they are (other teams import them; change their internals freely).
+5. Prefer native HTML elements and behavior; where a custom widget is genuinely needed, follow the WAI-ARIA Authoring Practices pattern for it.
+6. Don't fix one finding in a way that creates another.
+7. axe-core is installed in `apps/web`. Add tests that would have caught each finding (keyboard interaction and announcements, not only axe), and keep every existing test passing.
+
+If you need help with a specific finding or have questions, feel free to ask!

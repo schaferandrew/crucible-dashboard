@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "1b539b86-703d-41c2-9503-dd5bcee6c44c",
+ "run_path": "lmstudio_mistralai_devstral-small-2-2512/js-to-typescript-port/20261124_204931",
+ "legacy_run_id": null,
+ "started_at": "2026-11-24T20:49:32.794520+00:00",
+ "ended_at": "2026-11-24T21:09:34.363420+00:00",
+ "elapsed_s": 1200.72,
+ "task": {
+  "id": "js-to-typescript-port",
+  "version": 1,
+  "rubric_version": 1,
+  "content_hash": "8467a4146819d4ec",
+  "rubric_hash": "b402da316f3f7ab9",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/mistralai/devstral-small-2-2512",
+  "base": "mistralai/devstral-small-2-2512",
+  "publisher": "mistralai",
+  "artifact": "mistralai/devstral-small-2-2512",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": null,
+   "resolved_source": "unknown"
+  },
+  "context_loaded": 100352,
+  "variant_key": "mistralai/devstral-small-2-2512|mistralai|gguf|q4_k_m",
+  "display": "devstral-small-2-2512 · Q4_K_M",
+  "origin": {
+   "maker": "mistralai",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "ip-192-168-1-119"
+ },
+ "outcome": {
+  "status": "timeout",
+  "harness_status": "TIMEOUT",
+  "returncode": 143,
+  "timed_out": true,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 41,
+  "tokens_in": 569075,
+  "tokens_out": 15303,
+  "model_responses": 41,
+  "ttft_s": 5.005,
+  "ttft_avg_s": 1.043,
+  "response_time_avg_s": 28.977,
+  "output_tokens_per_s": 13.4,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/1b539b86-703d-41c2-9503-dd5bcee6c44c.txt",
+ "provenance": {
+  "crucible_version": "3.13.0",
+  "crucible_commit": "c1eb4c5",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "ip-192-168-1-119",
+  "source": "crucible-run",
+  "content_hash": "sha256:5c70d2755e4caf25fbe7f3cc5771e2f87f5c6bb1a5241aaa771e03577d09d003",
+  "submitter": null,
+  "verification": null
+ }
+}

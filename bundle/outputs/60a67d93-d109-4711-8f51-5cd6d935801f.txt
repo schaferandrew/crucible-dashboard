@@ -1,0 +1,7 @@
+Reasoning: The clear errors are two word-choice slips, not style choices. “Louder then she remembered it” compares two things (the station’s loudness vs. her memory of it), so “then” must be “than.” “Talking to fast” is an idiom error; the natural phrase is “talking too fast.” Everything else reads as deliberate voice: the fragment “Not waiting for her, exactly,” the em dash in “Still—she was back,” and the absolute-phrase opening of the second sentence (“all brakes shrieking…”) are kept intact. The one genuinely ambiguous item is the comma before “or” in “whether to laugh, or leave”: it could be a simple slip, but it also creates a hesitation beat that fits the fragment/em-dash rhythm, so I left it and flagged it rather than silently deleting it.
+
+CORRECTED:
+Mara stepped off the train and into a city that smelled like rain, hot asphalt, and somebody's breakfast. The station was louder than she remembered it, all brakes shrieking and people talking too fast. She could feel the old neighborhood somewhere beyond the buildings, waiting. Not waiting for her, exactly. That would have been too kind. Still—she was back. And she didn't know whether to laugh, or leave.
+
+POSSIBLY INTENTIONAL:
+"laugh, or leave": left as written; the pause before "or" may be deliberate hesitation matching the fragment/em-dash rhythm (if unintended, drop it → "laugh or leave")

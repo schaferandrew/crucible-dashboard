@@ -1,0 +1,105 @@
+### 1. Savings Account Calculation
+To calculate the future value of the savings account, we use the compound interest formula:
+
+\[ A = P \left(1 + \frac{r}{n}\right)^{nt} \]
+
+Where:
+- \( A \) is the amount of money accumulated after n years, including interest.
+- \( P \) is the principal amount (the initial amount of money).
+- \( r \) is the annual interest rate (decimal).
+- \( n \) is the number of times that interest is compounded per year.
+- \( t \) is the time the money is invested for in years.
+
+Given:
+- \( P = 5000 \)
+- \( r = 0.04 \) (4% annual interest rate)
+- \( n = 12 \) (compounded monthly)
+- \( t = 3 \) years
+
+Plugging in the values:
+
+\[ A = 5000 \left(1 + \frac{0.04}{12}\right)^{12 \times 3} \]
+
+First, calculate the monthly interest rate:
+
+\[ \frac{0.04}{12} = 0.003333... \]
+
+Next, add 1 to this value:
+
+\[ 1 + 0.003333... = 1.003333... \]
+
+Now, raise this to the power of \( nt \):
+
+\[ (1.003333...)^{36} \]
+
+Calculating this:
+
+\[ (1.003333...)^{36} \approx 1.127485 \]
+
+Finally, multiply by the principal:
+
+\[ A = 5000 \times 1.127485 \approx 5637.425 \]
+
+Rounding to the nearest cent:
+
+\[ A \approx 5637.43 \]
+
+### 2. Flooring Calculation
+First, calculate the total area needed including waste:
+
+\[ \text{Total Area} = \text{Floor Area} + (\text{Waste Percentage} \times \text{Floor Area}) \]
+\[ \text{Total Area} = 1850 + (0.10 \times 1850) \]
+\[ \text{Total Area} = 1850 + 185 \]
+\[ \text{Total Area} = 2035 \text{ sq ft} \]
+
+Next, determine the number of boxes needed:
+
+\[ \text{Number of Boxes} = \frac{\text{Total Area}}{\text{Area per Box}} \]
+\[ \text{Number of Boxes} = \frac{2035}{23.5} \]
+\[ \text{Number of Boxes} \approx 86.5957 \]
+
+Since you can't buy a fraction of a box, round up to the next whole number:
+
+\[ \text{Number of Boxes} = 87 \]
+
+### 3. Gas Cost Calculation
+First, calculate the total amount of gas needed for the trip:
+
+\[ \text{Gas Needed} = \frac{\text{Distance}}{\text{Miles per Gallon}} \]
+\[ \text{Gas Needed} = \frac{412}{34} \]
+\[ \text{Gas Needed} \approx 12.1176 \text{ gallons} \]
+
+Next, calculate the total cost of gas:
+
+\[ \text{Total Cost} = \text{Gas Needed} \times \text{Price per Gallon} \]
+\[ \text{Total Cost} = 12.1176 \times 3.89 \]
+\[ \text{Total Cost} \approx 47.1506 \]
+
+Rounding to the nearest cent:
+
+\[ \text{Total Cost} \approx 47.15 \]
+
+### 4. Dinner Bill Calculation
+First, calculate the tip amount:
+
+\[ \text{Tip} = \text{Pre-Tax Amount} \times \text{Tip Percentage} \]
+\[ \text{Tip} = 172.00 \times 0.18 \]
+\[ \text{Tip} = 30.96 \]
+
+Next, calculate the total bill including tip:
+
+\[ \text{Total Bill} = \text{Dinner Cost} + \text{Tip} \]
+\[ \text{Total Bill} = 186.40 + 30.96 \]
+\[ \text{Total Bill} = 217.36 \]
+
+Finally, split the total bill among four people:
+
+\[ \text{Each Person Pays} = \frac{\text{Total Bill}}{4} \]
+\[ \text{Each Person Pays} = \frac{217.36}{4} \]
+\[ \text{Each Person Pays} = 54.34 \]
+
+### ANSWERS
+1. $5,637.43
+2. 87 boxes
+3. $47.15
+4. $54.34

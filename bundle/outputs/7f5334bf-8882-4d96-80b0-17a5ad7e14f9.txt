@@ -1,0 +1,8 @@
+The morning brief has been created at `morning_brief.md` with all four required sections in the correct order:
+
+- ## Emails  
+- ## Calendar  
+- ## News  
+- ## Spanish practice  
+
+Each section contains concise, relevant content derived from the fetched sources (yesterday's emails, today’s calendar events, and local news). The final Spanish paragraph is a single line ending with a period, as required. No extra text appears after that paragraph.

@@ -1,0 +1,14 @@
+Reasoning: language errors are limited to agreement/possessive/comparison (3, 6, 12). The rest of the wording is grammatical; their problems are in the claims. Absolute or sweeping assertions (“inevitably causes hyperinflation,” “completely ineffective,” “definitively debunked … without growing the economy at all,” and the categorical either/or about unemployment) are overstated. Sentences that give a wrong causal story or invent a legal duty (1, 4) are misleading rather than merely imprecise; I did not flag the broadly accurate descriptive sentences (2, 5, 7, 9–10, 13, 15–17) as imprecise.
+
+ERRORS:
+3: are
+6: its
+12: than
+
+FLAGS:
+1: misleading
+4: misleading
+8: overstated
+11: overstated
+14: overstated
+18: overstated

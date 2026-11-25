@@ -1,0 +1,16 @@
+Done. Here's what I filed:
+
+**New rows added to `giving-log.csv`** (existing 5 rows untouched, kept in date order):
+
+| Date | Organization | Amount | Method | Tax Year | Receipt File |
+|---|---|---|---|---|---|
+| 2024-11-17 | Maple Street Community Church | $250.00 | Check | 2024 | `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` |
+| 2025-12-31 | Hope Harbor Food Pantry | $180.00 | Card | 2025 | `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` |
+| 2026-01-02 | Riverbend Public Radio | $60.00 | Card | 2026 | `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` |
+
+**Notes on the tricky details:**
+- **Maple Street Community Church** — the reissued statement (printed March 2, 2026) records a gift dated Nov 17, 2024 for $250.00 by check no. 1129. I used that gift date/amount and excluded the $500.00 pledge balance noted as "not part of this gift". It's distinct from the existing Dec 24, 2024 ($300) row — different date, amount, and check number — so it was added as a new row rather than merged or overwritten.
+- **Hope Harbor Food Pantry** — the letter is dated Jan 4, 2026 but records a gift received Dec 31, 2025 charged to credit card; I filed it under tax year 2025 using the gift date (not the letter date).
+- **Riverbend Public Radio** — the receipt records a $60.00 monthly sustainer gift dated Jan 2, 2026 (card on file). The "$660.00 total given in 2025" is just context and was not logged as a separate gift; this row reflects only the recorded $60.00 under tax year 2026.
+
+`inbox/` is now empty, all three PDFs are filed under `records/<tax-year>/` with names matching the existing convention (`<date>_<Org-Name-With-Hyphens>.pdf`), and no existing rows or files were modified.

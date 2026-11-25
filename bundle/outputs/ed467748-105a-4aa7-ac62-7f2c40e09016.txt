@@ -1,0 +1,7 @@
+Based on historical facts, the following claims are inaccurate.
+ERRORS:
+2: John
+3: 1492
+6: 1815
+7: 1912
+10: 1989

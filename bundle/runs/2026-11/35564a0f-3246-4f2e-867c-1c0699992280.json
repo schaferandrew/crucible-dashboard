@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "35564a0f-3246-4f2e-867c-1c0699992280",
+ "run_path": "lmstudio_mistralai_devstral-small-2-2512/geography-trick-questions/20261124_175213",
+ "legacy_run_id": null,
+ "started_at": "2026-11-24T17:52:13.600681+00:00",
+ "ended_at": "2026-11-24T17:52:32.328497+00:00",
+ "elapsed_s": 18.11,
+ "task": {
+  "id": "geography-trick-questions",
+  "version": 1,
+  "rubric_version": 1,
+  "content_hash": "5a1af1208cb9b9a5",
+  "rubric_hash": "5944fb9d7568cdce",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/mistralai/devstral-small-2-2512",
+  "base": "mistralai/devstral-small-2-2512",
+  "publisher": "mistralai",
+  "artifact": "mistralai/devstral-small-2-2512",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": null,
+   "resolved_source": "unknown"
+  },
+  "context_loaded": 100352,
+  "variant_key": "mistralai/devstral-small-2-2512|mistralai|gguf|q4_k_m",
+  "display": "devstral-small-2-2512 · Q4_K_M",
+  "origin": {
+   "maker": "mistralai",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": 662,
+  "tokens_out": 319,
+  "model_responses": 1,
+  "ttft_s": 0.565,
+  "ttft_avg_s": 0.565,
+  "response_time_avg_s": 18.105,
+  "output_tokens_per_s": 18.2,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 0
+ },
+ "output_ref": "outputs/35564a0f-3246-4f2e-867c-1c0699992280.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:4ae6fff74c040a8e593538eb546cfafb0a1cab5e9114993cabb5b643bcc5d8db",
+  "submitter": null,
+  "verification": null
+ }
+}

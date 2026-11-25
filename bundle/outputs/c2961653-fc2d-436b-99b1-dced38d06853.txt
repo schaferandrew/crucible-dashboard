@@ -1,0 +1,5 @@
+I checked your calendar for today (Tuesday, September 1, 2026) around 3:30 PM in your America/Chicago timezone. There's a "Design review" event scheduled from 2:00 PM to 3:30 PM. The free/busy query shows a busy block from 3:00 PM to 3:30 PM, meaning the event ends at exactly 3:30 PM.
+
+At 3:30 PM, the design review has concluded, so you would be free.
+
+ANSWER: free

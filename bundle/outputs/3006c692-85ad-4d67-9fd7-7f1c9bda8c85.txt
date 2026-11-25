@@ -1,0 +1,8 @@
+To complete the task, I need to:
+
+1. Parse the calendar-fixture.json file to get the availability of Alex and Jamie.
+2. Identify all valid time slots for a 60-minute meeting between Alex and Jamie, ensuring it does not overlap any busy event and runs entirely between 9:00 AM and 5:00 PM local time.
+3. Filter the slots to prefer weekdays, minimize gaps between existing meetings, and avoid the first or last available hour of the day.
+4. Save the results as slots.json in the working directory.
+
+I will now proceed with these steps. Please note that the calendar-fixture.json file is not attached here, so I cannot directly parse it. You should provide the calendar-fixture.json file for me to proceed.

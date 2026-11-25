@@ -1,0 +1,12 @@
+1. Multiples of 3: 3333; multiples of 7: 1428; multiples of 21: 476. Union = 4285, then exclude those divisible by 21: 3809.
+2. \(7^4\equiv1\pmod{100}\), and \(2026\equiv2\pmod4\), so \(7^{2026}\equiv49\pmod{100}\).
+3. Let \(f(n)\) be the number of tilings of a \(2\times n\) board. Then \(f(0)=1,\ f(1)=1,\ f(n)=f(n-1)+2f(n-2)\). This gives \(f(12)=2731\).
+4. Max exactly 4: \((4^3-3^3)/6^3=37/216\).
+5. Let \(q=P(\text{boy and Tuesday})=1/14\). Then \(P(E)=1-(13/14)^2=27/196\), and \(P(BB\cap E)=\frac14\left(1-(6/7)^2\right)=13/196\). Ratio: \(13/27\).
+
+ANSWERS
+1. 3809
+2. 49
+3. 2731
+4. 37/216
+5. 13/27

@@ -1,0 +1,48 @@
+
+
+All tests pass. Here's the write-up:
+
+---
+
+## Root Cause
+
+**Infinite redirect loop for invited contributors** between `/editor` and `/welcome`.
+
+The `acceptInvite` function in `services/invites.ts` set `termsAcceptedAt` when a contributor accepted their invite, but **did not set `onboardingComplete: true`**. The `RequireWriter` guard checks `onboardingComplete` to gate editor access. Since invited users had `onboardingComplete: false`, the flow was:
+
+1. User accepts invite → redirected to `/editor`
+2. `RequireWriter` sees `onboardingComplete: false` → redirects to `/welcome`
+3. `WelcomePage` sees `accountState === "invited"` → redirects to `/editor` (to skip the bio screen)
+4. **Loop repeats infinitely** → browser hangs/flash
+
+## Decisions Made
+
+### 1. Fix: Set `onboardingComplete: true` in `acceptInvite` (`services/invites.ts`)
+When a contributor accepts their invite, they've done everything onboarding requires: picked a username, set a password, and accepted the contributor terms. Setting `onboardingComplete: true` is correct because the invite acceptance **is** their onboarding. This matches the design doc (invited users skip the bio screen) and Legal's requirement (terms must be accepted before editor access).
+
+### 2. Migration: Fix existing affected accounts (`migrate.ts`, called in `app.ts`)
+The migration sets `onboardingComplete: true` for any user with:
+- `accountState: "invited"`
+- `termsAcceptedAt !== null` (they've accepted terms)
+- `onboardingComplete: false` (the bug state)
+
+This means rosa and tomek will work immediately after deploy without any manual data editing.
+
+### 3. Web test infrastructure fix (`test/setup.ts`)
+Added a localStorage polyfill for jsdom environments to fix pre-existing test failures.
+
+### 4. Tests added (`test/invites.test.ts`)
+Six tests covering:
+- Accepting an invite sets `onboardingComplete: true`
+- Regular registration does NOT set `onboardingComplete` (must complete welcome screen)
+- Invited accounts keep `accountState: "invited"` after accept (editor tracking)
+- Duplicate email rejection in `createInvite`
+- Already-accepted invite rejection
+- Pending invite signup flow
+
+## Code Review Flags
+
+1. **Migration is idempotent** — running it multiple times is safe since it only flips `false → true`.
+2. **The migration runs in `createApp()`** — this means tests get the migration too, which is correct (tests with fresh DBs have no affected users, so it's a no-op).
+3. **`accountState` stays `"invited"`** — editors still track which contributors came through invites, as the design doc requires.
+4. **Legal compliance** — invited users now have both `termsAcceptedAt` set AND `onboardingComplete: true`, satisfying the requirement that accounts can't reach the editor without accepting terms.

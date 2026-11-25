@@ -1,0 +1,1 @@
+Good progress! The cache keys are now different for different users (user=1 vs user=2). But the favorite isn't being set. Let me debug this by checking what's happening:

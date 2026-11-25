@@ -1,0 +1,165 @@
+⏺ bash(command=cat README.md && echo ===== && cat docs/accessibility-audit.)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express RE
+⏺ bash(command=find apps/web -type f | grep -v node_modules | sort && echo )
+  ⎿ apps/web/index.html
+apps/web/package.json
+apps/web/src/api/client.ts
+apps/web/src/App.tsx
+apps/web/src/auth/AuthContext.tsx
+apps/web/src/components/ArticleList.tsx
+apps/web/src/components/ArticlePrevi
+⏺ bash(command=for f in apps/web/src/components/*.tsx; do echo "===== $f ==)
+  ⎿ ===== apps/web/src/components/ArticleList.tsx =====
+import type { ArticleListQuery, ArticlesResponse } from "@conduit/shared";
+import { useEffect, useState } from "react";
+import { ArticlePreview } fr
+⏺ bash(command=for f in apps/web/src/pages/*.tsx apps/web/src/App.tsx apps/)
+  ⎿ ===== apps/web/src/pages/ArticlePage.tsx =====
+import type { Article, Comment } from "@conduit/shared";
+import { type FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate, usePara
+⏺ bash(command=for f in apps/web/test/*.tsx apps/web/test/*.ts apps/web/pac)
+  ⎿ ===== apps/web/test/ArticleList.test.tsx =====
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+
+⏺ bash(command=find apps/web -name "*.css" -not -path "*/node_modules/*" | )
+  ⎿ import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { App } from "./App";
+import { AuthProvider } from "./auth/A
+⏺ bash(command=grep -rn "className" apps/web/src --include=*.tsx | head -50)
+  ⎿ apps/web/src/App.tsx:13:      <header className="navbar">
+apps/web/src/components/ConfirmDialog.tsx:14:    <div className="overlay" onClick={onCancel}>
+apps/web/src/components/ConfirmDialog.tsx:15:   
+⏺ bash(command=grep -rn "\.css" apps/web --include=*.tsx --include=*.ts --i)
+  ⎿ index.html
+package.json
+src
+test
+tsconfig.json
+vite.config.ts
+export * from "./types";
+export * from "./validation";
+export * from "./slug";
+/** URL slug for an article title: "How to Train Your Drago
+⏺ bash(command=git log --oneline -3 2>/dev/null; git status --short 2>/dev/, timeout=600)
+  ⎿ d6e2d38 Seeded workspace
+?? package-lock.json
+?? prompt.txt
+     11| }
+ ❯ test/FavoriteButton.test.tsx:21:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/14]⎯
+
+ FAIL  test/FavoriteButton.test.tsx > FavoriteButton > unfa
+⏺ bash(command=cd apps/web && npx vitest run 2>&1 | head -80, timeout=300)
+  ⎿ RUN  v2.1.9 /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini@reasoning-low_accessibility-audit-fixes_20261123_220851/apps/web
+
+(node:64349) ExperimentalWa
+⏺ bash(command=node --version; cd apps/web && npx vitest run test/ArticleLi, timeout=300)
+  ⎿ v26.12.1
+ ❯ test/ArticleList.test.tsx (4 tests | 4 failed) 14ms
+   × ArticleList > renders a page of previews 11ms
+   × ArticleList > shows an empty state 1ms
+   × ArticleList > loads the next page by
+⏺ bash(command=cd apps/web && node -e "const {JSDOM}=require('jsdom'); cons)
+  ⎿ localStorage in jsdom window: object
+conduit-monorepo@ /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini@reasoning-low_accessibility-audit-fixes_20261123_2
+⏺ bash(command=cd apps/web && cat > /tmp/env-check.test.ts <<'EOF'
+import {, timeout=300)
+  ⎿ typeof localStorage: undefined
+globalThis.localStorage === window?.localStorage: true
+ ❯ test/env-check.test.ts (1 test | 1 failed) 2ms
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+⏺ bash(command=cd apps/web && cat > test/env-check.test.ts <<'EOF'
+import {, timeout=300)
+  ⎿ typeof window: object
+window keys sample: [
+typeof document: object
+ ❯ test/env-check.test.ts (1 test | 1 failed) 2ms
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+⏺ bash(command=cd apps/web && cat > test/env-check.test.ts <<'EOF'
+import {, timeout=300)
+  ⎿ RUN  v2.1.9 /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini@reasoning-low_accessibility-audit-fixes_20261123_220851/apps/web
+
+(node:65207) ExperimentalWa
+⏺ bash(command=cd apps/web && grep -rn "localStorage\|sessionStorage" node_)
+  ⎿ /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini@reasoning-low_accessibility-audit-fixes_20261123_220851/node_modules/vitest/dist/chunks/index.K90BXFOx.js
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ ====
+export { e as builtinEnvironments, p as populateGlobal } from './chunks/index.K90BXFOx.js';
+import 'node:console';
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ (no output)
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ 267:function populateGlobal(global, win, options = {}) {
+349:    const { keys, originals } = populateGlobal(global, vm.context, {
+408:    const { keys, originals } = populateGlobal(global, win, {
+410:
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ })
+  );
+  return keys;
+}
+function isClassLikeName(name) {
+  return name[0] === name[0].toUpperCase();
+}
+function populateGlobal(global, win, options = {}) {
+  const { bindFunctions = false } = options
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ "frames",
+  "getComputedStyle",
+  "history",
+  "innerHeight",
+  "innerWidth",
+  "length",
+  "location",
+  "matchMedia",
+  "moveBy",
+  "moveTo",
+  "name",
+  "navigator",
+  "open",
+  "outerHeight",
+  "o
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ ---
+  "WebSocket",
+  "NodeFilter",
+  "NodeIterator",
+  "TreeWalker",
+  "AbstractRange",
+  "Range",
+  "StaticRange",
+  "Selection",
+  "Storage",
+  "CustomElementRegistry",
+  "ShadowRoot",
+  "MutationOb
+⏺ bash(command=node -e "console.log(JSON.stringify(Object.getOwnPropertyDes)
+  ⎿ {
+  "get": "get() {\n      lazyLocalStorage ??= require('internal/webstorage').localStorage;\n      return lazyLocalStorage;\n    }",
+  "set": "set(value) {\n      lazyLocalStorage = value;\n    }",
+ 
+⏺ bash(command=node -e "console.log(JSON.stringify(Object.getOwnPropertyDes)
+  ⎿ {
+  "get": "function get() {\n      if (check !== undefined) {\n        FunctionPrototypeCall(check, this);\n      }\n      if (setterCalled) {\n        return value;\n      }\n      mod ??= require(i
+⏺ bash(command=cd /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lms)
+  ⎿ dom.window.close();
+        dom = void 0;
+      }
+    };
+  },
+  async setup(global, { jsdom = {} }) {
+    const { CookieJar, JSDOM, ResourceLoader, VirtualConsole } = await import('jsdom');
+    const 

@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "44f411d9-efe6-44a9-8660-8b3c2939ce12",
+ "run_path": "lmstudio_qwen_qwen3.6-35b-a3b/sports-fan-from-photo/20261120_200710",
+ "legacy_run_id": null,
+ "started_at": "2026-11-20T20:07:10.039288+00:00",
+ "ended_at": "2026-11-20T20:12:10.850964+00:00",
+ "elapsed_s": 300.06,
+ "task": {
+  "id": "sports-fan-from-photo",
+  "version": 2,
+  "rubric_version": 1,
+  "content_hash": "724fe7efc27c5321",
+  "rubric_hash": "e3084c4e34f85e94",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/qwen/qwen3.6-35b-a3b",
+  "base": "qwen/qwen3.6-35b-a3b",
+  "publisher": "qwen",
+  "artifact": "lmstudio-community/Qwen3.6-35B-A3B-MLX-6bit",
+  "format": "mlx",
+  "quant": "6bit",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 262144,
+  "variant_key": "qwen/qwen3.6-35b-a3b|qwen|mlx|mlx-6bit",
+  "display": "qwen3.6-35b-a3b · 6bit",
+  "origin": {
+   "maker": "qwen",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Mac-1783"
+ },
+ "outcome": {
+  "status": "timeout",
+  "harness_status": "TIMEOUT",
+  "returncode": 1,
+  "timed_out": true,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": null,
+  "tokens_out": null,
+  "model_responses": 1,
+  "ttft_s": 37.368,
+  "ttft_avg_s": 37.368,
+  "response_time_avg_s": 300.036,
+  "output_tokens_per_s": null,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 34632
+ },
+ "output_ref": null,
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": false,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Mac-1783",
+  "source": "crucible-run",
+  "content_hash": "sha256:1322145092bdc9a52efce5430653a0e35a1b4d1b92f4a3f06444c916994aeb52",
+  "submitter": null,
+  "verification": null
+ }
+}

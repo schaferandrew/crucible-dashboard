@@ -1,0 +1,20 @@
+The full flow is confirmed by the audit log. Here's my report:
+
+## Report
+
+**Task:** Log into the application as the designated test user (`testuser`) using the provided site skill; diagnose and recover from any login failure.
+
+**What happened, step by step:**
+
+1. **Started the app** — `npm start` → server running on http://localhost:3456.
+2. **First login attempt** — POST `/api/login` with username `testuser` / password `correctpassword` (the documented test-account password) returned **HTTP 401** `{"error":"invalid_credentials"}`. The audit log confirms the reason: `login_failed`, user `testuser`, reason `invalid_credentials`.
+3. **Diagnosis** — This is the skill's **Wrong Password** failure mode (symptom: "Invalid username or password"). Note that the seeded hash in `accounts.json` for `testuser` does not match `correctpassword` (verified by recomputing the scrypt hash), while the deactivated account's hash does — so this is a wrong-password condition on an active account, not a deactivated account or stale cookies.
+4. **Recovery (per skill's Password Reset Flow)** — Used the "Forgot password?" flow:
+   - POST `/api/reset-password-request` with username `testuser` → returned success and reset URL `/reset-password.html?token=…&user=testuser`.
+   - Navigated to that reset page's token and submitted the new password (twice in the UI; via API, one submission) — POST `/api/reset-password` with the returned token → **HTTP 200** `{"success":true}`. Audit log shows `password_reset` for `testuser`.
+5. **Re-login** — POST `/api/login` with username `testuser` / new password → **HTTP 200** `{"success":true,"redirect":"/dashboard.html"}` and a signed session cookie (`sessionId=sess_8954185a81a27902…`) was set.
+6. **Dashboard verification** — GET `/api/dashboard` with the session cookie returned `{"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}` (audit log shows `dashboard_ok` for that session). The authenticated dashboard page at `/dashboard.html` is served and loads its data via this API.
+
+**End state:** Authenticated on the dashboard as `testuser` with a valid session cookie. No authentication bypass, no application code changes — only the skill's documented reset flow was used. The server remains running in the background (started via `npm start`).
+
+FAILURE: Wrong Password

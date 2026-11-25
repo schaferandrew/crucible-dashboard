@@ -1,0 +1,11 @@
+Criterion-by-criterion:
+
+**Accuracy (4):** Every claim in the response is supported by the passage. It says the board voted to extend weekend hours to 8 p.m. starting in March — matches. The survey with 62% asking for evening access — matches (passage says it was their top request; "asked for" is a fair, non-invented rendering). $40,000 grant covering one year and revisiting next winter if no new money is found — matches. Two board members opposed over staffing concerns — matches (staffing shortages). No invented details. Score: 4/4.
+
+**Exactly two sentences (3):** The response contains three sentences: (1) "The Millbrook library board voted... evening access." (2) "The change is funded by a $40,000 grant... no further money is found." (3) "Two board members opposed the decision over staffing concerns." This violates the exact-two-sentence requirement. Score: 0/3.
+
+**Key points (3):** It captures the hours extension (to 8 p.m., starting in March), the funding limit ($40,000 grant covering one year, revisit next winter if no new money), and the resident survey (62% asked for evening access). All three required points are present. Score: 3/3.
+
+Total: 4 + 0 + 3 = 7.
+
+GRADE: 7

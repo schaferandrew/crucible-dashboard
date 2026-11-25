@@ -1,0 +1,1 @@
+I need to add a `query` state variable for the input onChange handler. Let me rewrite the search page properly:

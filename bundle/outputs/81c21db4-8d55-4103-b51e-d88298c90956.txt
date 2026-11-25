@@ -1,0 +1,11 @@
+The task is to migrate the Lantern Books website from the Pages Router to the App Router in Next.js 14. The requirements are:
+
+1. Migrate every page and the API route: the home page, the book pages, the genre pages, search, about, the custom not-found page, the shared layout that wraps every page, and `/api/books`.
+2. Keep every URL.
+3. Keep the HTTP status codes, including 404 for anything unknown, and the API's status codes for bad requests and unsupported methods.
+4. For the same data, keep the rendered HTML content the same: the same text, links and navigation, including which navigation link is marked as the current page. Each page keeps its title and description.
+5. Keep the rendering behaviour the pages had: pages that were built ahead of time stay built ahead of time, and a page that was rendered on every request keeps being rendered on every request.
+6. Keep the existing tests passing (`npm test`), and make sure `npm run build` succeeds.
+7. Do not add dependencies, and do not change package.json, the lockfile or the config files. You may change files under app/, components/, lib/ and styles/ (and delete pages/).
+
+End with a short summary of what you changed and anything that behaves differently from before.

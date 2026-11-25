@@ -1,0 +1,5 @@
+The task is to migrate the whole site for Lantern Books, a small bookshop, built on Next.js 14 with the Pages Router, to the App Router. The site must serve everything from the `app/` folder, and the `pages/` folder must be gone. All pages and the API route must be migrated, keeping the same URLs, HTTP status codes, rendered HTML content, and rendering behavior. Existing tests must pass, and `npm run build` must succeed. No new dependencies or changes to package.json, the lockfile, or config files are allowed. Changes can be made in `app/`, `components/`, `lib/`, and `styles/`, and the `pages/` folder can be deleted.
+
+End with a summary of what was changed and any differences from before.
+
+To start, I will read the README.md file to get more context and requirements.

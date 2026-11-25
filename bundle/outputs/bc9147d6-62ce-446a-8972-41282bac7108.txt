@@ -1,0 +1,30 @@
+I will provide 20 names for the character, each with a brief reason for why it fits, and then select the top five strongest names.
+
+NAMES:
+1. Eliza Kowalski — Polish-American heritage, intelligent and dryly funny
+2. Marlena Szczepanski — Polish-American, emotionally guarded
+3. Anna Zaleski — Polish-American, highly intelligent
+4. Teresa Kowalska — Polish-American, emotionally guarded
+5. Magdalena Szczepanska — Polish-American, dryly funny
+6. Elzbieta Kowalska — Polish-American, highly intelligent
+7. Marzena Szczepanska — Polish-American, emotionally guarded
+8. Anna Zaleska — Polish-American, dryly funny
+9. Teresa Kowalska — Polish-American, highly intelligent
+10. Magdalena Szczepanska — Polish-American, emotionally guarded
+11. Elzbieta Kowalska — Polish-American, dryly funny
+12. Marzena Szczepanska — Polish-American, highly intelligent
+13. Anna Zaleska — Polish-American, emotionally guarded
+14. Teresa Kowalska — Polish-American, dryly funny
+15. Magdalena Szczepanska — Polish-American, highly intelligent
+16. Elzbieta Kowalska — Polish-American, emotionally guarded
+17. Marzena Szczepanska — Polish-American, dryly funny
+18. Anna Zaleska — Polish-American, highly intelligent
+19. Teresa Kowalska — Polish-American, emotionally guarded
+20. Magdalena Szczepanska — Polish-American, dryly funny
+
+TOP FIVE:
+1. Eliza Kowalski
+2. Marlena Szczepanski
+3. Anna Zaleski
+4. Teresa Kowalska
+5. Magdalena Szczepanska

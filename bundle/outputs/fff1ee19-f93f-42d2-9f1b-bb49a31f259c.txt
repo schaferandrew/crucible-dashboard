@@ -1,0 +1,12 @@
+The task is to rewrite the Juniper Inn booking desk PHP app in Ruby, ensuring it produces the same output and behavior as the PHP app for every request. The Ruby app should be idiomatic, using only the standard library, and should run on the `ruby` installed in the environment. The legacy tests must also pass in Ruby.
+
+Here's a summary of the steps:
+
+1. Write the Ruby code in `app.rb` and `lib/` directories, using standard library only.
+2. Port the legacy tests: `ruby test/run_tests.rb` must read the fixture cases in `tests/fixtures/cases.json`, run each request through your Ruby app, compare the status and body the way `tests/run_tests.php` does, print what failed and exit non-zero if anything did. All the cases must pass. Add more tests if you like.
+3. Do not change the data/ or tests/fixtures/ directories; they are the reference.
+4. Leave the PHP files in place for comparison.
+
+The PHP app's actual behavior, quirks included, is the spec. The front desk's habits depend on it.
+
+Let's start by reading the PHP app and the test cases to understand the requirements and behavior.

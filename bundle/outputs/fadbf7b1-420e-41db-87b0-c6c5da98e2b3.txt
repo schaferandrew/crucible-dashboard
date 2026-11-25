@@ -1,0 +1,23 @@
+⏺ bash(command=ls -la && cat calendar-fixture.json)
+  ⎿ total 24
+drwxr-xr-x@  6 andrew.schafer@homebot.ai  staff   192 Nov 23 19:34 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 23 19:34 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ bash(command=cat > /tmp/calc.py << 'EOF'
+import json
+from datetime import)
+  ⎿ 2026-08-31T11:00 Monday
+2026-08-31T11:30 Monday
+2026-08-31T12:00 Monday
+2026-08-31T15:30 Monday
+2026-08-31T16:00 Monday
+2026-09-01T10:00 Tuesday
+2026-09-01T10:30 Tuesday
+2026-09-01T11:00 Tuesday
+2026-
+⏺ bash(command=cat > /tmp/score.py << 'EOF'
+import json
+from datetime impor)
+  ⎿ 2026-08-31 11:00 Mon prev_gap=0.0 next_gap=60.0 first=False last=False
+2026-08-31 11:30 Mon prev_gap=30.0 next_gap=30.0 first=False last=False
+2026-08-31 12:00 Mon prev_gap=60.0 next_gap=0.0 first=Fal

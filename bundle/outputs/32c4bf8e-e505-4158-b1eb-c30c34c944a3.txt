@@ -1,0 +1,12 @@
+All three receipts are filed and logged. Here's a summary:
+
+**Filed (inbox/ → records/):**
+- `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` — Maple Street Community Church, $250.00 by check no. 1129, gift dated Nov 17, 2024 (reissued statement; the $500 pledge balance was excluded as not part of the gift)
+- `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` — Hope Harbor Food Pantry, $180.00 by credit card, received Dec 31, 2025 (letter dated Jan 4, 2026, but the gift date is what's recorded)
+- `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` — Riverbend Public Radio, $60.00 by card on file, gift dated Jan 2, 2026 (the "$660 total for 2025" in the receipt is context, not this gift)
+
+**giving-log.csv:** three new rows added in chronological order with Date/Organization/Amount/Method/Tax Year/Receipt File filled as the existing rows do — tax year matches the gift date (2024 / 2025 / 2026 respectively). The git diff confirms only additions; all five pre-existing rows are byte-identical and unchanged, and no existing record files were touched.
+
+**inbox/:** empty.
+
+One judgment call worth flagging: the Maple Street statement says it "replaces the receipt mailed to you in 2024" — I verified no existing log row or record matches that gift (Nov 17, 2024 / $250 / check 1129); the logged 2024 Maple Street entry is a different gift (Dec 24, 2024 / $300 / check 1141). So it was added as a new distinct gift rather than treated as a duplicate.

@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "c0f1ca29-fe64-492a-b443-1da342a668b5",
+ "run_path": "lmstudio_allenai_olmocr-2-7b/sports-fan-from-photo/20261124_025752",
+ "legacy_run_id": null,
+ "started_at": "2026-11-24T02:57:52.445377+00:00",
+ "ended_at": "2026-11-24T02:57:59.952053+00:00",
+ "elapsed_s": 7.07,
+ "task": {
+  "id": "sports-fan-from-photo",
+  "version": 2,
+  "rubric_version": 1,
+  "content_hash": "724fe7efc27c5321",
+  "rubric_hash": "e3084c4e34f85e94",
+  "alias": null
+ },
+ "harness": {
+  "id": "direct",
+  "version": null
+ },
+ "model": {
+  "id": "lmstudio/allenai/olmocr-2-7b",
+  "base": "allenai/olmocr-2-7b",
+  "publisher": "allenai",
+  "artifact": "allenai/olmocr-2-7b",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": null,
+   "resolved_source": "unknown"
+  },
+  "context_loaded": 100352,
+  "variant_key": "allenai/olmocr-2-7b|allenai|gguf|q4_k_m",
+  "display": "olmocr-2-7b · Q4_K_M",
+  "origin": {
+   "maker": "allenai",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": null,
+  "tokens_in": 3935,
+  "tokens_out": 8,
+  "model_responses": 1,
+  "ttft_s": 6.889,
+  "ttft_avg_s": 6.889,
+  "response_time_avg_s": 7.068,
+  "output_tokens_per_s": 44.8,
+  "cost_usd": null,
+  "cost_source": null,
+  "reasoning_chars": 0
+ },
+ "output_ref": "outputs/c0f1ca29-fe64-492a-b443-1da342a668b5.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:29ee5747bd72a0ff4419e58262301d8734085fe46090d6ec756f0cc437a8a124",
+  "submitter": null,
+  "verification": null
+ }
+}

@@ -1,0 +1,14 @@
+Interpreting “immediately to the left” as adjacent and “somewhere to the right” as strictly to the right:
+
+- Chair 1 is green, so Dave (red) cannot be in chair 1.
+- Carol likes yellow and must sit to the right of Dave/red, so Dave can only be in chair 2 or chair 3.
+- If Dave is in chair 3, Carol must be in chair 4. Then chair 2 is blue, so Alice must sit immediately left of blue — i.e. in chair 1. That leaves Bob in chair 2. Valid.
+- If Dave is in chair 2:
+  - Carol in chair 3 makes chair 4 blue; Alice would need to be in chair 3, but that’s Carol. Invalid.
+  - Carol in chair 4 makes chair 3 blue; Alice would need to be in chair 2, but that’s Dave. Invalid.
+
+Chair 1: Alice, green
+Chair 2: Bob, blue
+Chair 3: Dave, red
+Chair 4: Carol, yellow
+ANSWER: Dave

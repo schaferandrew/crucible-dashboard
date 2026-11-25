@@ -1,0 +1,3 @@
+The prompt is asking to diagnose and fix an issue where the app is supposed to show the account name and plan for acct_1, but it doesn't work correctly. The task requires a modern Next.js approach to preserve the component structure and add or update tests to cover the bug.
+
+To start, I need to read the file and understand the current component structure and logic. Please provide the relevant code or component structure from the file so I can analyze and fix the issue.

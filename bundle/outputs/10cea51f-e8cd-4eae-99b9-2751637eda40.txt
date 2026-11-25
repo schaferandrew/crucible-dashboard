@@ -1,0 +1,12 @@
+Interpreting “immediately to the left” as directly adjacent, and “to the right” as a strictly higher-numbered chair:
+
+- Chair 1 is green. Dave likes red and Carol likes yellow, so chair 1 cannot be Dave or Carol; it must be Alice or Bob.
+- If chair 1 were Bob (green), then Dave would still be red, Carol yellow, leaving Alice blue. But clue 1 says Alice sits immediately left of the person who likes blue — impossible if Alice is that person. So chair 1 is Alice, green.
+- With Alice in chair 1 and colors distinct, Bob must be blue (Dave is red, Carol is yellow). Clue 1 then forces Bob into chair 2.
+- The remaining people are Dave and Carol for chairs 3 and 4. Since Carol must sit to the right of Dave, Dave cannot be in chair 4; so Dave is in chair 3 and Carol in chair 4.
+
+Chair 1: Alice, green
+Chair 2: Bob, blue
+Chair 3: Dave, red
+Chair 4: Carol, yellow
+ANSWER: Dave

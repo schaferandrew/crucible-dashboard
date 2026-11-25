@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "70174274-6e12-4649-aff8-9a79cea174e5",
+ "run_path": "lmstudio_mistralai_devstral-small-2-2512/nextjs-server-data-boundary/20261124_183859",
+ "legacy_run_id": null,
+ "started_at": "2026-11-24T18:39:05.372162+00:00",
+ "ended_at": "2026-11-24T18:45:37.189089+00:00",
+ "elapsed_s": 391.08,
+ "task": {
+  "id": "nextjs-server-data-boundary",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "f5196c62d3613d53",
+  "rubric_hash": "471ad3497a4fa659",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/mistralai/devstral-small-2-2512",
+  "base": "mistralai/devstral-small-2-2512",
+  "publisher": "mistralai",
+  "artifact": "mistralai/devstral-small-2-2512",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": null,
+   "resolved_source": "unknown"
+  },
+  "context_loaded": 100352,
+  "variant_key": "mistralai/devstral-small-2-2512|mistralai|gguf|q4_k_m",
+  "display": "devstral-small-2-2512 · Q4_K_M",
+  "origin": {
+   "maker": "mistralai",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "completed",
+  "harness_status": "COMPLETE",
+  "returncode": 0,
+  "timed_out": false,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 37,
+  "tokens_in": 353178,
+  "tokens_out": 4522,
+  "model_responses": 36,
+  "ttft_s": 15.953,
+  "ttft_avg_s": 1.618,
+  "response_time_avg_s": 9.878,
+  "output_tokens_per_s": 15.2,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/70174274-6e12-4649-aff8-9a79cea174e5.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:15f6531c8e7212d8f09bcfeaff66b80902ea39f9f8f63015490d04086f0119e1",
+  "submitter": null,
+  "verification": null
+ }
+}

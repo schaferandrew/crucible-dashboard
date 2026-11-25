@@ -1,0 +1,1 @@
+The environment has a pre-existing issue: Node 26's built-in `localStorage` global shadows jsdom's (vitest skips it because it's already in `globalThis`), so every web test fails at baseline. Let me fix the test setup first, then verify the baseline.

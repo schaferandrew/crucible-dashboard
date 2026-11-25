@@ -1,0 +1,1 @@
+The reload shows a **304 Not Modified** for `/api/dashboard` — but the DOM still shows "testuser", which is suspicious. Let me dig deeper into what happens client-side:

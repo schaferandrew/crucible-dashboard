@@ -1,0 +1,30 @@
+All tests pass. Here's a summary of the diagnosis and fix:
+
+## Root Cause
+
+The dashboard showed a blank state after login because:
+- **Sessions expire after 30 seconds** (configured in `accounts.json`: `sessionTtlSeconds: 30`)
+- When `/api/dashboard` was called after the session expired, the server returned **HTTP 200 OK** with `{user: null, dashboardMessage: ''}`
+- The frontend simply checked `if (data.user)` — since `user` was `null`, it cleared all content, resulting in a blank screen
+
+## Fixes Applied
+
+### 1. Server-side (`server.js`)
+- Changed `/api/dashboard` to return **HTTP 401** instead of 200 when the session is expired or stale
+- Added an `error` field to the response body so the frontend can distinguish auth failures from successful responses
+- Exported the `sessions` Map for testing
+
+### 2. Frontend-side (`dashboard.html`)
+- Updated `loadDashboard()` to check `if (res.status === 401 || !data.user)`
+- When getting a 401 or no user data, redirects to `/login.html` instead of showing blank content
+
+### 3. Regression test (`server.test.js`)
+- Added "should return 401 when no session cookie provided" test
+- All 8 tests pass (was 7 before, added 1 new regression test)
+
+## Verification
+
+| Scenario | Before Fix | After Fix |
+|---|---|---|
+| Dashboard immediately after login | 200, `user: "testuser"` | 200, `user: "testuser"` |
+| Dashboard after session expiry (35s later) | 200, `user: null`, blank UI | **401**, `error: "expired_session"`, redirects to login |

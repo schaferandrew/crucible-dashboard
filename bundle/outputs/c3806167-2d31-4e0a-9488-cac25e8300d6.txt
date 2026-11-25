@@ -1,0 +1,15 @@
+⏺ bash(command=ls -la && cat prompt.txt 2>/dev/null | head -50)
+  ⎿ total 16
+drwxr-xr-x@  5 andrew.schafer@homebot.ai  staff   160 Nov 22 15:36 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 22 15:36 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ bash(command=git log --oneline -5 2>/dev/null; python3 --version; which p)
+  ⎿ c7f7412 Seeded workspace
+Python 3.15.0
+/opt/homebrew/bin/python3
+/opt/homebrew/bin/pytest
+node_modules/
+.next/
+dist/
+__pycache__/
+.venv/

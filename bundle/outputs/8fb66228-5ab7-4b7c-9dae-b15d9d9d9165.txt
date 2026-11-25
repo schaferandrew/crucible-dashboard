@@ -1,0 +1,21 @@
+**Reasoning & Fact-Check:**
+
+1. ✅ 1066 is correct.
+2. ❌ Magna Carta was sealed by **King John**, not King Richard, in 1215 at Runnymede.
+3. ❌ Columbus first reached the Americas in **1492**, not 1493 (his second voyage was 1493).
+4. ✅ July 4, 1776 is correct.
+5. ✅ The Bastille was stormed on July 14, 1789; "July 1789" is accurate.
+6. ❌ Napoleon was defeated at **Waterloo in 1815**, not 1812 (1812 was the Russian campaign).
+7. ❌ The Titanic sank in **April 1912**, not 1913.
+8. ✅ August 1947 is correct.
+9. ✅ July 1969 (Apollo 11) is correct.
+10. ❌ The Berlin Wall fell in **November 1989**, not 1991.
+11. ✅ Germany was reunified in October 1990, which is indeed the year after the Wall fell in 1989.
+12. ✅ Nelson Mandela became President in May 1994; "1994" is correct.
+
+**ERRORS:**
+2: King John
+3: 1492
+6: 1815
+7: 1912
+10: 1989

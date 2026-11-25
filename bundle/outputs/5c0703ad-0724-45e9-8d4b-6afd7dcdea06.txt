@@ -1,0 +1,14 @@
+All done. The diff confirms only additions — existing rows untouched, inbox/ is empty, and all three PDFs are filed under records/ with the same naming convention as the existing files.
+
+**What I filed:**
+
+1. **Maple Street Community Church** — $250.00, Check (check no. 1129), gift date Nov 17, 2024 → `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` (tax year 2024)
+   - Note: this was a reissued statement replacing the receipt mailed in 2024; I used only the $250 gift amount — not the $500 remaining pledge balance, which is explicitly not part of the gift.
+
+2. **Hope Harbor Food Pantry** — $180.00, Card (credit card), gift received Dec 31, 2025 → `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` (tax year 2025)
+   - Note: the letter is dated Jan 4, 2026 and the file was named receipt-scan-20260104, but the gift itself was received Dec 31, 2025, so I used that date — not the scan/letter date.
+
+3. **Riverbend Public Radio** — $60.00, Card (card on file), gift date Jan 2, 2026 → `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` (tax year 2026)
+   - Note: the receipt mentions "$660.00 totaled in 2025" — that's a cumulative figure, not this gift; I recorded only the $60.00 monthly sustainer for Jan 2, 2026.
+
+Each row was added to `giving-log.csv` in date order (existing rows preserved exactly), and each PDF was moved from `inbox/` into the matching year folder under `records/`.

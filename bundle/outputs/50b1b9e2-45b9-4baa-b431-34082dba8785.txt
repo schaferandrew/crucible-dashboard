@@ -1,0 +1,3 @@
+The prompt is to fix accessibility issues in the web app of Conduit, a RealWorld monorepo, so that keyboard and screen reader users can do everything mouse users can. The constraints are to keep the visual design the same, keep component names, files, and props as they are, prefer native HTML elements and behavior, and not create new issues. Tests should be added to catch each finding, and existing tests should pass.
+
+The summary of each finding, what you changed, and anything you couldn't verify without a real screen reader should be included in the final output.

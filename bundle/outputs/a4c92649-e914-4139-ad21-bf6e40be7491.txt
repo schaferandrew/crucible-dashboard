@@ -1,0 +1,91 @@
+**Problem 1 – Savings account**  
+The balance after \(t\) years is  
+
+\[
+A=P\Bigl(1+\frac{r}{n}\Bigr)^{nt},
+\]
+
+where \(P=5{,}000,\; r=0.04,\; n=12,\; t=3\).  
+Thus  
+
+\[
+A=5{,}000\Bigl(1+\frac{0.04}{12}\Bigr)^{36}.
+\]
+
+Using the binomial expansion (or a calculator) gives  
+
+\[
+A\approx 5{,}636.36435\text{ dollars}.
+\]
+
+Rounded to the nearest cent this is **\$5 636.36**.
+
+---
+
+**Problem 2 – Flooring with waste**  
+The space needs \(10\%\) extra:  
+
+\[
+\text{required area}=1850\times1.10=2035\ \text{sq ft}.
+\]
+
+Each box covers 23.5 sq ft, so the number of boxes required is  
+
+\[
+\left\lceil\frac{2035}{23.5}\right\rceil
+   =\left\lceil86.0\ldots\right\rceil=87 .
+\]
+
+---
+
+**Problem 3 – Gasoline cost for the road trip**  
+
+\[
+\text{gallons needed}= \frac{412\text{ miles}}{34\text{ mpg}}
+                     =\frac{412}{34}=\frac{206}{17}\approx12.117647\text{ gal}.
+\]
+
+Cost (dollars)  
+
+\[
+\text{cost}=12.117647\;\text{gal}\times \$3.89/\text{gal}
+           =\frac{412\times389}{34}\; \text{cents}
+           =\frac{160\,268}{34}\approx4713.7647\text{ cents}.
+\]
+
+Rounding to the nearest cent gives \(4714\) cents, i.e. **\$47.14**.
+
+---
+
+**Problem 4 – Splitting the bill with a tip**  
+
+Pre‑tax subtotal = \$172.00  
+Tax already included → total before tip = \$186.40  
+
+Tip (18 % of pre‑tax amount)  
+
+\[
+\text{tip}=0.18\times172.00=30.96\text{ dollars}.
+\]
+
+Grand total before splitting  
+
+\[
+186.40+30.96 = 217.36\text{ dollars}.
+\]
+
+Split equally among four people:  
+
+\[
+\frac{217.36}{4}=54.34\text{ dollars per person}.
+\]
+
+Thus each person pays **\$54.34** (already exact to the cent).
+
+---
+
+ANSWERS  
+1. 5636.36  
+2. 87  
+3. 47.14  
+4. 54.34

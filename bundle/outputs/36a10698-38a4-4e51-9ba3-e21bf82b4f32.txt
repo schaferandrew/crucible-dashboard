@@ -1,0 +1,16 @@
+The task is to diagnose and fix a blank state in the dashboard after login for an application running at http://localhost:3456. The dashboard intermittently shows a blank state after login, and the issue needs to be reproduced, diagnosed, and fixed. Automated regression tests should be added to verify the fix.
+
+To start, you need to open the application in a real browser and reproduce the blank state after login. Here are the steps:
+
+1. Open a terminal and navigate to the project directory.
+2. Run `npm start` to start the application at http://localhost:3456.
+3. Log in using the test accounts listed in SKILL.md.
+4. Wait for the dashboard to load after login.
+5. If the dashboard shows a blank state, reproduce the issue by loading the dashboard a little after logging in.
+6. Open the browser console and network requests to inspect the failing request or client-side error.
+7. Identify the underlying application code that is causing the blank state.
+8. Fix the code to prevent the blank state.
+9. Verify the fix in the browser.
+10. Add an automated regression test to ensure the fix works as expected.
+
+If you need help with any of these steps, please provide more details or ask specific questions.

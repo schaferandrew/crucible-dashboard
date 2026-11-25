@@ -1,0 +1,1 @@
+Let me test session expiry timing precisely with curl.

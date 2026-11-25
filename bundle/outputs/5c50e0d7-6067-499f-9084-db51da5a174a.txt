@@ -1,0 +1,7 @@
+Accuracy: All claims are supported by the passage: board vote to extend weekend hours to 8 p.m. starting in March, 62% of residents requesting evening access, $40,000 grant covering one year, revisit next winter if no new money, and two opposed over staffing concerns. No invented details. (4/4)
+
+Exactly two sentences: The response contains three sentences — the first ends at "evening access.", the second at "no further money is found.", and a third sentence begins "Two board members..." So it fails this criterion. (0/3)
+
+Key points: It captures the hours extension, the funding limit ($40,000 / one year), and the resident survey (62% evening access request). (3/3)
+
+GRADE: 7

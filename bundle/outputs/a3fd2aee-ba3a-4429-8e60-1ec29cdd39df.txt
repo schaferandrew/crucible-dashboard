@@ -1,0 +1,5 @@
+read /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_allenai_olmocr-2-7b_login-recovery_20261124_025916/prompt.txt
+
+Use the provided site skill to log into the application as the designated test user. If login fails, diagnose the reason and use the recovery procedure described by the skill. You may clear cookies or reset the test password programmatically when appropriate. Do not bypass authentication or modify application code. End on the authenticated dashboard and report exactly what happened.
+
+Finish your report with one line, `FAILURE: <mode>`, naming the failure mode you diagnosed, using the skill's name for it (Wrong Password, Deactivated Account or Stale/Invalid Cookies), or `FAILURE: none` if the first login worked.

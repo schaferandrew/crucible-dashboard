@@ -1,0 +1,19 @@
+## Emails
+- **finance@example.com** — "Reminder: Q3 expense report due Wednesday 5 PM" (Sept 1): Your Q3 expense report must be submitted by 5:00 PM today; reports that miss the cutoff are paid with next month's payroll. Action needed today.
+- **client@example.com** — "Question about the proposal timeline" (Sept 1): Client asks whether the revised proposal can be delivered by Friday and needs an answer before briefing their team. Reply when you can.
+- **alex@example.com** — "Project update - Q3 review completed" (Sept 1): The Q3 review is complete and ahead of schedule; results to be discussed in the planning meeting.
+- **jamie@example.com** — "Meeting notes from yesterday" (Sept 1): Notes from yesterday's 1-on-1: career goals, next quarter priorities, and team building activities.
+
+## Calendar
+Today is Wednesday, September 2, 2026 (America/Chicago):
+- **9:30–10:30 AM** — Planning, Room B (Alex)
+- **10:00–11:00 AM** — Vendor demo, Zoom (Alex + vendor@example.com) — note this overlaps the planning meeting
+- **1:00–2:00 PM** — Budget meeting, Conference Room A (Jamie)
+
+## News (Saint Paul, MN)
+- **High** — Twin Cities Tech Conference Returns (StarTribune): Annual tech conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies. Registration opens this Friday.
+- **Medium** — Maplewood Park Renovation Complete (Pioneer Press): Renovations finished ahead of schedule, adding new walking trails and a children's playground. Grand reopening is Saturday.
+- **Low** — State Fair Attendance Drops Slightly (StarTribune): Minnesota State Fair saw a 3% decline in attendance this year, with cooler-than-average weather cited as a factor.
+
+## Spanish practice
+Hoy es miércoles y tengo una agenda ocupada: a las nueve y media de la mañana tengo una reunión de planificación en la sala B, seguida por una demostración de un proveedor a las diez en Zoom, y a la una de la tarde asisto a la reunión de presupuesto. También necesito enviar mi informe de gastos del tercer trimestre antes de las cinco de la tarde; si lo retraso, se pagará con el próximo pago. El viernes abre la inscripción para la conferencia tecnológica de Minneapolis y el sábado se reabre el parque Maplewood, así que tengo mucho que hacer hoy.

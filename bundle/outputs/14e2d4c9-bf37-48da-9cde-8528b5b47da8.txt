@@ -1,0 +1,32 @@
+⏺ bash(command=ls -la && cat README.md)
+  ⎿ total 32
+drwxr-xr-x@ 10 andrew.schafer@homebot.ai  staff   320 Nov 23 19:09 .
+drwxr-xr-x@  9 andrew.schafer@homebot.ai  staff   288 Nov 23 19:09 ..
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   38
+⏺ bash(command=cat app.php && find src data tests -type f | sort)
+  ⎿ <?php
+/**
+ * Juniper Inn booking desk, command-line entry point.
+ *
+ *   php app.php '/quote?room=101&checkin=2024-03-19&nights=2&guests=1'
+ *
+ * Prints the response body. Exit status 0 for a 2xx resp
+⏺ bash(command=cat src/DataStore.php src/Dates.php src/Pricing.php src/View)
+  ⎿ <?php
+/**
+ * Flat-file storage: rooms in JSON, bookings and coupons in CSV. No database.
+ */
+class DataStore
+{
+    private $dir;
+
+    public function __construct($dir)
+    {
+        $this->dir = rtrim
+⏺ bash(command=cat data/rooms.json && cat data/bookings.csv && cat data/cou)
+  ⎿ [
+  {"id": "101", "name": "Garden Single", "rate": "89.00", "max_guests": 1, "cleaning_fee": 20, "extra_guest_fee": "15"},
+  {"id": "102", "name": "Harbor Double", "rate": "124.50", "max_guests": "3",
+⏺ bash(command=cat tests/fixtures/cases.json && ruby -v && which php; echo )
+  ⎿ [
+  {"request":"/rooms","status":200,"body":[{"id":"101","name":"Garden Single","rate":89.0,"max_guests":1},{"id":"102","name":"Harbor Double","rate":124.5,"max_guests":3},{"id":"201","name":"Loft Sui

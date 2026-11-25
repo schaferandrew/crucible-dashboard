@@ -1,0 +1,31 @@
+The task is to migrate the article lists, the feed and comments to cursor pagination, without breaking existing clients. Here's a summary of the changes and considerations:
+
+### API
+1. **GET /api/articles** and **GET /api/articles/feed**:
+   - Accept `cursor` alongside `limit`.
+   - Responses gain `nextCursor`: an opaque string for the next page, or null on the last page.
+   - `articlesCount` keeps meaning the total that matches the filters.
+   - Never skip or repeat an article, even when articles are created, deleted or favorited between page requests. Order stays newest first.
+   - Opaque to clients and must not be forgeable into something else: a malformed or tampered cursor is a 422 with the usual error envelope.
+   - A cursor is only valid for the query that produced it. Using it with different filters (tag, author, favorited) or on a different endpoint is a 422.
+   - Sending both cursor and offset is a 422.
+   - Offset pagination keeps working exactly as before when no cursor is sent: apps/api/test/realworld.contract.test.ts must stay green and unmodified.
+
+2. **GET /api/articles/:slug/comments**:
+   - Gains the same cursor paging (`limit`, `cursor`, `nextCursor`), newest first.
+   - Without limit or cursor it returns every comment, as today.
+
+### Web app
+1. Replace numbered pagination with a "Load more" button on every article list (home tabs and profile tabs), driven by nextCursor.
+2. Comments on the article page load the same way.
+
+### Shared types
+Add tests that prove the no-skip/no-duplicate guarantee under concurrent writes, the validation rules and the new web behavior, and keep every existing test passing.
+
+### Summary
+- Migrated article lists, feed and comments to cursor pagination.
+- Added `nextCursor` to API responses.
+- Ensured no-skip/no-duplicate guarantee under concurrent writes.
+- Updated shared types to describe new response fields.
+- Added tests for new behavior and validation rules.
+- Kept every existing test passing.

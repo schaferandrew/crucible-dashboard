@@ -1,0 +1,1 @@
+The web tests fail out of the box due to a Node 26 vs vitest/jsdom incompatibility (Node's built-in `localStorage` getter shadows jsdom's). I'll note that and fix it minimally later. Let me look at the remaining files:

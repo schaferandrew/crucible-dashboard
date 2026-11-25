@@ -1,0 +1,6 @@
+Correct complexity (O(log n)) is not stated → 0 points.  
+Explanation (halving) is not explicitly described → 0 points.  
+Precondition (sorted input required) is contradicted by the response → 0 points.  
+Clarity – the answer is clear and well organised → +1 point.  
+
+Total earned = 1, so GRADE: 1

@@ -1,0 +1,22 @@
+The brief is saved at `morning-brief.md` in the workspace. Here it is:
+
+## Emails
+- **Finance — Q3 expense report due today (5:00 PM)**: Submit your Q3 expense report by 5:00 PM Wednesday, September 2; reports that miss the cutoff are paid with next month's payroll.
+- **Client — proposal timeline question**: Client asks whether the revised proposal can be delivered by Friday and needs an answer before briefing their team. Reply when you can.
+- **Alex — Q3 review complete**: The Q3 review is done, ahead of schedule; results to be discussed in today's planning meeting.
+- **Jamie — 1-on-1 notes (yesterday)**: Career goals, next quarter priorities, and team building activities were covered.
+
+## Calendar
+Today, Wednesday, September 2 (America/Chicago):
+- **9:30–10:30 AM — Planning**, Room B (Alex). Note the overlap with the vendor demo below.
+- **10:00–11:00 AM — Vendor demo**, Zoom (Alex + vendor@example.com).
+- **1:00–2:00 PM — Budget meeting**, Conference Room A (Jamie).
+
+## News
+Saint Paul / Twin Cities, MN:
+- **High** — Twin Cities Tech Conference returns to Minneapolis with 50+ speakers covering AI, startup funding, and emerging technologies; registration opens this Friday. (StarTribune)
+- **Medium** — Maplewood Park renovation finished ahead of schedule, adding new walking trails and a children's playground; grand reopening is Saturday. (Pioneer Press)
+- **Low** — Minnesota State Fair attendance slipped 3% this year, with cooler-than-average weather cited as a factor. (StarTribune)
+
+## Spanish practice
+Hoy tienes una jornada ocupada: primero la reunión de planificación con Alex y luego la demostración del proveedor por Zoom, para terminar con la reunión de presupuesto con Jamie en la sala A. También hay que recordar enviar el informe de gastos del tercer trimestre antes de las cinco de la tarde; si se retrasa, se pagará con la nómina del mes siguiente. Además, tienes que responder al cliente sobre la fecha límite de la propuesta revisada y preparar los resultados de la revisión del tercer trimestre para la reunión de planificación. Por último, en Saint Paul el Twin Cities Tech Conference regresa a Minneapolis con más de cincuenta ponentes y las inscripciones abren este viernes; también se reabrió el parque Maplewood el sábado. Un buen día para practicar: puedes decirle a un amigo que "tengo una reunión importante esta mañana" o preguntarle si quiere ir al tech conference el próximo fin de semana.

@@ -1,0 +1,21 @@
+
+
+Done. Here's a summary of the TypeScript port:
+
+**What was done:**
+- All 6 `.js` modules in `src/` converted to `.ts`, originals removed
+- `tsconfig.json` created with `strict: true`, `moduleResolution: "bundler"`, `noEmit: true`
+- `npx tsc -p tsconfig.json` passes with zero errors
+- All 21 tests pass unchanged
+
+**Places where types were not obvious:**
+
+1. **`insert` signature** — The JS code passes `{ name, category, tags, replacementCost }` to `insert`, which spreads it and calls `normalizeTool`. Since `normalizeTool` fills in missing fields, `insert` accepts `Partial<Tool>` rather than a full `Tool` minus `id`.
+
+2. **Nullable fields after mutation** — `tool.status = "loaned"`, `tool.borrower = ...`, `tool.dueDate = ...` mutate the object in place. TypeScript doesn't narrow `string | null` to `string` after assignment, so `!` assertions are used when emitting events or building strings (e.g., `tool.dueDate!`).
+
+3. **Discriminated unions vs. flat `StoreEvent`** — The event type is a flat interface with optional fields (`borrower?`, `dueDate?`, `lateDays?`, `reason?`) rather than a discriminated union, because the JS code accesses all fields freely. Non-nullish coalescing (`??`) and `!` assertions handle the narrowing in `auditLines`.
+
+4. **`OverdueTools` sort** — The filter `tool.dueDate && tool.dueDate < today` narrows at the filter step, but the narrowed type doesn't carry into the `sort` callback, so `dueDate!` is used there.
+
+5. **`RawTool` / `RawData`** — JSON data is typed as `unknown` fields (`RawTool`, `RawData`) and only validated through `normalizeTool`, matching the original "untrusted until checked" approach.

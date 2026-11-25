@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "832023ad-680b-477d-91c8-18d23e3593ca",
+ "run_path": "lmstudio_nvidia-nemotron-3.5-lightning-30b-a3b/nextjs-server-data-boundary/20261121_015712",
+ "legacy_run_id": null,
+ "started_at": "2026-11-21T01:57:17.315937+00:00",
+ "ended_at": "2026-11-21T02:12:18.985149+00:00",
+ "elapsed_s": 900.63,
+ "task": {
+  "id": "nextjs-server-data-boundary",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "f5196c62d3613d53",
+  "rubric_hash": "471ad3497a4fa659",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/nvidia-nemotron-3.5-lightning-30b-a3b",
+  "base": "nvidia-nemotron-3.5-lightning-30b-a3b",
+  "publisher": "unsloth",
+  "artifact": "unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "default",
+   "resolved": "on",
+   "resolved_source": "server"
+  },
+  "context_loaded": 100352,
+  "variant_key": "nvidia-nemotron-3.5-lightning-30b-a3b|unsloth|gguf|q4_k_m",
+  "display": "nvidia-nemotron-3.5-lightning-30b-a3b · Q4_K_M",
+  "origin": {
+   "maker": null,
+   "base_repo": null,
+   "params": 30000000000,
+   "active_params": 3000000000,
+   "source": "gguf"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "timeout",
+  "harness_status": "TIMEOUT",
+  "returncode": 143,
+  "timed_out": true,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 51,
+  "tokens_in": 1448282,
+  "tokens_out": 20548,
+  "model_responses": 44,
+  "ttft_s": 6.367,
+  "ttft_avg_s": 6.068,
+  "response_time_avg_s": 19.375,
+  "output_tokens_per_s": 35.1,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/832023ad-680b-477d-91c8-18d23e3593ca.txt",
+ "provenance": {
+  "crucible_version": "3.8.0",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:cf84e1103c270e10ba7322d289092b4870342dd2ed9a0343d62fcfc9ed7c1cdd",
+  "submitter": null,
+  "verification": null
+ }
+}

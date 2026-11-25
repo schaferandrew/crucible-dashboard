@@ -1,0 +1,1 @@
+<think>No feed keys in app.log at all — so the middleware never matched /articles/feed?? But my regex test says it matches... wait, let me recheck the actual regex in app.ts: `[/^\/articles(\/[^/]+)?$/, ...]`. Hmm wait — maybe I misread and it's actually different. Let me look at the raw file again carefully with cat -A or just re-read.</think>

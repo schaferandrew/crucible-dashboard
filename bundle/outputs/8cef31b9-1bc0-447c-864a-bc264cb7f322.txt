@@ -1,0 +1,27 @@
+Let's analyze the clues step by step:
+
+1. Alice sits immediately to the left of the person who likes blue.
+2. Bob does not sit in chair 4.
+3. The person who likes green sits in chair 1.
+4. Carol likes yellow and sits somewhere to the right of the person who likes red.
+5. Dave likes red.
+
+From clue 3, the person who likes green sits in chair 1. So, we have:
+Chair 1: Carol, green
+
+From clue 4, Carol likes yellow and sits somewhere to the right of the person who likes red. Since Carol is in chair 1, the person who likes red must be in chair 2. So, we have:
+Chair 2: Alice, red
+
+From clue 1, Alice sits immediately to the left of the person who likes blue. So, the person who likes blue must be in chair 3. So, we have:
+Chair 3: Bob, blue
+
+From clue 2, Bob does not sit in chair 4. So, Bob must be in chair 3. This is consistent with the previous clue. So, we have:
+Chair 4: Dave, red
+
+Now, let's summarize the seating and colors:
+Chair 1: Carol, green
+Chair 2: Alice, red
+Chair 3: Bob, blue
+Chair 4: Dave, red
+
+ANSWER: Bob

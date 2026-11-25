@@ -1,0 +1,36 @@
+⏺ bash(command=find . -type f -not -path './node_modules/*' | head -50 && e)
+  ⎿ ./test/tools.test.js
+./test/cli.test.js
+./test/helpers.js
+./prompt.txt
+./README.md
+./.gitignore
+./package-lock.json
+./package.json
+./.git/config
+./.git/objects/e3/ea4c194593d717a951baebc3b29eab2516e8a
+⏺ bash(command=ls -la src test && cat package.json)
+  ⎿ src:
+total 48
+drwxr-xr-x@  8 andrew.schafer@homebot.ai  staff   256 Nov 17 12:08 .
+drwxr-xr-x@ 12 andrew.schafer@homebot.ai  staff   384 Nov 23 03:12 ..
+-rw-r--r--@  1 andrew.schafer@homebot.ai  staff
+⏺ bash(command=for f in src/*.js; do echo "===== $f ====="; cat "$f"; done)
+  ⎿ ===== src/cli.js =====
+// Argument parsing and the commands. `main` never touches process.argv or process.exit, so tests can call it.
+
+import { ToolStore } from "./store.js";
+import { addTool, auditLi
+⏺ bash(command=for f in test/*.js; do echo "===== $f ====="; cat "$f"; done)
+  ⎿ ===== test/cli.test.js =====
+import fs from "node:fs";
+import { describe, expect, it } from "vitest";
+import { main, parseArgs } from "../src/cli";
+import { capture, tempData } from "./helpers";
+
+func
+⏺ bash(command=node --version && npm ls typescript vitest @types/node 2>&1 )
+  ⎿ v26.12.1
+toolshed@0.3.0 /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini_js-to-typescript-port_20261123_091249
+├── @types/node@20.17.10
+├── typescript@5.6

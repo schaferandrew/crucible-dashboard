@@ -1,0 +1,17 @@
+I have both calendars' data for this week (Mon Aug 31 – Fri Sep 4, 2026). Here's my analysis:
+
+**Alex's busy times:** Mon 09:00–16:30 (with a gap 14:00–15:00); Tue standup/1:1/lunch/offsite prep; Wed interview loop + lunch + planning; Thu standup, sprint review, lunch, project review; Fri standup + lunch.
+
+**Jamie's busy times:** Mon nearly full day (free only 11:00–12:00); Tue free 10:30–12:00 and after 14:30; Wed busy until 13:00 then 14:00–15:30; Thu free 10:30–12:00 and 13:00–14:00; Fri free 10:30–12:00.
+
+**Common full-hour slots this week:**
+- Mon Aug 31: none (Alex's only gap, 14:00–15:00, overlaps Jamie's busy block)
+- Tue Sep 1: only a 30-minute overlap (10:30–11:00) — not enough for an hour
+- Wed Sep 2: nothing until after 15:30 — late afternoon, less ideal
+- Thu Sep 3: **11:00–12:00** and **13:00–14:00** both work (note the declined Design sync doesn't count as busy)
+- Fri Sep 4: **10:30–11:30** works
+
+OPTIONS:
+2026-09-03 11:00 CDT
+2026-09-03 13:00 CDT
+2026-09-04 10:30 CDT

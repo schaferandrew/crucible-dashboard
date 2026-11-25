@@ -1,0 +1,26 @@
+
+
+Now I have all the data. Let me analyze the availability across all 18 calendars (16 people + 1 room).
+
+**Key constraints found:**
+- **Ben Thompson** is busy all day Aug 31 and Sep 14
+- **Priya Nair** is away Sep 10–12 (vacation)
+- **Sep 7** is a team-wide blocked day (likely off-site or holiday)
+- Morning hours (9–11 AM) are heavily blocked across most of the team
+
+After cross-referencing all 18 calendars, here are my findings:
+
+**Best 1-hour windows where everyone is free:**
+
+1. **Tuesday, Sep 1 — 1:00–2:00 PM CDT**: The early afternoon window after everyone's morning standup/standup block clears. All 16 people plus the Atlas room are free.
+
+2. **Thursday, Sep 3 — 2:00–3:00 PM CDT**: After the mid-morning rush clears. The Atlas room is free, and no one has conflicts in this slot.
+
+3. **Tuesday, Sep 8 — 4:00–5:00 PM CDT**: Late afternoon on the second week. Everyone's daily meetings clear by 4 PM, and the Atlas room is available.
+
+Note: Sep 9 at 3–4 PM was nearly free but Jordan Lee has a conflict. Sep 3 at 3–4 PM also failed due to Jordan. Sep 10–11 are completely blocked because Priya is out.
+
+OPTIONS:
+2026-09-01 13:00 CDT
+2026-09-03 14:00 CDT
+2026-09-08 16:00 CDT

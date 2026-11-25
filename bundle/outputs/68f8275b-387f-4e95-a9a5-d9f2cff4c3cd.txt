@@ -1,0 +1,218 @@
+⏺ shell(command=cat prompt.txt && ls -la)
+  ⎿ This is Conduit, a RealWorld (realworld.how) monorepo: an Express API in apps/api, a React app in apps/web, and shared types in packages/shared. Read README.md first.
+
+Support has escalated a problem with contributor invites: invited contributors can't start the work their editors assigned them. inc
+⏺ shell(command=cat README.md && echo "=====" && cat incident/support-notes.)
+  ⎿ # Conduit
+
+A [RealWorld](https://realworld.how) implementation: a Medium-style blogging platform with users, profiles, articles, comments, favorites, follows and tags.
+
+```
+apps/api         Express REST API implementing the RealWorld API spec
+apps/web         React single-page app that talks to the 
+⏺ shell(command=find . -path ./node_modules -prune -o -type f -print | grep )
+  ⎿ ./.git/COMMIT_EDITMSG
+./.git/config
+./.git/description
+./.git/HEAD
+./.git/hooks/applypatch-msg.sample
+./.git/hooks/commit-msg.sample
+./.git/hooks/fsmonitor-watchman.sample
+./.git/hooks/post-update.sample
+./.git/hooks/pre-applypatch.sample
+./.git/hooks/pre-commit.sample
+./.git/hooks/pre-merge-commit.
+⏺ shell(command=cat packages/shared/src/types.ts packages/shared/src/index.t)
+  ⎿ // JSON shapes of the RealWorld API (https://realworld-docs.netlify.app/specifications/backend/api-response-format/).
+// Both apps import these, so changing a response shape surfaces everywhere it's used.
+
+/** "invited": created by an editor's invite, before the person has signed in. */
+export type 
+⏺ shell(command=cat apps/api/src/db.ts apps/api/src/app.ts apps/api/src/erro)
+  ⎿ // In-memory store shaped like a relational schema. Repositories are the only code that touches it.
+
+export interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  passwordHash: string;
+  bio: string | null;
+  image: string | null;
+  accountState: "active" | "invited";
+  onboardingC
+⏺ shell(command=cat apps/api/src/routes/users.ts apps/api/src/services/users)
+  ⎿ import { loginSchema, onboardingSchema, registerSchema, updateUserSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+import { completeOnboarding, currentUser, login, register, updateUser } from "../ser
+⏺ shell(command=cat apps/api/src/routes/invites.ts apps/api/src/services/inv)
+  ⎿ import { acceptInviteSchema, createInviteSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { requireAuth } from "../middleware/auth";
+import { acceptInvite, createInvite, getInvite } from "../services/invites";
+
+export function invitesRouter(d
+⏺ shell(command=cat apps/web/src/App.tsx apps/web/src/main.tsx apps/web/src/)
+  ⎿ import { Link, Route, Routes } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
+import { RequireWriter } from "./auth/RequireWriter";
+import { ArticlePage } from "./pages/ArticlePage";
+import { InvitePage } from "./pages/InvitePage";
+import { RegisterPage } from "./pages/Regist
+⏺ shell(command=cat apps/web/src/pages/WelcomePage.tsx apps/web/src/pages/In)
+  ⎿ import { type FormEvent, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { api } from "../api/client";
+import { useAuth } from "../auth/AuthContext";
+
+/** First-run onboarding: set up a profile and accept the contributor terms. */
+export function 
+⏺ shell(command=cat apps/web/src/api/client.ts apps/web/src/pages/EditorPage)
+  ⎿ import type {
+  Invite,
+  Article,
+  ArticleListQuery,
+  ArticlesResponse,
+  Comment,
+  Profile,
+  User,
+} from "@conduit/shared";
+
+// The only module that talks to the API. Every function unwraps the RealWorld envelope.
+
+export class ApiError extends Error {
+  constructor(
+    public status: number
+⏺ shell(command=cat apps/api/src/routes/articles.ts apps/api/src/services/ar)
+  ⎿ import { createArticleSchema, createCommentSchema, updateArticleSchema } from "@conduit/shared";
+import { Router } from "express";
+import type { Db } from "../db";
+import { unprocessable } from "../errors";
+import { optionalAuth, requireAuth } from "../middleware/auth";
+import {
+  createArticle,
+  d
+⏺ shell(command=cat apps/api/test/helpers.ts && ls apps/api/test apps/web/te)
+  ⎿ import request from "supertest";
+import type { Express } from "express";
+import { createApp } from "../src/app";
+import { createDb } from "../src/db";
+
+/** A fresh app over an empty database, with a clock tests can advance. */
+export function freshApp() {
+  let time = Date.parse("2026-01-01T00:00:00
+⏺ shell(command=cat apps/api/test/realworld.contract.test.ts)
+  ⎿ // The RealWorld API contract (realworld.how), modelled on the project's official API test
+// collection. Other RealWorld frontends depend on these shapes and statuses: keep this green.
+// Like the official suite, it checks the fields the spec requires; extra fields are allowed.
+import request from 
+⏺ shell(command=cat apps/api/src/auth/tokens.ts apps/api/src/seed.ts apps/ap)
+  ⎿ import jwt from "jsonwebtoken";
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+
+const SECRET = process.env.JWT_SECRET ?? "conduit-dev-secret";
+const TOKEN_TTL = "30d";
+
+export function signToken(userId: number): string {
+  return jwt.sign({ sub: String(userId) }, SECRET, { e
+⏺ shell(command=git log --oneline -20 && git status && cat apps/api/src/rout)
+  ⎿ 158f0c4 Seeded workspace
+On branch main
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	package-lock.json
+	prompt.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+import { Router } from "express";
+import type { Db } from "../db";
+im
+⏺ shell(command=npm test 2>&1 | tail -40, timeout=300000)
+  ⎿ FAIL  test/FavoriteButton.test.tsx > FavoriteButton > unfavorites a favorited article
+TypeError: Cannot read properties of undefined (reading 'clear')
+ ❯ test/setup.ts:8:16
+      6|   cleanup();
+      7|   vi.restoreAllMocks();
+      8|   localStorage.clear();
+       |                ^
+      9| });
+
+⏺ shell(command=cat apps/web/vite.config.ts && cat apps/web/package.json | g, timeout=300000)
+  ⎿ import react from "@vitejs/plugin-react";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: { "/api": `http://localhost:${process.env.API_PORT ?? 3000}` },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFil
+⏺ shell(command=node --version && cat node_modules/jsdom/package.json | grep)
+  ⎿ v26.12.1
+  "version": "25.0.1",
+conduit-monorepo@ /Users/andrew.schafer@homebot.ai/.crucible/workspaces/lmstudio_thinkingmachines_inkling-2-mini_invite-signup-loop_20261123_173007
+├─┬ @conduit/api@1.0.0 -> ./apps/api
+│ └─┬ vitest@2.1.9
+│   └── jsdom@25.0.1 deduped
+└─┬ @conduit/web@1.0.0 -> ./apps/we
+⏺ shell(command=grep -rn "localStorage" node_modules/@vitest/web-worker* 2>/)
+  ⎿ zsh:1: no matches found: node_modules/@vitest/web-worker*
+node_modules/vitest/dist/environments.js
+node_modules/vitest/dist/chunks/index.K90BXFOx.js
+node_modules/vitest/dist/environments.js
+⏺ shell(command=grep -n "localStorage\|getWindowKeys\|populateGlobal" node_m)
+  ⎿ 249:function getWindowKeys(global, win, additionalKeys = []) {
+267:function populateGlobal(global, win, options = {}) {
+269:  const keys = getWindowKeys(global, win, options.additionalKeys);
+349:    const { keys, originals } = populateGlobal(global, vm.context, {
+408:    const { keys, originals } = 
+⏺ shell(command=sed -n 240,330p node_modules/vitest/dist/chunks/index.K90BXF)
+  ⎿ "stop",
+  /* 'toString', */
+  "top",
+  "Window",
+  "window"
+];
+const KEYS = LIVING_KEYS.concat(OTHER_KEYS);
+
+const skipKeys = ["window", "self", "top", "parent"];
+function getWindowKeys(global, win, additionalKeys = []) {
+  const keysArray = [...additionalKeys, ...KEYS];
+  const keys = new Set(
+    
+⏺ shell(command=node -e "console.log('localStorage:', typeof localStorage, l)
+  ⎿ localStorage: undefined undefined
+(node:35734) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+⏺ shell(command=sed -n 500,560p node_modules/vitest/dist/chunks/index.K90BXF)
+  ⎿ getVmContext() {
+        return dom.getInternalVMContext();
+      },
+      teardown() {
+        clearWindowErrors();
+        dom.window.close();
+        dom = void 0;
+      }
+    };
+  },
+  async setup(global, { jsdom = {} }) {
+    const { CookieJar, JSDOM, ResourceLoader, VirtualConsole } = await im
+⏺ shell(command=node --no-experimental-webstorage -e "console.log('localStor)
+  ⎿ localStorage: undefined
+  --experimental-storage-inspection
+                              experimental storage inspection support
+  --localstorage-file=...     file used to persist localStorage data
+  --no-async-context-frame    Improve AsyncLocalStorage performance
+  --webstorage, --no-experimental
+⏺ shell(command=node -e "console.log(JSON.stringify(Object.getOwnPropertyDes)
+  ⎿ {
+  "get": "get() {\n      lazyLocalStorage ??= require('internal/webstorage').localStorage;\n      return lazyLocalStorage;\n    }",
+  "set": "set(value) {\n      lazyLocalStorage = value;\n    }",
+  "enumerable": false,
+  "configurable": true
+}

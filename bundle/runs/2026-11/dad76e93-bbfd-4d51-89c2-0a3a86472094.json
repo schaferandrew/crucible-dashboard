@@ -1,0 +1,113 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "dad76e93-bbfd-4d51-89c2-0a3a86472094",
+ "run_path": "lmstudio_thinkingmachines_inkling-2-mini@reasoning-high/calendar-team-of-16/20261123_012032",
+ "legacy_run_id": null,
+ "started_at": "2026-11-23T01:20:32.955661+00:00",
+ "ended_at": "2026-11-23T01:40:34.685750+00:00",
+ "elapsed_s": 1200.44,
+ "task": {
+  "id": "calendar-team-of-16",
+  "version": 2,
+  "rubric_version": 2,
+  "content_hash": "b3eb371da517cb6a",
+  "rubric_hash": "28b2d02d8b0aedf0",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/thinkingmachines/inkling-2-mini",
+  "base": "thinkingmachines/inkling-2-mini",
+  "publisher": "thinkingmachines",
+  "artifact": "thinkingmachines/inkling-2-mini",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "high",
+   "resolved": "high",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 100352,
+  "variant_key": "thinkingmachines/inkling-2-mini|thinkingmachines|gguf|q4_k_m",
+  "display": "inkling-2-mini · Q4_K_M",
+  "origin": {
+   "maker": "thinkingmachines",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "timeout",
+  "harness_status": "TIMEOUT",
+  "returncode": 143,
+  "timed_out": true,
+  "invalid": {
+   "reason": "Contaminated: the agent read files in crucible's checkout outside its workspace (see leaks).",
+   "marked_at": "2026-11-23T01:40:34.779128+00:00"
+  },
+  "leaks": [
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/.venv/bin/python\\",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/cr",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/crucible/",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/crucible/mcp_servers/",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/crucible/mcp_servers/calendar_server.py",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/crucible/mcp_servers/calendar_server.py\\",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/fi",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/fixtures/",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/fixtures/mock-calendar/",
+   "/Users/andrew.schafer@homebot.ai/code/sandbox/crucible/fixtures/mock-calendar/forge.json"
+  ]
+ },
+ "metrics": {
+  "tests_passed": null,
+  "tests_failed": null,
+  "tool_calls": 18,
+  "tokens_in": 436339,
+  "tokens_out": 23092,
+  "model_responses": 16,
+  "ttft_s": 11.005,
+  "ttft_avg_s": 16.064,
+  "response_time_avg_s": 70.675,
+  "output_tokens_per_s": 26.4,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/dad76e93-bbfd-4d51-89c2-0a3a86472094.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:bd495e47668a5786201792f85d82600ab8a6681ac4d52e51848ac8d56a87592f",
+  "submitter": null,
+  "verification": null
+ }
+}

@@ -9,6 +9,12 @@
    "reason": "LM Studio key with the format and quant tags; IBM's Granite 4.2 3B (ibm-granite/granite-4.2-3b)"
   },
   {
+   "base": "granite-4.2-3b",
+   "to_base": "ibm-granite/granite-4.2-3b",
+   "maker": "ibm-granite",
+   "reason": "local key without the maker; IBM's Granite 4.2 3B (ibm-granite/granite-4.2-3b)"
+  },
+  {
    "base": "mlx-community/muse-glimmer-30b",
    "to_base": "meta/muse-glimmer",
    "maker": "meta",
@@ -38,6 +44,12 @@
    "to_base": "nvidia/nemotron-3-ultra-550b-a55b",
    "maker": "nvidia",
    "reason": "OpenRouter's :free tier suffix"
+  },
+  {
+   "base": "nvidia-nemotron-3.5-lightning-30b-a3b",
+   "to_base": "nvidia/nemotron-3.5-lightning-30b-a3b",
+   "maker": "nvidia",
+   "reason": "local key without the maker; NVIDIA Nemotron 3.5 Lightning 30B A3B"
   },
   {
    "base": "~openai/gpt-luna-latest",

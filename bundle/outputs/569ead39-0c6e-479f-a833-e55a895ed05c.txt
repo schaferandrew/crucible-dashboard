@@ -1,0 +1,20 @@
+
+
+I've analyzed the free/busy data for both Alex and Jamie for the week of August 31 – September 6, 2026 (all in America/Chicago). Here's a summary of the overlap analysis:
+
+**Monday (Aug 31):** Heavy conflicts — Alex is busy 10 AM–2 PM and 3–4:30 PM; Jamie is busy 2–5 PM. Only late afternoon after 5 PM works for both.
+
+**Tuesday (Sep 1):** Alex is busy 11 AM–1 PM and 2–5 PM; Jamie is busy 12–2:30 PM. Very limited overlap.
+
+**Wednesday (Sep 2):** Both are heavily booked 9 AM–1 PM. Only free after 3:30 PM.
+
+**Thursday (Sep 3):** Best day! Both are free 11:00 AM–12:00 PM and 1:00 PM–2:00 PM.
+
+**Friday (Sep 4):** Both free 10:30 AM–12:00 PM and after 3:00 PM.
+
+The best options are on Thursday and Friday during normal business hours:
+
+OPTIONS:
+2026-09-03 11:00 CDT
+2026-09-03 13:00 CDT
+2026-09-04 10:30 CDT

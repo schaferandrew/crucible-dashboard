@@ -1,0 +1,117 @@
+To rewrite the Juniper Inn booking desk PHP app in Ruby, we need to follow these steps:
+
+1. Create a Ruby script `app.rb` that mimics the PHP app's behavior for every request.
+2. Port the legacy tests to Ruby, running them from the root of the repository.
+3. Ensure the Ruby app runs on the `ruby` installed here, without additional gems or Bundler.
+4. Leave the PHP files and data/ folder untouched.
+
+Let's start by creating the Ruby script `app.rb`:
+
+```ruby
+require 'json'
+require 'date'
+
+# Load the fixture cases
+require_relative 'test/fixtures/cases.json'
+
+# Load the data files
+require_relative 'data/rooms.json'
+require_relative 'data/rooms.csv'
+require_relative 'data/guests.csv'
+
+# Load the PHP code for the quote calculator and date helpers
+require_relative 'php/quote_calculator.php'
+require_relative 'php/date_helpers.php'
+
+# Define the main app logic
+def app(request)
+  # Parse the request
+  params = request.split('?').last.split('&').map { |param| param.split('=') }.to_h
+
+  # Checkin date and nights
+  checkin = Date.parse(params['checkin'])
+  nights = params['nights'].to_i
+
+  # Guest count
+  guests = params['guests'].to_i
+
+  # Room number
+  room = params['room'].to_i
+
+  # Calculate the quote
+  quote = quote_calculator(room, checkin, nights, guests)
+
+  # Prepare the response
+  response = {
+    quote: quote,
+    checkin: checkin.to_s,
+    nights: nights,
+    guests: guests,
+    room: room
+  }
+
+  # Return the response as JSON
+  response.to_json
+end
+
+# Run the tests
+require_relative 'test/run_tests.rb'
+Test::RunTests.run_tests
+```
+
+Now, let's create the `test/run_tests.rb` script to run the legacy tests:
+
+```ruby
+require 'json'
+require 'date'
+
+# Load the fixture cases
+require_relative 'test/fixtures/cases.json'
+
+# Load the PHP code for the quote calculator and date helpers
+require_relative 'php/quote_calculator.php'
+require_relative 'php/date_helpers.php'
+
+# Define the main test logic
+def run_tests
+  cases = JSON.parse(File.read('test/fixtures/cases.json'))
+
+  cases.each do |case|
+    request = case['request']
+    expected = case['expected']
+    response = app(request)
+
+    if response != expected
+      puts "Test failed: request: #{request}, expected: #{expected}, got: #{response}"
+      return false
+    end
+  end
+
+  true
+end
+
+# Run the tests
+run_tests
+```
+
+Next, we need to ensure the Ruby script runs on the `ruby` installed here, without additional gems or Bundler. The Ruby version is checked by running `ruby -v`:
+
+```bash
+ruby -v
+```
+
+If the Ruby version is not installed, you may need to install it using your package manager. For example, on a Debian-based system:
+
+```bash
+sudo apt-get install ruby
+```
+
+Or on a Red Hat-based system:
+
+```bash
+sudo yum install ruby
+```
+
+Finally, we need to add more tests if you like. The PHP app's actual behavior, quirks included, is the spec. The front desk's habits depend on it.
+
+When you're done, end with a short summary of how the Ruby app is laid out and any PHP behavior you had to reproduce deliberately.

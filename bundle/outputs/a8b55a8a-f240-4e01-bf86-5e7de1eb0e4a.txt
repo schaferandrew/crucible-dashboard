@@ -1,0 +1,1 @@
+The issue is that the form has `id="lead-form"` but not `data-testid`. Let me check if we need to add data-testid attributes or just use the id:

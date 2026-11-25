@@ -1,0 +1,1 @@
+The API tests pass (19/19) but web tests fail with `localStorage` undefined — an environment issue. Let me investigate.

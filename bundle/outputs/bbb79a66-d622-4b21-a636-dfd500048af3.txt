@@ -1,0 +1,8 @@
+Done. All three inbox PDFs are filed and logged; `inbox/` is empty and no existing rows or files were changed.
+
+**What I filed:**
+- **Maple Street Community Church** — $250.00, check (no. 1129), gift date Nov 17, 2024 → `records/2024/2024-11-17_Maple-Street-Community-Church.pdf` (tax year 2024). Note: this is a reissued statement for an old receipt; the $500 remaining pledge balance was excluded as not part of the gift.
+- **Hope Harbor Food Pantry** — $180.00, credit card, received Dec 31, 2025 → `records/2025/2025-12-31_Hope-Harbor-Food-Pantry.pdf` (tax year 2025). The letter is dated Jan 4, 2026, but the gift itself was received Dec 31, 2025, so it's filed under 2025.
+- **Riverbend Public Radio** — $60.00 monthly sustainer, card on file, gift date Jan 2, 2026 → `records/2026/2026-01-02_Riverbend-Public-Radio.pdf` (tax year 2026). The "$660 total for 2025" mentioned in the receipt is a cumulative figure, not this gift, so it was not added as a row.
+
+**Log:** `giving-log.csv` now has three new rows inserted chronologically; all five existing rows are unchanged (same content and relative order). Every referenced file path verifies against the filesystem.

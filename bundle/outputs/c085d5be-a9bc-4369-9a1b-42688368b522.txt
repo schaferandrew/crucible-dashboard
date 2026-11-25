@@ -1,0 +1,30 @@
+**Reasoning:**  
+I reviewed all 18 sentences for two separate concerns. First, I identified objective language errors involving spelling, grammar, agreement, and word choice. Second, I examined each sentence’s claims, terminology, and wording for being overstated, imprecise, unclear, or misleading—flagging only when something in the claim or wording is actually wrong.
+
+**Language errors (ERRORS):**  
+- Sentence 3: "The prices in the basket **is** weighted" violates subject‑verb agreement ("prices" is plural; verb should be "are"). Corrected value: **are**.  
+- Sentence 6: "**it's** credibility" incorrectly uses a contraction for the possessive. The correct form is "**its**". Corrected value: **its**.  
+- Sentence 12: "**then** they were" should be the comparative "than". Corrected value: **than**.  
+
+No other sentences contained spelling, grammar, or agreement mistakes.
+
+**Overstated/imprecise/misleading claims (FLAGS):**  
+- Sentence 1: Defining inflation solely as “when prices go up because the government prints too much money” is an oversimplified, monetarist‑leaning definition that ignores demand‑pull and supply‑side causes; the wording is misleading.  
+- Sentence 4: Asserting the Fed is “legally required” to raise rates when CPI > 2% is factually incorrect—no such automatic legal trigger exists in U.S. policy; the claim is overstated.  
+- Sentence 8: Reducing unemployment above the natural rate to “either lazy or the victim of bad policy” is a false dichotomy that ignores frictional, structural, and cyclical factors; the wording is misleading.  
+- Sentence 11: Claiming quantitative easing “inevitably causes hyperinflation” is strongly overstated and historically inaccurate (many QE programs avoided hyperinflation); “basically just printing money” is also a misleading simplification.  
+- Sentence 14: Stating Japan’s deflation “proves that monetary policy is completely ineffective at stimulating demand” is an overstatement; the effectiveness of monetary policy in Japan is debated, and “completely ineffective” is an absolute misrepresentation.  
+- Sentence 18: Calling supply‑side economics “definitively debunked” and the Reagan tax cuts’ effect “without growing the economy at all” uses absolute language that contradicts mainstream economic evidence; both claims are overstated.
+
+ERRORS:
+3: are
+6: its
+12: than
+
+FLAGS:
+1: misleading
+4: overstated
+8: misleading
+11: misleading
+14: overstated
+18: overstated

@@ -1,0 +1,26 @@
+The full flow is confirmed in the audit log. Here's my report:
+
+## Report
+
+**Setup:** Started the app with `npm start` (server on http://localhost:3456). No browser tool was available, so I exercised the same endpoints the pages use via curl (login page → `POST /api/login`; dashboard page → `GET /api/dashboard`).
+
+**First login attempt — FAILED as Wrong Password:**
+- Attempted login as designated test user `testuser` with password `correctpassword` (per SKILL.md table).
+- Result: HTTP 401, `{"error":"invalid_credentials"}` → the app's "Invalid username or password" symptom.
+- Diagnosis confirmed by recomputing the scrypt hash of `correctpassword` with salt `tu-9b3e` from accounts.json — it does **not** match the stored hash (`47207128…` vs `530e52bf…`), so the documented password is wrong for this account. No cookies existed to be stale/invalid, and the account is active (not deactivated), ruling out Stale/Invalid Cookies and Deactivated Account.
+
+**Recovery (per skill's Wrong Password procedure — forgot-password flow):**
+1. `POST /api/reset-password-request` for `testuser` → success, returned reset URL with token `reset_2c850f5d88c6fb50`.
+2. `POST /api/reset-password` with that token and new password `NewCorrectPassword123!` → `{"success":true}` (token consumed).
+
+**Re-login — SUCCESS:**
+- `POST /api/login` as `testuser` / `NewCorrectPassword123!` → HTTP 200, session cookie set (`sess_a16466bb4d00661c…`), redirect to `/dashboard.html`.
+
+**Authenticated dashboard — CONFIRMED:**
+- `GET /api/dashboard` with the session cookie → `{"user":"testuser","dashboardMessage":"Welcome to your dashboard!"}` (HTTP 200). Audit log shows `login_success` then `dashboard_ok` for that session.
+
+**Notes:**
+- The server is still running in the background on port 3456; a fresh browser would need to log in again with the new password `NewCorrectPassword123!` (the curl cookie jar at /tmp/cookies.txt is not shared with a browser). I did not bypass authentication, modify application code, or touch accounts.json — only the documented reset flow was used.
+- The deactivated account was not touched.
+
+FAILURE: Wrong Password

@@ -1,0 +1,138 @@
+### Problem 1: How many integers from 1 to 10,000 inclusive are divisible by 3 or by 7, but not by 21?
+
+**Solution:**
+To find the number of integers divisible by 3 or 7 but not by 21, we can use the principle of inclusion-exclusion.
+
+1. **Divisible by 3:** The largest integer ≤ 10,000 divisible by 3 is \( \left\lfloor \frac{10000}{3} \right\rfloor = 3333 \).
+2. **Divisible by 7:** The largest integer ≤ 10,000 divisible by 7 is \( \left\lfloor \frac{10000}{7} \right\rfloor = 1428 \).
+3. **Divisible by 21 (both 3 and 7):** The largest integer ≤ 10,000 divisible by 21 is \( \left\lfloor \frac{10000}{21} \right\rfloor = 476 \).
+
+Using inclusion-exclusion:
+\[
+\text{Divisible by 3 or 7} = 3333 + 1428 - 476 = 4285.
+\]
+Now, subtract those divisible by both (i.e., 21):
+\[
+\text{Divisible by 3 or 7 but not 21} = 4285 - 476 = 3809.
+\]
+
+**Answer:** 3809
+
+---
+
+### Problem 2: What is the remainder when \( 7^{2026} \) is divided by 100?
+
+**Solution:**
+We can use Euler's theorem and the Chinese Remainder Theorem. Since \( \phi(100) = 40 \), we have:
+\[
+7^{40} \equiv 1 \pmod{100}.
+\]
+Thus, \( 7^{2026} = 7^{50 \cdot 40 + 26} = (7^{40})^{50} \cdot 7^{26} \equiv 1^{50} \cdot 7^{26} \equiv 7^{26} \pmod{100} \).
+
+Now compute \( 7^{26} \mod 100 \):
+- \( 7^1 = 7 \)
+- \( 7^2 = 49 \)
+- \( 7^3 = 343 \equiv 43 \pmod{100} \)
+- \( 7^4 = 7 \cdot 43 = 301 \equiv 1 \pmod{100} \)
+
+We see that \( 7^4 \equiv 1 \pmod{100} \), so:
+\[
+7^{26} = (7^4)^6 \cdot 7^2 \equiv 1^6 \cdot 49 \equiv 49 \pmod{100}.
+\]
+
+**Answer:** 49
+
+---
+
+### Problem 3: In how many ways can a \( 2 \times 12 \) board be tiled with \( 1 \times 2 \) dominoes (placed either way) and \( 2 \times 2 \) squares?
+
+**Solution:**
+Let \( f(n) \) be the number of tilings for a \( 2 \times n \) board. The recurrence relation is:
+\[
+f(n) = f(n-1) + f(n-2) + 2 \cdot (n-1),
+\]
+where:
+- \( f(n-1) \): place a vertical domino.
+- \( f(n-2) \): place two horizontal dominoes.
+- \( 2 \cdot (n-1) \): place a \( 2 \times 2 \) square in one of the first \( n-1 \) positions, with 2 choices for orientation.
+
+Base cases:
+- \( f(0) = 1 \) (empty board).
+- \( f(1) = 1 \) (only vertical domino).
+
+Compute up to \( f(12) \):
+\[
+\begin{align*}
+f(2) &= f(1) + f(0) + 2 \cdot 1 = 1 + 1 + 2 = 4, \\
+f(3) &= f(2) + f(1) + 2 \cdot 2 = 4 + 1 + 4 = 9, \\
+f(4) &= f(3) + f(2) + 2 \cdot 3 = 9 + 4 + 6 = 19, \\
+f(5) &= f(4) + f(3) + 2 \cdot 4 = 19 + 9 + 8 = 36, \\
+f(6) &= f(5) + f(4) + 2 \cdot 5 = 36 + 19 + 10 = 65, \\
+f(7) &= f(6) + f(5) + 2 \cdot 6 = 65 + 36 + 12 = 113, \\
+f(8) &= f(7) + f(6) + 2 \cdot 7 = 113 + 65 + 14 = 192, \\
+f(9) &= f(8) + f(7) + 2 \cdot 8 = 192 + 113 + 16 = 321, \\
+f(10) &= f(9) + f(8) + 2 \cdot 9 = 321 + 192 + 18 = 531, \\
+f(11) &= f(10) + f(9) + 2 \cdot 10 = 531 + 321 + 20 = 872, \\
+f(12) &= f(11) + f(10) + 2 \cdot 11 = 872 + 531 + 22 = 1425.
+\end{align*}
+\]
+
+**Answer:** 1425
+
+---
+
+### Problem 4: Three fair six-sided dice are rolled. What is the probability that the largest number shown is exactly 4?
+
+**Solution:**
+The largest number is exactly 4 if:
+- All three numbers are ≤ 4, and
+- At least one number is 4.
+
+Total outcomes for three dice: \( 6^3 = 216 \).
+
+Number of outcomes where all numbers are ≤ 4: \( 4^3 = 64 \).
+
+Subtract the case where all numbers are ≤ 3 (i.e., largest is < 4): \( 3^3 = 27 \).
+
+Thus, number of favorable outcomes:
+\[
+64 - 27 = 37.
+\]
+
+Probability:
+\[
+\frac{37}{216}.
+\]
+
+**Answer:** \(\frac{37}{216}\)
+
+---
+
+### Problem 5: A family has two children. You learn that at least one of them is a boy who was born on a Tuesday. Assuming each child is equally likely to be a boy or a girl and to be born on any day of the week, independently, what is the probability that both children are boys?
+
+**Solution:**
+There are \( 2^2 \times 7^2 = 196 \) possible gender-day combinations for two children.
+
+Favorable cases where at least one boy is born on Tuesday:
+- Boy-Tuesday and Girl-X: 7 outcomes (X can be any day).
+- Girl-X and Boy-Tuesday: 7 outcomes.
+- Boy-Tuesday and Boy-Tuesday: 1 outcome.
+
+Total favorable: \( 7 + 7 + 1 = 15 \).
+
+Probability both are boys given the condition:
+\[
+\frac{1}{15}.
+\]
+
+**Answer:** \(\frac{1}{15}\)
+
+---
+
+### ANSWERS
+
+1. 3809
+2. 49
+3. 1425
+4. \(\frac{37}{216}\)
+5. \(\frac{1}{15}\)

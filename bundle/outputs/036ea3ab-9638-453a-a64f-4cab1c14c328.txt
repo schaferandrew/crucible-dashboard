@@ -1,0 +1,24 @@
+Let's evaluate the agent's response against each criterion:
+
+1. **Accuracy (4)**:
+   - The summary correctly states that the library board voted to extend weekend hours to 8 p.m. starting in March, which matches the passage.
+   - It accurately mentions the survey where 62% of residents requested evening access.
+   - The funding detail ($40,000 grant covering one year) is correct, as is the mention that the board will revisit the schedule next winter if no new money is found.
+   - The opposition from two board members due to staffing shortages is also accurately included.
+   - No invented details are present.
+   - **Score: 4/4**
+
+2. **Exactly two sentences (3)**:
+   - The response consists of three sentences, not two as required.
+   - **Score: 0/3** (since it fails the exact requirement)
+
+3. **Key points (3)**:
+   - The hours extension is captured ("extend weekend hours to 8 p.m.").
+   - The funding limit is mentioned ("$40,000 grant that covers one year").
+   - The resident survey is included ("62% of residents asked for evening access").
+   - **Score: 3/3**
+
+### Final Grade:
+The response earns **7/10** (4 + 0 + 3), but since the "Exactly two sentences" criterion is a hard requirement and it fails, the score is reduced to reflect that. However, the key points are fully covered, and accuracy is perfect.
+
+GRADE: 5

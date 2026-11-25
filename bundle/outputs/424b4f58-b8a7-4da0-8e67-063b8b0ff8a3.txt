@@ -1,0 +1,71 @@
+
+
+All tests pass. Here's a summary of what was changed:
+
+---
+
+## Summary of Changes
+
+### New Files
+1. **`apps/api/src/routes/cursor.ts`** — Cursor encoding/decoding module. Cursors are base64url-encoded JSON containing:
+   - `q`: a deterministic query signature (hash of filter params) to prevent cross-query cursor reuse
+   - `c`: `{ t, i }` — the `createdAt` (ISO) and `id` of the last row, for deterministic ordering
+
+2. **`apps/api/test/cursor.test.ts`** — 18 new tests covering:
+   - Validation: malformed cursor → 422, tampered cursor → 422, cursor mismatch → 422, cursor+offset → 422, cross-endpoint cursor rejection
+   - Correctness: full pagination through 15 articles, no-skip guarantee, comments pagination, backwards-compatible unpaginated comments
+   - Concurrent writes: no duplicates when articles are created/deleted/favorited between page requests
+   - Backwards compatibility: offset pagination still works, defaults work
+
+### Modified Files
+
+**Shared Types** (`packages/shared/src/types.ts`)
+- Added `nextCursor: string | null` to `ArticlesResponse` and `CommentsResponse`
+- Added `cursor?: string` to `ArticleListQuery`
+
+**API Repository** (`apps/api/src/repositories/articles.ts`)
+- `listArticles` now accepts optional `cursor` parameter
+- Cursor filters to items *before* the cursor position (newer items first)
+- `count` is computed before cursor filtering (total matching items)
+- Returns `lastItem` for cursor generation, `hasMore` for `nextCursor` logic
+
+**Comments Repository** (`apps/api/src/repositories/comments.ts`)
+- `commentsForArticle` accepts optional `limit` and `cursor` parameters
+- Without limit: returns all comments (backwards-compatible)
+- With limit: cursor-based pagination, newest first
+
+**API Service** (`apps/api/src/services/articles.ts`)
+- `Page` interface now includes `cursor: CursorPayload | null`
+- `listArticlesForQuery` and `feed` verify cursor signatures and return `nextCursor`
+
+**Comments Service** (`apps/api/src/services/comments.ts`)
+- `listComments` accepts optional `limit` and `cursor`, returns `{ comments, nextCursor }`
+
+**API Routes** (`apps/api/src/routes/articles.ts`)
+- Comments endpoint now accepts `limit` and `cursor` query params with validation
+
+**Web ArticleList** (`apps/web/src/components/ArticleList.tsx`)
+- Replaced offset-based numbered pagination with cursor-based "Load more" button
+- Articles accumulate on screen; button disappears on last page
+- `load` callback signature changed: `({ limit, cursor? })` instead of `{ limit, offset }`
+
+**Web Pagination** (`apps/web/src/components/Pagination.tsx`)
+- Replaced numbered page links with "Load more" button component
+
+**Web ArticlePage** (`apps/web/src/pages/ArticlePage.tsx`)
+- Comments now load via cursor pagination with "Load more comments" button
+
+**Web API Client** (`apps/web/src/api/client.ts`)
+- `feed()` accepts `{ limit, cursor }` instead of `{ limit, offset }`
+- `comments()` accepts optional `limit` and `cursor`, returns `{ comments, nextCursor }`
+
+**Web Tests** (`apps/web/test/ArticleList.test.tsx`, `render.tsx`, `setup.ts`)
+- Updated tests for cursor-based pagination behavior
+- Fixed localStorage polyfill for jsdom test environment
+
+### Design Decisions
+- **Cursor format**: opaque base64url JSON with query signature binding — clients can't forge or cross-use cursors
+- **Ordering**: newest first by `createdAt`, then highest `id` first for ties — deterministic
+- **No-skip guarantee**: cursor skips to items strictly before the cursor position, so created/deleted articles between pages are naturally handled
+- **Backwards compatibility**: offset pagination works unchanged when no cursor is sent; comment listing without limit returns all comments
+- **articlesCount**: always reflects total matching items (before paging), as per the RealWorld spec

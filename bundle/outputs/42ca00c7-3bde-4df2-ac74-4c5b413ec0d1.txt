@@ -1,0 +1,1 @@
+Let me look at the app.ts to understand how the DB is created and used:

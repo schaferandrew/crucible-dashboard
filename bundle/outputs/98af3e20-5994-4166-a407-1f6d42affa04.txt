@@ -1,0 +1,38 @@
+The task is to fix the quote request form at /contact in a Next.js 14 (App Router) app, ensuring it builds correctly and functions as intended. The form should:
+
+1. Build with `npm run build` and render the form on the server.
+2. Show typed content in each field.
+3. Tab through fields in order, then to the button, and Enter submits.
+4. Require name, email, and message; company is optional.
+5. Show errors for empty fields or invalid input.
+6. Submit to /api/leads with the lead as JSON.
+7. Show a success message if accepted by the API; otherwise keep the form and errors.
+
+The form elements and IDs must be preserved:
+- Form: `lead-form`
+- Fields: `lead-name`, `lead-email`, `lead-company`, `lead-message`
+- Submit button: `lead-submit`
+- Error elements: `lead-name-error`, `lead-email-error`, `lead-message-error`
+- Success message: `lead-success`
+
+The form must:
+1. Build with `npm run build`.
+2. Show typed content in each field.
+3. Tab through fields in order, then to the button, and Enter submits.
+4. Require name, email, and message; company is optional.
+5. Show errors for empty fields or invalid input.
+6. Submit to /api/leads with the lead as JSON.
+7. Show a success message if accepted by the API; otherwise keep the form and errors.
+
+Email handling:
+- Accept what real people type: surrounding spaces, capital letters, plus addressing (`name+tag@`), dots in the name, subdomains, hyphens in domain names and long or new top-level domains.
+- Save one canonical form: trimmed and lowercased. Never save an address that isn't valid: one `@`, nothing empty around a dot, no spaces, domain labels of letters, digits and inner hyphens, and a top-level domain of at least two letters.
+
+API handling:
+- Trim every field.
+- Save a missing company as an empty string.
+- Normalize the email as above.
+- Answer 201 with `{ "lead": <the saved lead> }` for success.
+- Answer 422 with `{ "errors": { "<field>": "<message>" } }` and save nothing for problems.
+
+No additional dependencies, only changes under app/ and lib/ (tests can go there too). Run `npm test` and `npm run build` before finishing, and end with a summary of changes.

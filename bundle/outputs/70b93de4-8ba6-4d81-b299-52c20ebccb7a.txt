@@ -1,0 +1,29 @@
+The task is to complete the benchmark task described in the attached prompt.txt file. The prompt outlines the requirements for adding an editorial review step to the RealWorld monorepo, which includes an Express API and a React app. The key points are:
+
+1. The public must never see work that hasn't been approved.
+2. Editors review other people's work. No one approves their own.
+3. Feedback is a conversation between the author and the editors. Nobody else should ever see it.
+4. Authors need to see where each of their articles stands and why something was sent back.
+5. Existing RealWorld clients must keep working. apps/api/test/realworld.contract.test.ts must stay green and unmodified.
+
+The mobile team has already built against this client contract, so match it exactly:
+- Article JSON gains `status` ("draft", "in_review" or "published") and `reviewComment` (string or null).
+- POST /api/articles accepts an optional "status": "draft". Without it, articles publish immediately, as today.
+- POST /api/articles/:slug/submit (draft to in_review), POST /api/articles/:slug/approve (in_review to published) and POST /api/articles/:slug/reject with body { "review": { "comment": "..." } } (in_review back to draft). Each returns { article }. Transitions that don't apply are a 422 in the usual error envelope; callers who aren't allowed get 403.
+- GET /api/articles/review-queue: what editors need to review, oldest first, as { articles, articlesCount }.
+- GET /api/user/articles: the signed-in user's own articles of every status, newest first, with an optional ?status= filter.
+- Editors are configured by username: createApp(db, { editors: ["ada"] }), and server.ts reads a comma-separated EDITORS environment variable.
+
+On the web app, editors need a screen to work through the review queue, and authors need to see their articles' status and feedback and submit drafts. Keep it simple: the API rules are what matter.
+
+Some of this brief may conflict with how the app behaves today. Where it does, choose the option that keeps existing clients working and keeps unapproved work private, and explain each call you made. Add tests for the rules, keep every existing test passing, and finish with a summary of what you changed and what you'd flag in code review.
+
+To complete this task, I will need to:
+1. Analyze the current state of the monorepo and identify any conflicts with the new editorial review rules.
+2. Modify the API endpoints and controllers to implement the new rules.
+3. Add tests for the new rules and ensure all existing tests pass.
+4. Update the web app to display article status and feedback for authors and editors.
+5. Configure editors by username in the server.
+6. Ensure the mobile client contract is matched exactly.
+
+I will start by analyzing the current state of the monorepo and identifying any conflicts with the new editorial review rules. Please provide any additional files or context that may be relevant.

@@ -1,0 +1,5 @@
+<think>I checked my calendar for today (Tuesday, September 1, 2026) in America/Chicago. Events today: Standup 9:00–9:30, 1:1 with Jamie 11:00–12:00, Lunch 12:00–13:00, Design review 14:00–15:30, Customer call 16:00–17:00. At 3:30 PM (15:30), the Design review ends exactly at that moment and the next event (Customer call) doesn't start until 4:00 PM. So nothing covers 3:30 PM — I'm free then.</think>
+
+I checked today, Tuesday September 1, 2026, in America/Chicago. The Design review runs 2:00–3:30 PM and ends exactly at 3:30; the next event (Customer call) starts at 4:00 PM. So no meeting covers 3:30 PM — I'm free then.
+
+ANSWER: free

@@ -1,0 +1,20 @@
+Done. Here's a summary of the diagnosis and fix:
+
+## Diagnosis
+`app/page.tsx` was written as if it were a client component — it used `useState`/`useEffect` with no `'use client'` directive, so Next.js treated it as a server component. It also had an untyped state (`useState(null)` infers `null`), which narrowed to `never` after the loading guard — that's what made `next build` fail with `Property 'name' does not exist on type 'never'`. Even if it compiled, the page would have rendered "Loading..." forever and depended on a client-side fetch roundtrip for data available at render time.
+
+## Fix (idiomatic modern Next.js)
+- **New `lib/accounts.ts`** — single source of truth: typed `Account`, the accounts record, and an async `getAccount(id)` returning `Promise<Account | null>`.
+- **`app/page.tsx`** — now an async Server Component that awaits `getAccount('acct_1')` directly (no client fetch, no hooks, no API roundtrip) and renders the account; calls `notFound()` if missing. The dead unused `accounts` constant was removed.
+- **`app/api/account/route.ts`** — kept as an endpoint but now backed by the same shared data module (same response shape, so existing API behavior is preserved).
+
+## Tests
+- `app/page.test.tsx` — rewritten to render the async server component and assert it shows "Account", Alice's name, and Pro plan (this covers the bug; previously only the API route was tested).
+- `app/api/account/route.test.ts` — the original API tests moved here unchanged in behavior.
+
+## Verification
+- `npm test`: 3/3 pass across both files.
+- `npx next build`: compiles, type-checks, and prerenders successfully (page is static).
+- Production server smoke test: `/` returns HTML containing `Name: Alice` / `Plan: Pro`; `/api/account?id=acct_1` returns `{"name":"Alice","plan":"Pro"}`.
+
+Note: `next-env.d.ts` was auto-updated by the build (added the standard "do not edit" comment) — that's expected Next.js behavior.

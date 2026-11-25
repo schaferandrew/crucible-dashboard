@@ -1,0 +1,98 @@
+{
+ "record": "run",
+ "format_version": 3,
+ "run_uuid": "33b2414f-b046-42f5-9f85-8451075114a4",
+ "run_path": "lmstudio_thinkingmachines_inkling-2-mini@reasoning-low/accessibility-audit-fixes/20261123_220851",
+ "legacy_run_id": null,
+ "started_at": "2026-11-23T22:08:58.291696+00:00",
+ "ended_at": "2026-11-23T22:23:59.518662+00:00",
+ "elapsed_s": 900.45,
+ "task": {
+  "id": "accessibility-audit-fixes",
+  "version": 1,
+  "rubric_version": 3,
+  "content_hash": "02332049fef999c1",
+  "rubric_hash": "6e60db812281e189",
+  "alias": null
+ },
+ "harness": {
+  "id": "pi",
+  "version": "1.4.0"
+ },
+ "model": {
+  "id": "lmstudio/thinkingmachines/inkling-2-mini",
+  "base": "thinkingmachines/inkling-2-mini",
+  "publisher": "thinkingmachines",
+  "artifact": "thinkingmachines/inkling-2-mini",
+  "format": "gguf",
+  "quant": "Q4_K_M",
+  "reasoning": {
+   "requested": "low",
+   "resolved": "low",
+   "resolved_source": "requested"
+  },
+  "context_loaded": 100352,
+  "variant_key": "thinkingmachines/inkling-2-mini|thinkingmachines|gguf|q4_k_m",
+  "display": "inkling-2-mini · Q4_K_M",
+  "origin": {
+   "maker": "thinkingmachines",
+   "base_repo": null,
+   "params": null,
+   "active_params": null,
+   "source": "lmstudio-key"
+  }
+ },
+ "endpoint": {
+  "where": "local",
+  "provider": "lmstudio",
+  "app": null,
+  "served_via": null,
+  "device": "Duskfall",
+  "upstream": null,
+  "resolved_model": null
+ },
+ "hardware": {
+  "key": "m5-pro-48gb",
+  "class": "apple_silicon",
+  "accelerators": [],
+  "system_memory_gb": 48.0,
+  "cpu": "Apple M5 Pro",
+  "offload": null,
+  "label": "Duskfall"
+ },
+ "outcome": {
+  "status": "timeout",
+  "harness_status": "TIMEOUT",
+  "returncode": 143,
+  "timed_out": true,
+  "invalid": null,
+  "leaks": []
+ },
+ "metrics": {
+  "tests_passed": 0,
+  "tests_failed": 1,
+  "tool_calls": 25,
+  "tokens_in": 528810,
+  "tokens_out": 8066,
+  "model_responses": 25,
+  "ttft_s": 5.964,
+  "ttft_avg_s": 6.384,
+  "response_time_avg_s": 17.157,
+  "output_tokens_per_s": 29.9,
+  "cost_usd": 0,
+  "cost_source": "pi_estimate",
+  "reasoning_chars": null
+ },
+ "output_ref": "outputs/33b2414f-b046-42f5-9f85-8451075114a4.txt",
+ "provenance": {
+  "crucible_version": "3.11.1",
+  "crucible_commit": "beddc4b",
+  "crucible_dirty": true,
+  "machine_id": "m_9482e089d1c3",
+  "machine_label": "Duskfall",
+  "source": "crucible-run",
+  "content_hash": "sha256:c11c07dbafa09df0913b821cf1f16cb74e3598f1ed1a0e02ac8281bc7f9b9227",
+  "submitter": null,
+  "verification": null
+ }
+}

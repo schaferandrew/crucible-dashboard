@@ -1,0 +1,19 @@
+Working:
+1. Monthly rate = 0.04/12; periods = 3×12=36  
+   $5,000(1+0.04/12)^{36} ≈ $5,636.36
+
+2. Required area with waste = 1,850 × 1.10 = 2,035 sq ft  
+   Boxes needed = 2,035 / 23.5 ≈ 86.60 → round up to 87 boxes
+
+3. Gallons used = 412 / 34 ≈ 12.1176 gal  
+   Cost = 12.1176 × $3.89 ≈ $47.14
+
+4. Tip = 18% × $172.00 = $30.96  
+   Total = $186.40 + $30.96 = $217.36  
+   Each person = $217.36 / 4 = $54.34
+
+ANSWERS
+1. $5,636.36
+2. 87 boxes
+3. $47.14
+4. $54.34

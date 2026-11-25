@@ -1,0 +1,7 @@
+ANSWERS:
+Flight: <flight number>
+Total: <dollars>
+Restaurant: <name>
+Walk: <miles>
+Distance: <miles>
+Taxi: <minutes>
