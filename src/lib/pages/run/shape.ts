@@ -70,6 +70,7 @@ export interface CheckItem {
   label: string;
   passed: boolean | null;
   detail: string | null;
+  items: CheckItem[];
 }
 export interface CheckGroup {
   name: string | null;
@@ -174,6 +175,15 @@ function chooseScore(run: Rec, ref: unknown): Rec | null {
   );
 }
 
+function checkItem(it: Rec): CheckItem {
+  return {
+    label: str(it.label) ?? str(it.id) ?? 'check',
+    passed: typeof it.passed === 'boolean' ? it.passed : null,
+    detail: str(it.detail),
+    items: arr(it.items).map((item) => checkItem(rec(item))),
+  };
+}
+
 function checksOf(record: Rec | null): RunView['checks'] {
   if (!record)
     return {
@@ -187,11 +197,7 @@ function checksOf(record: Rec | null): RunView['checks'] {
     for (const it of items) {
       const g = str(it.group) ?? '';
       const list = groups.get(g) ?? [];
-      list.push({
-        label: str(it.label) ?? str(it.id) ?? 'check',
-        passed: typeof it.passed === 'boolean' ? it.passed : null,
-        detail: str(it.detail),
-      });
+      list.push(checkItem(it));
       groups.set(g, list);
     }
     return {

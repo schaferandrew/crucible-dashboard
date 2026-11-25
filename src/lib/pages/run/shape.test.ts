@@ -131,6 +131,32 @@ describe('run page data shaping (B-21, spec 5.2)', () => {
       ['x', false, 'boom'],
     ]);
   });
+  it('keeps nested grader results and their individual outcomes', () => {
+    const view = shapeRun({
+      scores: [
+        {
+          items: [
+            {
+              label: 'Puzzle A',
+              passed: false,
+              items: [
+                { label: '1 Across', passed: true },
+                { label: '2 Down', passed: false, detail: 'got CANDY' },
+                { label: '3 Down', passed: null },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    const parent = view.checks.groups[0]!.items[0]!;
+    expect(parent.label).toBe('Puzzle A');
+    expect(parent.items.map(({ label, passed, detail }) => [label, passed, detail])).toEqual([
+      ['1 Across', true, null],
+      ['2 Down', false, 'got CANDY'],
+      ['3 Down', null, null],
+    ]);
+  });
   it('status history is oldest first', () => {
     expect(v.statusHistory.map((s) => s.text)).toEqual(['Marked valid', 'Marked invalid: oops']);
   });

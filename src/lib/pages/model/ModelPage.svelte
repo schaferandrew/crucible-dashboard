@@ -15,7 +15,7 @@
   import NotShown from '$lib/ui/feedback/NotShown.svelte';
   import PageHeader from '$lib/ui/layout/PageHeader.svelte';
   import { describeNotShown } from '$lib/ui/feedback/notShown';
-  import { taskHref } from '$lib/paths';
+  import { runHref, runsHref, taskHref } from '$lib/paths';
   import { fmtSeconds, fmtScore } from '$lib/core/format';
   import AbBlock from './AbBlock.svelte';
   import AreaBars from './AreaBars.svelte';
@@ -275,7 +275,12 @@
         again to clear.
       </p>
       <ErrorBoundary what="the deployments" error={loaded?.error} onretry={() => fetchRuns(cs.index.suite)}>
-        <DeploymentsTable table={dt} onpick={pickDeployment} pending={!ready} />
+        <DeploymentsTable
+          table={dt}
+          onpick={pickDeployment}
+          runsHref={(r) => runsHref(sq, { model: modelId, deployment: r.id, mode: ctx.section })}
+          pending={!ready}
+        />
       </ErrorBoundary>
       {#if dnf.length}
         <details class="dnfbox">
@@ -287,6 +292,7 @@
                     .task}{/if}:
                 {d.run.outcome === 'timed_out' ? 'timed out' : 'errored'} after {secs(d.run.elapsed_s)} on {d.deployment};
                 the leaderboard scores it {fmtScore(d.run.score)}.
+                <a href={runHref(d.run.run_uuid, sq)}>Run {d.run.run_uuid.slice(0, 8)}</a>
                 {#if !d.recorded}<span class="tag warn">not recorded</span>{/if}
               </li>
             {/each}
@@ -339,7 +345,7 @@
       <p class="note muted">
         Every task for this setup, grouped by {view.kind === 'combined' ? 'section and ' : ''}area; a score is
         the mean of its counted runs. Time and cost are from this setup’s own runs ({bestDeployment}). Select
-        a score for its run, checks and output.
+        a run ID for its score breakdown, checks and output.
       </p>
       <ErrorBoundary what="the tasks">
         {#if !ready}<Loading label="Loading the runs…" />{/if}

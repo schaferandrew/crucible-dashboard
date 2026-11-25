@@ -62,7 +62,7 @@
           {pick.count > 1 ? `Newest of ${pick.count} counted runs` : 'One counted run'}, {fmtDate(
             pick.newest.startedAt,
           )} ·
-          <a href={runHref(pick.newest.uuid, suiteQ)}>open the run</a>
+          <a href={runHref(pick.newest.uuid, suiteQ)}>Run {pick.newest.uuid.slice(0, 8)}</a>
         </p>
         {#if !st || st.status === 'loading'}
           <p class="muted small">Loading checks…</p>

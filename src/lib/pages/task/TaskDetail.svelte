@@ -295,14 +295,14 @@
     </ErrorBoundary>
   </section>
 
-  <section>
+  <section id="best-performers">
     <h2>Best performers</h2>
     <p class="muted">
       {showAll
         ? 'Every setup'
         : `Each model's best setup (the one the leaderboard ranks it by, on its ${index.catalog.labels.overall} score)`},
       ranked by score on this task, then time. Check squares are from the setup's newest counted run. Select a
-      score to open that run.
+      run ID to open that run.
     </p>
     <ErrorBoundary what="the performers">
       <ResponsiveTable
@@ -319,6 +319,7 @@
               class="mlink"
               href={mhref(r.e.setup.model)}>{shortModel(r.e)}</a
             >
+            <div><a class="run-link" href={run(r.e)}>Run {r.e.latest.uuid.slice(0, 8)}</a></div>
             {#if layout === 'card'}<span class="tag {r.e.local ? 'local' : 'cloud'}"
                 >{r.e.local ? 'local' : 'cloud'}</span
               >{/if}
@@ -469,6 +470,10 @@
 {/snippet}
 
 <style>
+  .run-link {
+    font-size: var(--text-xs);
+    font-weight: 500;
+  }
   section,
   .two {
     margin-bottom: var(--space-5);

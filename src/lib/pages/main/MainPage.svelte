@@ -164,8 +164,9 @@
     {:else}
       Score per task, grouped by tier, for each model's best setup; rows keep the leaderboard's order. A score
     {/if}
-    is the mean of that setup's runs (&times;n marks repeats). Select any cell for its runs, checks and output.
-    An empty outlined cell has runs that don't count in this suite (an older task version, or a run marked invalid).
+    is the mean of that setup's runs (&times;n marks repeats). A scored cell opens the latest counted run. Its page
+    shows the checks, output and any repeats. An empty outlined cell has runs that don't count in this suite (an
+    older task version, or a run marked invalid).
   </p>
   <ErrorBoundary what="the matrix">
     <Matrix index={cs.index} {sc} suite={suiteQ} />

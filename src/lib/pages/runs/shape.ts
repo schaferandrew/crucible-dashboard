@@ -164,6 +164,7 @@ export const NO_FILTERS: RunFilters = { outcome: 'all', state: 'all' };
 
 /** The facets of the run's setup (panel), its section and tier, then outcome and state. */
 export function rowMatches(row: RunRow, ctx: DataContext, f: RunFilters): boolean {
+  if (ctx.focus && row.setupId !== ctx.focus) return false;
   if (f.outcome !== 'all' && row.outcome !== f.outcome) return false;
   if (f.state !== 'all' && (row.state ?? 'none') !== f.state) return false;
   if (ctx.section !== 'combined' && row.mode !== ctx.section) return false;
@@ -175,7 +176,7 @@ export function rowMatches(row: RunRow, ctx: DataContext, f: RunFilters): boolea
       if (!row.taskId || !set.has(row.taskId)) return false;
       continue;
     }
-    const v = row.setup ? facetValue(row.setup, dim) : null;
+    const v = dim === 'model' ? row.modelId : row.setup ? facetValue(row.setup, dim) : null;
     if (v === null || !set.has(v)) return false;
   }
   return true;

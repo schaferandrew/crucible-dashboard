@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { defaultContext } from '$lib/core/context';
-import type { SuiteId } from '$lib/core/types';
+import { asSetupId, type SuiteId } from '$lib/core/types';
 import {
   NO_FILTERS,
   isFlagged,
@@ -62,6 +62,21 @@ describe('runs shaping (B-05, B-06)', () => {
     expect(rowMatches(b, ctx, { outcome: 'all', state: 'counted' })).toBe(false);
     expect(rowMatches(b, ctx, { outcome: 'error', state: 'invalid' })).toBe(true);
     expect(rowMatches(b, { ...ctx, section: 'chat' as never }, NO_FILTERS)).toBe(false);
+  });
+
+  it('matches a leaderboard link by exact setup ID', () => {
+    const focus = asSetupId('winner');
+    const focused = { ...ctx, focus };
+    expect(rowMatches(row({ setupId: focus }), focused, NO_FILTERS)).toBe(true);
+    expect(rowMatches(row({ setupId: 'another-setup' }), focused, NO_FILTERS)).toBe(false);
+    expect(rowMatches(row({}), focused, NO_FILTERS)).toBe(false);
+  });
+
+  it('matches model-and-task links for runs without a resolved setup', () => {
+    const related = { ...ctx, filters: { model: new Set(['m/m']), task: new Set(['t']) } };
+    expect(rowMatches(row({}), related, NO_FILTERS)).toBe(true);
+    expect(rowMatches(row({ modelId: 'm/other' }), related, NO_FILTERS)).toBe(false);
+    expect(rowMatches(row({ taskId: 'other-task' }), related, NO_FILTERS)).toBe(false);
   });
 
   it('a setup filter drops runs whose setup is unknown', () => {

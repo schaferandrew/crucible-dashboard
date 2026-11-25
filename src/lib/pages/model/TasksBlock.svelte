@@ -101,6 +101,7 @@
               {fmtCost(t.cost, local)}
             {:else if col.id === 'runs'}
               {runsText(t)}
+              {#if t.run}<div><a href={runHref(t.run, suiteParam)}>Run {t.run.slice(0, 8)}</a></div>{/if}
             {/if}
           {/snippet}
         </ResponsiveTable>

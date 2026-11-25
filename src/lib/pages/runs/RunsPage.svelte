@@ -20,7 +20,7 @@
     type SortKey,
   } from '$lib/pages/runs/shape';
   import { parseRunsUrl, runsSearch } from './url';
-  import { runHref } from '$lib/paths';
+  import { modelHref, runHref, suiteParam } from '$lib/paths';
   import { ContextState } from '$lib/ui/controls/contextState.svelte';
   import ControlPanel from '$lib/ui/controls/ControlPanel.svelte';
   import Empty from '$lib/ui/feedback/Empty.svelte';
@@ -44,6 +44,7 @@
     untrack(() => (data.firstMonth ? [{ month: data.firstMonth, runs: data.firstRuns }] : [])),
   );
   let monthLoading = $state(false);
+  let monthRequest: Promise<void> | undefined;
   let monthError = $state<string | null>(null);
   const nextMonth = $derived(data.months[loaded.length] ?? null);
 
@@ -52,6 +53,11 @@
   let limit = $state(PAGE);
 
   const suite = $derived(cs.ctx.suite);
+  const suiteQ = $derived(suiteParam(suite, data.meta.current_suite));
+  const focusedSetup = $derived(cs.ctx.focus ? cs.index.entities.setups[cs.ctx.focus] : undefined);
+  const hasLinkedScope = $derived(
+    Boolean(focusedSetup || cs.ctx.filters.model?.size || cs.ctx.filters.task?.size),
+  );
   const tasks = $derived(taskTable(cs.index));
   const all = $derived(loaded.flatMap((m) => m.runs.map((r) => toRow(r, suite, cs.index, tasks))));
   const states = $derived(stateCounts(all));
@@ -74,9 +80,8 @@
   );
 
   const harnessLabel = (id: string) => cs.index.catalog.harnesses.find((h) => h.id === id)?.label ?? id;
-  function setupText(r: RunRow): string {
-    const s = r.setup;
-    if (!s) return r.setupId ?? '—';
+  const setupText = (r: RunRow) => (r.setup ? formatSetup(r.setup) : (r.setupId ?? '—'));
+  function formatSetup(s: NonNullable<RunRow['setup']>): string {
     const where = s.where === 'local' ? (s.labels.hw ?? 'local') : (s.labels.provider ?? cap(s.where));
     return [
       harnessLabel(s.harness),
@@ -113,20 +118,29 @@
     return cs.update(next);
   };
 
-  async function showNext() {
+  function showNext() {
     const month = nextMonth;
-    if (!month || monthLoading) return;
+    if (!month || monthRequest) return monthRequest;
     monthLoading = true;
     monthError = null;
-    try {
-      const runs = await loadMonth(fetch, month);
-      loaded = [...loaded, { month, runs }];
-    } catch (e) {
-      monthError = e instanceof Error ? e.message : String(e);
-    } finally {
-      monthLoading = false;
-    }
+    monthRequest = loadMonth(fetch, month)
+      .then((runs) => {
+        loaded = [...loaded, { month, runs }];
+      })
+      .catch((e: unknown) => {
+        monthError = e instanceof Error ? e.message : String(e);
+      })
+      .finally(() => {
+        monthRequest = undefined;
+        monthLoading = false;
+      });
+    return monthRequest;
   }
+
+  // A linked setup or deployment may have no runs in the newest month.
+  $effect(() => {
+    if (hasLinkedScope && !inScope.length && nextMonth && !monthLoading && !monthError) untrack(showNext);
+  });
 
   onMount(() => {
     readUrl();
@@ -173,6 +187,17 @@
   unknownSuite={cs.unknownSuite}
   label="Run filters"
 />
+
+{#if cs.ctx.focus}
+  <p class="focus">
+    {#if focusedSetup}
+      Setup filter · {focusedSetup.labels.model} · {formatSetup(focusedSetup)}
+    {:else}
+      Setup filter · {cs.ctx.focus}
+    {/if}
+    <button type="button" onclick={() => onctx({ ...cs.ctx, focus: undefined })}>Clear setup filter</button>
+  </p>
+{/if}
 
 <div class="bar">
   <label>
@@ -246,7 +271,6 @@
       {columns}
       rowKey={(r) => r.id}
       caption="Recent runs"
-      href={(r) => runHref(r.id, cs.ctx.suite === data.meta.current_suite ? undefined : cs.ctx.suite)}
       empty={nextMonth
         ? 'No loaded run matches these filters. Older months are not loaded yet.'
         : 'No run matches these filters.'}
@@ -254,7 +278,9 @@
     >
       {#snippet cell(r, col, layout)}
         {#if col.id === 'model'}
-          <span class="name">{r.model}</span>
+          {#if r.modelId}<a href={modelHref(r.modelId, suiteQ)}>{r.model}</a>
+          {:else}{r.model}{/if}
+          <div><a class="run-link" href={runHref(r.id, suiteQ)}>Run {r.id.slice(0, 8)}</a></div>
           {#if r.flag}<span class="tag bad badge">{r.flag === 'withdrawn' ? 'Withdrawn' : 'Invalid'}</span
             >{/if}
         {:else if col.id === 'outcome'}
@@ -304,6 +330,14 @@
 {/if}
 
 <style>
+  .focus {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    overflow-wrap: anywhere;
+    font-size: var(--text-sm);
+  }
   .bar {
     display: flex;
     flex-wrap: wrap;
@@ -338,6 +372,10 @@
   }
   .list.loading {
     opacity: 0.5;
+  }
+  .run-link {
+    font-size: var(--text-xs);
+    font-weight: 500;
   }
   .badge {
     margin-left: var(--space-2);

@@ -2,14 +2,14 @@
   // /run/<uuid>: one run, its own shareable page (B-21, spec 5.2). The data is one small file, loaded by the
   // route; the run's own `labels` give model, maker, hardware and machine credit; only the task name and method labels
   // use a suite index that another page already loaded.
-  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { cachedIndex } from '$lib/data';
   import { fmtDate, fmtScore } from '$lib/core/format';
-  import { link, modelHref, runHref, taskHref } from '$lib/paths';
+  import { link, modelHref, runsHref, taskHref } from '$lib/paths';
   import { labelsFromIndex } from '$lib/pages/run/labels';
+  import RelatedRuns from '$lib/pages/run/RelatedRuns.svelte';
   import RunOutput from '$lib/pages/run/RunOutput.svelte';
-  import { pickSuite, shapeRun, stateText, type SiblingRun, type SuiteStanding } from '$lib/pages/run/shape';
+  import { pickSuite, shapeRun, type CheckItem, type SuiteStanding } from '$lib/pages/run/shape';
   import { chrome, goBack } from '$lib/ui/layout/chrome.svelte';
   import type { Column } from '$lib/ui/tables/table';
   import Empty from '$lib/ui/feedback/Empty.svelte';
@@ -35,23 +35,15 @@
   });
   // Links keep a non-current suite
   const suiteQ = $derived(view?.suite && view.suite !== current ? view.suite : undefined);
+  const modelRuns = $derived(view?.model.id ? runsHref(suiteQ, { model: view.model.id }) : null);
   const scoreHeat = $derived(heat(view?.score.value));
 
-  const backHref = $derived(chrome.previous ?? link('/'));
   function back(e: MouseEvent) {
-    // Back goes where the reader came from, with its filters (the history entry keeps them). A deep link has
-    // nowhere to go back to, so the plain link to the leaderboard is followed.
+    // The history entry restores the filters of the page the reader came from.
     if (chrome.previous && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
       e.preventDefault();
       void goBack();
     }
-  }
-
-  // Switching between repeats replaces the history entry, so Back still returns to where the reader came from
-  function switchTo(e: MouseEvent, uuid: string) {
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    e.preventDefault();
-    void goto(runHref(uuid, suiteQ), { replaceState: true });
   }
 
   const suiteCols: Column<SuiteStanding>[] = [
@@ -60,13 +52,22 @@
     { id: 'score', header: 'Score', align: 'end', value: (s) => fmtScore(s.score) },
     { id: 'task', header: 'Task', value: (s) => s.task },
   ];
-  const sibCols: Column<SiblingRun>[] = [
-    { id: 'run', header: 'Run', rowHeader: true },
-    { id: 'when', header: 'Started', value: (s) => fmtDate(s.startedAt) },
-    { id: 'state', header: 'Standing', value: (s) => stateText(s.state).split(':')[0] },
-    { id: 'score', header: 'Score', align: 'end', value: (s) => fmtScore(s.score) },
-  ];
 </script>
+
+{#snippet checks(items: CheckItem[])}
+  <ul class="checks">
+    {#each items as it, j (j)}
+      <li class:fail={it.passed === false}>
+        <span class="mark" aria-hidden="true">{it.passed ? '✓' : it.passed === false ? '✕' : '–'}</span>
+        <span class="visually-hidden"
+          >{it.passed ? 'Passed:' : it.passed === false ? 'Failed:' : 'Not run:'}</span
+        >
+        {it.label}{#if it.detail}<span class="muted">&nbsp;({it.detail})</span>{/if}
+        {#if it.items.length}{@render checks(it.items)}{/if}
+      </li>
+    {/each}
+  </ul>
+{/snippet}
 
 {#if !view}
   <PageHeader
@@ -82,10 +83,14 @@
   <PageHeader
     title={view.task.name}
     docTitle="{view.task.name} · run {view.shortId}"
-    crumbs={[{ label: 'Runs', href: link('/runs/', { suite: suiteQ }) }, { label: `Run ${view.shortId}` }]}
+    crumbs={[
+      { label: 'Runs', href: runsHref(suiteQ) },
+      ...(modelRuns ? [{ label: `${view.model.label} runs`, href: modelRuns }] : []),
+      { label: `Run ${view.shortId}` },
+    ]}
   />
 
-  <p class="back"><a href={backHref} onclick={back}>← Back</a></p>
+  {#if chrome.previous}<p class="back"><a href={chrome.previous} onclick={back}>← Back</a></p>{/if}
 
   <p class="sub">
     <a href={view.model.id ? modelHref(view.model.id, suiteQ) : undefined}>{view.model.label}</a>
@@ -117,14 +122,14 @@
             class:bad={view.outcome.kind === 'error'}>{view.outcome.label}</span
           >
         </p>
-        {#if view.task.id}
-          <p class="links">
-            <a href={taskHref(view.task.id, suiteQ)}>The task</a>
-            {#if view.model.id}· <a href={modelHref(view.model.id, suiteQ)}>The model</a>{/if}
-          </p>
-        {/if}
       </div>
     </section>
+
+    {#if view.task.id || view.siblings.length}
+      {#key `${view.suite}|${view.model.id}|${view.task.id}`}
+        <RelatedRuns {view} {suiteQ} />
+      {/key}
+    {/if}
 
     {#if view.notes.length}
       <section class="notes" aria-label="Corrections">
@@ -174,50 +179,10 @@
       {:else}
         {#each view.checks.groups as g, i (i)}
           {#if g.name}<h3>{g.name}</h3>{/if}
-          <ul class="checks">
-            {#each g.items as it, j (j)}
-              <li class:fail={it.passed === false}>
-                <span class="mark" aria-hidden="true"
-                  >{it.passed ? '✓' : it.passed === false ? '✕' : '–'}</span
-                >
-                <span class="visually-hidden"
-                  >{it.passed ? 'Passed:' : it.passed === false ? 'Failed:' : 'Not run:'}</span
-                >
-                {it.label}{#if it.detail}<span class="muted">&nbsp;({it.detail})</span>{/if}
-              </li>
-            {/each}
-          </ul>
+          {@render checks(g.items)}
         {/each}
       {/if}
     </section>
-
-    {#if view.siblings.length}
-      <section aria-labelledby="h-rep">
-        <h2 id="h-rep">Repeats of this task and setup</h2>
-        <p class="muted small">
-          The leaderboard cell shows the mean of the counted repeats and links to the run marked “scored”.
-        </p>
-        <ResponsiveTable
-          rows={view.siblings}
-          columns={sibCols}
-          rowKey={(s) => s.uuid}
-          caption="Runs of the same task and setup"
-        >
-          {#snippet cell(s, col)}
-            {#if col.id === 'run'}
-              {#if s.self}
-                <span aria-current="page">This run</span>
-              {:else}
-                <a href={runHref(s.uuid, suiteQ)} onclick={(e) => switchTo(e, s.uuid)}
-                  >Run {s.uuid.slice(0, 8)}</a
-                >
-              {/if}
-              {#if s.scored}<span class="tag good">scored</span>{/if}
-            {:else}{col.value?.(s) ?? '—'}{/if}
-          {/snippet}
-        </ResponsiveTable>
-      </section>
-    {/if}
 
     <section aria-labelledby="h-suites">
       <h2 id="h-suites">In each suite</h2>
@@ -256,6 +221,11 @@
         {#key view.uuid}
           <RunOutput output={view.output} />
         {/key}
+      </section>
+    {:else}
+      <section aria-labelledby="h-out">
+        <h2 id="h-out">Model output</h2>
+        <p class="muted">No model output was published for this run.</p>
       </section>
     {/if}
 
@@ -328,9 +298,6 @@
   .sentence {
     font-weight: 600;
   }
-  .links {
-    font-size: var(--text-sm);
-  }
   .notes {
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-lg);
@@ -346,7 +313,7 @@
   }
   .cols {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: 0 var(--space-5);
   }
   .facts {
@@ -381,6 +348,9 @@
   }
   .checks li {
     padding: 2px 0;
+  }
+  .checks .checks {
+    margin-left: 1.2rem;
   }
   .checks .mark {
     display: inline-block;

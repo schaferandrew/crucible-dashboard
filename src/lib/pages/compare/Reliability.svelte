@@ -77,7 +77,9 @@
                   <a href={taskHref(b.task.id, suiteQ)}>{b.task.name}</a>:
                   {#if b.runs.length}
                     {#each b.runs as run, i (run.uuid)}{i ? '; ' : ''}<a href={runHref(run.uuid, suiteQ)}
-                        >{outcomeLine(run)}</a
+                        >Run {run.uuid.slice(0, 8)}</a
+                      >
+                      · {outcomeLine(run)}
                       >{/each}
                   {:else}
                     {badKinds(b)}

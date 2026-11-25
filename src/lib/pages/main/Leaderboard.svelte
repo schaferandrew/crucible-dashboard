@@ -6,6 +6,7 @@
   import type { Scope } from '$lib/core/scope';
   import type { SuiteIndex } from '$lib/core/types';
   import { setupLabel } from '$lib/labels';
+  import { runsHref } from '$lib/paths';
   import ResponsiveTable from '$lib/ui/tables/ResponsiveTable.svelte';
   import type { Column, SortState } from '$lib/ui/tables/table';
   import ModelRef from './ModelRef.svelte';
@@ -110,9 +111,14 @@
         >
       {/if}
       <span class="actions">
-        {#if row.variants.length > 1}
+        {#if !combined && row.ran}
+          <a href={runsHref(suite, { setup: row.setup.id, mode: view.id })}>View runs</a>
+        {/if}
+        {#if row.variants.length > 1 || (combined && row.ran)}
           <details class="variants">
-            <summary>best of {row.variants.length} setups</summary>
+            <summary
+              >{row.variants.length > 1 ? `best of ${row.variants.length} setups` : 'Section setups'}</summary
+            >
             <ul>
               {#each row.variants as v, i (v.candidate.id)}
                 <li>
@@ -122,6 +128,21 @@
                     >&middot; {v.runs} counted run{v.runs === 1 ? '' : 's'} &middot; {info.overallLabel}
                     {v.overall.score === null ? '—' : v.overall.score.toFixed(1)}</span
                   >
+                  {#if combined}
+                    <ul class="section-setups">
+                      {#each v.candidate.members as member, i (i)}
+                        {#if member}
+                          {@const part = view.parts[i]}
+                          <li>
+                            {part?.label} · {member.harness}
+                            <a href={runsHref(suite, { setup: member.id, mode: part?.id })}>View runs</a>
+                          </li>
+                        {/if}
+                      {/each}
+                    </ul>
+                  {:else if i > 0 && v.ran}
+                    <a href={runsHref(suite, { setup: v.setup.id, mode: view.id })}>View runs</a>
+                  {/if}
                 </li>
               {/each}
             </ul>
@@ -228,6 +249,9 @@
     padding-left: var(--space-4);
     color: var(--fg);
     text-align: left;
+  }
+  .variants .section-setups {
+    margin-bottom: var(--space-1);
   }
   .pick {
     border: 1px solid var(--border-strong);
