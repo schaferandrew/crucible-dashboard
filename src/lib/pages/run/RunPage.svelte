@@ -2,21 +2,14 @@
   // /run/<uuid>: one run, its own shareable page (B-21, spec 5.2). The data is one small file, loaded by the
   // route; the run's own `labels` give model, maker, hardware and machine credit; only the task name and method labels
   // use a suite index that another page already loaded.
-  import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import { cachedIndex } from '$lib/data';
   import { fmtDate, fmtScore } from '$lib/core/format';
-  import { compareHref, link, modelHref, runHref, runsHref, taskHref } from '$lib/paths';
+  import { link, modelHref, runsHref, taskHref } from '$lib/paths';
   import { labelsFromIndex } from '$lib/pages/run/labels';
+  import RelatedRuns from '$lib/pages/run/RelatedRuns.svelte';
   import RunOutput from '$lib/pages/run/RunOutput.svelte';
-  import {
-    pickSuite,
-    shapeRun,
-    stateText,
-    type CheckItem,
-    type SiblingRun,
-    type SuiteStanding,
-  } from '$lib/pages/run/shape';
+  import { pickSuite, shapeRun, type CheckItem, type SuiteStanding } from '$lib/pages/run/shape';
   import { chrome, goBack } from '$lib/ui/layout/chrome.svelte';
   import type { Column } from '$lib/ui/tables/table';
   import Empty from '$lib/ui/feedback/Empty.svelte';
@@ -42,11 +35,7 @@
   });
   // Links keep a non-current suite
   const suiteQ = $derived(view?.suite && view.suite !== current ? view.suite : undefined);
-  const setupId = $derived(view?.standing?.setup ?? null);
   const modelRuns = $derived(view?.model.id ? runsHref(suiteQ, { model: view.model.id }) : null);
-  const modelTaskRuns = $derived(
-    view?.model.id && view.task.id ? runsHref(suiteQ, { model: view.model.id, task: view.task.id }) : null,
-  );
   const scoreHeat = $derived(heat(view?.score.value));
 
   function back(e: MouseEvent) {
@@ -57,24 +46,11 @@
     }
   }
 
-  // Switching between repeats replaces the history entry, so Back still returns to where the reader came from
-  function switchTo(e: MouseEvent, uuid: string) {
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    e.preventDefault();
-    void goto(runHref(uuid, suiteQ), { replaceState: true });
-  }
-
   const suiteCols: Column<SuiteStanding>[] = [
     { id: 'suite', header: 'Suite', rowHeader: true, value: (s) => s.suite },
     { id: 'state', header: 'Standing', value: (s) => s.text },
     { id: 'score', header: 'Score', align: 'end', value: (s) => fmtScore(s.score) },
     { id: 'task', header: 'Task', value: (s) => s.task },
-  ];
-  const sibCols: Column<SiblingRun>[] = [
-    { id: 'run', header: 'Run', rowHeader: true },
-    { id: 'when', header: 'Started', value: (s) => fmtDate(s.startedAt) },
-    { id: 'state', header: 'Standing', value: (s) => stateText(s.state).split(':')[0] },
-    { id: 'score', header: 'Score', align: 'end', value: (s) => fmtScore(s.score) },
   ];
 </script>
 
@@ -149,15 +125,10 @@
       </div>
     </section>
 
-    {#if view.task.id || setupId}
-      <nav class="related" aria-label="Related runs and comparisons">
-        {#if modelTaskRuns}<a href={modelTaskRuns}>Same model on this task</a>{/if}
-        {#if view.task.id}
-          <a href={taskHref(view.task.id, suiteQ) + '#best-performers'}>Compare models on this task</a>
-        {/if}
-        {#if setupId}<a href={compareHref([setupId], suiteQ)}>Compare this setup</a>{/if}
-        {#if view.siblings.length}<a href="#h-rep">Repeats of this run</a>{/if}
-      </nav>
+    {#if view.task.id || view.siblings.length}
+      {#key `${view.suite}|${view.model.id}|${view.task.id}`}
+        <RelatedRuns {view} {suiteQ} />
+      {/key}
     {/if}
 
     {#if view.notes.length}
@@ -212,34 +183,6 @@
         {/each}
       {/if}
     </section>
-
-    {#if view.siblings.length}
-      <section aria-labelledby="h-rep">
-        <h2 id="h-rep">Repeats of this task and setup</h2>
-        <p class="muted small">
-          The leaderboard cell shows the mean of the counted repeats and links to the run marked “scored”.
-        </p>
-        <ResponsiveTable
-          rows={view.siblings}
-          columns={sibCols}
-          rowKey={(s) => s.uuid}
-          caption="Runs of the same task and setup"
-        >
-          {#snippet cell(s, col)}
-            {#if col.id === 'run'}
-              {#if s.self}
-                <span aria-current="page">This run</span>
-              {:else}
-                <a href={runHref(s.uuid, suiteQ)} onclick={(e) => switchTo(e, s.uuid)}
-                  >Run {s.uuid.slice(0, 8)}</a
-                >
-              {/if}
-              {#if s.scored}<span class="tag good">scored</span>{/if}
-            {:else}{col.value?.(s) ?? '—'}{/if}
-          {/snippet}
-        </ResponsiveTable>
-      </section>
-    {/if}
 
     <section aria-labelledby="h-suites">
       <h2 id="h-suites">In each suite</h2>
@@ -354,13 +297,6 @@
   }
   .sentence {
     font-weight: 600;
-  }
-  .related {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-4);
-    margin: calc(-1 * var(--space-2)) 0 var(--space-5);
-    font-size: var(--text-sm);
   }
   .notes {
     padding: var(--space-3) var(--space-4);

@@ -252,8 +252,12 @@ try {
     await output().locator('pre').waitFor();
     const firstOutput = await page.request.get(`${base}/data/${repeat.run.output}`).then((r) => r.text());
     assert.equal(await output().locator('pre').textContent(), firstOutput || '(empty)');
+    const related = page.getByRole('region', { name: 'Related runs' });
+    const sameSetup = related.getByRole('checkbox', { name: 'Same setup only' });
+    if (await sameSetup.isVisible()) await sameSetup.check();
+    assert.ok((await related.getByRole('listitem').count()) <= 5, 'The related-run preview stays bounded');
     await followLink(
-      page.getByRole('link', { name: `Run ${repeat.other.run_uuid.slice(0, 8)}`, exact: true }),
+      related.getByRole('link', { name: `Run ${repeat.other.run_uuid.slice(0, 8)}`, exact: true }),
     );
     assert.equal(await output().getAttribute('open'), null);
     await output().locator('summary').click();
