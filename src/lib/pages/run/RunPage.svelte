@@ -9,7 +9,14 @@
   import { link, modelHref, runHref, taskHref } from '$lib/paths';
   import { labelsFromIndex } from '$lib/pages/run/labels';
   import RunOutput from '$lib/pages/run/RunOutput.svelte';
-  import { pickSuite, shapeRun, stateText, type SiblingRun, type SuiteStanding } from '$lib/pages/run/shape';
+  import {
+    pickSuite,
+    shapeRun,
+    stateText,
+    type CheckItem,
+    type SiblingRun,
+    type SuiteStanding,
+  } from '$lib/pages/run/shape';
   import { chrome, goBack } from '$lib/ui/layout/chrome.svelte';
   import type { Column } from '$lib/ui/tables/table';
   import Empty from '$lib/ui/feedback/Empty.svelte';
@@ -67,6 +74,21 @@
     { id: 'score', header: 'Score', align: 'end', value: (s) => fmtScore(s.score) },
   ];
 </script>
+
+{#snippet checks(items: CheckItem[])}
+  <ul class="checks">
+    {#each items as it, j (j)}
+      <li class:fail={it.passed === false}>
+        <span class="mark" aria-hidden="true">{it.passed ? '✓' : it.passed === false ? '✕' : '–'}</span>
+        <span class="visually-hidden"
+          >{it.passed ? 'Passed:' : it.passed === false ? 'Failed:' : 'Not run:'}</span
+        >
+        {it.label}{#if it.detail}<span class="muted">&nbsp;({it.detail})</span>{/if}
+        {#if it.items.length}{@render checks(it.items)}{/if}
+      </li>
+    {/each}
+  </ul>
+{/snippet}
 
 {#if !view}
   <PageHeader
@@ -174,19 +196,7 @@
       {:else}
         {#each view.checks.groups as g, i (i)}
           {#if g.name}<h3>{g.name}</h3>{/if}
-          <ul class="checks">
-            {#each g.items as it, j (j)}
-              <li class:fail={it.passed === false}>
-                <span class="mark" aria-hidden="true"
-                  >{it.passed ? '✓' : it.passed === false ? '✕' : '–'}</span
-                >
-                <span class="visually-hidden"
-                  >{it.passed ? 'Passed:' : it.passed === false ? 'Failed:' : 'Not run:'}</span
-                >
-                {it.label}{#if it.detail}<span class="muted">&nbsp;({it.detail})</span>{/if}
-              </li>
-            {/each}
-          </ul>
+          {@render checks(g.items)}
         {/each}
       {/if}
     </section>
@@ -256,6 +266,11 @@
         {#key view.uuid}
           <RunOutput output={view.output} />
         {/key}
+      </section>
+    {:else}
+      <section aria-labelledby="h-out">
+        <h2 id="h-out">Model output</h2>
+        <p class="muted">No model output was published for this run.</p>
       </section>
     {/if}
 
@@ -346,7 +361,7 @@
   }
   .cols {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: 0 var(--space-5);
   }
   .facts {
@@ -381,6 +396,9 @@
   }
   .checks li {
     padding: 2px 0;
+  }
+  .checks .checks {
+    margin-left: 1.2rem;
   }
   .checks .mark {
     display: inline-block;

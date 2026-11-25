@@ -20,7 +20,7 @@
     type SortKey,
   } from '$lib/pages/runs/shape';
   import { parseRunsUrl, runsSearch } from './url';
-  import { runHref } from '$lib/paths';
+  import { modelHref, runHref, suiteParam } from '$lib/paths';
   import { ContextState } from '$lib/ui/controls/contextState.svelte';
   import ControlPanel from '$lib/ui/controls/ControlPanel.svelte';
   import Empty from '$lib/ui/feedback/Empty.svelte';
@@ -52,6 +52,7 @@
   let limit = $state(PAGE);
 
   const suite = $derived(cs.ctx.suite);
+  const suiteQ = $derived(suiteParam(suite, data.meta.current_suite));
   const tasks = $derived(taskTable(cs.index));
   const all = $derived(loaded.flatMap((m) => m.runs.map((r) => toRow(r, suite, cs.index, tasks))));
   const states = $derived(stateCounts(all));
@@ -246,7 +247,6 @@
       {columns}
       rowKey={(r) => r.id}
       caption="Recent runs"
-      href={(r) => runHref(r.id, cs.ctx.suite === data.meta.current_suite ? undefined : cs.ctx.suite)}
       empty={nextMonth
         ? 'No loaded run matches these filters. Older months are not loaded yet.'
         : 'No run matches these filters.'}
@@ -254,7 +254,9 @@
     >
       {#snippet cell(r, col, layout)}
         {#if col.id === 'model'}
-          <span class="name">{r.model}</span>
+          {#if r.modelId}<a href={modelHref(r.modelId, suiteQ)}>{r.model}</a>
+          {:else}{r.model}{/if}
+          <div><a class="run-link" href={runHref(r.id, suiteQ)}>Run {r.id.slice(0, 8)}</a></div>
           {#if r.flag}<span class="tag bad badge">{r.flag === 'withdrawn' ? 'Withdrawn' : 'Invalid'}</span
             >{/if}
         {:else if col.id === 'outcome'}
@@ -338,6 +340,10 @@
   }
   .list.loading {
     opacity: 0.5;
+  }
+  .run-link {
+    font-size: var(--text-xs);
+    font-weight: 500;
   }
   .badge {
     margin-left: var(--space-2);
